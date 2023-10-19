@@ -1,57 +1,14 @@
-<section class="py-8 h-screen">
-  <div class="sm:p-32 py-32 lg:grid lg:grid-cols-2 items-center h-auto w-auto">
-    <!-- elevate -->
-    <div class="hidden lg:block text-7xl text-center">Elevate</div>
-
-    <!-- login/signup  -->
-    <div class="flex flex-col items-center justify-center">
-      <!--login/signup tab -->
-      <app-tab-container></app-tab-container>
-
-      <button class="mt-9 w-16">
-        <img
-          class="rounded-lg"
-          src="../assets/images/items/google_cover.jpg"
-          alt="Google Authentication"
-        />
-      </button>
-
-      <div
-        class="my-5 flex items-center justify-center sm:space-x-7 space-x-3 text-gray-50 opacity-70"
-      >
-        <span class="flex-shrink-0">. . . . . . . . .</span>
-        <div class="text-center pt-2 flex-shrink-0">OR</div>
-        <span class="flex-shrink-0">. . . . . . . . .</span>
-      </div>
-
-      <input
-        placeholder="email"
-        type="email"
-        class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
-      />
-      <input
-        placeholder="password"
-        type="password"
-        class="md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
-      />
-
-      <button
-        class="bg-black hover:border-gray-400 hover:border text-white rounded-lg md:w-96 w-64 py-2 mt-4"
-      >
-        Submit
-      </button>
-
-      <button [routerLink]="['/auth/forgot']" class="text-white my-4">
-        forgot password?
-      </button>
-
-      <span class="md:block hidden text-gray-50 opacity-70"
-        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-        . . . . . . . .</span
-      >
-      <span class="block md:hidden text-gray-50 opacity-70"
-        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span
-      >
-    </div>
-  </div>
-</section>
+<app-tab-container>
+  <form class="text-center">
+    <input
+      placeholder="phone"
+      type="tel"
+      class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    />
+    <button
+      class="bg-black hover:border-gray-400 hover:border text-white rounded-lg md:w-96 w-64 py-2 mt-4"
+    >
+      Submit
+    </button>
+  </form>
+</app-tab-container>

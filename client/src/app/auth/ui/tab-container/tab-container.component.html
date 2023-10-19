@@ -1,16 +1,57 @@
-<ul class="bg-white rounded-md text-lg flex justify-around md:w-96 p-2">
-  <li>
-    <a
-      [routerLink]="['/auth/login']"
-      class="bg-black text-white rounded-lg py-1 px-10"
-      >Login</a
-    >
-  </li>
-  <li>
-    <a
-      [routerLink]="['/auth/signup']"
-      class="text-gray-900 rounded-lg py-1 px-10"
-      >Signup</a
-    >
-  </li>
-</ul>
+<section class="py-8 h-screen">
+  <div class="sm:p-32 py-32 lg:grid lg:grid-cols-2 items-center h-auto w-auto">
+    <!-- elevate -->
+    <div class="hidden lg:block text-7xl text-center">Elevate</div>
+
+    <!-- login/signup  -->
+    <div class="flex flex-col items-center justify-center">
+      <!--login/signup tab -->
+      <ul class="bg-white rounded-md text-lg flex justify-around md:w-96 p-2">
+        <li>
+          <a
+            [routerLink]="['/auth/login']"
+            class="bg-black text-white rounded-lg py-1 px-10"
+            >Login</a
+          >
+        </li>
+        <li>
+          <a
+            [routerLink]="['/auth/signup']"
+            class="text-gray-900 rounded-lg py-1 px-10"
+            >Signup</a
+          >
+        </li>
+      </ul>
+
+      <button class="mt-9 w-16">
+        <img
+          class="rounded-lg"
+          src="../assets/images/items/google_cover.jpg"
+          alt="Google Authentication"
+        />
+      </button>
+
+      <div
+        class="my-5 flex items-center justify-center sm:space-x-7 space-x-3 text-gray-50 opacity-70"
+      >
+        <span class="flex-shrink-0">. . . . . . . . .</span>
+        <div class="text-center pt-2 flex-shrink-0">OR</div>
+        <span class="flex-shrink-0">. . . . . . . . .</span>
+      </div>
+
+      <ng-content></ng-content>
+      
+      <button [routerLink]="['/auth/forgot']" class="text-white my-4">
+        forgot password?
+      </button>
+
+      <span class="md:block hidden text-gray-50 opacity-70"
+        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . .</span
+      >
+      <span class="block md:hidden text-gray-50 opacity-70"
+        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span
+      >
+    </div>
+  </div>
+</section>
