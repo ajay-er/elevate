@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 import { ForgotPassComponent } from './forgot-pass.component';
 import { TabContainerModule } from '../../ui/tab-container/tab-container.module';
+import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { TabContainerModule } from '../../ui/tab-container/tab-container.module'
   imports: [
     CommonModule,
     ForgotPasswordRoutingModule,
-    TabContainerModule
+    TabContainerModule,
+    ForgotFormModule
   ]
 })
 export class ForgotPasswordModule { }
