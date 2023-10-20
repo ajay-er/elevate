@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OtpVerifyComponent } from './otp-verify.component';
+import { AuthAccessComponent } from './auth-access.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: OtpVerifyComponent,
-  },
+    path:'',
+    component:AuthAccessComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class OtpVerifyRoutingModule {}
+export class AuthAccessRoutingModule { }

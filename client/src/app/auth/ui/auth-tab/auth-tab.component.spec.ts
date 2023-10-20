@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignupComponent } from './signup.component';
+import { AuthTabComponent } from './auth-tab.component';
 
-describe('SignupComponent', () => {
-  let component: SignupComponent;
-  let fixture: ComponentFixture<SignupComponent>;
+describe('AuthTabComponent', () => {
+  let component: AuthTabComponent;
+  let fixture: ComponentFixture<AuthTabComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SignupComponent]
+      declarations: [AuthTabComponent]
     });
-    fixture = TestBed.createComponent(SignupComponent);
+    fixture = TestBed.createComponent(AuthTabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
