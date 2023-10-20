@@ -8,18 +8,14 @@
       <!--login/signup tab -->
       <div class="bg-white rounded-md text-lg flex justify-around md:w-96 p-2">
         <button
-          (click)="changeTab()"
-          [ngClass]="getCss1()"
           routerLink="/auth/login"
-          class="rounded-lg py-1 px-10"
+          class="bg-black rounded-lg py-1 px-10"
         >
           Login
         </button>
         <button
-          (click)="changeTab()"
-          [ngClass]="getCss2()"
           routerLink="/auth/signup"
-          class="rounded-lg py-1 px-10"
+          class="bg-black rounded-lg py-1 px-10"
         >
           Signup
         </button>

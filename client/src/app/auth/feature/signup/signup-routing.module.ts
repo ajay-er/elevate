@@ -7,6 +7,11 @@ const routes: Routes = [
     path: '',
     component: SignupComponent,
   },
+  {
+    path: 'verify-otp',
+    loadChildren: () =>
+      import('../otp-verify/otp-verify.module').then((m) => m.OtpVerifyModule),
+  },
 ];
 
 @NgModule({

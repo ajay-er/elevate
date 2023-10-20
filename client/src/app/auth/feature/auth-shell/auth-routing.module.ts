@@ -23,7 +23,7 @@ const routes: Routes = [
       import('../forgot-password/forgot-password.module').then(
         (m) => m.ForgotPasswordModule
       ),
-  },
+  }
 ];
 
 @NgModule({

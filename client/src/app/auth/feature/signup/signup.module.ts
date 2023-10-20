@@ -5,6 +5,7 @@ import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup.component';
 import { TabContainerModule } from '../../ui/tab-container/tab-container.module';
 import { SignupFormModule } from '../../ui/signup-form/signup-form.module';
+import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
 
 @NgModule({
   declarations: [SignupComponent],
@@ -13,6 +14,7 @@ import { SignupFormModule } from '../../ui/signup-form/signup-form.module';
     SignupRoutingModule,
     TabContainerModule,
     SignupFormModule,
+    OtpVerifyModule
   ],
 })
 export class SignupModule {}

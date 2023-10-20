@@ -5,6 +5,7 @@ import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 import { ForgotPassComponent } from './forgot-pass.component';
 import { TabContainerModule } from '../../ui/tab-container/tab-container.module';
 import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
+import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
     CommonModule,
     ForgotPasswordRoutingModule,
     TabContainerModule,
-    ForgotFormModule
+    ForgotFormModule,
+    OtpVerifyModule
   ]
 })
 export class ForgotPasswordModule { }
