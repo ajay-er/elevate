@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Tab } from 'src/app/shared/types/tab-enum';
+import { Tab } from 'src/app/shared/types';
 
 @Component({
   selector: 'app-tab-container',

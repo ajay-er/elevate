@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { toogleAuthTab } from './auth.action';
-import { Tab } from 'src/app/shared/types/tab-enum';
+import { Tab } from 'src/app/shared/types';
 
 export interface AuthState {
   currentAuthTab: Tab;
