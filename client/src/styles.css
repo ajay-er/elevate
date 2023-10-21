@@ -24,4 +24,9 @@
         background: radial-gradient(280.94% 281.94% at 50% 100%, #f3a4ee 0, rgba(200, 139, 196, 0) 55.24%), linear-gradient(270deg, rgba(243, 238, 255, 0), rgba(243, 238, 255, .04)), rgba(200, 139, 196, .01);
         box-shadow: 0 0 0 0 rgba(51, 0, 44, .4), 0 2px 5px 0 rgba(46, 0, 51, .39), 0 8px 8px 0 rgba(48, 0, 51, .34), 0 19px 11px 0 rgba(16, 0, 51, .2), 0 34px 14px 0 rgba(16, 0, 51, .06), 0 53px 15px 0 rgba(16, 0, 51, .01), inset 0 0 12px 0 hsla(0, 0%, 100%, .08), inset 0 -8px 32px 0 #1e001c;
     }
+
+@layer utilities {
+    .gradient-color-button {
+        background: linear-gradient(45deg, #8250f879, #3379c2);
+    }
 }

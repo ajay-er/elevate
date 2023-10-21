@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavComponent } from './nav.component';
+import { TabContainerComponent } from './tab-container.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [NavComponent],
+  declarations: [TabContainerComponent],
   imports: [CommonModule,RouterModule],
-  exports: [NavComponent],
+  exports:[TabContainerComponent]
 })
-export class NavModule {}
+export class TabContainerModule {}

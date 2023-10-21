@@ -1,0 +1,70 @@
+<section class="py-8">
+  <div class="sm:px-24 sm:pt-24 pt-32 lg:grid lg:grid-cols-2 items-center">
+    <!-- elevate -->
+    <div class="hidden lg:block text-7xl text-center">Elevate</div>
+
+    <!-- login/signup  -->
+    <div class="flex flex-col items-center justify-center">
+      <!--login/signup tab -->
+      <div
+        class="bg-white shadow-2xl shadow-blue-500/50 rounded-md text-lg flex gap-1 justify-around md:w-96 w-64 p-2"
+      >
+        <button
+          [ngClass]="{
+          'bg-black': currentTab !== TabType.Signup,
+          'text-black': currentTab === TabType.Signup,
+
+          }"
+          (click)="selectTab(TabType.Login)"
+          class="rounded-lg py-1 px-7 md:px-10"
+        >
+          Login
+        </button>
+        <button
+          [ngClass]="{
+          'bg-black':currentTab === TabType.Signup,
+          'text-black': currentTab !== TabType.Signup,
+        }"
+          (click)="selectTab(TabType.Signup)"
+          class="rounded-lg py-1 px-7 md:px-10"
+        >
+          Signup
+        </button>
+      </div>
+
+      <button class="mt-9 w-16">
+        <img
+          class="rounded-lg"
+          src="../assets/images/items/google_cover.jpg"
+          alt="Google Authentication"
+        />
+      </button>
+
+      <div
+        class="mt-5 flex items-center justify-center sm:space-x-7 space-x-3 text-gray-50"
+      >
+        <span class="flex-shrink-0">. . . . . . . . .</span>
+        <div class="text-center pt-2 flex-shrink-0">OR</div>
+        <span class="flex-shrink-0">. . . . . . . . .</span>
+      </div>
+      <ng-content></ng-content>
+
+      <div
+        *ngIf="currentTab === TabType.Login"
+        class="flex justify-center items-center"
+      >
+        <button (click)="selectTab(TabType.Forgot)" class="text-white my-4">
+          forgot password?
+        </button>
+      </div>
+
+      <span class="md:block hidden text-gray-50"
+        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . .</span
+      >
+      <span class="block md:hidden text-gray-50"
+        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span
+      >
+    </div>
+  </div>
+</section>
