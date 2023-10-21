@@ -44,9 +44,6 @@ export class AuthAccessComponent {
         const segments = event.url.split('/');
         this.processUrlSegments(segments);
       });
-
-    //dispatch action
-    this.dispatchAuthTabChange();
   }
 
   private processUrlSegments(segments: string[]) {
@@ -67,6 +64,9 @@ export class AuthAccessComponent {
           break;
       }
     }
+
+    //dispatch action
+    this.dispatchAuthTabChange();
   }
 
   private dispatchAuthTabChange(): void {
