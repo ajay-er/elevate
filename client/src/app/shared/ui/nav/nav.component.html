@@ -1,21 +1,6 @@
 <header class="fixed w-full">
   <nav class="backdrop-blur-2xl relative z-40">
-    <div
-      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-    >
-      <a href="#">
-        <span
-          class="self-center text-2xl font-semibold whitespace-nowrap text-white hover:text-violet-300"
-          >Elevate
-        </span>
-      </a>
-      <div class="flex items-center md:order-2">
-        <button
-          type="button"
-          class="electric-violet hover:electric-violet-hover mr-3 rounded-xl hidden md:block border border-gray-500 px-5 py-1"
-        >
-          Get started
-        </button>
+  <nav class="backdrop-blur-2xl">
         <button
           routerLink="/auth/login"
           routerLinkActive="router-link-active"
@@ -62,6 +47,7 @@
           aria-controls="navbar-user"
           aria-expanded="false"
           (click)="toggleNavbar()"
+
         >
           <span class="sr-only">Open main menu</span>
           <svg
