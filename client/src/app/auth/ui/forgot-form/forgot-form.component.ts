@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-forgot-form',
@@ -7,10 +6,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-form.component.css'],
 })
 export class ForgotFormComponent {
-  private router = inject(Router);
-
-  forgot() {
-    this.router.navigate(['/auth/forgot/verify-otp']);
-    return;
-  }
+  forgot() {}
 }

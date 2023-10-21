@@ -9,9 +9,9 @@ export interface State {
 const getAuthFeatureState = createFeatureSelector<AuthState>('auth');
 
 //selecting each data from the slice
-export const getCurrentPage = createSelector(
+export const toggleAuthPage = createSelector(
   getAuthFeatureState,
   (state) => {
-    return state.currentAuthPage;
+    return state.currentAuthTab;
   }
 );

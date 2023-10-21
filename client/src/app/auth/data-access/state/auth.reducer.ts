@@ -1,28 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-  selectForgotPage,
-  selectLoginPage,
-  selectSignupPage,
-} from './auth.action';
-import { CurrentPage } from 'src/app/shared/types/currentPage';
+import { toogleAuthTab } from './auth.action';
+import { Tab } from 'src/app/shared/types/tab-enum';
 
 export interface AuthState {
-  currentAuthPage: CurrentPage;
+  currentAuthTab: Tab;
 }
 
 const initialState: AuthState = {
-  currentAuthPage: 'login',
+  currentAuthTab: Tab.Login,
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(selectLoginPage, (state, action): AuthState => {
-    return { ...state, currentAuthPage: action.currentAuthPage };
-  }),
-  on(selectSignupPage, (state, action) => {
-    return { ...state, currentAuthPage: action.currentAuthPage };
-  }),
-  on(selectForgotPage, (state, action) => {
-    return { ...state, currentAuthPage: action.currentAuthPage };
+  on(toogleAuthTab, (state, action): AuthState => {
+    return { ...state, currentAuthTab: action.currentAuthTab };
   })
 );

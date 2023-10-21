@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./auth/feature/auth-shell/auth-shell.module').then(
         (m) => m.AuthShellModule
       ),
+  },
+  {
+    path: '**',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
   },
 ];
 

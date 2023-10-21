@@ -1,17 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import { CurrentPage } from 'src/app/shared/types/currentPage';
+import { Tab } from 'src/app/shared/types/tab-enum';
 
-export const selectLoginPage = createAction(
-  '[Auth Page] Login page',
-  props<{ currentAuthPage: CurrentPage }>()
-);
-
-export const selectSignupPage = createAction(
-  '[Auth Page] Signup page',
-  props<{ currentAuthPage: CurrentPage }>()
-);
-
-export const selectForgotPage = createAction(
-  '[Auth Page] Forgot page',
-  props<{ currentAuthPage: CurrentPage }>()
+export const toogleAuthTab = createAction(
+  '[Auth Page] Toggle Current Tab',
+  props<{ currentAuthTab: Tab }>()
 );

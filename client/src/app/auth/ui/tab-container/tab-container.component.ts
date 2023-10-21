@@ -1,10 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChildren,
-  QueryList,
+  EventEmitter,
+  Input,
+  Output,
 } from '@angular/core';
-import { AuthTabComponent } from '../auth-tab/auth-tab.component';
+import { Tab } from 'src/app/shared/types/tab-enum';
 
 @Component({
   selector: 'app-tab-container',
@@ -13,25 +14,12 @@ import { AuthTabComponent } from '../auth-tab/auth-tab.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabContainerComponent {
-  @ContentChildren(AuthTabComponent) tabs: QueryList<AuthTabComponent> =
-    new QueryList();
-
-  ngAfterContentInit(): void {
-    const activeTabs = this.tabs?.filter((tab) => tab.active);
-    if (!activeTabs || activeTabs.length === 0) {
-      this.selectTab(this.tabs!.first);
-    }
-  }
+  protected TabType: typeof Tab = Tab;
   
-  selectTab(tab: AuthTabComponent) {
-    this.tabs?.forEach((tab) => {
-      tab.active = false;
-    });
+  @Input() currentTab!:Tab;
+  @Output() tabSelected = new EventEmitter<Tab>();
 
-    tab.active = true;
-    return false;
+  selectTab(page: Tab) {
+    this.tabSelected.emit(page);
   }
-
-
-
 }

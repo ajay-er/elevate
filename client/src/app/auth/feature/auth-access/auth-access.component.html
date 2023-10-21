@@ -1,22 +1,13 @@
-<app-tab-container>
-    <!-- login -->
-    <app-auth-tab>
-      <app-login-form></app-login-form>
-    </app-auth-tab>
-  
-    <!--  signup -->
-    <app-auth-tab>
-      <app-signup-form></app-signup-form>
-    </app-auth-tab>
-  
-    <!-- forgot -->
-    <app-auth-tab>
-      <app-forgot-form></app-forgot-form>
-    </app-auth-tab>
-  
-    <!-- verify-otp -->
-    <app-auth-tab>
-      <app-verify-otp-form></app-verify-otp-form>
-    </app-auth-tab>
-  
-  </app-tab-container>
+<app-tab-container
+  [currentTab]="currentTab"
+  (tabSelected)="selectedTab($event)"
+>
+  <router-outlet></router-outlet>
+</app-tab-container>
+
+<!-- <app-login-form *ngIf="currentTab === TabType.Login"></app-login-form>
+  <app-signup-form *ngIf="currentTab === TabType.Signup"></app-signup-form>
+  <app-forgot-form *ngIf="currentTab === TabType.Forgot"></app-forgot-form>
+  <app-verify-otp-form
+    *ngIf="currentTab === TabType.Verify"
+  ></app-verify-otp-form> -->

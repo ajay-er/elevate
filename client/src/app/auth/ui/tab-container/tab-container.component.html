@@ -9,8 +9,27 @@
       <div
         class="bg-white rounded-md text-lg flex gap-1 justify-around md:w-96 p-2"
       >
-        <button class="bg-black rounded-lg py-1 px-10">Login</button>
-        <button class="text-black rounded-lg py-1 px-10">Signup</button>
+        <button
+          [ngClass]="{
+          'bg-black': currentTab !== TabType.Signup,
+          'text-black': currentTab === TabType.Signup,
+
+          }"
+          (click)="selectTab(TabType.Login)"
+          class="rounded-lg py-1 px-10"
+        >
+          Login
+        </button>
+        <button
+          [ngClass]="{
+          'bg-black':currentTab === TabType.Signup,
+          'text-black': currentTab !== TabType.Signup,
+        }"
+          (click)="selectTab(TabType.Signup)"
+          class="rounded-lg py-1 px-10"
+        >
+          Signup
+        </button>
       </div>
 
       <button class="mt-9 w-16">
@@ -29,6 +48,15 @@
         <span class="flex-shrink-0">. . . . . . . . .</span>
       </div>
       <ng-content></ng-content>
+
+      <div
+        *ngIf="currentTab === TabType.Login"
+        class="flex justify-center items-center"
+      >
+        <button (click)="selectTab(TabType.Forgot)" class="text-white my-4">
+          forgot password?
+        </button>
+      </div>
 
       <span class="md:block hidden text-gray-50 opacity-70"
         >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
