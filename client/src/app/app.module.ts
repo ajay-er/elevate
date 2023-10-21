@@ -20,7 +20,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       name: 'Elevate',
       maxAge: 25,
       logOnly: !isDevMode(),
-    })
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

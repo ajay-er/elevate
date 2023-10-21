@@ -8,3 +8,4 @@ import { FooterComponent } from './footer.component';
   exports: [FooterComponent],
 })
 export class FooterModule {}
+
