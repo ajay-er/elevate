@@ -1,0 +1,31 @@
+version: '3'
+services:
+  users:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./users
+    volumes:
+      - /app/node_modules
+      - ./users:/app
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://users-db:27017
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    ports:
+      - '4200:4200'
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+
+  users-db:
+    image: mongo:latest
+    container_name: users-db
+    ports:
+      - '27017:27017'
+      
+  

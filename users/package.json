@@ -2,7 +2,7 @@
   "name": "users",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "server.js",
   "scripts": {
     "start": "ts-node-dev --poll src/server.ts",
     "prettier": "prettier --write ."
