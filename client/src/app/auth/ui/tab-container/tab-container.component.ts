@@ -15,8 +15,7 @@ import { Tab } from 'src/app/shared/types';
 })
 export class TabContainerComponent {
   protected TabType: typeof Tab = Tab;
-  
-  @Input() currentTab!:Tab;
+  @Input() currentTab!: Tab;
   @Output() tabSelected = new EventEmitter<Tab>();
 
   selectTab(page: Tab) {

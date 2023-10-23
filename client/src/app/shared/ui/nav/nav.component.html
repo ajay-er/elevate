@@ -11,12 +11,14 @@
       </a>
       <div class="flex items-center md:order-2">
         <button
+          *ngIf="!isLoggedin"
           type="button"
           class="electric-violet hover:electric-violet-hover mr-3 rounded-xl hidden md:block border border-gray-500 px-5 py-1"
         >
           Get started
         </button>
         <button
+          *ngIf="!isLoggedin"
           routerLink="/auth/login"
           routerLinkActive="router-link-active"
           type="button"
@@ -24,38 +26,47 @@
         >
           Login
         </button>
-        <!-- <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 " id="user-menu-button"
-          aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-          <span class="sr-only">Open user menu</span>
-          <img class="w-8 h-8 rounded-full" src="../assets/images/profile/IMAGE.png" alt="user photo">
-        </button> -->
-        <!-- Dropdown menu -->
-        <div
-          class="z-50 hidden my-4 text-base list-none divide-y rounded-lg shadow bg-black border border-gray-600 divide-gray-600"
-          id="user-dropdown"
-        >
-          <div class="px-4 py-3">
-            <span class="block text-sm text-white">Bonnie Green</span>
-            <span class="block text-sm truncate text-gray-400"
-              >bonnie@gmail.com
-            </span>
+        <ng-container *ngIf="isLoggedin">
+          <button (click)="toggleProfileDropdown()"
+            type="button"
+            class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0"
+            id="user-menu-button"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open user menu</span>
+            <img
+              class="w-8 h-8 rounded-full"
+              src="../assets/images/profile/IMAGE.png"
+              alt="user photo"
+            />
+          </button>
+          <!-- Dropdown menu -->
+          <div *ngIf="isDropdownOpen"
+            id="user-dropdown"
+            class="z-50 my-4 absolute top-10 right-10 text-base list-none divide-y rounded-lg shadow bg-black border border-gray-600 divide-gray-600"
+          >
+            <div class="px-4 py-3">
+              <span class="block text-sm text-white">Bonnie Green</span>
+              <span class="block text-sm truncate text-gray-400"
+                >bonnie@gmail.com
+              </span>
+            </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+                  >Profile
+                </a>
+              </li>
+              <li>
+                <a
+                  class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+                  >Sign out
+                </a>
+              </li>
+            </ul>
           </div>
-          <ul class="py-2" aria-labelledby="user-menu-button">
-            <li>
-              <a
-                class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
-                >Profile
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
-                >Sign out
-              </a>
-            </li>
-          </ul>
-        </div>
+        </ng-container>
         <button
           type="button"
           class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm md:hidden rounded-lg focus:outline-none dark:text-gray-400 hover:bg-slate-400"

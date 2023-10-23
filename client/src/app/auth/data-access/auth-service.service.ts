@@ -1,9 +1,5 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, inject } from '@angular/core';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthServiceService {
-
-  constructor() { }
-}
+export class AuthService {}

@@ -13,7 +13,6 @@
           [ngClass]="{
           'bg-black': currentTab !== TabType.Signup,
           'text-black': currentTab === TabType.Signup,
-
           }"
           (click)="selectTab(TabType.Login)"
           class="rounded-lg py-1 px-7 md:px-10"
@@ -32,13 +31,7 @@
         </button>
       </div>
 
-      <button class="mt-9 w-16">
-        <img
-          class="rounded-lg"
-          src="../assets/images/items/google_cover.jpg"
-          alt="Google Authentication"
-        />
-      </button>
+      <asl-google-signin-button type="icon" size="large"  class="mt-9"></asl-google-signin-button>
 
       <div
         class="mt-5 flex items-center justify-center sm:space-x-7 space-x-3 text-gray-50"

@@ -2,8 +2,7 @@
   class="bg-cover bg-center bg-no-repeat"
   style="background-image: url(./assets/images/backgrounds/bg.png)"
 >
-  <app-nav></app-nav>
+  <app-nav [socialUser]="socialUser" [isLoggedin]="isLoggedin" (logOut)="logOut()" ></app-nav>
   <router-outlet></router-outlet>
-  
   <app-footer></app-footer>
 </div>
