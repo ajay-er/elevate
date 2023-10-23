@@ -44,7 +44,6 @@ import {
         ],
       } as SocialAuthServiceConfig,
     },
-    
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

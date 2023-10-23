@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +16,8 @@ export class AppComponent {
     initFlowbite();
     this.socialAuthService.authState.subscribe((user) => {
       this.socialUser = user;
-      this.isLoggedin = user != null;      
+      this.isLoggedin = user != null;
+      console.log(user);
     });
   }
 

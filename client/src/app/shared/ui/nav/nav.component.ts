@@ -1,6 +1,11 @@
-
 import { SocialUser } from '@abacritt/angularx-social-login';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -17,7 +22,7 @@ export class NavComponent {
   toggleNavbar() {
     this.isNavbarOpen = !this.isNavbarOpen;
   }
-  
+
   isDropdownOpen = false;
   toggleProfileDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;

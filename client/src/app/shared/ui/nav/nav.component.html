@@ -27,7 +27,8 @@
           Login
         </button>
         <ng-container *ngIf="isLoggedin">
-          <button (click)="toggleProfileDropdown()"
+          <button
+            (click)="toggleProfileDropdown()"
             type="button"
             class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0"
             id="user-menu-button"
@@ -36,19 +37,22 @@
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              src="../assets/images/profile/IMAGE.png"
+              [src]="socialUser.photoUrl"
               alt="user photo"
             />
           </button>
           <!-- Dropdown menu -->
-          <div *ngIf="isDropdownOpen"
+          <div
+            *ngIf="isDropdownOpen"
             id="user-dropdown"
             class="z-50 my-4 absolute top-10 right-10 text-base list-none divide-y rounded-lg shadow bg-black border border-gray-600 divide-gray-600"
           >
             <div class="px-4 py-3">
-              <span class="block text-sm text-white">Bonnie Green</span>
+              <span class="block text-sm text-white">{{
+                socialUser.name
+              }}</span>
               <span class="block text-sm truncate text-gray-400"
-                >bonnie@gmail.com
+                >{{ socialUser.email }}
               </span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
@@ -164,4 +168,9 @@
     class="fixed top-0 left-0 w-full h-full bg-black opacity-80 z-10"
     (click)="toggleNavbar()"
   ></div>
+  <div
+  [ngClass]="{ block: isDropdownOpen, hidden: !isDropdownOpen }"
+  class="fixed top-0 left-0 w-full h-full bg-black opacity-0 z-10"
+  (click)="toggleProfileDropdown()"
+></div>
 </header>
