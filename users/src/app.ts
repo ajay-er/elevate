@@ -1,6 +1,7 @@
 import { NotFoundError, errorHandler } from "@ajay404/elevate";
 import express, { Request, Response } from "express";
 import morgan from "morgan";
+import 'express-async-errors';
 
 import { authRouter } from "./lib/controller/auth.controller";
 
