@@ -38,15 +38,12 @@ router.post("/signup", async (req: Request, res: Response) => {
 	if (existingUser) {
 		throw new BadRequestError("Email already in use");
 	}
-
 	const user = await userRepo.signup({
 		email,
 		password,
 		firstName
 	});
 
-	console.log(process.env.JWT_SECRET!);
-	
 	const userJWT = jwt.sign(
 		{
 			id: user?._id,
