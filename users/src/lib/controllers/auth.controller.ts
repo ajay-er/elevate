@@ -45,6 +45,8 @@ router.post("/signup", async (req: Request, res: Response) => {
 		firstName
 	});
 
+	console.log(process.env.JWT_SECRET!);
+	
 	const userJWT = jwt.sign(
 		{
 			id: user?._id,

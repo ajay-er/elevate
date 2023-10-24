@@ -1,6 +1,7 @@
 version: '3'
 services:
   users:
+    container_name: users
     build:
       dockerfile: Dockerfile.dev
       context: ./users
@@ -15,6 +16,7 @@ services:
       - CLIENT_ID =136905288035-rfcs7jag9gh9e4ne4454jri50lec2p9s.apps.googleusercontent.com
       - JWT_SECRET = 'secretkeyhere'
   client:
+    container_name: client
     build:
       dockerfile: Dockerfile.dev
       context: ./client
@@ -30,6 +32,6 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - ./users/db:/data/db
+      - ../data_elevate/db:/data/db
       
   
