@@ -17,17 +17,18 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 	}
 	const userexist = await userRepo.findByEmail(user.email);
 	let result;
+	req.session = { googleToken };
+
 	if (!userexist) {
 		//if user doen't exist,then create
 		result = await userRepo.signup({ email: user.email, firstName: user.name });
 		statuscode = 201;
+		return res.status(statuscode).json({ message: "google signup successfully completed", result });
 	} else {
 		//if user already then update
-		result = await userRepo.update(user);
+		await userRepo.update(user);
+		return res.status(statuscode).json({ message: "google login successfully completed" });
 	}
-	req.session = { googleToken };
-
-	res.json(statuscode).json({ message: "google authentication successfully completed", result });
 });
 
 router.post("/signup", async (req: Request, res: Response) => {
@@ -51,10 +52,9 @@ router.post("/signup", async (req: Request, res: Response) => {
 		},
 		process.env.JWT_SECRET!
 	);
-
 	req.session = { jwt: userJWT };
 
-	res.status(201).send(user);
+	res.status(201).json(user);
 });
 
 export { router as authRoute };

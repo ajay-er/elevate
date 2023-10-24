@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 		throw new Error("MONGO_URI not found");
 	}
 	try {
+		console.clear();
 		await mongoConnect(process.env.MONGO_URI);
 
 		app.listen(PORT, () => {

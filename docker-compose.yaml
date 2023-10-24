@@ -13,7 +13,7 @@ services:
       - PORT=3000
       - MONGO_URI=mongodb://users-db:27017
       - CLIENT_ID =136905288035-rfcs7jag9gh9e4ne4454jri50lec2p9s.apps.googleusercontent.com
-      - JWT_SECRET = secretkeyhere
+      - JWT_SECRET = 'secretkeyhere'
   client:
     build:
       dockerfile: Dockerfile.dev
@@ -30,6 +30,6 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - ./db:/data/db
+      - ./users/db:/data/db
       
   

@@ -1,9 +1,10 @@
-import { NotFoundError, errorHandler } from "@ajay404/elevate";
+import { NotFoundError, currentUser, errorHandler } from "@ajay404/elevate";
 import express, { Request, Response } from "express";
 import morgan from "morgan";
 import "express-async-errors";
 import cookieSession from "cookie-session";
 import { authRoute } from "./lib/controllers/auth.controller";
+import "dotenv/config";
 
 const app = express();
 
