@@ -1,79 +1,31 @@
 import { Schema } from "mongoose";
 
-// interface BankDetail {
-//     bankName: string;
-//     accountNumber: string;
-//   }
-  
-//   interface Investment {
-//     investmentType: string;
-//     amount: number;
-//   }
-  
-//   interface FounderRole {
-//     organization: string;
-//     role: string;
-//   }
-  
-//   interface Blog {
-//     title: string;
-//     content: string;
-//   }
-  
-//   interface Address {
-//     // Assuming the referenced type is "User"
-//     type: Schema.Types.ObjectId;
-//     ref: 'User';
-//   }
-  
-//   interface Follower {
-//     // Assuming the referenced type is "User"
-//     type: Schema.Types.ObjectId;
-//     ref: 'User';
-//   }
-  
-//   interface Following {
-//     // Assuming the referenced type is "User"
-//     type: Schema.Types.ObjectId;
-//     ref: 'User';
-//   }
-  
-//   interface Idea {
-//     // Assuming the referenced type is "Idea"
-//     type: Schema.Types.ObjectId;
-//     ref: 'Idea';
-//   }
-  
-//   interface Message {
-//     sender: {
-//       // Assuming the referenced type is "User"
-//       type: Schema.Types.ObjectId;
-//       ref: 'User';
-//     };
-//     message: string;
-//   }
-  
-//   // Main User interface
-//   export interface IUserAttrs {
-// 	  _id: Schema.Types.ObjectId;
-//     userName: string;
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     phone: string;
-//     password: string;
-//     otp?:string;
-//     profileImgUrl: string;
-//     bankDetails: BankDetail[];
-//     investments: Investment[];
-//     founderOf: FounderRole[];
-//     blogs: Blog[];
-//     address: Address[];
-//     followers: Follower[];
-//     following: Following[];
-//     ideasCreated: Idea[];
-//     messages: Message[];
-//   }
+
+// An interface that describes the properties
+// that are requried to create a new User
+export interface UserAttrs {
+	userName: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	phone?: string;
+	otp?: string;
+	profileImgUrl?: string;
+	bankDetails?: Array<{ bankName: string; accountNumber: string }>;
+	investments?: Array<{ investmentType: string; amount: number }>;
+	founderOf?: Array<{ organization: string; role: string }>;
+	blogs?: Array<{ title: string; content: string }>;
+	address?: Array<Schema.Types.ObjectId>;
+	followers?: Array<Schema.Types.ObjectId>;
+	following?: Array<Schema.Types.ObjectId>;
+	ideasCreated?: Array<Schema.Types.ObjectId>;
+	messages?: Array<{
+		sender: Schema.Types.ObjectId;
+		message: string;
+	}>;
+}
+
 
 
 

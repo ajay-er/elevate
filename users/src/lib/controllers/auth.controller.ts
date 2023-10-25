@@ -97,12 +97,12 @@ router.post("/verify-email", async (req: Request, res: Response) => {
 	}
 	const otp: string = generateOtp();
 	user.otp = otp;
- 
+
 	const emailTemplate = verifyEmailTemplate(otp);
 	//SEND FORGOT PASSWORD EMAIL
 	await sendMail({
 		to: email,
-		subject: 'Elevate-verification',
+		subject: "Elevate-verification",
 		html: emailTemplate.html
 	});
 
@@ -110,7 +110,22 @@ router.post("/verify-email", async (req: Request, res: Response) => {
 	res.status(200).json({ message: `OTP sent successfully to ${email}` });
 });
 
-router.post("/verify-otp", async (req: Request, res: Response) => {});
+
+router.post("/verify-otp", async (req: Request, res: Response) => {
+	const { email, otp } = req.body;
+	const user = await userRepo.findByEmail(email);
+	if (!user) {
+		throw new BadRequestError("Email not registered! Please signup");
+	}
+
+	if (otp !== user.otp) {
+		throw new BadRequestError("Invalid OTP. Please check your OTP and try again.");
+	}
+
+	user.otp = null;
+	user.save();
+	res.status(200).json({ message: "OTP verified successfully" });
+});
 
 router.post("/logout", async (req: Request, res: Response) => {
 	req.session = null;

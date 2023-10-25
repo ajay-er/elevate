@@ -1,30 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Password } from "../../service/password.service";
-
-// An interface that describes the properties
-// that are requried to create a new User
-export interface UserAttrs {
-	userName: string;
-	firstName: string;
-	lastName: string;
-	email: string;
-	password: string;
-	phone?: string;
-	otp?: string;
-	profileImgUrl?: string;
-	bankDetails?: Array<{ bankName: string; accountNumber: string }>;
-	investments?: Array<{ investmentType: string; amount: number }>;
-	founderOf?: Array<{ organization: string; role: string }>;
-	blogs?: Array<{ title: string; content: string }>;
-	address?: Array<Schema.Types.ObjectId>;
-	followers?: Array<Schema.Types.ObjectId>;
-	following?: Array<Schema.Types.ObjectId>;
-	ideasCreated?: Array<Schema.Types.ObjectId>;
-	messages?: Array<{
-		sender: Schema.Types.ObjectId;
-		message: string;
-	}>;
-}
+import { UserAttrs } from "../../interfaces";
 
 // An interface that describes the properties
 // that a User Model has
