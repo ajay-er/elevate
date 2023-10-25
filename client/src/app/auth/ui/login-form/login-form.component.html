@@ -2,35 +2,32 @@
   <input
     placeholder="email"
     type="email"
-    class="form-input md:w-96 w-64 ps-3 py-1 mt-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     name="email"
     formControlName="email"
   />
-  <ng-container *ngIf="loginForm.touched && loginForm.dirty">
-    <p
-      *ngIf="loginForm.get('email')?.hasError('required')"
-      class="text-red-400"
-    >
-      Field is required
-    </p>
-    <p class="text-red-400" *ngIf="loginForm.get('email')?.hasError('email')">
-      Please enter a valid email address
-    </p>
-  </ng-container>
+  <p
+    *ngIf="loginForm.touched && loginForm.get('email')?.hasError('required')"
+    class="text-red-400"
+  >
+    email is required
+  </p>
+  <p
+    class="text-red-400"
+    *ngIf="loginForm.touched && loginForm.get('email')?.hasError('email')"
+  >
+    Please enter a valid email address
+  </p>
   <input
     placeholder="password"
     type="password"
-    class="md:w-96 w-64 ps-3 py-1 mt-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    class="md:w-96 w-64 ps-3 py-1 my-3 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     name="password"
     formControlName="password"
   />
   <p
     class="text-red-400"
-    *ngIf="
-      loginForm.touched &&
-      loginForm.dirty &&
-      loginForm.get('password')?.hasError('required')
-    "
+    *ngIf="loginForm.touched && loginForm.get('password')?.hasError('required')"
   >
     Password is required
   </p>

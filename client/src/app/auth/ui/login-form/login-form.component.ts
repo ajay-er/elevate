@@ -7,7 +7,7 @@ import { ILogin } from 'src/app/shared/interfaces';
   templateUrl: './login-form.component.html',
 })
 export class LoginFormComponent {
-  @Output() submitForm: EventEmitter<ILogin> = new EventEmitter();
+  @Output() submitLoginForm: EventEmitter<ILogin> = new EventEmitter();
 
   private fb = inject(FormBuilder);
 
@@ -16,8 +16,9 @@ export class LoginFormComponent {
     password: ['', Validators.required],
   });
 
-  onSubmit() {    if (this.loginForm.valid) {
-      // this.submitForm.emit(this.loginForm.value);
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.submitLoginForm.emit(this.loginForm.value as ILogin);
     }
   }
 }

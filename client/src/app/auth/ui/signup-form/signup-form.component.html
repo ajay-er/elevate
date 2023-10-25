@@ -1,33 +1,84 @@
-<form class="flex flex-col" #loginForm="ngForm">
+<form class="flex flex-col" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <input
     placeholder="firstname"
     type="text"
     class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    formControlName="firstName"
   />
+  <p
+    class="text-red-400"
+    *ngIf="(registerFormControl.firstName.touched) && registerFormControl.firstName.errors?.['required']"
+  >
+    firstname is required
+  </p>
   <input
     placeholder="lastname"
     type="text"
     class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    formControlName="lastName"
   />
+  <p
+    class="text-red-400"
+    *ngIf="(registerFormControl.lastName.touched) && registerFormControl.lastName.errors?.['required']"
+  >
+    lastname is required
+  </p>
   <input
     placeholder="email"
     type="email"
     class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    formControlName="email"
   />
+  <p
+    class="text-red-400"
+    *ngIf="(registerFormControl.email.touched) && registerFormControl.email.errors?.['required']"
+  >
+    email is required
+  </p>
   <input
     placeholder="password"
     type="password"
     class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    formControlName="password"
   />
+  <p
+    class="text-red-400"
+    *ngIf="(registerFormControl.password.touched) && registerFormControl.password.errors?.['required']"
+  >
+    password is required
+  </p>
+  <p
+    class="text-red-400"
+    *ngIf="
+      registerFormControl.password.touched &&
+      registerFormControl.password.errors?.['invalidPassword']
+    "
+  >
+    Password should have minimum 8 characters, at least 1 uppercase letter, 1
+    lowercase letter and 1 number password is required
+  </p>
   <input
     placeholder="confirm password"
     type="password"
     class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    formControlName="confirmPassword"
   />
+  <p
+    class="text-red-400"
+    *ngIf="(registerFormControl.confirmPassword.touched) && registerFormControl.confirmPassword.errors?.['required']"
+  >
+    confirm password is required
+  </p>
+  <p
+    class="text-red-400"
+    *ngIf="registerFormControl.confirmPassword.touched && registerFormControl.confirmPassword.errors?.['passwordMismatch']"
+  >
+    Passwords doesnot match
+  </p>
   <button
+    [disabled]="!registerForm.valid"
     class="bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4"
   >
     Submit
   </button>
-  
 </form>

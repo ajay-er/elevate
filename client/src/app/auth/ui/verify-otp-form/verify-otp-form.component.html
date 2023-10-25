@@ -1,17 +1,20 @@
-<form class="px-4 pt-6">
+<form class="px-4 pt-6" (ngSubmit)="onSubmit()">
   <div class="flex justify-center gap-2 mb-6">
     <input
-    *ngFor="let input of inputs; let i = index"
-    #otpInput
-    class="md:w-14 md:h-12  w-8 h-8 text-center border rounded-md shadow-sm text-black"
-    type="text"
-    maxlength="1"
-    pattern="[0-9]"
-    required
-    (input)="onInput(i)"
-    [attr.id]="'input-' + i"
-  />
+      *ngFor="let input of inputs; let i = index"
+      #otpInput
+      class="md:w-14 md:h-12 w-8 h-8 text-center border rounded-md shadow-sm text-black"
+      type="text"
+      maxlength="1"
+      pattern="[0-9]"
+      (input)="onInput(i)"
+      (keydown)="onKeyDown($event, i)"
+      [attr.id]="'input-' + i"
+    />
   </div>
+  <p class="text-red-400" *ngIf="otp.length < 5 && submitted">
+    Please enter a valid OTP
+  </p>
   <div class="flex flex-col items-center justify-center">
     <button
       class="bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4"

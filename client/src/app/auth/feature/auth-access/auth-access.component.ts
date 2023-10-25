@@ -5,6 +5,7 @@ import { State } from '../../data-access/state';
 import { Store } from '@ngrx/store';
 import { toogleAuthTab } from '../../data-access/state/auth.action';
 import { Subscription, filter } from 'rxjs';
+import { ILogin, ISignup } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-auth-access',
@@ -80,12 +81,14 @@ export class AuthAccessComponent {
     }
   }
 
-
   //form submissions
   //login
-  onLoginFormSubmit(formData: any) {
-    
-  }
+  loginFormSubmit(formData: ILogin) {}
 
+  //signup
+  signupFormSubmit(formData: ISignup) {}
+  //email verify
+  verifyEmailFormSubmit(email: { email: string }) {}
 
+  verifyOtpSubmit(otp: { otp: string }) {}
 }

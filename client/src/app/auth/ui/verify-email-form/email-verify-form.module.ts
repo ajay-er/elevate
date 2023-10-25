@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SignupFormComponent } from './signup-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { VerifyEmailFormComponent } from './email-verify-form.component';
 
 @NgModule({
-  declarations: [SignupFormComponent],
+  declarations: [VerifyEmailFormComponent],
   imports: [CommonModule, ReactiveFormsModule],
-  exports: [SignupFormComponent],
+  exports: [VerifyEmailFormComponent],
 })
-export class SignupFormModule {}
+export class VerifyEmailFormModule {}
