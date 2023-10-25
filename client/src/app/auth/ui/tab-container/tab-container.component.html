@@ -11,8 +11,9 @@
       >
         <button
           [ngClass]="{
-          'bg-black': currentTab !== TabType.Signup,
-          'text-black': currentTab === TabType.Signup,
+            'bg-black': currentTab !== TabType.Signup,
+            'text-black': currentTab === TabType.Signup,
+            'hover:bg-slate-300': currentTab === TabType.Signup
           }"
           (click)="selectTab(TabType.Login)"
           class="rounded-lg py-1 px-7 md:px-10"
@@ -21,9 +22,10 @@
         </button>
         <button
           [ngClass]="{
-          'bg-black':currentTab === TabType.Signup,
-          'text-black': currentTab !== TabType.Signup,
-        }"
+            'bg-black': currentTab === TabType.Signup,
+            'text-black': currentTab !== TabType.Signup,
+            'hover:bg-slate-300': currentTab !== TabType.Signup
+          }"
           (click)="selectTab(TabType.Signup)"
           class="rounded-lg py-1 px-7 md:px-10"
         >
@@ -31,7 +33,11 @@
         </button>
       </div>
 
-      <asl-google-signin-button type="icon" size="large"  class="mt-9"></asl-google-signin-button>
+      <asl-google-signin-button
+        type="icon"
+        size="large"
+        class="mt-9"
+      ></asl-google-signin-button>
 
       <div
         class="mt-5 flex items-center justify-center sm:space-x-7 space-x-3 text-gray-50"

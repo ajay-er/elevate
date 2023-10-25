@@ -1,6 +1,7 @@
 <app-tab-container
   [currentTab]="currentTab"
   (tabSelected)="selectedTab($event)"
+  (submitForm)="onLoginFormSubmit($event)"
 >
   <router-outlet></router-outlet>
   

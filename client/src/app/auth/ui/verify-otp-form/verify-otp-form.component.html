@@ -3,7 +3,7 @@
     <input
     *ngFor="let input of inputs; let i = index"
     #otpInput
-    class="w-14 h-12 text-center border rounded-md shadow-sm text-black"
+    class="md:w-14 md:h-12  w-8 h-8 text-center border rounded-md shadow-sm text-black"
     type="text"
     maxlength="1"
     pattern="[0-9]"
@@ -23,7 +23,7 @@
         class="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500 mt-4"
       >
         <p>Didn't receive code?</p>
-        <a class="text-blue-600">Resend</a>
+        <a class="cursor-pointer text-blue-600">Resend</a>
       </div>
     </div>
   </div>

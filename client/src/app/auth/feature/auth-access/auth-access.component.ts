@@ -79,4 +79,13 @@ export class AuthAccessComponent {
       this.routeSubscription.unsubscribe();
     }
   }
+
+
+  //form submissions
+  //login
+  onLoginFormSubmit(formData: any) {
+    
+  }
+
+
 }
