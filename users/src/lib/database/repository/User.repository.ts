@@ -1,28 +1,13 @@
+import { ISignupUser, IUser } from "../../interfaces";
 import { User } from "../model/User";
 
-interface IUser {
-	id: string;
-	name: string;
-	email: string;
-	photo?: string;
-}
-
-interface ISignupUser{
-	email:string,
-	password?:string,
-	firstName:string,
-	lastName?:string,
-}
-
 export class UserRepository {
-	async findByEmail(email: string): Promise<IUser | null> {
+	async findByEmail(email: string): Promise<any> {
 		return await User.findOne({ email });
 	}
 
 	async signup(user:ISignupUser) {
-		const newUser = await User.create(user);
-		newUser.save();
-		return newUser;
+		return await User.create(user);
 	}
 
 	async find() {

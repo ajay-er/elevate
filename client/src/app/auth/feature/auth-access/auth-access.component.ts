@@ -73,9 +73,7 @@ export class AuthAccessComponent {
     this.store.dispatch(toogleAuthTab({ currentAuthTab: this.currentTab }));
   }
 
-  /**
-   * The ngOnDestroy function checks if there is a routeSubscription and unsubscribes from it if it exists.
-   */
+  //The ngOnDestroy function checks if there is a routeSubscription and unsubscribes from it if it exists.
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();

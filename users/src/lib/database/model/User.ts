@@ -10,6 +10,7 @@ export interface UserAttrs {
 	email: string;
 	password: string;
 	phone?: string;
+	otp?: string;
 	profileImgUrl?: string;
 	bankDetails?: Array<{ bankName: string; accountNumber: string }>;
 	investments?: Array<{ investmentType: string; amount: number }>;
@@ -34,37 +35,38 @@ interface UserModel extends mongoose.Model<UserDoc> {
 // An interface that describes the properties
 // that a User Document has
 interface UserDoc extends mongoose.Document {
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    phone?: string;
-    password: string;
-    profileImgUrl?: string;
-    bankDetails?: Array<{
-      bankName: string;
-      accountNumber: string;
-    }>;
-    investments?: Array<{
-      investmentType: string;
-      amount: number;
-    }>;
-    founderOf?: Array<{
-      organization: string;
-      role: string;
-    }>;
-    blogs?: Array<{
-      title: string;
-      content: string;
-    }>;
-    address?: Array<Schema.Types.ObjectId>;
-    followers?: Array<Schema.Types.ObjectId>;
-    following?: Array<Schema.Types.ObjectId>;
-    ideasCreated?: Array<Schema.Types.ObjectId>;
-    messages?: Array<{
-      sender: Schema.Types.ObjectId;
-      message: string;
-    }>;
+	userName?: string;
+	firstName?: string;
+	lastName?: string;
+	email: string;
+	phone?: string;
+	password: string;
+	otp?: string;
+	profileImgUrl?: string;
+	bankDetails?: Array<{
+		bankName: string;
+		accountNumber: string;
+	}>;
+	investments?: Array<{
+		investmentType: string;
+		amount: number;
+	}>;
+	founderOf?: Array<{
+		organization: string;
+		role: string;
+	}>;
+	blogs?: Array<{
+		title: string;
+		content: string;
+	}>;
+	address?: Array<Schema.Types.ObjectId>;
+	followers?: Array<Schema.Types.ObjectId>;
+	following?: Array<Schema.Types.ObjectId>;
+	ideasCreated?: Array<Schema.Types.ObjectId>;
+	messages?: Array<{
+		sender: Schema.Types.ObjectId;
+		message: string;
+	}>;
 }
 
 const userSchema = new mongoose.Schema(
@@ -75,6 +77,7 @@ const userSchema = new mongoose.Schema(
 		email: String,
 		phone: String,
 		password: String,
+		otp: String,
 		profileImgUrl: String,
 
 		bankDetails: [

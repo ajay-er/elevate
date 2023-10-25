@@ -11,17 +11,24 @@ export class AppComponent {
   socialUser!: SocialUser;
   isLoggedin: boolean = false;
 
-  constructor(private socialAuthService: SocialAuthService,
-    private authService:AuthService) {}
+  constructor(
+    private socialAuthService: SocialAuthService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     initFlowbite();
 
     this.socialAuthService.authState.subscribe((user) => {
-      this.authService.post(user.idToken)
-     
-      this.isLoggedin = user != null;
-      this.socialUser = user;
+      this.authService.sendGoogleToken(user.idToken).subscribe({
+        next: (res) => {
+          this.isLoggedin = user != null;
+          this.socialUser = user;
+        },
+        error: (err) => {
+          console.error('Oops something wrong', err);
+        },
+      });
     });
   }
 

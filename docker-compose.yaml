@@ -10,11 +10,8 @@ services:
       - ./users:/app
     ports:
       - '3000:3000'
-    environment:
-      - PORT=3000
-      - MONGO_URI=mongodb://users-db:27017
-      - CLIENT_ID=136905288035-rfcs7jag9gh9e4ne4454jri50lec2p9s.apps.googleusercontent.com
-      - JWT_SECRET=secretkeyhere
+    env_file:
+      - ./users/.env
   client:
     container_name: client
     build:
