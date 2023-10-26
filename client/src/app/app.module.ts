@@ -12,6 +12,9 @@ import {
   SocialAuthServiceConfig,
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/data-access/state/auth.effects';
+import { authReducer } from './auth/data-access/state/auth.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,12 +25,14 @@ import {
     NavModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
+    StoreModule.forFeature('auth', authReducer),
     StoreDevtoolsModule.instrument({
       name: 'Elevate',
       maxAge: 25,
       logOnly: !isDevMode(),
     }),
     SocialLoginModule,
+    EffectsModule.forRoot([AuthEffects]),
   ],
   providers: [
     {

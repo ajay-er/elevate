@@ -27,4 +27,11 @@ export class AuthService {
   verifyOtp(otp: { otp: string }): Observable<any> {
     return this.http.post('/api/auth/verify-otp', otp);
   }
+
+  logout(): Observable<any> {
+    return this.http.post('/api/auth/logout',{});
+  }
+
+  
+
 }

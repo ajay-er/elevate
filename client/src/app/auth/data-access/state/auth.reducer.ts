@@ -3,6 +3,8 @@ import { Tab } from 'src/app/shared/types';
 import {
   GetLocalStorageData,
   SetCurrentUser,
+  SetUserLoggedInFalse,
+  SetUserLoggedInTrue,
   ToogleAuthTab,
   UnsetCurrentUser,
 } from './auth.action';
@@ -36,6 +38,12 @@ export const authReducer = createReducer(
   on(SetCurrentUser, (state, action): AuthState => {
     return { ...state, currentUser: action.currentUser, isUserLoggedIn: true };
   }),
+  on(SetUserLoggedInFalse, (state): AuthState => {
+    return { ...state, isUserLoggedIn: false };
+  }),
+  on(SetUserLoggedInTrue, (state): AuthState => {
+    return { ...state, isUserLoggedIn: true };
+  }),
   on(UnsetCurrentUser, (state): AuthState => {
     return {
       ...state,
@@ -52,10 +60,9 @@ export const authReducer = createReducer(
       ...state,
       currentUser: {
         name: action.currentUser.name,
-        photo: action.currentUser.photo || '',
+        photo: action.currentUser?.photo,
         email: action.currentUser.email,
       },
-      isUserLoggedIn: true,
     };
   })
 );

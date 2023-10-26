@@ -26,7 +26,7 @@
         >
           Login
         </button>
-        <ng-container *ngIf="!(isUserLoggedIn$ | async)">
+        <ng-container *ngIf="(isUserLoggedIn$ | async)">
           <button
             (click)="toggleProfileDropdown()"
             type="button"
@@ -37,9 +37,17 @@
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              [src]="socialUser.photoUrl"
-              alt="user photo"
+              *ngIf="(currentUser$ | async )?.photo; else fallbackImage"
+              src="{{(currentUser$ | async )?.photo}}"
+              alt="photo"
             />
+            <ng-template #fallbackImage>
+              <img
+                class="w-8 h-8 rounded-full"
+                src="../../../../assets/images/profile/IMAGE.png"
+                alt="photo"
+              />
+            </ng-template>
           </button>
           <!-- Dropdown menu -->
           <div
@@ -49,10 +57,10 @@
           >
             <div class="px-4 py-3">
               <span class="block text-sm text-white">{{
-                socialUser.name
+                (currentUser$ | async )?.name
               }}</span>
               <span class="block text-sm truncate text-gray-400"
-                >{{ socialUser.email }}
+                >{{ (currentUser$ | async )?.email }}
               </span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">

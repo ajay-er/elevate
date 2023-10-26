@@ -87,7 +87,7 @@ router.post("/login", async (req: Request, res: Response) => {
 
 	req.session = { jwt: userJWT };
 
-	res.status(201).json(user);
+	res.status(200).json(user);
 });
 
 router.post("/verify-email", async (req: Request, res: Response) => {

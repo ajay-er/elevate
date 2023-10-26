@@ -3,7 +3,7 @@ import { Tab } from 'src/app/shared/types';
 import { ICurrentUser } from './auth.reducer';
 
 export const ToogleAuthTab = createAction(
-  '[Auth Page] Toggle Current Tab',
+  '[Auth] Toggle Current Tab',
   props<{ currentAuthTab: Tab }>()
 );
 
@@ -14,7 +14,15 @@ export const SetCurrentUser = createAction(
 
 export const UnsetCurrentUser = createAction('[Auth] Unset Current User');
 
-export const SetUserLoggedIn = createAction('[Auth] Set User LoggedIn');
+export const SetUserLoggedInFalse = createAction('[Auth] SetUserLoggedInFalse');
+
+export const SetUserLoggedInTrue = createAction('[Auth] SetUserLoggedInTrue');
+
+export const CheckLocalStorageAction = createAction('[Auth] Check User LocalSession');
+
+export const ClearLocalStorageAction = createAction('[Auth] Clear User LocalSession');
+
+export const LogoutSuccess = createAction('[Auth] LogoutSuccess');
 
 export const GetLocalStorageData = createAction(
   '[Auth] Get LocalSession',

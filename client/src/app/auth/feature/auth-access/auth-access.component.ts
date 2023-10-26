@@ -4,12 +4,15 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { State } from '../../data-access/state';
 import { Store } from '@ngrx/store';
 import {
+  CheckLocalStorageAction,
   SetCurrentUser,
+  SetUserLoggedInFalse,
   ToogleAuthTab,
 } from '../../data-access/state/auth.action';
 import { Subscription, filter } from 'rxjs';
 import { ILogin, ISignup } from 'src/app/shared/interfaces';
 import { AuthService } from '../../data-access/auth.service';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-auth-access',
@@ -25,16 +28,40 @@ export class AuthAccessComponent {
   private activatedRoute = inject(ActivatedRoute);
   private store = inject(Store<State>);
   private authService = inject(AuthService);
+  private socialAuthService = inject(SocialAuthService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
     this.router.navigate([tab], { relativeTo: this.activatedRoute });
-    // this.dispatchAuthTabChange();
   }
 
   // The function sets the current authentication tab based on the current route segment.
   ngOnInit(): void {
+    this.store.dispatch(CheckLocalStorageAction());
     this.setAuthTabFromRoute();
+    this.subscribeSocialAuth();
+  }
+
+  private subscribeSocialAuth() {
+    this.socialAuthService.authState.subscribe((user: SocialUser) => {
+      this.authService.sendGoogleToken(user.idToken).subscribe({
+        next: (res: any) => {
+          this.store.dispatch(SetUserLoggedInFalse());
+          if (user) {
+            const currentUser = {
+              name: user.name,
+              photo: user?.photoUrl,
+              email: user.email,
+            };
+            //*dispatch
+            this.store.dispatch(SetCurrentUser({ currentUser }));
+          }
+        },
+        error: (err: any) => {
+          console.error('Oops something wrong', err);
+        },
+      });
+    });
   }
 
   private setAuthTabFromRoute(): void {
