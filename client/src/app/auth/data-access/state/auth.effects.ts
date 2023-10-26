@@ -13,15 +13,17 @@ import {
 } from './auth.action';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
-  storeToken$ = createEffect(
+  storeCurrentUser$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(SetCurrentUser),
         tap((action) => {
           this.localstorageService.saveKeys(action.currentUser);
+          this.router.navigate(['/ideas']);
         })
       );
     },
@@ -34,7 +36,7 @@ export class AuthEffects {
       switchMap(() =>
         this.authService.logout().pipe(
           switchMap((r) => {
-            return [ClearLocalStorageAction(), LogoutSuccess()];
+              return [ClearLocalStorageAction(), LogoutSuccess()];
           }),
           catchError((error) => {
             console.error('Logout API Error:', error);
@@ -83,6 +85,7 @@ export class AuthEffects {
     private actions$: Actions,
     private localstorageService: LocalStorageService,
     private store: Store,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 }

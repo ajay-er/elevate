@@ -5,14 +5,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('../auth-access/auth-access.module').then(
-        (m) => m.AuthAccessModule
+      import('../idea-details/idea-details.module').then(
+        (m) => m.IdeaDetailsModule
       ),
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AuthShellRoutingModule {}
+export class IdeaShellRoutingModule { }

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { unauthenticatedGuard } from './shared/guards/unauthenticated.guard';
+import { authGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'ideas',
     pathMatch: 'full',
   },
   {
@@ -13,10 +15,18 @@ const routes: Routes = [
       import('./auth/feature/auth-shell/auth-shell.module').then(
         (m) => m.AuthShellModule
       ),
+    canActivate: [unauthenticatedGuard],
+  },
+  {
+    path: 'ideas',
+    loadChildren: () =>
+      import('./ideas/feature/idea-shell/idea-shell.module').then(
+        (m) => m.IdeaShellModule
+      ),
   },
   {
     path: '**',
-    redirectTo: 'auth/login',
+    redirectTo: 'ideas',
     pathMatch: 'full',
   },
 ];
