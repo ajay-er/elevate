@@ -15,3 +15,18 @@ export const toggleAuthPage = createSelector(
     return state.currentAuthTab;
   }
 );
+
+export const getCurrentUserData = createSelector(
+  getAuthFeatureState,
+  (state) => {
+    return state.currentUser;
+  }
+);
+
+export const isUserLoggedIn = createSelector(
+  getAuthFeatureState,
+  (state) => {
+    return state.isUserLoggedIn;
+  }
+);
+

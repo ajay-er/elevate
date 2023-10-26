@@ -3,9 +3,13 @@ import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { State } from '../../data-access/state';
 import { Store } from '@ngrx/store';
-import { toogleAuthTab } from '../../data-access/state/auth.action';
+import {
+  SetCurrentUser,
+  ToogleAuthTab,
+} from '../../data-access/state/auth.action';
 import { Subscription, filter } from 'rxjs';
 import { ILogin, ISignup } from 'src/app/shared/interfaces';
+import { AuthService } from '../../data-access/auth.service';
 
 @Component({
   selector: 'app-auth-access',
@@ -20,11 +24,12 @@ export class AuthAccessComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private store = inject(Store<State>);
+  private authService = inject(AuthService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
     this.router.navigate([tab], { relativeTo: this.activatedRoute });
-    this.dispatchAuthTabChange();
+    // this.dispatchAuthTabChange();
   }
 
   // The function sets the current authentication tab based on the current route segment.
@@ -71,7 +76,7 @@ export class AuthAccessComponent {
   }
 
   private dispatchAuthTabChange(): void {
-    this.store.dispatch(toogleAuthTab({ currentAuthTab: this.currentTab }));
+    this.store.dispatch(ToogleAuthTab({ currentAuthTab: this.currentTab }));
   }
 
   //The ngOnDestroy function checks if there is a routeSubscription and unsubscribes from it if it exists.
@@ -83,12 +88,67 @@ export class AuthAccessComponent {
 
   //form submissions
   //login
-  loginFormSubmit(formData: ILogin) {}
+  loginFormSubmit(formData: ILogin) {
+    this.authService.login(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        const currentUser = {
+          name: res.firstName,
+          photo: res?.profileImgUrl,
+          email: res.email,
+        };
+        this.store.dispatch(SetCurrentUser({ currentUser }));
+      },
+      error: (e) => {
+        console.error(e);
+      },
+    });
+  }
 
   //signup
-  signupFormSubmit(formData: ISignup) {}
-  //email verify
-  verifyEmailFormSubmit(email: { email: string }) {}
+  signupFormSubmit(formData: ISignup) {
+    this.authService.signup(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        const currentUser = {
+          name: res.firstName,
+          email: res.email,
+        };
+        this.store.dispatch(SetCurrentUser({ currentUser }));
+      },
+      error: (e) => {
+        console.error(e);
+      },
+    });
+  }
 
-  verifyOtpSubmit(otp: { otp: string }) {}
+  //email verify
+  verifyEmailFormSubmit(email: { email: string }) {
+    this.authService.verifyEmail(email).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.router.navigateByUrl('/auth/verify');
+      },
+      error: (e) => {
+        console.error(e);
+      },
+    });
+  }
+
+  verifyOtpSubmit(otp: { otp: string }) {
+    this.authService.verifyOtp(otp).subscribe({
+      next: (res) => {
+        console.log(res);
+        const currentUser = {
+          name: res.firstName,
+          photo: res?.profileImgUrl,
+          email: res.email,
+        };
+        this.store.dispatch(SetCurrentUser({ currentUser }));
+      },
+      error: (e) => {
+        console.error(e);
+      },
+    });
+  }
 }

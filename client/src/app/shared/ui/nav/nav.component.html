@@ -11,14 +11,14 @@
       </a>
       <div class="flex items-center md:order-2">
         <button
-          *ngIf="!isLoggedin"
+          *ngIf="!(isUserLoggedIn$ | async)"
           type="button"
           class="electric-violet hover:electric-violet-hover mr-3 rounded-xl hidden md:block border border-gray-500 px-5 py-1"
         >
           Get started
         </button>
         <button
-          *ngIf="!isLoggedin"
+          *ngIf="!(isUserLoggedIn$ | async)"
           routerLink="/auth/login"
           routerLinkActive="router-link-active"
           type="button"
@@ -26,7 +26,7 @@
         >
           Login
         </button>
-        <ng-container *ngIf="isLoggedin">
+        <ng-container *ngIf="!(isUserLoggedIn$ | async)">
           <button
             (click)="toggleProfileDropdown()"
             type="button"
@@ -63,7 +63,7 @@
                 </a>
               </li>
               <li>
-                <a
+                <a (click)="logOut()"
                   class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
                   >Sign out
                 </a>
@@ -138,12 +138,12 @@
               >Blog
             </a>
           </li>
-          <li
+          <li *ngIf="!(isUserLoggedIn$ | async)"
             (click)="toggleNavbar()"
             routerLink="/auth/login"
             class="cursor-pointer"
           >
-            <a
+            <a 
               class="block md:hidden py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Login
             </a>

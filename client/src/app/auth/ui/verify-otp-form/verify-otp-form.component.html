@@ -1,9 +1,14 @@
 <form class="px-4 pt-6" (ngSubmit)="onSubmit()">
+  <div class="pb-3 md:w-96 w-64 text-gray-50 text-sm">
+    <p>Please check your email for the OTP and enter it below.
+    You have 10 minutes to complete this process.</p>
+  </div>
+
   <div class="flex justify-center gap-2 mb-6">
     <input
       *ngFor="let input of inputs; let i = index"
       #otpInput
-      class="md:w-14 md:h-12 w-8 h-8 text-center border rounded-md shadow-sm text-black"
+      class="md:w-14 md:h-12 w-9 h-8 text-center border rounded-md shadow-sm text-black"
       type="text"
       maxlength="1"
       pattern="[0-9]"

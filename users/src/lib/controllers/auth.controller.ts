@@ -20,18 +20,19 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 		throw new BadRequestError("oops user not found in the google_token");
 	}
 	const userexist = await userRepo.findByEmail(user.email);
-	let result;
 	req.session = { googleToken };
 
+	let userResult;
 	if (!userexist) {
 		//if user doen't exist,then create
-		result = await userRepo.signup({ email: user.email, firstName: user.name });
+		userResult = await userRepo.signup({ email: user.email, firstName: user.name });
 		statuscode = 201;
-		return res.status(statuscode).json({ message: "google signup successfully completed", result });
+		return res.status(statuscode).json({ message: "google signup successfully completed", userResult });
 	} else {
 		//if user already then update
 		await userRepo.update(user);
-		return res.status(statuscode).json({ message: "google login successfully completed" });
+		userResult = { email: user.email, firstName: user.name, profileImgUrl: user.picture };
+		return res.status(statuscode).json({ message: "google login successfully completed", userResult });
 	}
 });
 
@@ -103,13 +104,13 @@ router.post("/verify-email", async (req: Request, res: Response) => {
 	await sendMail({
 		to: email,
 		subject: "Elevate-verification",
-		html: emailTemplate.html
+		html: emailTemplate.html,
+		text: emailTemplate.text
 	});
 
 	user.save();
 	res.status(200).json({ message: `OTP sent successfully to ${email}` });
 });
-
 
 router.post("/verify-otp", async (req: Request, res: Response) => {
 	const { email, otp } = req.body;
@@ -124,7 +125,7 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 
 	user.otp = null;
 	user.save();
-	res.status(200).json({ message: "OTP verified successfully" });
+	res.status(200).json({ message: "OTP verified successfully", user });
 });
 
 router.post("/logout", async (req: Request, res: Response) => {

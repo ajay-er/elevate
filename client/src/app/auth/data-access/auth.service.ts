@@ -20,4 +20,11 @@ export class AuthService {
     return this.http.post('/api/auth/login', loginData);
   }
 
+  verifyEmail(email: { email: string }): Observable<any> {
+    return this.http.post('/api/auth/verify-email', email);
+  }
+  
+  verifyOtp(otp: { otp: string }): Observable<any> {
+    return this.http.post('/api/auth/verify-otp', otp);
+  }
 }
