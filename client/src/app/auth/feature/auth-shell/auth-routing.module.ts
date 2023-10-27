@@ -8,7 +8,7 @@ const routes: Routes = [
       import('../auth-access/auth-access.module').then(
         (m) => m.AuthAccessModule
       ),
-  }
+  },
 ];
 
 @NgModule({

@@ -14,6 +14,7 @@ import { ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
 import { AuthService } from '../../data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
+import { SpinnerService } from 'src/app/shared/data-access/spinner.service';
 
 @Component({
   selector: 'app-auth-access',
@@ -31,6 +32,7 @@ export class AuthAccessComponent {
   private authService = inject(AuthService);
   private socialAuthService = inject(SocialAuthService);
   private snackbar = inject(SnackbarService);
+  private spinner = inject(SpinnerService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -60,6 +62,11 @@ export class AuthAccessComponent {
           }
         },
         error: (err: any) => {
+          if (err.error?.message) {
+            this.snackbar.showError(err.error?.message);
+          } else {
+            this.snackbar.showError(err.message);
+          }
           console.error('Oops something wrong', err);
         },
       });
@@ -121,8 +128,10 @@ export class AuthAccessComponent {
   //form submissions
   //login
   loginFormSubmit(formData: ILogin) {
+    this.spinner.startSpin();
     this.authService.login(formData).subscribe({
       next: (res) => {
+        this.spinner.endSpin();
         console.log(res);
         this.snackbar.showSuccess(res.message);
         const currentUser = {
@@ -134,28 +143,42 @@ export class AuthAccessComponent {
       },
       error: (e) => {
         console.error(e);
-        this.snackbar.showError(e.message);
+        this.spinner.endSpin();
+        if (e.error?.message) {
+          this.snackbar.showError(e.error?.message);
+        } else {
+          this.snackbar.showError(e.message);
+        }
       },
     });
   }
   tempEmail!: string;
   //signup
   signupFormSubmit(formData: ISignup) {
+    this.spinner.startSpin();
     this.authService.signup(formData).subscribe({
       next: (res) => {
         console.log(res);
+        this.spinner.endSpin();
         this.tempEmail = res.user.email;
         this.snackbar.showSuccess(res.message);
         this.router.navigateByUrl('/auth/verify-otp');
       },
       error: (e) => {
         console.error(e);
-        this.snackbar.showError(e.message);
+        this.spinner.endSpin();
+        if (e.error?.message) {
+          this.snackbar.showError(e.error?.message);
+        } else {
+          this.snackbar.showError(e.message);
+        }
       },
     });
   }
 
   verifyOtpSubmit(data: IVerifyOTP) {
+    this.spinner.startSpin();
+
     const email = this.tempEmail;
     if (!email) {
       this.snackbar.showError('Oops something wrong!Please try again later');
@@ -165,6 +188,7 @@ export class AuthAccessComponent {
     this.authService.verifyOtp(data).subscribe({
       next: (res) => {
         console.log(res);
+        this.spinner.endSpin();
         this.snackbar.showSuccess(res.message);
         const currentUser = {
           name: res.firstName,
@@ -175,21 +199,33 @@ export class AuthAccessComponent {
       },
       error: (e) => {
         console.error(e);
-        this.snackbar.showError(e.message);
+        this.spinner.endSpin();
+        if (e.error?.message) {
+          this.snackbar.showError(e.error?.message);
+        } else {
+          this.snackbar.showError(e.message);
+        }
       },
     });
   }
 
   //email verify
   verifyEmailFormSubmit(email: { email: string }) {
+    this.spinner.startSpin();
     this.authService.verifyEmail(email).subscribe({
       next: (res) => {
         console.log(res);
+        this.spinner.endSpin();
         // this.router.navigateByUrl('/auth/verify-otp');
       },
       error: (e) => {
         console.error(e);
-        this.snackbar.showError(e.message);
+        this.spinner.endSpin();
+        if (e.error?.message) {
+          this.snackbar.showError(e.error?.message);
+        } else {
+          this.snackbar.showError(e.message);
+        }
       },
     });
   }

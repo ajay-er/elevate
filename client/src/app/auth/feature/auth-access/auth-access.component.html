@@ -1,8 +1,8 @@
+<my-spinner></my-spinner>
 <app-tab-container
   [currentTab]="currentTab"
   (tabSelected)="selectedTab($event)"
 >
-
   <app-login-form
     (submitLoginForm)="loginFormSubmit($event)"
     *ngIf="currentTab === TabType.Login"

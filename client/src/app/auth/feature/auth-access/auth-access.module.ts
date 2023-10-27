@@ -9,6 +9,7 @@ import { LoginFormModule } from '../../ui/login-form/login-form.module';
 import { SignupFormModule } from '../../ui/signup-form/signup-form.module';
 import { VerifyOtpFormModule } from '../../ui/verify-otp-form/verify-otp-form.module';
 import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
+import { SpinnerModule } from 'src/app/shared/ui/spinner/spinner.module';
 
 @NgModule({
   declarations: [AuthAccessComponent],
@@ -20,7 +21,8 @@ import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
     SignupFormModule,
     VerifyEmailFormModule,
     VerifyOtpFormModule,
-    ForgotFormModule
+    ForgotFormModule,
+    SpinnerModule
   ],
 })
 export class AuthAccessModule {}

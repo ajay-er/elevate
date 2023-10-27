@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { AuthShellRoutingModule } from './auth-routing.module';
 
 @NgModule({
-  imports: [
-    AuthShellRoutingModule,
-  ],
+  imports: [AuthShellRoutingModule],
 })
 export class AuthShellModule {}
