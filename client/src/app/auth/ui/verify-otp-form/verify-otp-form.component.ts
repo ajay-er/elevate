@@ -25,8 +25,11 @@ export class VerifyOtpFormComponent {
       .toArray()
       .every((input) => /^\d$/.test(input.nativeElement.value));
     if (isOtpValid) {
-      this.otp = this.inputs.join('');
+      this.otp = this.otpInputs
+        .map((input) => input.nativeElement.value)
+        .join('');
       this.submitted = false;
+      console.log(this.otp, 'otp here');
       this.submitVerifyOtpForm.emit({ otp: this.otp });
     } else {
       this.submitted = true;

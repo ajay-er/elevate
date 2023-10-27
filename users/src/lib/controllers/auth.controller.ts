@@ -6,10 +6,12 @@ import { Password } from "../service/password.service";
 import { generateOtp } from "../../utils/generateOtp";
 import { verifyEmailTemplate } from "../../templates/verifyEmail";
 import { sendMail } from "../../config/nodemailer";
+import { SessionRepository } from "../database/repository/Session.repository";
 
 let router = express.Router();
 
 const userRepo = new UserRepository();
+const userSessionRepo = new SessionRepository();
 
 router.post("/googleauth", async (req: Request, res: Response) => {
 	const { googleToken } = req.body;
@@ -34,32 +36,6 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 		userResult = { email: user.email, firstName: user.name, profileImgUrl: user.picture };
 		return res.status(statuscode).json({ message: "google login successfully completed", userResult });
 	}
-});
-
-router.post("/signup", async (req: Request, res: Response) => {
-	const { email, password, firstName, lastName } = req.body;
-
-	const existingUser = await userRepo.findByEmail(email);
-	if (existingUser) {
-		throw new BadRequestError("Email already in use");
-	}
-	const user = await userRepo.signup({
-		email,
-		password,
-		firstName,
-		lastName
-	});
-
-	const userJWT = jwt.sign(
-		{
-			id: user?._id,
-			email: user?.email
-		},
-		process.env.JWT_SECRET!
-	);
-	req.session = { jwt: userJWT };
-
-	res.status(201).json(user);
 });
 
 router.post("/login", async (req: Request, res: Response) => {
@@ -90,6 +66,34 @@ router.post("/login", async (req: Request, res: Response) => {
 	res.status(200).json(user);
 });
 
+router.post("/signup", async (req: Request, res: Response) => {
+	const { email, password, firstName, lastName } = req.body;
+
+	const existingUser = await userRepo.findByEmail(email);
+
+	if (existingUser) {
+		throw new BadRequestError("Email already in use");
+	}
+
+	const tempUser = await userSessionRepo.signup({ email, password, firstName, lastName });
+
+	const otp: string = generateOtp();
+	tempUser.otp = otp;
+
+	const emailTemplate = verifyEmailTemplate(otp);
+	//SEND FORGOT PASSWORD EMAIL
+	await sendMail({
+		to: email,
+		subject: "Elevate-verification",
+		html: emailTemplate.html,
+		text: emailTemplate.text
+	});
+
+	tempUser.save();	
+
+	res.status(200).json({ message: "OTP send successfuly", user: tempUser });
+});
+
 router.post("/verify-email", async (req: Request, res: Response) => {
 	const { email } = req.body;
 	const user = await userRepo.findByEmail(email);
@@ -114,17 +118,36 @@ router.post("/verify-email", async (req: Request, res: Response) => {
 
 router.post("/verify-otp", async (req: Request, res: Response) => {
 	const { email, otp } = req.body;
-	const user = await userRepo.findByEmail(email);
-	if (!user) {
+	
+	const tempUser = await userSessionRepo.findByEmail(email);
+
+	if (!tempUser) {
 		throw new BadRequestError("Email not registered! Please signup");
 	}
 
-	if (otp !== user.otp) {
+	if (otp !== tempUser.otp) {
 		throw new BadRequestError("Invalid OTP. Please check your OTP and try again.");
 	}
 
-	user.otp = null;
-	user.save();
+	const user = await userRepo.signup({
+		email: tempUser.email,
+		password: tempUser.password,
+		firstName: tempUser.firstName,
+		lastName: tempUser.lastName
+	});
+
+	const userJWT = jwt.sign(
+		{
+			id: user?._id,
+			email: user?.email
+		},
+		process.env.JWT_SECRET!
+	);
+
+	 await userSessionRepo.delteByEmail(email);
+
+	req.session = { jwt: userJWT };
+
 	res.status(200).json({ message: "OTP verified successfully", user });
 });
 

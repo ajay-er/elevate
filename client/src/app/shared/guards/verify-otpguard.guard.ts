@@ -13,13 +13,9 @@ export const verifyOTPGuardGuard: CanActivateFn = (route, state) => {
   }
 };
 
-export function resetClickedVerifyOTP() {
-  hasClickedVerifyOTP = false;
-  setTimeout(() => {
-    hasClickedVerifyOTP = true;
-  }, 30000);
-}
-
 export function setClickedVerifyOTP() {
   hasClickedVerifyOTP = true;
+  setTimeout(() => {
+    hasClickedVerifyOTP = false;
+  }, 30000);
 }

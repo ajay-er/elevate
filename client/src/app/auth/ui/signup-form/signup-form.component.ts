@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 import { CustomValidationService } from '../../data-access/custom-validation.service';
 import { ISignup } from 'src/app/shared/interfaces';
+import { setClickedVerifyOTP } from 'src/app/shared/guards/verify-otpguard.guard';
 
 @Component({
   selector: 'app-signup-form',
@@ -45,6 +46,7 @@ export class SignupFormComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
+      setClickedVerifyOTP()
       this.submitSignupForm.emit(this.registerForm.value as ISignup);
     }
   }

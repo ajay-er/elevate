@@ -14,3 +14,10 @@ export interface IForgot{
     password:string,
 }
 
+export interface IVerifyOTP{
+    otp:string,
+    email?:string
+}
+
+
+

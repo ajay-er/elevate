@@ -20,7 +20,7 @@ const routes: Routes = [
       {
         path: 'verify-otp',
         component: VerifyOtpFormComponent,
-        // canActivate: [verifyOTPGuardGuard],
+        canActivate: [verifyOTPGuardGuard],
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ILogin, ISignup } from 'src/app/shared/interfaces';
+import { ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
 @Injectable({
   providedIn: 'root',
 })
@@ -24,7 +24,7 @@ export class AuthService {
     return this.http.post('/api/auth/verify-email', email);
   }
   
-  verifyOtp(otp: { otp: string }): Observable<any> {
+  verifyOtp(otp: IVerifyOTP): Observable<any> {
     return this.http.post('/api/auth/verify-otp', otp);
   }
 

@@ -10,7 +10,7 @@ import {
   ToogleAuthTab,
 } from '../../data-access/state/auth.action';
 import { Subscription, filter } from 'rxjs';
-import { ILogin, ISignup } from 'src/app/shared/interfaces';
+import { ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
 import { AuthService } from '../../data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
@@ -30,7 +30,7 @@ export class AuthAccessComponent {
   private store = inject(Store<State>);
   private authService = inject(AuthService);
   private socialAuthService = inject(SocialAuthService);
-  private snackbar = inject(SnackbarService)
+  private snackbar = inject(SnackbarService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -124,6 +124,7 @@ export class AuthAccessComponent {
     this.authService.login(formData).subscribe({
       next: (res) => {
         console.log(res);
+        this.snackbar.showSuccess(res.message);
         const currentUser = {
           name: res.firstName,
           photo: res?.profileImgUrl,
@@ -133,23 +134,48 @@ export class AuthAccessComponent {
       },
       error: (e) => {
         console.error(e);
+        this.snackbar.showError(e.message);
       },
     });
   }
-
+  tempEmail!: string;
   //signup
   signupFormSubmit(formData: ISignup) {
     this.authService.signup(formData).subscribe({
       next: (res) => {
         console.log(res);
+        this.tempEmail = res.user.email;
+        this.snackbar.showSuccess(res.message);
+        this.router.navigateByUrl('/auth/verify-otp');
+      },
+      error: (e) => {
+        console.error(e);
+        this.snackbar.showError(e.message);
+      },
+    });
+  }
+
+  verifyOtpSubmit(data: IVerifyOTP) {
+    const email = this.tempEmail;
+    if (!email) {
+      this.snackbar.showError('Oops something wrong!Please try again later');
+      return;
+    }
+    data.email = email;
+    this.authService.verifyOtp(data).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.snackbar.showSuccess(res.message);
         const currentUser = {
           name: res.firstName,
           email: res.email,
         };
         this.store.dispatch(SetCurrentUser({ currentUser }));
+        this.router.navigateByUrl('/ideas');
       },
       error: (e) => {
         console.error(e);
+        this.snackbar.showError(e.message);
       },
     });
   }
@@ -163,28 +189,10 @@ export class AuthAccessComponent {
       },
       error: (e) => {
         console.error(e);
+        this.snackbar.showError(e.message);
       },
     });
   }
 
-  verifyOtpSubmit(otp: { otp: string }) {
-    this.authService.verifyOtp(otp).subscribe({
-      next: (res) => {
-        console.log(res);
-        const currentUser = {
-          name: res.firstName,
-          photo: res?.profileImgUrl,
-          email: res.email,
-        };
-        this.store.dispatch(SetCurrentUser({ currentUser }));
-      },
-      error: (e) => {
-        console.error(e);
-      },
-    });
-  }
-
-  verifyForgotFormSubmit(data:any){}
-
-
+  verifyForgotFormSubmit(data: any) {}
 }
