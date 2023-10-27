@@ -7,11 +7,14 @@ import { generateOtp } from "../../utils/generateOtp";
 import { verifyEmailTemplate } from "../../templates/verifyEmail";
 import { sendMail } from "../../config/nodemailer";
 import { SessionRepository } from "../database/repository/Session.repository";
+import { TokenRepository } from "../database/repository/Token.repository";
+import { resetPassEmailTemplate } from "../../templates/resetPassEmailTemplate";
 
 let router = express.Router();
 
 const userRepo = new UserRepository();
 const userSessionRepo = new SessionRepository();
+const tokenRepo = new TokenRepository();
 
 router.post("/googleauth", async (req: Request, res: Response) => {
 	const { googleToken } = req.body;
@@ -89,36 +92,87 @@ router.post("/signup", async (req: Request, res: Response) => {
 		text: emailTemplate.text
 	});
 
-	tempUser.save();	
+	tempUser.save();
 
 	res.status(200).json({ message: "OTP send successfuly", user: tempUser });
 });
 
-router.post("/verify-email", async (req: Request, res: Response) => {
+router.post("/fogot-password", async (req: Request, res: Response) => {
 	const { email } = req.body;
+
 	const user = await userRepo.findByEmail(email);
+
 	if (!user) {
 		throw new BadRequestError("Email not registered!Please signup");
 	}
-	const otp: string = generateOtp();
-	user.otp = otp;
 
-	const emailTemplate = verifyEmailTemplate(otp);
-	//SEND FORGOT PASSWORD EMAIL
+	const resetToken = jwt.sign(
+		{
+			email: user?.email
+		},
+		process.env.JWT_SECRET!,
+		{ expiresIn: "15m" }
+	);
+
+	await tokenRepo.createNew({ email, token: resetToken });
+
+	const emailTemplate = resetPassEmailTemplate(resetToken);
+
 	await sendMail({
 		to: email,
-		subject: "Elevate-verification",
+		subject: "Elevate-Reset password",
 		html: emailTemplate.html,
 		text: emailTemplate.text
 	});
 
-	user.save();
-	res.status(200).json({ message: `OTP sent successfully to ${email}` });
+	res.status(200).json({ message: `Please reset new password using the link provided to ${email}` });
+});
+
+router.post("/reset-password", async (req: Request, res: Response) => {
+	const { token } = req.body;
+	const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { exp: number; email: string };
+
+	console.log(decoded);
+
+	const email = decoded.email;
+
+	if (new Date() > new Date(decoded.exp * 1000)) {
+		throw new BadRequestError("Token has expired.");
+	}
+
+	const storedToken = await tokenRepo.findByEmailAndToken(email, token);
+
+	if (!storedToken) {
+		throw new BadRequestError("Token not found or has been used.");
+	}
+
+	res.status(200).json({ message: "Please reset the password" });
+});
+
+router.post("/confirm-password", async (req: Request, res: Response) => {
+	const { newPassword, token } = req.body;
+
+	const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { exp: number; email: string };
+
+	if (decoded.exp * 1000 < Date.now()) {
+		throw new BadRequestError("Token has expired.");
+	}
+	const email = decoded.email;
+
+	const storedToken = await tokenRepo.findByEmailAndToken(email, token);
+
+	if (!storedToken) {
+		throw new BadRequestError("Invalid or token");
+	}
+
+	await userRepo.updatePasswordByEmail(email, newPassword);
+
+	res.status(200).json({ message: "Password reset successful" });
 });
 
 router.post("/verify-otp", async (req: Request, res: Response) => {
 	const { email, otp } = req.body;
-	
+
 	const tempUser = await userSessionRepo.findByEmail(email);
 
 	if (!tempUser) {
@@ -144,7 +198,7 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 		process.env.JWT_SECRET!
 	);
 
-	 await userSessionRepo.delteByEmail(email);
+	await userSessionRepo.delteByEmail(email);
 
 	req.session = { jwt: userJWT };
 

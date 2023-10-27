@@ -15,11 +15,11 @@
 
   <app-forgot-form
     (submitForgotForm)="verifyForgotFormSubmit($event)"
-    *ngIf="currentTab === TabType.Forgot"
+    *ngIf="currentTab === TabType.Reset"
   ></app-forgot-form>
 
   <app-email-verify-form
-    (submitVerifyEmailForm)="verifyEmailFormSubmit($event)"
+    (submitVerifyEmailForm)="resetPassFormSubmit($event)"
     *ngIf="currentTab === TabType.Verify"
   ></app-email-verify-form>
 

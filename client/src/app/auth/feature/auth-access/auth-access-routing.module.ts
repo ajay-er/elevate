@@ -7,6 +7,7 @@ import { SignupFormComponent } from '../../ui/signup-form/signup-form.component'
 import { LoginFormComponent } from '../../ui/login-form/login-form.component';
 import { verifyOTPGuardGuard } from 'src/app/shared/guards/verify-otpguard.guard';
 import { ForgotFormComponent } from '../../ui/forgot-form/forgot-form.component';
+import { resetPasswordGuardGuard } from 'src/app/shared/guards/reset-password-guard.guard';
 
 const routes: Routes = [
   {
@@ -15,12 +16,16 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginFormComponent },
       { path: 'signup', component: SignupFormComponent },
-      { path: 'forgot', component: ForgotFormComponent },
       { path: 'verify', component: VerifyEmailFormComponent },
       {
         path: 'verify-otp',
         component: VerifyOtpFormComponent,
         canActivate: [verifyOTPGuardGuard],
+      },
+      {
+        path: 'reset-password/:token',
+        component: ForgotFormComponent,
+        canActivate: [resetPasswordGuardGuard],
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],

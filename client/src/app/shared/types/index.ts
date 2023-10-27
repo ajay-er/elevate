@@ -1,7 +1,7 @@
 export enum Tab {
   Login = 'login',
   Signup = 'signup',
-  Forgot = 'forgot',
   Verify = 'verify',
-  VerifyOtp = 'verify-otp'
+  VerifyOtp = 'verify-otp',
+  Reset = 'reset-password',
 }

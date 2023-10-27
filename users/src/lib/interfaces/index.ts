@@ -49,6 +49,11 @@ export interface ILoginUser{
 	password:string,
 }
 
+export interface IToken{
+	email:string,
+	token:string,
+}
+
 export interface MailInterface {
   from?: string;
   to: string | string[];

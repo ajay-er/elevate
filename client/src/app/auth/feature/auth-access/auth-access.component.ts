@@ -10,7 +10,7 @@ import {
   ToogleAuthTab,
 } from '../../data-access/state/auth.action';
 import { Subscription, filter } from 'rxjs';
-import { ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
+import { IConfirmPass, ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
 import { AuthService } from '../../data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
@@ -95,8 +95,8 @@ export class AuthAccessComponent {
         case this.TabType.Login:
           this.currentTab = this.TabType.Login;
           break;
-        case this.TabType.Forgot:
-          this.currentTab = this.TabType.Forgot;
+        case this.TabType.Reset:
+          this.currentTab = this.TabType.Reset;
           break;
         case this.TabType.Signup:
           this.currentTab = this.TabType.Signup;
@@ -209,14 +209,13 @@ export class AuthAccessComponent {
     });
   }
 
-  //email verify
-  verifyEmailFormSubmit(email: { email: string }) {
+  resetPassFormSubmit(email: { email: string }) {
     this.spinner.startSpin();
-    this.authService.verifyEmail(email).subscribe({
+    this.authService.resetPass(email).subscribe({
       next: (res) => {
         console.log(res);
+        this.snackbar.showSuccess(res.message);
         this.spinner.endSpin();
-        // this.router.navigateByUrl('/auth/verify-otp');
       },
       error: (e) => {
         console.error(e);
@@ -230,5 +229,25 @@ export class AuthAccessComponent {
     });
   }
 
-  verifyForgotFormSubmit(data: any) {}
+  verifyForgotFormSubmit(data: IConfirmPass) {
+    console.log(data,'confirm password data reached here');
+    this.spinner.startSpin();
+    this.authService.confirmPassWord(data).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.spinner.endSpin();
+        this.snackbar.showSuccess(res.message);
+        this.router.navigateByUrl('/ideas');
+      },
+      error: (e) => {
+        console.error(e);
+        this.spinner.endSpin();
+        if (e.error?.message) {
+          this.snackbar.showError(e.error?.message);
+        } else {
+          this.snackbar.showError(e.message);
+        }
+      },
+    });
+  }
 }
