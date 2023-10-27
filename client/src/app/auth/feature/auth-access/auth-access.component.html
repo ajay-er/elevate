@@ -2,20 +2,29 @@
   [currentTab]="currentTab"
   (tabSelected)="selectedTab($event)"
 >
+
   <app-login-form
     (submitLoginForm)="loginFormSubmit($event)"
     *ngIf="currentTab === TabType.Login"
   ></app-login-form>
+
   <app-signup-form
     (submitSignupForm)="signupFormSubmit($event)"
     *ngIf="currentTab === TabType.Signup"
   ></app-signup-form>
+
+  <app-forgot-form
+    (submitForgotForm)="verifyForgotFormSubmit($event)"
+    *ngIf="currentTab === TabType.Forgot"
+  ></app-forgot-form>
+
   <app-email-verify-form
     (submitVerifyEmailForm)="verifyEmailFormSubmit($event)"
-    *ngIf="currentTab === TabType.Forgot"
+    *ngIf="currentTab === TabType.Verify"
   ></app-email-verify-form>
+
   <app-verify-otp-form
     (submitVerifyOtpForm)="verifyOtpSubmit($event)"
-    *ngIf="currentTab === TabType.Verify"
+    *ngIf="currentTab === TabType.VerifyOtp"
   ></app-verify-otp-form>
 </app-tab-container>

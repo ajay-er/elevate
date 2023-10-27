@@ -13,6 +13,7 @@ import { Subscription, filter } from 'rxjs';
 import { ILogin, ISignup } from 'src/app/shared/interfaces';
 import { AuthService } from '../../data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 
 @Component({
   selector: 'app-auth-access',
@@ -29,6 +30,7 @@ export class AuthAccessComponent {
   private store = inject(Store<State>);
   private authService = inject(AuthService);
   private socialAuthService = inject(SocialAuthService);
+  private snackbar = inject(SnackbarService)
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -95,6 +97,9 @@ export class AuthAccessComponent {
         case this.TabType.Verify:
           this.currentTab = this.TabType.Verify;
           break;
+        case this.TabType.VerifyOtp:
+          this.currentTab = this.TabType.VerifyOtp;
+          break;
       }
     }
 
@@ -154,7 +159,7 @@ export class AuthAccessComponent {
     this.authService.verifyEmail(email).subscribe({
       next: (res) => {
         console.log(res);
-        this.router.navigateByUrl('/auth/verify');
+        // this.router.navigateByUrl('/auth/verify-otp');
       },
       error: (e) => {
         console.error(e);
@@ -178,4 +183,8 @@ export class AuthAccessComponent {
       },
     });
   }
+
+  verifyForgotFormSubmit(data:any){}
+
+
 }

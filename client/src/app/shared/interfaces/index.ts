@@ -10,3 +10,7 @@ export interface ILogin{
     password:string,
 }
 
+export interface IForgot{
+    password:string,
+}
+

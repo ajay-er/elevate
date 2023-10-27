@@ -5,6 +5,8 @@ import { VerifyOtpFormComponent } from '../../ui/verify-otp-form/verify-otp-form
 import { VerifyEmailFormComponent } from '../../ui/verify-email-form/email-verify-form.component';
 import { SignupFormComponent } from '../../ui/signup-form/signup-form.component';
 import { LoginFormComponent } from '../../ui/login-form/login-form.component';
+import { verifyOTPGuardGuard } from 'src/app/shared/guards/verify-otpguard.guard';
+import { ForgotFormComponent } from '../../ui/forgot-form/forgot-form.component';
 
 const routes: Routes = [
   {
@@ -13,8 +15,13 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginFormComponent },
       { path: 'signup', component: SignupFormComponent },
-      { path: 'forgot', component: VerifyEmailFormComponent },
-      { path: 'verify', component: VerifyOtpFormComponent },
+      { path: 'forgot', component: ForgotFormComponent },
+      { path: 'verify', component: VerifyEmailFormComponent },
+      {
+        path: 'verify-otp',
+        component: VerifyOtpFormComponent,
+        // canActivate: [verifyOTPGuardGuard],
+      },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },

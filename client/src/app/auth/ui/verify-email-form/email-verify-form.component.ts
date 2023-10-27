@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { setClickedVerifyOTP, verifyOTPGuardGuard } from 'src/app/shared/guards/verify-otpguard.guard';
 
 @Component({
   selector: 'app-email-verify-form',
@@ -17,6 +18,7 @@ export class VerifyEmailFormComponent {
 
   onSubmit() {
     if (this.verifyForm.valid) {
+      setClickedVerifyOTP();
       this.submitVerifyEmailForm.emit(
         this.verifyForm.value as { email: string }
       );

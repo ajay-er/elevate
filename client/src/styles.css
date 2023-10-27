@@ -1,8 +1,10 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import url('https://fonts.googleapis.com/css2?family=Gabarito&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 
 @layer components {
@@ -31,4 +33,34 @@
             background: linear-gradient(45deg, #8250f879, #3379c2);
         }
     }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+/* snack bar custom */
+.success-snackbar.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background: rgb(255, 255, 255);
+}
+
+.success-snackbar.mat-mdc-snack-bar-container .mdc-snackbar__surface .mat-mdc-button {
+    color: rgb(255, 166, 166) !important;
+}
+
+.success-snackbar.mat-mdc-snack-bar-container .mdc-snackbar__surface .mat-mdc-button:hover {
+    color: rgb(250, 83, 83) !important;
+}
+
+.success-snackbar.mat-mdc-snack-bar-container .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    white-space: pre-wrap;
 }

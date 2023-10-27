@@ -3,4 +3,5 @@ export enum Tab {
   Signup = 'signup',
   Forgot = 'forgot',
   Verify = 'verify',
+  VerifyOtp = 'verify-otp'
 }

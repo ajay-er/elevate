@@ -15,6 +15,9 @@ import {
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/data-access/state/auth.effects';
 import { authReducer } from './auth/data-access/state/auth.reducer';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +36,9 @@ import { authReducer } from './auth/data-access/state/auth.reducer';
     }),
     SocialLoginModule,
     EffectsModule.forRoot([AuthEffects]),
+    MatSnackBarModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

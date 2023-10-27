@@ -8,6 +8,7 @@ import { VerifyEmailFormModule } from '../../ui/verify-email-form/email-verify-f
 import { LoginFormModule } from '../../ui/login-form/login-form.module';
 import { SignupFormModule } from '../../ui/signup-form/signup-form.module';
 import { VerifyOtpFormModule } from '../../ui/verify-otp-form/verify-otp-form.module';
+import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
 
 @NgModule({
   declarations: [AuthAccessComponent],
@@ -19,6 +20,7 @@ import { VerifyOtpFormModule } from '../../ui/verify-otp-form/verify-otp-form.mo
     SignupFormModule,
     VerifyEmailFormModule,
     VerifyOtpFormModule,
+    ForgotFormModule
   ],
 })
 export class AuthAccessModule {}
