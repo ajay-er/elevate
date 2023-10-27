@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IConfirmPass, ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
+import {
+  IConfirmPass,
+  ILogin,
+  ISignup,
+  IVerifyOTP,
+} from 'src/app/shared/interfaces';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,8 +25,8 @@ export class AuthService {
     return this.http.post('/api/auth/login', loginData);
   }
 
-  resetPass(email: { email: string }): Observable<any> {
-    return this.http.post('/api/auth/verify-email', email);
+  forgotPass(email: { email: string }): Observable<any> {
+    return this.http.post('/api/auth/forgot-password', email);
   }
 
   verifyOtp(otp: IVerifyOTP): Observable<any> {
@@ -33,7 +38,7 @@ export class AuthService {
   }
 
   checkTokenValidation(token: string): Observable<any> {
-    return this.http.post('/api/auth/reset-password', token);
+    return this.http.post('/api/auth/reset-password', { token });
   }
 
   confirmPassWord(data: IConfirmPass): Observable<any> {

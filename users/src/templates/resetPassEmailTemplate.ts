@@ -27,8 +27,8 @@ export const resetPassEmailTemplate = function (token: string) {
     <p style="font-size:1.1em">Hi,</p>
     <p>Thank you for choosing Elevate. To reset your password, please click on the following link. This link is valid for a limited time. For security reasons, we recommend that you reset your password promptly and do not share this link with anyone. If you did not request this password reset, please disregard this email
     </p>
-    <a>
-    http://localhost:4200/reset-password/${token}
+    <a href="http://localhost:4200/auth/reset-password/${token}">
+    click here to verify
     </a>
     <p style="font-size:0.9em;">Regards,<br />Elevate</p>
     <hr style="border:none;border-top:1px solid #eee" />

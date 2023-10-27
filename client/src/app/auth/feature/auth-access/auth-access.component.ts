@@ -59,6 +59,7 @@ export class AuthAccessComponent {
             };
             //*dispatch
             this.store.dispatch(SetCurrentUser({ currentUser }));
+            this.snackbar.showSuccess('Login successfull')
           }
         },
         error: (err: any) => {
@@ -211,11 +212,12 @@ export class AuthAccessComponent {
 
   resetPassFormSubmit(email: { email: string }) {
     this.spinner.startSpin();
-    this.authService.resetPass(email).subscribe({
+    this.authService.forgotPass(email).subscribe({
       next: (res) => {
         console.log(res);
         this.snackbar.showSuccess(res.message);
         this.spinner.endSpin();
+        this.router.navigateByUrl('/auth/login')
       },
       error: (e) => {
         console.error(e);
@@ -230,7 +232,6 @@ export class AuthAccessComponent {
   }
 
   verifyForgotFormSubmit(data: IConfirmPass) {
-    console.log(data,'confirm password data reached here');
     this.spinner.startSpin();
     this.authService.confirmPassWord(data).subscribe({
       next: (res) => {

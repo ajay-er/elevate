@@ -44,21 +44,21 @@ export class ForgotFormComponent {
 
   onSubmit() {
     let token;
-    this.activatedRoute.paramMap.subscribe((params) => {
-      token = params.get('token');
-    });
+    let url = window.location.pathname;
+    const path = url.split('/');
+    token = path[3];
 
     if (this.forgotForm.valid && token) {
-      const newPasswordControl = this.forgotForm.get('newPassword');
-
-      if (newPasswordControl) {
+      const newPasswordControl = this.forgotForm.get('password');
+      if (newPasswordControl && newPasswordControl.value) {
         const data: IConfirmPass = {
           newPassword: newPasswordControl.value,
           token: token,
         };
-
         this.submitForgotForm.emit(data);
       }
+    } else {
+      console.log('Oops something wrong!Please try again later');
     }
   }
 }

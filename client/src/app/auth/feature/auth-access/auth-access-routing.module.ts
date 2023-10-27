@@ -25,7 +25,7 @@ const routes: Routes = [
       {
         path: 'reset-password/:token',
         component: ForgotFormComponent,
-        canActivate: [resetPasswordGuardGuard],
+        // canActivate: [resetPasswordGuardGuard],
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],

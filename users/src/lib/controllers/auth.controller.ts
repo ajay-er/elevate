@@ -97,7 +97,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 	res.status(200).json({ message: "OTP send successfuly", user: tempUser });
 });
 
-router.post("/fogot-password", async (req: Request, res: Response) => {
+router.post("/forgot-password", async (req: Request, res: Response) => {
 	const { email } = req.body;
 
 	const user = await userRepo.findByEmail(email);
@@ -130,6 +130,11 @@ router.post("/fogot-password", async (req: Request, res: Response) => {
 
 router.post("/reset-password", async (req: Request, res: Response) => {
 	const { token } = req.body;
+	
+	if(!token){
+		throw new BadRequestError('Please provide token');
+	}
+
 	const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { exp: number; email: string };
 
 	console.log(decoded);
