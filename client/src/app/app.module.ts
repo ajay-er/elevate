@@ -13,11 +13,12 @@ import {
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './auth/data-access/state/auth.effects';
-import { authReducer } from './auth/data-access/state/auth.reducer';
+import { AuthEffects } from './shared/data-access/state/auth/auth.effects';
+import { authReducer } from './shared/data-access/state/auth/auth.reducer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { errorReducer } from './shared/data-access/state/error/error.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     StoreModule.forRoot({}, {}),
     StoreModule.forFeature('auth', authReducer),
+    StoreModule.forFeature('error', errorReducer),
     StoreDevtoolsModule.instrument({
       name: 'Elevate',
       maxAge: 25,

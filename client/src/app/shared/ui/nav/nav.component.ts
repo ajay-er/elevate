@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  State,
-  getCurrentUserData,
-  isUserLoggedIn,
-} from 'src/app/auth/data-access/state';
-import { UnsetCurrentUser } from 'src/app/auth/data-access/state/auth.action';
-import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
+import { UnsetCurrentUser } from 'src/app/shared/data-access/state/auth/auth.action';
+import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
+import { State, getCurrentUserData, isUserLoggedIn } from '../../data-access/state/auth';
 
 @Component({
   selector: 'app-nav',

@@ -172,7 +172,7 @@ router.post("/confirm-password", async (req: Request, res: Response) => {
 
 	await userRepo.updatePasswordByEmail(email, newPassword);
 
-	res.status(200).json({ message: "Password reset successful" });
+	res.status(200).json({ message: "Password reset successful"});
 });
 
 router.post("/verify-otp", async (req: Request, res: Response) => {

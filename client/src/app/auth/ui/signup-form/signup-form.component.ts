@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { CustomValidationService } from '../../data-access/custom-validation.service';
 import { ISignup } from 'src/app/shared/interfaces';
-import { setClickedVerifyOTP } from 'src/app/shared/guards/verify-otpguard.guard';
+import { setClickedVerifyOTP } from 'src/app/shared/guards/verify-otp.guard';
 
 @Component({
   selector: 'app-signup-form',

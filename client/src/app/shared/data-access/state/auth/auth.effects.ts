@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { LocalStorageService } from '../local-storage.service';
+import { LocalStorageService } from '../../local-storage.service';
 import {
   CheckLocalStorageAction,
   ClearLocalStorageAction,
   GetLocalStorageData,
+  LogoutFailer,
   LogoutSuccess,
   SetCurrentUser,
   SetUserLoggedInTrue,
   UnsetCurrentUser,
 } from './auth.action';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -36,11 +37,11 @@ export class AuthEffects {
       switchMap(() =>
         this.authService.logout().pipe(
           switchMap((r) => {
-              return [ClearLocalStorageAction(), LogoutSuccess()];
+            return [ClearLocalStorageAction(), LogoutSuccess()];
           }),
           catchError((error) => {
             console.error('Logout API Error:', error);
-            return [];
+            return [ClearLocalStorageAction(), LogoutFailer()];
           })
         )
       )
@@ -51,7 +52,9 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(ClearLocalStorageAction),
-        tap(() => {
+        tap((r) => {
+          console.log('here reched');
+
           this.localstorageService.clear();
         })
       ),

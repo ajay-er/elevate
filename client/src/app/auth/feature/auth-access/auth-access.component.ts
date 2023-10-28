@@ -1,17 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { State } from '../../data-access/state';
+import { State } from '../../../shared/data-access/state/auth';
 import { Store } from '@ngrx/store';
 import {
   CheckLocalStorageAction,
   SetCurrentUser,
   SetUserLoggedInFalse,
   ToogleAuthTab,
-} from '../../data-access/state/auth.action';
+} from '../../../shared/data-access/state/auth/auth.action';
 import { Subscription, filter } from 'rxjs';
-import { IConfirmPass, ILogin, ISignup, IVerifyOTP } from 'src/app/shared/interfaces';
-import { AuthService } from '../../data-access/auth.service';
+import {
+  IConfirmPass,
+  ILogin,
+  ISignup,
+  IVerifyOTP,
+} from 'src/app/shared/interfaces';
+import { AuthService } from '../../../shared/data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 import { SpinnerService } from 'src/app/shared/data-access/spinner.service';
@@ -59,7 +64,7 @@ export class AuthAccessComponent {
             };
             //*dispatch
             this.store.dispatch(SetCurrentUser({ currentUser }));
-            this.snackbar.showSuccess('Login successfull')
+            this.snackbar.showSuccess('Login successfull');
           }
         },
         error: (err: any) => {
@@ -143,10 +148,10 @@ export class AuthAccessComponent {
         this.store.dispatch(SetCurrentUser({ currentUser }));
       },
       error: (e) => {
-        console.error(e);
+        console.error(e.error.errors[0].message);
         this.spinner.endSpin();
-        if (e.error?.message) {
-          this.snackbar.showError(e.error?.message);
+        if (e.error.errors[0].message) {
+          this.snackbar.showError(e.error.errors[0].message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -168,8 +173,8 @@ export class AuthAccessComponent {
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error?.message) {
-          this.snackbar.showError(e.error?.message);
+        if (e.error.errors[0].message) {
+          this.snackbar.showError(e.error.errors[0].message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -190,10 +195,10 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         this.spinner.endSpin();
-        this.snackbar.showSuccess(res.message);
+        this.snackbar.showSuccess('Login successfully');
         const currentUser = {
-          name: res.firstName,
-          email: res.email,
+          name: res.user.firstName,
+          email: res.user.firstName,
         };
         this.store.dispatch(SetCurrentUser({ currentUser }));
         this.router.navigateByUrl('/ideas');
@@ -201,8 +206,8 @@ export class AuthAccessComponent {
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error?.message) {
-          this.snackbar.showError(e.error?.message);
+        if (e.error.errors[0].message) {
+          this.snackbar.showError(e.error.errors[0].message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -217,13 +222,13 @@ export class AuthAccessComponent {
         console.log(res);
         this.snackbar.showSuccess(res.message);
         this.spinner.endSpin();
-        this.router.navigateByUrl('/auth/login')
+        this.router.navigateByUrl('/auth/login');
       },
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error?.message) {
-          this.snackbar.showError(e.error?.message);
+        if (e.error.errors[0].message) {
+          this.snackbar.showError(e.error.errors[0].message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -237,14 +242,14 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         this.spinner.endSpin();
-        this.snackbar.showSuccess(res.message);
-        this.router.navigateByUrl('/ideas');
+        this.snackbar.showSuccess('Password reset succesfull,Please login');
+        this.router.navigateByUrl('/auth/login');
       },
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error?.message) {
-          this.snackbar.showError(e.error?.message);
+        if (e.error.errors[0].message) {
+          this.snackbar.showError(e.error.errors[0].message);
         } else {
           this.snackbar.showError(e.message);
         }

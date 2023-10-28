@@ -18,11 +18,17 @@ export const SetUserLoggedInFalse = createAction('[Auth] SetUserLoggedInFalse');
 
 export const SetUserLoggedInTrue = createAction('[Auth] SetUserLoggedInTrue');
 
-export const CheckLocalStorageAction = createAction('[Auth] Check User LocalSession');
+export const CheckLocalStorageAction = createAction(
+  '[Auth] Check User LocalSession'
+);
 
-export const ClearLocalStorageAction = createAction('[Auth] Clear User LocalSession');
+export const ClearLocalStorageAction = createAction(
+  '[Auth] Clear User LocalSession'
+);
 
 export const LogoutSuccess = createAction('[Auth] LogoutSuccess');
+
+export const LogoutFailer = createAction('[Auth] LogoutFailer');
 
 export const GetLocalStorageData = createAction(
   '[Auth] Get LocalSession',
