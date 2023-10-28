@@ -49,7 +49,6 @@ router.post("/login", async (req: Request, res: Response) => {
 	if (!user || !user?.password) {
 		throw new BadRequestError("Invalid credentials");
 	}
-
 	const passwordsMatch = await Password.compare(user.password, password);
 
 	if (!passwordsMatch) {
@@ -170,7 +169,9 @@ router.post("/confirm-password", async (req: Request, res: Response) => {
 		throw new BadRequestError("Invalid or token");
 	}
 
-	await userRepo.updatePasswordByEmail(email, newPassword);
+	const hashedPassword = await Password.toHash(newPassword);
+
+	await userRepo.updatePasswordByEmail(email, hashedPassword);
 
 	res.status(200).json({ message: "Password reset successful"});
 });

@@ -20,6 +20,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { errorReducer } from './shared/data-access/state/error/error.reducer';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -36,8 +37,8 @@ import { errorReducer } from './shared/data-access/state/error/error.reducer';
       maxAge: 25,
       logOnly: !isDevMode(),
     }),
-    SocialLoginModule,
     EffectsModule.forRoot([AuthEffects]),
+    SocialLoginModule,
     MatSnackBarModule,
     NoopAnimationsModule,
     BrowserAnimationsModule,

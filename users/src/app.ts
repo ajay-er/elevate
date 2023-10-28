@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 app.use(
 	cookieSession({
 		signed: false,
-		secure: false
+		secure: false,
 	})
 );
 

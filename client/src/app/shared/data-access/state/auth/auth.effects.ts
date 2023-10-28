@@ -53,8 +53,6 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(ClearLocalStorageAction),
         tap((r) => {
-          console.log('here reched');
-
           this.localstorageService.clear();
         })
       ),

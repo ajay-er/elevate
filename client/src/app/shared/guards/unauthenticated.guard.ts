@@ -1,15 +1,22 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { LocalStorageService } from '../data-access/local-storage.service';
+import { Store } from '@ngrx/store';
+import { State, isUserLoggedIn } from '../data-access/state/auth';
+import { map, take } from 'rxjs';
 
 export const unauthenticatedGuard: CanActivateFn = (route, state) => {
-  const localstorageService = inject(LocalStorageService);
   const router = inject(Router);
-  const isTokenAvailable = localstorageService.isTokenAvailable();
-  if (isTokenAvailable) {
-    return false;
-  } else {
-    router.navigateByUrl('/ideas');
-    return true;
-  }
+  const store = inject(Store<State>);
+  return store.select(isUserLoggedIn).pipe(
+    take(1),
+    map((isUserLoggedIn) => {
+      console.log(isUserLoggedIn);
+      if (isUserLoggedIn) {
+        router.navigateByUrl('/ideas');
+        return false;
+      } else {
+        return true;
+      }
+    })
+  );
 };

@@ -20,6 +20,7 @@ import { AuthService } from '../../../shared/data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 import { SpinnerService } from 'src/app/shared/data-access/spinner.service';
+import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
 
 @Component({
   selector: 'app-auth-access',
@@ -46,7 +47,6 @@ export class AuthAccessComponent {
 
   // The function sets the current authentication tab based on the current route segment.
   ngOnInit(): void {
-    this.store.dispatch(CheckLocalStorageAction());
     this.setAuthTabFromRoute();
     this.subscribeSocialAuth();
   }
@@ -139,12 +139,16 @@ export class AuthAccessComponent {
       next: (res) => {
         this.spinner.endSpin();
         console.log(res);
-        this.snackbar.showSuccess(res.message);
-        const currentUser = {
+        this.snackbar.showSuccess("Login successfull");
+        let currentUser:ICurrentUser = {
           name: res.firstName,
-          photo: res?.profileImgUrl,
           email: res.email,
         };
+      
+        if (res.profileImgUrl) {
+          currentUser.photo = res.profileImgUrl;
+        }
+
         this.store.dispatch(SetCurrentUser({ currentUser }));
       },
       error: (e) => {
@@ -198,7 +202,7 @@ export class AuthAccessComponent {
         this.snackbar.showSuccess('Login successfully');
         const currentUser = {
           name: res.user.firstName,
-          email: res.user.firstName,
+          email: res.user.email,
         };
         this.store.dispatch(SetCurrentUser({ currentUser }));
         this.router.navigateByUrl('/ideas');

@@ -20,10 +20,5 @@ export class LocalStorageService {
 
   clear(): void {
     window.localStorage.clear();
-    window.sessionStorage.clear();
-  }
- 
-  isTokenAvailable(){
-    return sessionStorage.getItem('googleToken') || sessionStorage.getItem('session') ;
   }
 }

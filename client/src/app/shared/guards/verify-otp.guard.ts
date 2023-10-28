@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
 let hasClickedVerifyOTP: boolean = false;
-export const verifyOTPGuardGuard: CanActivateFn = (route, state) => {
+export const verifyOTPGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (hasClickedVerifyOTP) {
