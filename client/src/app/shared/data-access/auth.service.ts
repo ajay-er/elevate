@@ -33,6 +33,10 @@ export class AuthService {
     return this.http.post('/api/auth/verify-otp', otp);
   }
 
+  resendOtp(data: { email: string }): Observable<any> {
+    return this.http.post('/api/auth/resend-otp', data);
+  }
+
   logout(): Observable<any> {
     return this.http.post('/api/auth/logout', {});
   }

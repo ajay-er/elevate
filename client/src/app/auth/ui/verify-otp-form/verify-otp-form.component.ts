@@ -6,8 +6,6 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
-import { IVerifyOTP } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-verify-otp-form',
@@ -17,12 +15,13 @@ import { IVerifyOTP } from 'src/app/shared/interfaces';
 export class VerifyOtpFormComponent {
   @Output() submitVerifyOtpForm: EventEmitter<{ otp: string }> =
     new EventEmitter();
+  @Output() resendOtp: EventEmitter<void> = new EventEmitter();
 
   display: any;
   submitted: boolean = false;
   otp: string = '';
 
-  constructor(private localstorageService: LocalStorageService) {
+  constructor() {
     this.timer();
   }
 
@@ -36,13 +35,8 @@ export class VerifyOtpFormComponent {
         .map((input) => input.nativeElement.value)
         .join('');
       this.submitted = false;
-      console.log(this.otp, 'otp here');
-      const email = this.localstorageService.get('email');
-      const otpData: IVerifyOTP = { otp: this.otp };
-      if (email) {
-        otpData.email = email;
-      }
-      this.submitVerifyOtpForm.emit(otpData);
+
+      this.submitVerifyOtpForm.emit({ otp: this.otp });
     } else {
       this.submitted = true;
       console.error('Oops enter valid otp');
@@ -85,7 +79,6 @@ export class VerifyOtpFormComponent {
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
 
       if (seconds == 0) {
-        console.log('finished timer');
         clearInterval(timer);
         this.display = '';
       }
@@ -94,5 +87,6 @@ export class VerifyOtpFormComponent {
 
   resend() {
     this.timer();
+    this.resendOtp.emit();
   }
 }

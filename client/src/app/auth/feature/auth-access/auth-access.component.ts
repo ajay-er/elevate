@@ -195,8 +195,10 @@ export class AuthAccessComponent {
 
   verifyOtpSubmit(otpSubmisstion: IVerifyOTP) {
     this.spinner.startSpin();
-    console.log(otpSubmisstion, 'ok aahno?');
-
+    const email = this.localstorageService.get('email');
+    if (email) {
+      otpSubmisstion.email = email;
+    }
     this.authService.verifyOtp(otpSubmisstion).subscribe({
       next: (res) => {
         console.log(res);
@@ -262,5 +264,30 @@ export class AuthAccessComponent {
         }
       },
     });
+  }
+
+  resendOtp() {
+    const email = this.localstorageService.get('email');
+    console.log(email);
+    if (email) {
+      this.authService.resendOtp({ email }).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.spinner.endSpin();        
+          this.snackbar.showSuccess(res.message);
+        },
+        error: (e) => {
+          console.error(e);
+          this.spinner.endSpin();
+          if (e.error?.errors) {
+            this.snackbar.showError(e.error?.errors[0]?.message);
+          } else {
+            this.snackbar.showError(e.message);
+          }
+        },
+      });
+    } else {
+      this.snackbar.showError('oops something wrong! please signup again');
+    }
   }
 }

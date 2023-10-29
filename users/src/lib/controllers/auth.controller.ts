@@ -47,6 +47,11 @@ router.post("/login", async (req: Request, res: Response) => {
 	if (!user || !user?.password) {
 		throw new BadRequestError("Invalid credentials");
 	}
+
+	if (!user.isEmailVerified) {
+		throw new BadRequestError("You are not a verified user. Please Signup and verify your email");
+	}
+
 	const passwordsMatch = await Password.compare(user.password, password);
 
 	if (!passwordsMatch) {
@@ -92,6 +97,37 @@ router.post("/signup", async (req: Request, res: Response) => {
 	});
 
 	user.isEmailVerified = false;
+	user.otp = otp;
+
+	await user.save();
+
+	res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
+});
+
+router.post("/resend-otp", async (req: Request, res: Response) => {
+	const { email } = req.body;
+
+	const user = await userRepo.findByEmail(email);
+
+	if (!user) {
+		throw new BadRequestError("Email not registered! Please signup");
+	}
+
+	if (user.isEmailVerified) {
+		throw new BadRequestError("Email already verified!");
+	}
+
+	const otp: string = generateOtp();
+	const emailTemplate = verifyEmailTemplate(otp);
+
+	// SEND EMAIL FOR EMAIL VERIFICATION
+	await sendMail({
+		to: email,
+		subject: "Elevate-verification",
+		html: emailTemplate.html,
+		text: emailTemplate.text
+	});
+
 	user.otp = otp;
 
 	await user.save();

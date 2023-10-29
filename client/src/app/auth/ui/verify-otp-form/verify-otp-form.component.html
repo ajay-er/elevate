@@ -30,7 +30,7 @@
     </button>
     <div class="flex flex-row mt-4 gap-1 items-baseline">
       <p class="text-gray-400">Didn't receive code?</p>
-      <button (click)="resend()"
+      <button (click)="resend()" type="reset"
         class="cursor-pointer text-blue-600 p-0 m-0 disabled:opacity-50" [disabled]="display != ''"
       >
         Resend

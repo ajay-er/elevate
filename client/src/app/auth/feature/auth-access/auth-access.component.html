@@ -24,6 +24,7 @@
   ></app-email-verify-form>
 
   <app-verify-otp-form
+    (resendOtp)="resendOtp()"
     (submitVerifyOtpForm)="verifyOtpSubmit($event)"
     *ngIf="currentTab === TabType.VerifyOtp"
   ></app-verify-otp-form>
