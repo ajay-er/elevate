@@ -6,6 +6,8 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
+import { IVerifyOTP } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-verify-otp-form',
@@ -16,8 +18,13 @@ export class VerifyOtpFormComponent {
   @Output() submitVerifyOtpForm: EventEmitter<{ otp: string }> =
     new EventEmitter();
 
+  display: any;
   submitted: boolean = false;
   otp: string = '';
+
+  constructor(private localstorageService: LocalStorageService) {
+    this.timer();
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -30,10 +37,15 @@ export class VerifyOtpFormComponent {
         .join('');
       this.submitted = false;
       console.log(this.otp, 'otp here');
-      this.submitVerifyOtpForm.emit({ otp: this.otp });
+      const email = this.localstorageService.get('email');
+      const otpData: IVerifyOTP = { otp: this.otp };
+      if (email) {
+        otpData.email = email;
+      }
+      this.submitVerifyOtpForm.emit(otpData);
     } else {
       this.submitted = true;
-      console.log('Invalid OTP');
+      console.error('Oops enter valid otp');
     }
   }
 
@@ -52,5 +64,35 @@ export class VerifyOtpFormComponent {
       this.otpInputs.toArray()[index].nativeElement.value = '';
       this.otpInputs.toArray()[index - 1].nativeElement.focus();
     }
+  }
+
+  timer(minute = 1) {
+    let seconds: number = minute * 60;
+    let textSec: any = '0';
+    let statSec: number = 60;
+
+    const prefix = minute < 10 ? '0' : '';
+
+    const timer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+
+      if (statSec < 10) {
+        textSec = '0' + statSec;
+      } else textSec = statSec;
+
+      this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+
+      if (seconds == 0) {
+        console.log('finished timer');
+        clearInterval(timer);
+        this.display = '';
+      }
+    }, 1000);
+  }
+
+  resend() {
+    this.timer();
   }
 }

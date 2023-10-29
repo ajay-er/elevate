@@ -2,16 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
-import {
-  CheckLocalStorageAction,
-  ClearLocalStorageAction,
-  GetLocalStorageData,
-  LogoutFailer,
-  LogoutSuccess,
-  SetCurrentUser,
-  SetUserLoggedInTrue,
-  UnsetCurrentUser,
-} from './auth.action';
+import * as AuthActions from './auth.action';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
@@ -21,7 +12,7 @@ export class AuthEffects {
   storeCurrentUser$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(SetCurrentUser),
+        ofType(AuthActions.SetCurrentUser),
         tap((action) => {
           this.localstorageService.saveKeys(action.currentUser);
           this.router.navigate(['/ideas']);
@@ -33,15 +24,15 @@ export class AuthEffects {
 
   clearLocalStorageOnLogout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UnsetCurrentUser),
+      ofType(AuthActions.UnsetCurrentUser),
       switchMap(() =>
         this.authService.logout().pipe(
           switchMap((r) => {
-            return [ClearLocalStorageAction(), LogoutSuccess()];
+            return [AuthActions.ClearLocalStorageAction(), AuthActions.LogoutSuccess()];
           }),
           catchError((error) => {
             console.error('Logout API Error:', error);
-            return [ClearLocalStorageAction(), LogoutFailer()];
+            return [AuthActions.ClearLocalStorageAction(), AuthActions.LogoutFailer()];
           })
         )
       )
@@ -51,7 +42,7 @@ export class AuthEffects {
   clearLocalStorage$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ClearLocalStorageAction),
+        ofType(AuthActions.ClearLocalStorageAction),
         tap((r) => {
           this.localstorageService.clear();
         })
@@ -61,23 +52,25 @@ export class AuthEffects {
 
   getLocalStorageData$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CheckLocalStorageAction),
+      ofType(AuthActions.CheckLocalStorageAction),
       map(() => {
-        const keys = ['name', 'photo', 'email'];
+        const keys = ['name', 'photo', 'email' , 'isEmailVerified'];
         const currentUserData: any = {};
         for (const key of keys) {
           const value = this.localstorageService.get(key);
           if (value !== null) {
-            currentUserData[key] = value;
+            currentUserData[key] = key === 'isEmailVerified' ? JSON.parse(value) : value;
           }
         }
-        const isUserPresent = Object.keys(currentUserData).length > 0;
-
+        console.log(currentUserData);
+        
+        const isUserPresent = Object.keys(currentUserData).length > 0 && currentUserData.isEmailVerified;
+        
         if (isUserPresent) {
-          this.store.dispatch(SetUserLoggedInTrue());
+          this.store.dispatch(AuthActions.SetUserLoggedInTrue());
         }
 
-        return GetLocalStorageData({ currentUser: currentUserData });
+        return AuthActions.GetLocalStorageData({ currentUser: currentUserData });
       })
     )
   );

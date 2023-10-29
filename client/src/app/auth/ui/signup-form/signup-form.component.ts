@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { CustomValidationService } from '../../data-access/custom-validation.service';
 import { ISignup } from 'src/app/shared/interfaces';
-import { setClickedVerifyOTP } from 'src/app/shared/guards/verify-otp.guard';
+import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -17,6 +17,7 @@ export class SignupFormComponent {
   @Output() submitSignupForm: EventEmitter<ISignup> = new EventEmitter();
   private fb = inject(FormBuilder);
   private customValidator = inject(CustomValidationService);
+  private localStorageService = inject(LocalStorageService);
 
   registerForm = this.fb.group(
     {
@@ -46,7 +47,7 @@ export class SignupFormComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      setClickedVerifyOTP()
+      this.localStorageService.setOtpVerifyTimeLimitToken();
       this.submitSignupForm.emit(this.registerForm.value as ISignup);
     }
   }

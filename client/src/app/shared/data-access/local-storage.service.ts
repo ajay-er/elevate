@@ -11,14 +11,25 @@ export class LocalStorageService {
   }
 
   save(key: string, value: string): void {
-    localStorage.setItem(key, value);
+    window.localStorage.setItem(key, value);
   }
 
   get(key: string): string | null {
-    return localStorage.getItem(key);
+    return window.localStorage.getItem(key);
   }
 
   clear(): void {
     window.localStorage.clear();
+  }
+
+  getOtpVerifyTimeLimitToken(): string | null {
+    return window.localStorage.getItem('verify_otp_timestamp');
+  }
+
+  setOtpVerifyTimeLimitToken() {
+    window.localStorage.setItem(
+      'verify_otp_timestamp',
+      new Date().getTime().toString()
+    );
   }
 }

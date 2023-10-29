@@ -9,6 +9,10 @@ const routes: Routes = [
         (m) => m.AuthAccessModule
       ),
   },
+  // {
+  //   path:'admin',
+  //   loadChildren:()=> 
+  // }
 ];
 
 @NgModule({

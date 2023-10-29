@@ -19,6 +19,7 @@ interface UserDoc extends mongoose.Document {
 	password: string;
 	otp?: string;
 	profileImgUrl?: string;
+	isEmailVerified: boolean;
 	bankDetails?: Array<{
 		bankName: string;
 		accountNumber: string;
@@ -55,7 +56,10 @@ const userSchema = new mongoose.Schema(
 		password: String,
 		otp: String,
 		profileImgUrl: String,
-
+		isEmailVerified: {
+			type: Boolean,
+			default: false
+		},
 		bankDetails: [
 			{
 				bankName: String,

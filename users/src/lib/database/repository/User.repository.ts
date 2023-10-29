@@ -1,4 +1,5 @@
 import { ISignupUser, IUser } from "../../interfaces";
+import { Password } from "../../service/password.service";
 import { User } from "../model/User";
 
 export class UserRepository {
@@ -14,11 +15,20 @@ export class UserRepository {
 		return await User.find({});
 	}
 
-	async update(user: IUser) {
-		return await User.updateOne({ email: user.email }, {$set:{ email: user.email, name: user.name, profileImgUrl: user?.photo }});
-	}
-
 	async updatePasswordByEmail(email: string, password: string) {
 		return await User.updateOne({ email }, { $set: { password } });
+	}
+
+	async updateUser(email: string,user: ISignupUser) {
+		user.password = await Password.toHash(user.password!);
+		return await User.findOneAndUpdate({ email }, { $set: user }, { new: true });
+	}
+
+	//TODO: change this to reusable one!
+	async update(user: IUser) {
+		return await User.updateOne(
+			{ email: user.email },
+			{ $set: { email: user.email, name: user.name, profileImgUrl: user?.photo } }
+		);
 	}
 }

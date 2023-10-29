@@ -9,12 +9,9 @@ export interface State {
 const getAuthFeatureState = createFeatureSelector<AuthState>('auth');
 
 //selecting each data from the slice
-export const toggleAuthPage = createSelector(
-  getAuthFeatureState,
-  (state) => {
-    return state.currentAuthTab;
-  }
-);
+export const toggleAuthPage = createSelector(getAuthFeatureState, (state) => {
+  return state.currentAuthTab;
+});
 
 export const getCurrentUserData = createSelector(
   getAuthFeatureState,
@@ -23,10 +20,10 @@ export const getCurrentUserData = createSelector(
   }
 );
 
-export const isUserLoggedIn = createSelector(
-  getAuthFeatureState,
-  (state) => {
-    return state.isUserLoggedIn;
-  }
-);
+export const isUserLoggedIn = createSelector(getAuthFeatureState, (state) => {
+  return state.isUserLoggedIn;
+});
 
+export const getUserEmail = createSelector(getAuthFeatureState, (state) => {
+  return state.currentUser.email;
+});

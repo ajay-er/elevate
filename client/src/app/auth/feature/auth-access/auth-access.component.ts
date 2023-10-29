@@ -1,15 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { State } from '../../../shared/data-access/state/auth';
+import { State, getUserEmail } from '../../../shared/data-access/state/auth';
 import { Store } from '@ngrx/store';
-import {
-  CheckLocalStorageAction,
-  SetCurrentUser,
-  SetUserLoggedInFalse,
-  ToogleAuthTab,
-} from '../../../shared/data-access/state/auth/auth.action';
-import { Subscription, filter } from 'rxjs';
+import * as AuthActions from '../../../shared/data-access/state/auth/auth.action';
+import { Subscription, filter, take } from 'rxjs';
 import {
   IConfirmPass,
   ILogin,
@@ -21,6 +16,7 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 import { SpinnerService } from 'src/app/shared/data-access/spinner.service';
 import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
+import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
 
 @Component({
   selector: 'app-auth-access',
@@ -39,6 +35,7 @@ export class AuthAccessComponent {
   private socialAuthService = inject(SocialAuthService);
   private snackbar = inject(SnackbarService);
   private spinner = inject(SpinnerService);
+  private localstorageService = inject(LocalStorageService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -46,7 +43,7 @@ export class AuthAccessComponent {
   }
 
   // The function sets the current authentication tab based on the current route segment.
-  ngOnInit(): void {
+  constructor() {
     this.setAuthTabFromRoute();
     this.subscribeSocialAuth();
   }
@@ -55,25 +52,25 @@ export class AuthAccessComponent {
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       this.authService.sendGoogleToken(user.idToken).subscribe({
         next: (res: any) => {
-          this.store.dispatch(SetUserLoggedInFalse());
-          if (user) {
+          this.store.dispatch(AuthActions.SetUserLoggedInFalse());
+          console.log(res);
+          if (res?.user) {
             const currentUser = {
-              name: user.name,
-              photo: user?.photoUrl,
-              email: user.email,
-            };
+              name: res.user?.firstName,
+              photo: res.user?.profileImgUrl,
+              email: res.user?.email,
+              isEmailVerified: res.user?.isEmailVerified,
+            } as ICurrentUser;
             //*dispatch
-            this.store.dispatch(SetCurrentUser({ currentUser }));
+            this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
             this.snackbar.showSuccess('Login successfull');
           }
         },
-        error: (err: any) => {
-          if (err.error?.message) {
-            this.snackbar.showError(err.error?.message);
-          } else {
-            this.snackbar.showError(err.message);
-          }
-          console.error('Oops something wrong', err);
+        error: (e: any) => {
+          console.error('Oops something wrong', e);
+          this.snackbar.showError(
+            'Oops something wrong! Please try again later'
+          );
         },
       });
     });
@@ -95,7 +92,7 @@ export class AuthAccessComponent {
   }
 
   private processUrlSegments(segments: string[]) {
-    if (segments.length >= 2) {
+    if (segments.length > 2) {
       const secondSegment = segments[2];
       switch (secondSegment) {
         case this.TabType.Login:
@@ -114,6 +111,8 @@ export class AuthAccessComponent {
           this.currentTab = this.TabType.VerifyOtp;
           break;
       }
+    } else {
+      this.selectedTab(this.TabType.Login);
     }
 
     //dispatch action
@@ -121,7 +120,9 @@ export class AuthAccessComponent {
   }
 
   private dispatchAuthTabChange(): void {
-    this.store.dispatch(ToogleAuthTab({ currentAuthTab: this.currentTab }));
+    this.store.dispatch(
+      AuthActions.ToogleAuthTab({ currentAuthTab: this.currentTab })
+    );
   }
 
   //The ngOnDestroy function checks if there is a routeSubscription and unsubscribes from it if it exists.
@@ -139,30 +140,31 @@ export class AuthAccessComponent {
       next: (res) => {
         this.spinner.endSpin();
         console.log(res);
-        this.snackbar.showSuccess("Login successfull");
-        let currentUser:ICurrentUser = {
-          name: res.firstName,
-          email: res.email,
+        this.snackbar.showSuccess('Login successfull');
+        let currentUser: ICurrentUser = {
+          name: res.user.firstName,
+          email: res.user.email,
+          isEmailVerified: res.user.isEmailVerified,
         };
-      
+
         if (res.profileImgUrl) {
           currentUser.photo = res.profileImgUrl;
         }
 
-        this.store.dispatch(SetCurrentUser({ currentUser }));
+        this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
       },
       error: (e) => {
-        console.error(e.error.errors[0].message);
+        console.error(e.error?.errors[0]?.message);
         this.spinner.endSpin();
-        if (e.error.errors[0].message) {
-          this.snackbar.showError(e.error.errors[0].message);
+        if (e.error?.errors[0]?.message) {
+          this.snackbar.showError(e.error?.errors[0]?.message);
         } else {
           this.snackbar.showError(e.message);
         }
       },
     });
   }
-  tempEmail!: string;
+
   //signup
   signupFormSubmit(formData: ISignup) {
     this.spinner.startSpin();
@@ -170,15 +172,20 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         this.spinner.endSpin();
-        this.tempEmail = res.user.email;
+        const currentUser = {
+          name: res.user.firstName,
+          email: res.user.email,
+          isEmailVerified: res.user.isEmailVerified,
+        };
+        this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
         this.router.navigateByUrl('/auth/verify-otp');
       },
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error.errors[0].message) {
-          this.snackbar.showError(e.error.errors[0].message);
+        if (e.error?.errors) {
+          this.snackbar.showError(e.error?.errors[0]?.message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -186,16 +193,11 @@ export class AuthAccessComponent {
     });
   }
 
-  verifyOtpSubmit(data: IVerifyOTP) {
+  verifyOtpSubmit(otpSubmisstion: IVerifyOTP) {
     this.spinner.startSpin();
+    console.log(otpSubmisstion, 'ok aahno?');
 
-    const email = this.tempEmail;
-    if (!email) {
-      this.snackbar.showError('Oops something wrong!Please try again later');
-      return;
-    }
-    data.email = email;
-    this.authService.verifyOtp(data).subscribe({
+    this.authService.verifyOtp(otpSubmisstion).subscribe({
       next: (res) => {
         console.log(res);
         this.spinner.endSpin();
@@ -203,15 +205,16 @@ export class AuthAccessComponent {
         const currentUser = {
           name: res.user.firstName,
           email: res.user.email,
+          isEmailVerified: res.user.isEmailVerified,
         };
-        this.store.dispatch(SetCurrentUser({ currentUser }));
+        this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
         this.router.navigateByUrl('/ideas');
       },
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error.errors[0].message) {
-          this.snackbar.showError(e.error.errors[0].message);
+        if (e.error?.errors[0]?.message) {
+          this.snackbar.showError(e.error?.errors[0]?.message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -231,8 +234,8 @@ export class AuthAccessComponent {
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error.errors[0].message) {
-          this.snackbar.showError(e.error.errors[0].message);
+        if (e.error?.errors[0]?.message) {
+          this.snackbar.showError(e.error?.errors[0]?.message);
         } else {
           this.snackbar.showError(e.message);
         }
@@ -252,8 +255,8 @@ export class AuthAccessComponent {
       error: (e) => {
         console.error(e);
         this.spinner.endSpin();
-        if (e.error.errors[0].message) {
-          this.snackbar.showError(e.error.errors[0].message);
+        if (e.error?.errors[0]?.message) {
+          this.snackbar.showError(e.error?.errors[0]?.message);
         } else {
           this.snackbar.showError(e.message);
         }

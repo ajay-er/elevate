@@ -13,6 +13,7 @@ export interface ICurrentUser {
   name: string;
   photo?: string;
   email: string;
+  isEmailVerified: boolean;
 }
 export interface AuthState {
   currentAuthTab: Tab;
@@ -27,6 +28,7 @@ const initialState: AuthState = {
     name: '',
     photo: '',
     email: '',
+    isEmailVerified: false,
   },
 };
 
@@ -35,14 +37,14 @@ export const authReducer = createReducer(
   on(ToogleAuthTab, (state, action): AuthState => {
     return { ...state, currentAuthTab: action.currentAuthTab };
   }),
-  on(SetCurrentUser, (state, action): AuthState => {
-    return { ...state, currentUser: action.currentUser, isUserLoggedIn: true };
-  }),
   on(SetUserLoggedInFalse, (state): AuthState => {
     return { ...state, isUserLoggedIn: false };
   }),
   on(SetUserLoggedInTrue, (state): AuthState => {
     return { ...state, isUserLoggedIn: true };
+  }),
+  on(SetCurrentUser, (state, action): AuthState => {
+    return { ...state, currentUser: action.currentUser, isUserLoggedIn: action.currentUser.isEmailVerified };
   }),
   on(UnsetCurrentUser, (state): AuthState => {
     return {
@@ -51,6 +53,7 @@ export const authReducer = createReducer(
         name: '',
         photo: '',
         email: '',
+        isEmailVerified: false,
       },
       isUserLoggedIn: false,
     };
@@ -62,6 +65,7 @@ export const authReducer = createReducer(
         name: action.currentUser.name,
         photo: action.currentUser?.photo,
         email: action.currentUser.email,
+        isEmailVerified: action.currentUser.isEmailVerified,
       },
     };
   })
