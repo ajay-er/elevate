@@ -52,15 +52,15 @@ export class AuthAccessComponent {
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       this.authService.sendGoogleToken(user.idToken).subscribe({
         next: (res: any) => {
-          this.store.dispatch(AuthActions.SetUserLoggedInFalse());
+          // this.store.dispatch(AuthActions.SetUserLoggedInFalse());
           console.log(res);
           if (res?.user) {
-            const currentUser = {
+            const currentUser:ICurrentUser = {
               name: res.user?.firstName,
               photo: res.user?.profileImgUrl,
               email: res.user?.email,
               isEmailVerified: res.user?.isEmailVerified,
-            } as ICurrentUser;
+            };
             //*dispatch
             this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
             this.snackbar.showSuccess('Login successfull');

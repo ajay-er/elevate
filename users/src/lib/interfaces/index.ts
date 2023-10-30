@@ -42,6 +42,7 @@ export interface ISignupUser{
 	password?:string,
 	firstName:string,
 	lastName?:string,
+	isEmailVerified?:boolean;
 }
 
 export interface ILoginUser{

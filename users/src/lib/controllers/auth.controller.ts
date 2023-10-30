@@ -18,24 +18,28 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 	const { googleToken } = req.body;
 	let statuscode = 200;
 	if (!googleToken) throw new BadRequestError("Please provide google id_token");
-	const user = await verifyGoogleOAuth2(googleToken, process.env.CLIENT_ID!);
-	if (!user) {
+	const oAuthuser = await verifyGoogleOAuth2(googleToken, process.env.CLIENT_ID!);
+	if (!oAuthuser) {
 		throw new BadRequestError("oops user not found in the google_token");
 	}
-	const userexist = await userRepo.findByEmail(user.email);
+	const userexist = await userRepo.findByEmail(oAuthuser.email);
 	req.session = { googleToken };
-
-	let userResult;
 	if (!userexist) {
 		//if user doen't exist,then create
-		userResult = await userRepo.signup({ email: user.email, firstName: user.name });
+		const user = await userRepo.signup({
+			email: oAuthuser.email,
+			firstName: oAuthuser.name,
+			isEmailVerified: oAuthuser.isEmailVerified
+		});
 		statuscode = 201;
-		return res.status(statuscode).json({ message: "google signup successfully completed", userResult });
+		console.log(user);
+		
+		return res.status(statuscode).json({ message: "google signup successfully completed", user });
 	} else {
 		//if user already then update
-		await userRepo.update(user);
-		userResult = { email: user.email, firstName: user.name, profileImgUrl: user.picture };
-		return res.status(statuscode).json({ message: "google login successfully completed", userResult });
+		const user = await userRepo.update(oAuthuser);
+		console.log(user);
+		return res.status(statuscode).json({ message: "google login successfully completed", user });
 	}
 });
 

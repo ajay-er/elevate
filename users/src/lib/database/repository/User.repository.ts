@@ -19,7 +19,7 @@ export class UserRepository {
 		return await User.updateOne({ email }, { $set: { password } });
 	}
 
-	async updateUser(email: string,user: ISignupUser) {
+	async updateUser(email: string, user: ISignupUser) {
 		user.password = await Password.toHash(user.password!);
 		return await User.findOneAndUpdate({ email }, { $set: user }, { new: true });
 	}
@@ -28,7 +28,8 @@ export class UserRepository {
 	async update(user: IUser) {
 		return await User.updateOne(
 			{ email: user.email },
-			{ $set: { email: user.email, name: user.name, profileImgUrl: user?.photo } }
+			{ $set: { email: user.email, name: user.name, profileImgUrl: user?.photo } },
+			{ new: true }
 		);
 	}
 }

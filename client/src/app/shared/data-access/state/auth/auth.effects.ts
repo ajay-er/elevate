@@ -28,11 +28,17 @@ export class AuthEffects {
       switchMap(() =>
         this.authService.logout().pipe(
           switchMap((r) => {
-            return [AuthActions.ClearLocalStorageAction(), AuthActions.LogoutSuccess()];
+            return [
+              AuthActions.ClearLocalStorageAction(),
+              AuthActions.LogoutSuccess(),
+            ];
           }),
           catchError((error) => {
             console.error('Logout API Error:', error);
-            return [AuthActions.ClearLocalStorageAction(), AuthActions.LogoutFailer()];
+            return [
+              AuthActions.ClearLocalStorageAction(),
+              AuthActions.LogoutFailer(),
+            ];
           })
         )
       )
@@ -54,23 +60,40 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.CheckLocalStorageAction),
       map(() => {
-        const keys = ['name', 'photo', 'email' , 'isEmailVerified'];
+        const keys = ['name', 'photo', 'email', 'isEmailVerified'];
         const currentUserData: any = {};
         for (const key of keys) {
           const value = this.localstorageService.get(key);
           if (value !== null) {
-            currentUserData[key] = key === 'isEmailVerified' ? JSON.parse(value) : value;
+            currentUserData[key] =
+              key === 'isEmailVerified'
+                ? isJSONString(value)
+                  ? JSON.parse(value)
+                  : false
+                : value;
+            function isJSONString(str: string) {
+              try {
+                JSON.parse(str);
+                return true;
+              } catch (e) {
+                return false;
+              }
+            }
           }
         }
         console.log(currentUserData);
-        
-        const isUserPresent = Object.keys(currentUserData).length > 0 && currentUserData.isEmailVerified;
-        
+
+        const isUserPresent =
+          Object.keys(currentUserData).length > 0 &&
+          currentUserData.isEmailVerified;
+
         if (isUserPresent) {
           this.store.dispatch(AuthActions.SetUserLoggedInTrue());
         }
 
-        return AuthActions.GetLocalStorageData({ currentUser: currentUserData });
+        return AuthActions.GetLocalStorageData({
+          currentUser: currentUserData,
+        });
       })
     )
   );
