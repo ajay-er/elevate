@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://users:3000/api/v1",
+    "target": "http://auth:3000/api/v1",
     "secure": false,
     "pathRewrite": {
       "^/api": ""
