@@ -18,6 +18,13 @@ const routes: Routes = [
     canActivate: [unauthenticatedGuard],
   },
   {
+    path: 'founders',
+    loadChildren: () =>
+      import('./founders/feature/founders-shell/founders-shell.module').then(
+        (m) => m.FoundersShellModule
+      ),
+  },
+  {
     path: 'ideas',
     loadChildren: () =>
       import('./ideas/feature/idea-shell/idea-shell.module').then(

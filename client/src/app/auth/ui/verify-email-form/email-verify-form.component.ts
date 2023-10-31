@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  inject,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-email-verify-form',
   templateUrl: './email-verify-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerifyEmailFormComponent {
   @Output() submitVerifyEmailForm: EventEmitter<{ email: string }> =
@@ -17,7 +24,10 @@ export class VerifyEmailFormComponent {
 
   onSubmit() {
     if (this.verifyForm.valid) {
-      window.localStorage.setItem('verify_otp_timestamp', new Date().getTime().toString());
+      window.localStorage.setItem(
+        'verify_otp_timestamp',
+        new Date().getTime().toString()
+      );
       this.submitVerifyEmailForm.emit(
         this.verifyForm.value as { email: string }
       );

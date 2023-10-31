@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  inject,
+} from '@angular/core';
 import {
   Validators,
   FormBuilder,
@@ -12,6 +18,7 @@ import { LocalStorageService } from 'src/app/shared/data-access/local-storage.se
   selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupFormComponent {
   @Output() submitSignupForm: EventEmitter<ISignup> = new EventEmitter();

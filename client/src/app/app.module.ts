@@ -27,6 +27,7 @@ import { errorReducer } from './shared/data-access/state/error/error.reducer';
 import { GlobalErrorHandler } from './shared/data-access/global-error-handler.service';
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
+import { ProfileComponent } from './founders/ui/profile/profile.component';
 
 @NgModule({
   declarations: [AppComponent],

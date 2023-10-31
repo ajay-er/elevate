@@ -1,23 +1,28 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  inject,
+} from '@angular/core';
 import {
   AbstractControlOptions,
   FormBuilder,
   Validators,
 } from '@angular/forms';
 import { CustomValidationService } from '../../data-access/custom-validation.service';
-import { ActivatedRoute } from '@angular/router';
 import { IConfirmPass } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-forgot-form',
   templateUrl: './forgot-form.component.html',
   styleUrls: ['./forgot-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotFormComponent {
   @Output() submitForgotForm: EventEmitter<IConfirmPass> = new EventEmitter();
   private fb = inject(FormBuilder);
   private customValidator = inject(CustomValidationService);
-  private activatedRoute = inject(ActivatedRoute);
 
   forgotForm = this.fb.group(
     {

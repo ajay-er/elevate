@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,6 +12,7 @@ import {
   selector: 'app-verify-otp-form',
   templateUrl: './verify-otp-form.component.html',
   styleUrls: ['./verify-otp-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VerifyOtpFormComponent {
   @Output() submitVerifyOtpForm: EventEmitter<{ otp: string }> =
