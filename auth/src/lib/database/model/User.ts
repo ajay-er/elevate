@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import { Password } from "../../service/password.service";
 import { UserAttrs } from "../../interfaces";
 
@@ -20,30 +20,6 @@ interface UserDoc extends mongoose.Document {
 	otp?: string;
 	profileImgUrl?: string;
 	isEmailVerified: boolean;
-	bankDetails?: Array<{
-		bankName: string;
-		accountNumber: string;
-	}>;
-	investments?: Array<{
-		investmentType: string;
-		amount: number;
-	}>;
-	founderOf?: Array<{
-		organization: string;
-		role: string;
-	}>;
-	blogs?: Array<{
-		title: string;
-		content: string;
-	}>;
-	address?: Array<Schema.Types.ObjectId>;
-	followers?: Array<Schema.Types.ObjectId>;
-	following?: Array<Schema.Types.ObjectId>;
-	ideasCreated?: Array<Schema.Types.ObjectId>;
-	messages?: Array<{
-		sender: Schema.Types.ObjectId;
-		message: string;
-	}>;
 }
 
 const userSchema = new mongoose.Schema(
@@ -59,64 +35,7 @@ const userSchema = new mongoose.Schema(
 		isEmailVerified: {
 			type: Boolean,
 			default: false
-		},
-		bankDetails: [
-			{
-				bankName: String,
-				accountNumber: String
-			}
-		],
-		investments: [
-			{
-				investmentType: String,
-				amount: Number
-			}
-		],
-		founderOf: [
-			{
-				organization: String,
-				role: String
-			}
-		],
-		blogs: [
-			{
-				title: String,
-				content: String
-			}
-		],
-		address: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: "User"
-			}
-		],
-		followers: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: "User"
-			}
-		],
-		following: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: "User"
-			}
-		],
-		ideasCreated: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: "Idea"
-			}
-		],
-		messages: [
-			{
-				sender: {
-					type: Schema.Types.ObjectId,
-					ref: "User"
-				},
-				message: String
-			}
-		]
+		}
 	},
 	{
 		toJSON: {
@@ -126,7 +45,8 @@ const userSchema = new mongoose.Schema(
 				delete ret.password;
 				delete ret.__v;
 			}
-		}
+		},
+		timestamps: true
 	}
 );
 

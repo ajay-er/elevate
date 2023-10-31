@@ -1,17 +1,17 @@
 version: '3'
 services:
-  users:
-    container_name: users
+  auth:
+    container_name: auth
     build:
       dockerfile: Dockerfile.dev
-      context: ./users
+      context: ./auth
     volumes:
       - /app/node_modules
-      - ./users:/app
+      - ./auth:/app
     ports:
       - '3000:3000'
     env_file:
-      - ./users/.env
+      - ./auth/.env
   client:
     container_name: client
     build:
@@ -23,9 +23,9 @@ services:
       - /app/node_modules
       - ./client:/app
 
-  users-db:
+  auth-db:
     image: mongo:latest
-    container_name: users-db
+    container_name: auth-db
     ports:
       - '27017:27017'
     volumes:
