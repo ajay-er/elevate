@@ -1,1 +1,18 @@
-<app-profile></app-profile>
+<app-profile (toggleEditBtn)="selectTab($event)">
+  <app-edit-name-input
+    class="name-input-edit"
+    *ngIf="currentTab === SelectTab.EditName"
+  ></app-edit-name-input>
+  <app-edit-email
+    class="email-input-edit"
+    *ngIf="currentTab === SelectTab.EditEmail"
+  ></app-edit-email>
+  <app-phone-input
+    class="phone-input-edit"
+    *ngIf="currentTab === SelectTab.EditPhone"
+  ></app-phone-input>
+  <app-add-address
+    class="address-input-edit"
+    *ngIf="currentTab === SelectTab.EditAddress"
+  ></app-add-address>
+</app-profile>

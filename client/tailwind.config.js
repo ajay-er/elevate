@@ -6,6 +6,7 @@ module.exports = {
     extend: {},
     fontFamily: {
       display: ["Gabarito", "sans-serif"],
+      geologica: ["Geologica", "sans-serif"],
     },
   },
   plugins: [require("flowbite/plugin"), require("@tailwindcss/forms")],

@@ -5,3 +5,11 @@ export enum Tab {
   VerifyOtp = 'verify-otp',
   Reset = 'reset-password',
 }
+
+export enum ProfileTab {
+  EditName = 'editname',
+  EditEmail = 'editemail',
+  EditPhone = 'editphone',
+  EditAddress = 'editaddress',
+  NothingSelected = 'none'
+}
