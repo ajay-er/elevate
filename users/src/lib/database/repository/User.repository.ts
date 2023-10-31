@@ -26,7 +26,7 @@ export class UserRepository {
 
 	//TODO: change this to reusable one!
 	async update(user: IUser) {
-		return await User.updateOne(
+		return await User.findOneAndUpdate(
 			{ email: user.email },
 			{ $set: { email: user.email, name: user.name, profileImgUrl: user?.photo } },
 			{ new: true }

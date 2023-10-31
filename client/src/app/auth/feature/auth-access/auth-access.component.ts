@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { State, getUserEmail } from '../../../shared/data-access/state/auth';
+import { State } from '../../../shared/data-access/state/auth';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../shared/data-access/state/auth/auth.action';
-import { Subscription, filter, take } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import {
   IConfirmPass,
   ILogin,
@@ -17,6 +17,7 @@ import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 import { SpinnerService } from 'src/app/shared/data-access/spinner.service';
 import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
 import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
+import { GlobalErrorHandler } from 'src/app/shared/data-access/global-error-handler.service';
 
 @Component({
   selector: 'app-auth-access',
@@ -36,6 +37,7 @@ export class AuthAccessComponent {
   private snackbar = inject(SnackbarService);
   private spinner = inject(SpinnerService);
   private localstorageService = inject(LocalStorageService);
+  private errorHandler = inject(GlobalErrorHandler);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -55,7 +57,7 @@ export class AuthAccessComponent {
           // this.store.dispatch(AuthActions.SetUserLoggedInFalse());
           console.log(res);
           if (res?.user) {
-            const currentUser:ICurrentUser = {
+            const currentUser: ICurrentUser = {
               name: res.user?.firstName,
               photo: res.user?.profileImgUrl,
               email: res.user?.email,
@@ -68,9 +70,7 @@ export class AuthAccessComponent {
         },
         error: (e: any) => {
           console.error('Oops something wrong', e);
-          this.snackbar.showError(
-            'Oops something wrong! Please try again later'
-          );
+          this.errorHandler.handleError(e);
         },
       });
     });
@@ -154,13 +154,8 @@ export class AuthAccessComponent {
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
       },
       error: (e) => {
-        console.error(e.error?.errors[0]?.message);
         this.spinner.endSpin();
-        if (e.error?.errors[0]?.message) {
-          this.snackbar.showError(e.error?.errors[0]?.message);
-        } else {
-          this.snackbar.showError(e.message);
-        }
+        this.errorHandler.handleError(e);
       },
     });
   }
@@ -182,13 +177,8 @@ export class AuthAccessComponent {
         this.router.navigateByUrl('/auth/verify-otp');
       },
       error: (e) => {
-        console.error(e);
         this.spinner.endSpin();
-        if (e.error?.errors) {
-          this.snackbar.showError(e.error?.errors[0]?.message);
-        } else {
-          this.snackbar.showError(e.message);
-        }
+        this.errorHandler.handleError(e);
       },
     });
   }
@@ -213,13 +203,8 @@ export class AuthAccessComponent {
         this.router.navigateByUrl('/ideas');
       },
       error: (e) => {
-        console.error(e);
         this.spinner.endSpin();
-        if (e.error?.errors[0]?.message) {
-          this.snackbar.showError(e.error?.errors[0]?.message);
-        } else {
-          this.snackbar.showError(e.message);
-        }
+        this.errorHandler.handleError(e);
       },
     });
   }
@@ -234,13 +219,8 @@ export class AuthAccessComponent {
         this.router.navigateByUrl('/auth/login');
       },
       error: (e) => {
-        console.error(e);
         this.spinner.endSpin();
-        if (e.error?.errors[0]?.message) {
-          this.snackbar.showError(e.error?.errors[0]?.message);
-        } else {
-          this.snackbar.showError(e.message);
-        }
+        this.errorHandler.handleError(e);
       },
     });
   }
@@ -255,13 +235,8 @@ export class AuthAccessComponent {
         this.router.navigateByUrl('/auth/login');
       },
       error: (e) => {
-        console.error(e);
         this.spinner.endSpin();
-        if (e.error?.errors[0]?.message) {
-          this.snackbar.showError(e.error?.errors[0]?.message);
-        } else {
-          this.snackbar.showError(e.message);
-        }
+        this.errorHandler.handleError(e);
       },
     });
   }
@@ -273,17 +248,12 @@ export class AuthAccessComponent {
       this.authService.resendOtp({ email }).subscribe({
         next: (res) => {
           console.log(res);
-          this.spinner.endSpin();        
+          this.spinner.endSpin();
           this.snackbar.showSuccess(res.message);
         },
         error: (e) => {
-          console.error(e);
           this.spinner.endSpin();
-          if (e.error?.errors) {
-            this.snackbar.showError(e.error?.errors[0]?.message);
-          } else {
-            this.snackbar.showError(e.message);
-          }
+          this.errorHandler.handleError(e);
         },
       });
     } else {

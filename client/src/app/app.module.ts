@@ -1,4 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  ErrorHandler,
+  NgModule,
+  isDevMode,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { errorReducer } from './shared/data-access/state/error/error.reducer';
-
+import { GlobalErrorHandler } from './shared/data-access/global-error-handler.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +49,10 @@ import { errorReducer } from './shared/data-access/state/error/error.reducer';
     BrowserAnimationsModule,
   ],
   providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
