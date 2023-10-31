@@ -11,7 +11,7 @@ import { FooterModule } from './shared/ui/footer/footer.module';
 import { NavModule } from './shared/ui/nav/nav.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
@@ -25,6 +25,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { errorReducer } from './shared/data-access/state/error/error.reducer';
 import { GlobalErrorHandler } from './shared/data-access/global-error-handler.service';
+import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +50,7 @@ import { GlobalErrorHandler } from './shared/data-access/global-error-handler.se
     MatSnackBarModule,
     NoopAnimationsModule,
     BrowserAnimationsModule,
+    SpinnerModule
   ],
   providers: [
     {
@@ -66,6 +70,11 @@ import { GlobalErrorHandler } from './shared/data-access/global-error-handler.se
           },
         ],
       } as SocialAuthServiceConfig,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

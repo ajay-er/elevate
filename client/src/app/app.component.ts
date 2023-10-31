@@ -9,13 +9,11 @@ import { CheckLocalStorageAction } from './shared/data-access/state/auth/auth.ac
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
   private store = inject(Store<State>);
 
   ngOnInit() {
     initFlowbite();
 
-   
     //checking user logged in or not
     this.store.dispatch(CheckLocalStorageAction());
   }

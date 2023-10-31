@@ -14,10 +14,8 @@ import {
 import { AuthService } from '../../../shared/data-access/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
-import { SpinnerService } from 'src/app/shared/data-access/spinner.service';
 import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
 import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
-import { GlobalErrorHandler } from 'src/app/shared/data-access/global-error-handler.service';
 
 @Component({
   selector: 'app-auth-access',
@@ -35,9 +33,7 @@ export class AuthAccessComponent {
   private authService = inject(AuthService);
   private socialAuthService = inject(SocialAuthService);
   private snackbar = inject(SnackbarService);
-  private spinner = inject(SpinnerService);
   private localstorageService = inject(LocalStorageService);
-  private errorHandler = inject(GlobalErrorHandler);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -54,7 +50,6 @@ export class AuthAccessComponent {
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       this.authService.sendGoogleToken(user.idToken).subscribe({
         next: (res: any) => {
-          // this.store.dispatch(AuthActions.SetUserLoggedInFalse());
           console.log(res);
           if (res?.user) {
             const currentUser: ICurrentUser = {
@@ -67,10 +62,6 @@ export class AuthAccessComponent {
             this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
             this.snackbar.showSuccess('Login successfull');
           }
-        },
-        error: (e: any) => {
-          console.error('Oops something wrong', e);
-          this.errorHandler.handleError(e);
         },
       });
     });
@@ -135,10 +126,8 @@ export class AuthAccessComponent {
   //form submissions
   //login
   loginFormSubmit(formData: ILogin) {
-    this.spinner.startSpin();
     this.authService.login(formData).subscribe({
       next: (res) => {
-        this.spinner.endSpin();
         console.log(res);
         this.snackbar.showSuccess('Login successfull');
         let currentUser: ICurrentUser = {
@@ -150,23 +139,16 @@ export class AuthAccessComponent {
         if (res.profileImgUrl) {
           currentUser.photo = res.profileImgUrl;
         }
-
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
-      },
-      error: (e) => {
-        this.spinner.endSpin();
-        this.errorHandler.handleError(e);
       },
     });
   }
 
   //signup
   signupFormSubmit(formData: ISignup) {
-    this.spinner.startSpin();
     this.authService.signup(formData).subscribe({
       next: (res) => {
         console.log(res);
-        this.spinner.endSpin();
         const currentUser = {
           name: res.user.firstName,
           email: res.user.email,
@@ -176,15 +158,10 @@ export class AuthAccessComponent {
         this.snackbar.showSuccess(res.message);
         this.router.navigateByUrl('/auth/verify-otp');
       },
-      error: (e) => {
-        this.spinner.endSpin();
-        this.errorHandler.handleError(e);
-      },
     });
   }
 
   verifyOtpSubmit(otpSubmisstion: IVerifyOTP) {
-    this.spinner.startSpin();
     const email = this.localstorageService.get('email');
     if (email) {
       otpSubmisstion.email = email;
@@ -192,7 +169,6 @@ export class AuthAccessComponent {
     this.authService.verifyOtp(otpSubmisstion).subscribe({
       next: (res) => {
         console.log(res);
-        this.spinner.endSpin();
         this.snackbar.showSuccess('Login successfully');
         const currentUser = {
           name: res.user.firstName,
@@ -202,58 +178,35 @@ export class AuthAccessComponent {
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
         this.router.navigateByUrl('/ideas');
       },
-      error: (e) => {
-        this.spinner.endSpin();
-        this.errorHandler.handleError(e);
-      },
     });
   }
 
   resetPassFormSubmit(email: { email: string }) {
-    this.spinner.startSpin();
     this.authService.forgotPass(email).subscribe({
       next: (res) => {
         console.log(res);
         this.snackbar.showSuccess(res.message);
-        this.spinner.endSpin();
         this.router.navigateByUrl('/auth/login');
-      },
-      error: (e) => {
-        this.spinner.endSpin();
-        this.errorHandler.handleError(e);
       },
     });
   }
 
   verifyForgotFormSubmit(data: IConfirmPass) {
-    this.spinner.startSpin();
     this.authService.confirmPassWord(data).subscribe({
       next: (res) => {
-        console.log(res);
-        this.spinner.endSpin();
         this.snackbar.showSuccess('Password reset succesfull,Please login');
         this.router.navigateByUrl('/auth/login');
-      },
-      error: (e) => {
-        this.spinner.endSpin();
-        this.errorHandler.handleError(e);
       },
     });
   }
 
   resendOtp() {
     const email = this.localstorageService.get('email');
-    console.log(email);
     if (email) {
       this.authService.resendOtp({ email }).subscribe({
         next: (res) => {
           console.log(res);
-          this.spinner.endSpin();
           this.snackbar.showSuccess(res.message);
-        },
-        error: (e) => {
-          this.spinner.endSpin();
-          this.errorHandler.handleError(e);
         },
       });
     } else {

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorHandler, Injectable, inject } from '@angular/core';
+import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -7,6 +7,7 @@ import { SnackbarService } from './snackbar.service';
 })
 export class GlobalErrorHandler implements ErrorHandler {
   private snackbar = inject(SnackbarService);
+  private zone = inject(NgZone);
 
   handleError(error: Error | HttpErrorResponse): void {
     let errorMsg = '';
@@ -14,7 +15,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     if (error instanceof HttpErrorResponse) {
       console.log('Error from the server', error);
 
-      if (error.error.errors[0].message) {
+      if (error.error?.errors[0]?.message) {
         errorMsg = error.error.errors[0].message;
       } else {
         errorMsg = error.message;
@@ -23,7 +24,6 @@ export class GlobalErrorHandler implements ErrorHandler {
       console.log('Error from the client', error);
       errorMsg = error.message;
     }
-
-    this.snackbar.showError(errorMsg);
+    this.zone.run(() => this.snackbar.showError(errorMsg));
   }
 }
