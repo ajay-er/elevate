@@ -74,8 +74,8 @@ router.post("/login", async (req: Request, res: Response) => {
 
 router.post("/signup", async (req: Request, res: Response) => {
 	const { email } = req.body;
-
 	let user = await userRepo.findByEmail(email);
+
 	if (user) {
 		if (user.isEmailVerified) {
 			throw new BadRequestError("Email already in use");
@@ -88,14 +88,17 @@ router.post("/signup", async (req: Request, res: Response) => {
 
 	const otp: string = generateOtp();
 	const emailTemplate = verifyEmailTemplate(otp);
-
 	// SEND EMAIL FOR EMAIL VERIFICATION
-	await sendMail({
+	const result = await sendMail({
 		to: email,
 		subject: "Elevate-verification",
 		html: emailTemplate.html,
 		text: emailTemplate.text
 	});
+	
+	if (!result) {
+		throw new BadRequestError("Oops something went wrong!Please try again later!");
+	}
 
 	user.isEmailVerified = false;
 	user.otp = otp;

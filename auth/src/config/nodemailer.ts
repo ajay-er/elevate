@@ -26,5 +26,8 @@ export const sendMail = async (options: MailInterface) => {
 		.then((info) => {
 			console.log(`Mail sent successfully!!`);
 			return info;
-		});
+		}).catch((err)=>{
+			console.error(err);
+			return null;
+		})
 };
