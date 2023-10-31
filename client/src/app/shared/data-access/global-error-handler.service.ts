@@ -14,12 +14,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     if (error instanceof HttpErrorResponse) {
       console.log('Error from the server', error);
-
-      if (error.error?.errors[0]?.message) {
-        errorMsg = error.error.errors[0].message;
-      } else {
-        errorMsg = error.message;
-      }
+      errorMsg = error.error?.errors?.[0]?.message || error.statusText
     } else {
       console.log('Error from the client', error);
       errorMsg = error.message;

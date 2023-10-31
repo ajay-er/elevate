@@ -26,6 +26,7 @@ export class AuthAccessComponent {
   protected TabType: typeof Tab = Tab;
   currentTab: Tab = Tab.Login;
   private routeSubscription!: Subscription;
+  private socialAuthSubscription!: Subscription;
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -43,28 +44,37 @@ export class AuthAccessComponent {
   // The function sets the current authentication tab based on the current route segment.
   constructor() {
     this.setAuthTabFromRoute();
+  }
+
+  ngOnInit() {
     this.subscribeSocialAuth();
   }
 
   private subscribeSocialAuth() {
-    this.socialAuthService.authState.subscribe((user: SocialUser) => {
-      this.authService.sendGoogleToken(user.idToken).subscribe({
-        next: (res: any) => {
-          console.log(res);
-          if (res?.user) {
-            const currentUser: ICurrentUser = {
-              name: res.user?.firstName,
-              photo: res.user?.profileImgUrl,
-              email: res.user?.email,
-              isEmailVerified: res.user?.isEmailVerified,
-            };
-            //*dispatch
-            this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
-            this.snackbar.showSuccess('Login successfull');
-          }
-        },
-      });
-    });
+    this.socialAuthSubscription = this.socialAuthService.authState.subscribe(
+      (user: SocialUser) => {
+        if (user) {
+          console.log(user);
+          this.authService.sendGoogleToken(user.idToken).subscribe({
+            next: (res: any) => {
+              if (res?.user) {
+                const currentUser: ICurrentUser = {
+                  name: res.user?.firstName,
+                  photo: res.user?.profileImgUrl,
+                  email: res.user?.email,
+                  isEmailVerified: res.user?.isEmailVerified,
+                };
+                //*dispatch
+                this.store.dispatch(
+                  AuthActions.SetCurrentUser({ currentUser })
+                );
+                this.snackbar.showSuccess('Login successfull');
+              }
+            },
+          });
+        }
+      }
+    );
   }
 
   private setAuthTabFromRoute(): void {
@@ -120,6 +130,9 @@ export class AuthAccessComponent {
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
+    }
+    if (this.socialAuthSubscription) {
+      this.socialAuthSubscription.unsubscribe();
     }
   }
 

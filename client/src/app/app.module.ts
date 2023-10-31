@@ -26,7 +26,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { errorReducer } from './shared/data-access/state/error/error.reducer';
 import { GlobalErrorHandler } from './shared/data-access/global-error-handler.service';
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 
 @NgModule({

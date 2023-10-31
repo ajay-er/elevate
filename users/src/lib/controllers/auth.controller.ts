@@ -16,7 +16,6 @@ const tokenRepo = new TokenRepository();
 
 router.post("/googleauth", async (req: Request, res: Response) => {
 	const { googleToken } = req.body;
-	let statuscode = 200;
 	if (!googleToken) throw new BadRequestError("Please provide google id_token");
 	const oAuthuser = await verifyGoogleOAuth2(googleToken, process.env.CLIENT_ID!);
 	if (!oAuthuser) {
@@ -31,15 +30,13 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 			firstName: oAuthuser.name,
 			isEmailVerified: oAuthuser.isEmailVerified
 		});
-		statuscode = 201;
 		console.log(user);
-		
-		return res.status(statuscode).json({ message: "google signup successfully completed", user });
+		return res.status(201).json({ message: "google signup successfully completed", user });
 	} else {
 		//if user already then update
 		const user = await userRepo.update(oAuthuser);
 		console.log(user);
-		return res.status(statuscode).json({ message: "google login successfully completed", user });
+		return res.status(200).json({ message: "google login successfully completed", user });
 	}
 });
 
