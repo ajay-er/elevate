@@ -26,7 +26,7 @@
         >
           Login
         </button>
-        <ng-container *ngIf="(isUserLoggedIn$ | async)">
+        <ng-container *ngIf="isUserLoggedIn$ | async">
           <button
             (click)="toggleProfileDropdown()"
             type="button"
@@ -37,13 +37,13 @@
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              *ngIf="(currentUser$ | async )?.photo; else fallbackImage"
-              src="{{(currentUser$ | async )?.photo}}"
+              *ngIf="(currentUser$ | async)?.photo; else fallbackImage"
+              src="{{ (currentUser$ | async)?.photo }}"
               alt="photo"
             />
             <ng-template #fallbackImage>
               <img
-                class="w-6 h-6  rounded-full"
+                class="w-6 h-6 rounded-full"
                 src="../../../../assets/images/profile/profile.png"
                 alt="photo"
               />
@@ -57,21 +57,23 @@
           >
             <div class="px-4 py-3">
               <span class="block text-sm text-white">{{
-                (currentUser$ | async )?.name
+                (currentUser$ | async)?.name
               }}</span>
               <span class="block text-sm truncate text-gray-400"
-                >{{ (currentUser$ | async )?.email }}
+                >{{ (currentUser$ | async)?.email }}
               </span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
               <li>
                 <a
+                  routerLink="/founders/profile"
                   class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
                   >Profile
                 </a>
               </li>
               <li>
-                <a (click)="logOut()"
+                <a
+                  (click)="logOut()"
                   class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
                   >Sign out
                 </a>
@@ -115,43 +117,42 @@
         >
           <li>
             <a
-              class="block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
+              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Home
             </a>
           </li>
           <li>
             <a
-              href="#"
-              class="block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
+              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Founders
             </a>
           </li>
           <li>
             <a
-              href="#"
-              class="block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
+              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Investors
             </a>
           </li>
           <li>
             <a
-              href="#"
-              class="block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
+              routerLink="/ideas"
+              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Ideas
             </a>
           </li>
           <li>
             <a
-              class="block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
+              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Blog
             </a>
           </li>
-          <li *ngIf="!(isUserLoggedIn$ | async)"
+          <li
+            *ngIf="!(isUserLoggedIn$ | async)"
             (click)="toggleNavbar()"
             routerLink="/auth/login"
             class="cursor-pointer"
           >
-            <a 
+            <a
               class="block md:hidden py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Login
             </a>
@@ -177,8 +178,8 @@
     (click)="toggleNavbar()"
   ></div>
   <div
-  [ngClass]="{ block: isDropdownOpen, hidden: !isDropdownOpen }"
-  class="fixed top-0 left-0 w-full h-full bg-black opacity-0 z-10"
-  (click)="toggleProfileDropdown()"
-></div>
+    [ngClass]="{ block: isDropdownOpen, hidden: !isDropdownOpen }"
+    class="fixed top-0 left-0 w-full h-full bg-black opacity-0 z-10"
+    (click)="toggleProfileDropdown()"
+  ></div>
 </header>

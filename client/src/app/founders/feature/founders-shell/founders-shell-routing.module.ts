@@ -9,6 +9,11 @@ const routes: Routes = [
         (m) => m.ProfileContainerModule
       ),
   },
+  {
+    path: '',
+    redirectTo: 'profile',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
