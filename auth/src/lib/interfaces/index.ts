@@ -1,6 +1,5 @@
 import { Schema } from "mongoose";
 
-
 // An interface that describes the properties
 // that are requried to create a new User
 export interface UserAttrs {
@@ -26,10 +25,7 @@ export interface UserAttrs {
 	}>;
 }
 
-
-
-
-  //auth
+//auth
 export interface IUser {
 	id: string;
 	name: string;
@@ -37,30 +33,35 @@ export interface IUser {
 	photo?: string;
 }
 
-export interface ISignupUser{
-	email:string,
-	password?:string,
-	firstName:string,
-	lastName?:string,
-	isEmailVerified?:boolean;
+export interface ISignupUser {
+	email: string;
+	password?: string;
+	firstName: string;
+	lastName?: string;
+	isEmailVerified?: boolean;
 }
 
-export interface ILoginUser{
-	email:string,
-	password:string,
+export interface ILoginUser {
+	email: string;
+	password: string;
 }
 
-export interface IToken{
-	email:string,
-	token:string,
+export interface IToken {
+	email: string;
+	token: string;
 }
 
 export interface MailInterface {
-  from?: string;
-  to: string | string[];
-  cc?: string | string[];
-  bcc?: string | string[];
-  subject: string;
-  text?: string;
-  html: string;
+	from?: string;
+	to: string | string[];
+	cc?: string | string[];
+	bcc?: string | string[];
+	subject: string;
+	text?: string;
+	html: string;
+}
+
+export enum IRole {
+	USER = "USER",
+	ADMIN = "ADMIN"
 }

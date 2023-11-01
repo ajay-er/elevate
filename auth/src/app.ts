@@ -15,6 +15,11 @@ app.use(
 	cookieSession({
 		signed: false,
 		secure: false,
+		secret: process.env.SESSION_SECRET, 
+		maxAge: 24 * 60 * 60 * 1000, 
+		name: "session_key",
+		sameSite: "strict", 
+		httpOnly: false, 
 	})
 );
 

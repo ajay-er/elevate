@@ -9,10 +9,13 @@ const routes: Routes = [
         (m) => m.AuthAccessModule
       ),
   },
-  // {
-  //   path:'admin',
-  //   loadChildren:()=> 
-  // }
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('../admin-access/admin-access.module').then(
+        (m) => m.AdminAccessModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -28,6 +28,7 @@ import { GlobalErrorHandler } from './shared/data-access/global-error-handler.se
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,6 +54,7 @@ import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.i
     SpinnerModule,
   ],
   providers: [
+    CookieService,
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler,

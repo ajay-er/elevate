@@ -8,6 +8,7 @@ import { verifyEmailTemplate } from "../../templates/verifyEmail";
 import { sendMail } from "../../config/nodemailer";
 import { TokenRepository } from "../database/repository/Token.repository";
 import { resetPassEmailTemplate } from "../../templates/resetPassEmailTemplate";
+import { IRole } from "../interfaces";
 
 let router = express.Router();
 
@@ -62,7 +63,8 @@ router.post("/login", async (req: Request, res: Response) => {
 	const userJWT = jwt.sign(
 		{
 			id: user?._id,
-			email: user?.email
+			email: user?.email,
+			role: IRole.USER
 		},
 		process.env.JWT_SECRET!
 	);
@@ -163,7 +165,8 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 	const userJWT = jwt.sign(
 		{
 			id: user?._id,
-			email: user?.email
+			email: user?.email,
+			role: IRole.USER
 		},
 		process.env.JWT_SECRET!
 	);
