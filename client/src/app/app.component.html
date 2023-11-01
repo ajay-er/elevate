@@ -1,9 +1,19 @@
 <my-spinner></my-spinner>
-<div
-  class="bg-cover bg-center bg-no-repeat"
-  style="background-image: url(./assets/images/backgrounds/bg.png)"
->
-  <app-nav></app-nav>
-  <router-outlet></router-outlet>
-  <app-footer></app-footer>
-</div>
+<ng-container *ngIf="false; else admin">
+  <div
+    class="bg-cover bg-black text-white bg-center bg-no-repeat"
+    style="background-image: url(./assets/images/backgrounds/bg.png)"
+  >
+    <app-nav></app-nav>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </div>
+</ng-container>
+
+<ng-template #admin>
+  <div class="text-black">
+    <app-admin-nav *ngIf="true"></app-admin-nav>
+    <app-admin-aside *ngIf="true"></app-admin-aside>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>

@@ -29,6 +29,9 @@ import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.interceptor';
 import { CookieService } from 'ngx-cookie-service';
+import { AdminNavModule } from './shared/ui/admin-nav/admin-nav.module';
+import { AdminAsideModule } from './shared/ui/admin-aside/admin-aside.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +40,8 @@ import { CookieService } from 'ngx-cookie-service';
     AppRoutingModule,
     FooterModule,
     NavModule,
+    AdminNavModule,
+    AdminAsideModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
     StoreModule.forFeature('auth', authReducer),
@@ -52,6 +57,7 @@ import { CookieService } from 'ngx-cookie-service';
     NoopAnimationsModule,
     BrowserAnimationsModule,
     SpinnerModule,
+    RouterModule,
   ],
   providers: [
     CookieService,

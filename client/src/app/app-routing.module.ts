@@ -32,6 +32,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/feature/admin-shell/admin-shell.module').then(
+        (m) => m.AdminShellModule
+      ),
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },
