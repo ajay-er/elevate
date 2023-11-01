@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { unauthenticatedGuard } from './shared/guards/unauthenticated.guard';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,6 +26,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'investors',
+    loadChildren: () =>
+      import('./investors/feature/investors-shell/investors-shell.module').then(
+        (m) => m.InvestorsShellModule
+      ),
+  },
+  {
     path: 'ideas',
     loadChildren: () =>
       import('./ideas/feature/idea-shell/idea-shell.module').then(
@@ -37,6 +45,7 @@ const routes: Routes = [
       import('./admin/feature/admin-shell/admin-shell.module').then(
         (m) => m.AdminShellModule
       ),
+    // canActivate: [authGuard],
   },
   {
     path: '**',
