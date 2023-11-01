@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core';
 import { SnackbarService } from './snackbar.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     if (error instanceof HttpErrorResponse) {
       console.log('Error from the server', error);
-      errorMsg = error.error?.errors?.[0]?.message || error.statusText
+      errorMsg = error.error?.errors?.[0]?.message || error.statusText;
     } else {
       console.log('Error from the client', error);
       errorMsg = error.message;

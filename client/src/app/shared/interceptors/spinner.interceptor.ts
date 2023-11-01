@@ -16,11 +16,11 @@ export class SpinnerInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // this.spinnerService.startSpin();
+    this.spinnerService.startSpin();
     return next.handle(request).pipe(
       finalize(() => {
         if (request instanceof HttpRequest) {
-          // this.spinnerService.endSpin();
+          this.spinnerService.endSpin();
         }
       })
     );

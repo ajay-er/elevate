@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { unauthenticatedGuard } from './shared/guards/unauthenticated.guard';
-import { authGuard } from './shared/guards/auth.guard';
+import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -33,8 +33,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'ideas',
-    pathMatch: 'full',
+    component: NotFoundComponent,
   },
 ];
 

@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FoundersShellRoutingModule } from './founders-shell-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    FoundersShellRoutingModule
-  ]
+  imports: [CommonModule, FoundersShellRoutingModule],
 })
-export class FoundersShellModule { }
+export class FoundersShellModule {}

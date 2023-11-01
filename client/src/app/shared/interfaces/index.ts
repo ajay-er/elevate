@@ -10,7 +10,6 @@ export interface ILogin {
   password: string;
 }
 
-
 export interface IVerifyOTP {
   otp: string;
   email?: string;
@@ -19,4 +18,12 @@ export interface IVerifyOTP {
 export interface IConfirmPass {
   newPassword: string;
   token: string;
+}
+
+export interface IUserProfile {
+  name: string;
+  email: string;
+  phone?: string;
+  photo?:string;
+  address?: any;
 }

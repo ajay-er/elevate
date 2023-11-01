@@ -1,4 +1,4 @@
-<app-profile (toggleEditBtn)="selectTab($event)">
+<app-profile (toggleEditBtn)="selectTab($event)" [userData]="currentUserProfile">
   <app-edit-name-input
     class="name-input-edit"
     *ngIf="currentTab === SelectTab.EditName"
