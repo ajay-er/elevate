@@ -27,6 +27,7 @@ import { errorReducer } from './shared/data-access/state/error/error.reducer';
 import { GlobalErrorHandler } from './shared/data-access/global-error-handler.service';
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
+import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -73,6 +74,11 @@ import { SpinnerModule } from './shared/ui/spinner/spinner.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingButtonInterceptor,
       multi: true,
     },
   ],

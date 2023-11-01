@@ -57,12 +57,15 @@ export class ProfileComponent {
 
   sendTobackend(event?: any) {
     const formData = new FormData();
+    formData.append('image', event);
+    this.updateImage.emit(formData);
     if (this.croppedImage) {
-      formData.append('image', this.croppedImage);
-      this.updateImage.emit(formData);
+      // this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+      //   event?.objectUrl!
+      // );
+      // formData.append('image', this.croppedImage);
+      // this.updateImage.emit(formData);
     } else {
-      formData.append('image', event);
-      this.updateImage.emit(formData);
     }
   }
 }
