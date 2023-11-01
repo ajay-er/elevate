@@ -8,11 +8,24 @@
         >We'll reach out if there are any issues upon any updates you make.</P
       >
     </div>
-    <img
-      src="../../../../assets/images/profile/profile.png"
-      alt="profile"
-      class="sm:w-32 sm:h-32 w-24 h-24 mx-auto rounded-full dark:bg-gray-500 aspect-square"
-    />
+    <label for="profile-image" class="relative">
+      <img
+        [src]="
+          userData.photo || '../../../../assets/images/profile/profile.png'
+        "
+        alt="profile"
+        class="sm:w-32 sm:h-32 w-24 h-24 mx-auto rounded-full dark:bg-gray-500 aspect-square cursor-pointer"
+      />
+      <input
+        type="file"
+        id="profile-image"
+        name="profile-image"
+        class="hidden"
+        (change)="onImageSelected($event)"
+        accept="image/*"
+      />
+    </label>
+
     <div class="divide-y divide-gray-700">
       <div class="px-6 pt-4 flex justify-between">
         <div>
@@ -42,7 +55,7 @@
           <label class="text-lg">Email</label>
           <p class="text-sm text-gray-400">{{ userData.email }}</p>
         </div>
-        <button (click)="toogleEditButton(SelectTab.EditEmail)">
+        <!-- <button (click)="toogleEditButton(SelectTab.EditEmail)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -57,7 +70,7 @@
               d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
             />
           </svg>
-        </button>
+        </button> -->
       </div>
       <ng-content select=".email-input-edit"></ng-content>
       <div class="px-6 pt-4 flex justify-between">

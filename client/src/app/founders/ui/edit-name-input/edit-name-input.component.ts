@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-edit-name-input',
@@ -6,4 +11,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./edit-name-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditNameInputComponent {}
+export class EditNameInputComponent {
+  @Output() updateName = new EventEmitter<any>();
+  firstName!: string;
+  lastName!: string;
+  submit() {
+    this.updateName.emit({
+      firstName: this.firstName,
+      lastName: this.lastName,
+    });
+  }
+}

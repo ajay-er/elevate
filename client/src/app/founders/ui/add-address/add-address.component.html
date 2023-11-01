@@ -1,41 +1,47 @@
 <form class="px-6 my-4 flex flex-col">
   <input
     name="address1"
+    [(ngModel)]="addressData.address1"
     type="text"
     class="form-input mb-4 sm:w-90% w-full border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     placeholder="Address line 1"
   />
   <input
     name="address2"
+    [(ngModel)]="addressData.address2"
     type="text"
     class="form-input mb-4 sm:w-90% w-full border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     placeholder="Address line 2"
   />
   <input
     name="city"
+    [(ngModel)]="addressData.city"
     type="text"
     class="form-input mb-4 sm:w-90% w-full border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     placeholder="City"
   />
   <input
     name="state"
+    [(ngModel)]="addressData.state"
     type="text"
     class="form-input mb-4 sm:w-90% w-full border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     placeholder="State"
   />
   <input
     name="zip"
+    [(ngModel)]="addressData.zip"
     type="text"
     class="form-input mb-4 sm:w-90% w-full border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     placeholder="Zip/Postal code"
   />
   <input
     name="country"
+    [(ngModel)]="addressData.country"
     type="text"
     class="form-input mb-4 sm:w-90% w-full border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
     placeholder="Country"
   />
   <div class="mb-6">
-    <app-loading-button label="SAVE"></app-loading-button>
+    <app-loading-button label="SAVE" (click)="saveAddress()"></app-loading-button>
   </div>
 </form>

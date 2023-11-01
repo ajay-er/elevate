@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, } from '@angular/core';
 import { LoadingButtonService } from '../../data-access/loading-button.service';
 
 @Component({

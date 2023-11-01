@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-phone-input',
@@ -6,4 +11,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./edit-phone.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditPhoneComponent {}
+export class EditPhoneComponent {
+  @Output() updatePhoneNum = new EventEmitter<any>();
+  phone!: number;
+  updatePhoneNumber() {
+    this.updatePhoneNum.emit({ phone: this.phone });
+  }
+}

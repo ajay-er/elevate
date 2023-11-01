@@ -24,6 +24,26 @@ export interface IUserProfile {
   name: string;
   email: string;
   phone?: string;
-  photo?:string;
+  photo?: string;
   address?: any;
+}
+
+export interface IUpdateName {
+  firstName: string;
+  lastName: string;
+}
+export interface IUpdatePhone {
+  phone: string;
+}
+export interface IUpdateImage {
+  photo: string;
+}
+
+export interface IAddress {
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
 }
