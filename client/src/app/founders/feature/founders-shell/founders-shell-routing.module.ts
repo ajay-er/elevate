@@ -13,7 +13,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'profile',
+    loadChildren: () =>
+      import('../founders-list/founders-list.module').then(
+        (m) => m.FoundersListModule
+      ),
+  },
+  {
+    path: '',
+    redirectTo: 'founders',
     pathMatch: 'full',
   },
 ];
