@@ -10,7 +10,6 @@ export const unauthenticatedGuard: CanActivateFn = (route, state) => {
   return store.select(isUserLoggedIn).pipe(
     take(1),
     map((isUserLoggedIn) => {
-      console.log(isUserLoggedIn);
       if (isUserLoggedIn) {
         router.navigateByUrl('/ideas');
         return false;

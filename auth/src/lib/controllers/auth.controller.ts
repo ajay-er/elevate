@@ -23,7 +23,18 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 		throw new BadRequestError("oops user not found in the google_token");
 	}
 	const userexist = await userRepo.findByEmail(oAuthuser.email);
-	req.session = { googleToken };
+
+	let accessToken = jwt.sign(
+		{
+			id: userexist?._id,
+			email: userexist?.email,
+			role: IRole.USER
+		},
+		process.env.JWT_SECRET!
+	);
+
+	accessToken = "google:" + accessToken;
+
 	if (!userexist) {
 		//if user doen't exist,then create
 		const user = await userRepo.signup({
@@ -32,12 +43,12 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 			isEmailVerified: oAuthuser.isEmailVerified
 		});
 		console.log(user);
-		return res.status(201).json({ message: "google signup successfully completed", user });
+		return res.status(201).json({ message: "google signup successfully completed", user, accessToken });
 	} else {
 		//if user already then update
 		const user = await userRepo.update(oAuthuser);
 		console.log(user);
-		return res.status(200).json({ message: "google login successfully completed", user });
+		return res.status(200).json({ message: "google login successfully completed", user, accessToken });
 	}
 });
 
@@ -60,7 +71,7 @@ router.post("/login", async (req: Request, res: Response) => {
 		throw new BadRequestError("Invalid credentials");
 	}
 
-	const userJWT = jwt.sign(
+	let accessToken = jwt.sign(
 		{
 			id: user?._id,
 			email: user?.email,
@@ -69,9 +80,9 @@ router.post("/login", async (req: Request, res: Response) => {
 		process.env.JWT_SECRET!
 	);
 
-	req.session = { jwt: userJWT };
+	accessToken = "access:" + accessToken;
 
-	res.status(200).json({ message: `Login succesfull`, user });
+	res.status(200).json({ message: `Login succesfull`, user, accessToken });
 });
 
 router.post("/signup", async (req: Request, res: Response) => {
@@ -97,7 +108,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 		html: emailTemplate.html,
 		text: emailTemplate.text
 	});
-	
+
 	if (!result) {
 		throw new BadRequestError("Oops something went wrong!Please try again later!");
 	}
@@ -162,7 +173,7 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 	user.otp = null;
 	await user.save();
 
-	const userJWT = jwt.sign(
+	let accessToken = jwt.sign(
 		{
 			id: user?._id,
 			email: user?.email,
@@ -171,9 +182,9 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 		process.env.JWT_SECRET!
 	);
 
-	req.session = { jwt: userJWT };
+	accessToken = "access:" + accessToken;
 
-	res.status(200).json({ message: "OTP verified successfully", user });
+	res.status(200).json({ message: "OTP verified successfully", user, accessToken });
 });
 
 router.post("/forgot-password", async (req: Request, res: Response) => {
@@ -257,7 +268,6 @@ router.post("/confirm-password", async (req: Request, res: Response) => {
 });
 
 router.post("/logout", async (req: Request, res: Response) => {
-	req.session = null;
 	res.status(200).json({ message: "logout succefully" });
 });
 

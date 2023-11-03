@@ -1,12 +1,9 @@
-import { Injectable, inject } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  private cookieService = inject(CookieService);
-
   saveKeys(data: any) {
     for (const key in data) {
       this.save(key, data[key]);
@@ -34,9 +31,5 @@ export class LocalStorageService {
       'verify_otp_timestamp',
       new Date().getTime().toString()
     );
-  }
-
-  getCookies() {
-    console.log(this.cookieService.getAll());
   }
 }

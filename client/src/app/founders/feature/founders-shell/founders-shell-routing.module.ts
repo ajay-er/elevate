@@ -9,7 +9,7 @@ const routes: Routes = [
       import('../profile-container/profile-container.module').then(
         (m) => m.ProfileContainerModule
       ),
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
   },
   {
     path: '',

@@ -6,7 +6,6 @@ export const verifyOTPGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const localStoreService = inject(LocalStorageService);
   const verificationTimestamp = localStoreService.getOtpVerifyTimeLimitToken();
-  console.log(verificationTimestamp,'time stamp');
   if (verificationTimestamp) {
     const currentTime = new Date().getTime();
     const difference = currentTime - parseInt(verificationTimestamp, 10);

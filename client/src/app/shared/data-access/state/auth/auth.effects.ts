@@ -22,6 +22,18 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  storeToken$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.SetAccessToken),
+        tap((action) => {
+          this.localstorageService.save(action.tokenType,action.accessToken);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   clearLocalStorageOnLogout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.UnsetCurrentUser),

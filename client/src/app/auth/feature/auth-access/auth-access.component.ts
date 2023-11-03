@@ -68,6 +68,12 @@ export class AuthAccessComponent {
                 this.store.dispatch(
                   AuthActions.SetCurrentUser({ currentUser })
                 );
+                this.store.dispatch(
+                  AuthActions.SetAccessToken({
+                    accessToken: res.accessToken,
+                    tokenType: 'access_token',
+                  })
+                );
                 this.snackbar.showSuccess('Login successfull');
               }
             },
@@ -152,6 +158,14 @@ export class AuthAccessComponent {
         if (res.profileImgUrl) {
           currentUser.photo = res.profileImgUrl;
         }
+
+        this.store.dispatch(
+          AuthActions.SetAccessToken({
+            accessToken:res.accessToken,
+            tokenType: 'access_token',
+          })
+        );
+
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
       },
     });
@@ -167,6 +181,7 @@ export class AuthAccessComponent {
           email: res.user.email,
           isEmailVerified: res.user.isEmailVerified,
         };
+
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
         this.router.navigateByUrl('/auth/verify-otp');
@@ -182,6 +197,12 @@ export class AuthAccessComponent {
     this.authService.verifyOtp(otpSubmisstion).subscribe({
       next: (res) => {
         console.log(res);
+        this.store.dispatch(
+          AuthActions.SetAccessToken({
+            accessToken: res.accessToken,
+            tokenType: 'access_token',
+          })
+        );
         this.snackbar.showSuccess('Login successfully');
         const currentUser = {
           name: res.user.firstName,

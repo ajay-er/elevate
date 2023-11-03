@@ -12,6 +12,11 @@ export const SetCurrentUser = createAction(
   props<{ currentUser: ICurrentUser }>()
 );
 
+export const SetAccessToken = createAction(
+  '[Auth] Save Token In Local Store',
+  props<{ accessToken: string; tokenType: 'access_token' }>()
+);
+
 export const UnsetCurrentUser = createAction('[Auth] Unset Current User');
 
 export const SetUserLoggedInFalse = createAction('[Auth] SetUserLoggedInFalse');
