@@ -1,6 +1,6 @@
-import { ISignupUser, IUser } from "../../interfaces";
+import { ISignupUser, IUpdateUser } from "../../interfaces";
 import { Password } from "../../service/password.service";
-import { User } from "../model/User";
+import { User, UserDoc } from "../model/User";
 
 export class UserRepository {
 	async findByEmail(email: string): Promise<any> {
@@ -25,11 +25,15 @@ export class UserRepository {
 	}
 
 	//TODO: change this to reusable one!
-	async update(user: IUser) {
+	async update(user: IUpdateUser) {
 		return await User.findOneAndUpdate(
 			{ email: user.email },
 			{ $set: { email: user.email, name: user.name, profileImgUrl: user?.photo } },
 			{ new: true }
 		);
+	}
+
+	async save(user: UserDoc) {
+		return await user.save();
 	}
 }

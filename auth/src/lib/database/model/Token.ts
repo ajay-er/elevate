@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 // Define the user schema
 const tokenSchema = new Schema({
@@ -13,7 +13,7 @@ const tokenSchema = new Schema({
 });
 
 
-interface IToken extends Document {
+interface IToken extends mongoose.Document {
 	email: string;
 	token: string;
 }

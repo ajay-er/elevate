@@ -2,13 +2,14 @@ import { IToken } from "../../interfaces";
 import Token from "../model/Token";
 
 export class TokenRepository {
-	async createNew(token: IToken): Promise<any> {
+	async createNew(token: IToken): Promise<IToken> {
 		return await Token.create(token);
 	}
-	async findByEmail(email: string): Promise<any> {
+	async findByEmail(email: string): Promise<IToken | null> {
 		return await Token.findOne({ email });
 	}
-	async findByEmailAndToken(email: string, token: string): Promise<any> {
+	
+	async findByEmailAndToken(email: string, token: string): Promise<IToken | null> {
 		return await Token.findOne({ email, token });
 	}
 

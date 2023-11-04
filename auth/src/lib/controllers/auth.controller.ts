@@ -1,28 +1,30 @@
 import express, { Request, Response } from "express";
-import { BadRequestError, verifyGoogleOAuth2 } from "@ajay404/elevate";
-import { UserRepository } from "../database/repository/User.repository";
+import { BadRequestError } from "@ajay404/elevate";
 import jwt from "jsonwebtoken";
 import { Password } from "../service/password.service";
 import { generateOtp } from "../../utils/generateOtp";
 import { verifyEmailTemplate } from "../../templates/verifyEmail";
 import { sendMail } from "../../config/nodemailer";
-import { TokenRepository } from "../database/repository/Token.repository";
 import { resetPassEmailTemplate } from "../../templates/resetPassEmailTemplate";
 import { IRole } from "../interfaces";
+import { AuthService } from "../service/auth.service";
+import { container } from "tsyringe";
+import { TokenService } from "../service/token.service";
 
 let router = express.Router();
 
-const userRepo = new UserRepository();
-const tokenRepo = new TokenRepository();
+const authService = container.resolve(AuthService);
+const tokenService = container.resolve(TokenService);
 
 router.post("/googleauth", async (req: Request, res: Response) => {
 	const { googleToken } = req.body;
 	if (!googleToken) throw new BadRequestError("Please provide google id_token");
-	const oAuthuser = await verifyGoogleOAuth2(googleToken, process.env.CLIENT_ID!);
-	if (!oAuthuser) {
-		throw new BadRequestError("oops user not found in the google_token");
-	}
-	const userexist = await userRepo.findByEmail(oAuthuser.email);
+
+	const oAuthuser = await authService.verifyOauthToken(googleToken, process.env.CLIENT_ID!);
+
+	if (!oAuthuser) throw new BadRequestError("oops user not found in the google_token");
+
+	const userexist = await authService.findUserByEmail(oAuthuser.email);
 
 	let accessToken = jwt.sign(
 		{
@@ -37,7 +39,7 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 
 	if (!userexist) {
 		//if user doen't exist,then create
-		const user = await userRepo.signup({
+		const user = await authService.signup({
 			email: oAuthuser.email,
 			firstName: oAuthuser.name,
 			isEmailVerified: oAuthuser.isEmailVerified
@@ -46,7 +48,7 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 		return res.status(201).json({ message: "google signup successfully completed", user, accessToken });
 	} else {
 		//if user already then update
-		const user = await userRepo.update(oAuthuser);
+		const user = await authService.update(oAuthuser);
 		console.log(user);
 		return res.status(200).json({ message: "google login successfully completed", user, accessToken });
 	}
@@ -55,7 +57,7 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
-	const user = await userRepo.findByEmail(email);
+	const user = await authService.findUserByEmail(email);
 
 	if (!user || !user?.password) {
 		throw new BadRequestError("Invalid credentials");
@@ -87,16 +89,17 @@ router.post("/login", async (req: Request, res: Response) => {
 
 router.post("/signup", async (req: Request, res: Response) => {
 	const { email } = req.body;
-	let user = await userRepo.findByEmail(email);
+
+	let user = await authService.findUserByEmail(email);
 
 	if (user) {
 		if (user.isEmailVerified) {
 			throw new BadRequestError("Email already in use");
 		} else {
-			await userRepo.updateUser(email, req.body);
+			await authService.updateUser(email, req.body);
 		}
 	} else {
-		user = await userRepo.signup(req.body);
+		user = await authService.signup(req.body);
 	}
 
 	const otp: string = generateOtp();
@@ -116,7 +119,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 	user.isEmailVerified = false;
 	user.otp = otp;
 
-	await user.save();
+	user = await authService.saveUser(user);
 
 	res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
 });
@@ -124,7 +127,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 router.post("/resend-otp", async (req: Request, res: Response) => {
 	const { email } = req.body;
 
-	const user = await userRepo.findByEmail(email);
+	let user = await authService.findUserByEmail(email);
 
 	if (!user) {
 		throw new BadRequestError("Email not registered! Please signup");
@@ -147,7 +150,7 @@ router.post("/resend-otp", async (req: Request, res: Response) => {
 
 	user.otp = otp;
 
-	await user.save();
+	user = await authService.saveUser(user);
 
 	res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
 });
@@ -155,7 +158,7 @@ router.post("/resend-otp", async (req: Request, res: Response) => {
 router.post("/verify-otp", async (req: Request, res: Response) => {
 	const { email, otp } = req.body;
 
-	const user = await userRepo.findByEmail(email);
+	const user = await authService.findUserByEmail(email);
 
 	if (!user) {
 		throw new BadRequestError("Email not registered! Please signup");
@@ -171,7 +174,8 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 
 	user.isEmailVerified = true;
 	user.otp = null;
-	await user.save();
+
+	await authService.saveUser(user);
 
 	let accessToken = jwt.sign(
 		{
@@ -190,7 +194,7 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 router.post("/forgot-password", async (req: Request, res: Response) => {
 	const { email } = req.body;
 
-	const user = await userRepo.findByEmail(email);
+	const user = await authService.findUserByEmail(email);
 
 	if (!user) {
 		throw new BadRequestError("Email not registered!Please signup");
@@ -204,7 +208,7 @@ router.post("/forgot-password", async (req: Request, res: Response) => {
 		{ expiresIn: "15m" }
 	);
 
-	await tokenRepo.createNew({ email, token: resetToken });
+	await tokenService.createNew({ email, token: resetToken });
 
 	const emailTemplate = resetPassEmailTemplate(resetToken);
 
@@ -235,7 +239,7 @@ router.post("/reset-password", async (req: Request, res: Response) => {
 		throw new BadRequestError("Token has expired.");
 	}
 
-	const storedToken = await tokenRepo.findByEmailAndToken(email, token);
+	const storedToken = await tokenService.findByEmailAndToken(email, token);
 
 	if (!storedToken) {
 		throw new BadRequestError("Token not found or has been used.");
@@ -254,7 +258,7 @@ router.post("/confirm-password", async (req: Request, res: Response) => {
 	}
 	const email = decoded.email;
 
-	const storedToken = await tokenRepo.findByEmailAndToken(email, token);
+	const storedToken = await tokenService.findByEmailAndToken(email, token);
 
 	if (!storedToken) {
 		throw new BadRequestError("Invalid or token");
@@ -262,7 +266,7 @@ router.post("/confirm-password", async (req: Request, res: Response) => {
 
 	const hashedPassword = await Password.toHash(newPassword);
 
-	await userRepo.updatePasswordByEmail(email, hashedPassword);
+	await authService.updatePasswordByEmail(email, hashedPassword);
 
 	res.status(200).json({ message: "Password reset successful" });
 });

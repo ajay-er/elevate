@@ -1,16 +1,9 @@
 import mongoose from "mongoose";
 import { Password } from "../../service/password.service";
-import { UserAttrs } from "../../interfaces";
-
-// An interface that describes the properties
-// that a User Model has
-interface UserModel extends mongoose.Model<UserDoc> {
-	build(attrs: UserAttrs): UserDoc;
-}
 
 // An interface that describes the properties
 // that a User Document has
-interface UserDoc extends mongoose.Document {
+export interface UserDoc extends mongoose.Document {
 	userName?: string;
 	firstName?: string;
 	lastName?: string;
@@ -58,10 +51,6 @@ userSchema.pre("save", async function (next) {
 	next();
 });
 
-userSchema.statics.build = (attrs: UserAttrs) => {
-	return new User(attrs);
-};
-
-const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
+const User = mongoose.model<UserDoc>("User", userSchema);
 
 export { User };
