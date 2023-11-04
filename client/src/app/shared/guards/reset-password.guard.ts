@@ -28,7 +28,7 @@ export const resetPasswordGuard: CanActivateFn = async (route, state) => {
     if (isValid) {
       return true;
     } else {
-      router.navigateByUrl('ideas');
+      router.navigateByUrl('/ideas');
       return false;
     }
   } catch (error) {

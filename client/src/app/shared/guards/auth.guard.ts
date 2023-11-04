@@ -8,10 +8,16 @@ export const authGuard: CanActivateFn = (route, state) => {
   const jwtService = inject(JwtService);
   const localStoreService = inject(LocalStorageService);
   const token = localStoreService.get('access_token');
-  if (token && jwtService.isUser(token)) {
-    return true;
-  } else {
-    router.navigateByUrl('/ideas');
+
+  if (!token) {
+    router.navigateByUrl('/auth/login');
     return false;
   }
+
+  if (jwtService.isTokenExpired(token) && jwtService.isUser(token)) {
+    return true;
+  }
+
+  router.navigateByUrl('/auth/login');
+  return false;
 };

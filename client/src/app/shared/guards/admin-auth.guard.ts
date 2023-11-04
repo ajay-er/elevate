@@ -8,10 +8,16 @@ export const adminAuthGuard: CanActivateFn = (route, state) => {
   const jwtService = inject(JwtService);
   const localStoreService = inject(LocalStorageService);
   const token = localStoreService.get('access_token');
-  if (token && jwtService.isAdmin(token)) {
-    return true;
-  } else {
-    router.navigateByUrl('/ideas');
+
+  if (!token) {
+    router.navigateByUrl('/auth/admin/login');
     return false;
   }
+
+  if (jwtService.isTokenExpired(token) && jwtService.isAdmin(token)) {
+    return true;
+  }
+
+  router.navigateByUrl('/auth/admin/login');
+  return false;
 };

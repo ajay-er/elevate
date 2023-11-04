@@ -15,7 +15,6 @@ export const verifyOTPGuard: CanActivateFn = (route, state) => {
       return true;
     }
   }
-  //TODO:need to change this router to after add error page --> router.navigate(['/error']);
-  router.navigate(['/auth/signup']);
+  router.navigate(['/not-found']);
   return false;
 };

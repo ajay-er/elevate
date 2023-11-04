@@ -49,6 +49,10 @@ const routes: Routes = [
     data: { layout: 'admin' },
   },
   {
+    path: 'not-found',
+    component: NotFoundComponent,
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },

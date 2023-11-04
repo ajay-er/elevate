@@ -4,6 +4,7 @@ import { initFlowbite } from 'flowbite';
 import { State } from './shared/data-access/state/auth';
 import { CheckLocalStorageAction } from './shared/data-access/state/auth/auth.action';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +16,16 @@ export class AppComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   currentLayout:string = 'user';
+  private routerSubscription!: Subscription;
+  
   ngOnInit() {
     initFlowbite();
 
-    this.router.events.subscribe((event) => {
+    this.routerSubscription =  this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route = this.activatedRoute;
         while (route.firstChild) {
           route.firstChild.data.subscribe((data) => {
-            console.log(data['layout']);
             if (data['layout']) {
               this.currentLayout = data['layout'];
             }
@@ -36,5 +38,11 @@ export class AppComponent {
 
     //checking user logged in or not
     this.store.dispatch(CheckLocalStorageAction());
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

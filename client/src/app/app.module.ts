@@ -28,8 +28,8 @@ import { GlobalErrorHandler } from './shared/data-access/global-error-handler.se
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.interceptor';
-import { AdminNavModule } from './shared/ui/admin-nav/admin-nav.module';
-import { AdminAsideModule } from './shared/ui/admin-aside/admin-aside.module';
+import { AdminNavModule } from './admin/ui/admin-nav/admin-nav.module';
+import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
