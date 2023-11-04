@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { NotFoundError, errorHandler } from "@ajay404/elevate";
 import express, { Request, Response } from "express";
 import morgan from "morgan";

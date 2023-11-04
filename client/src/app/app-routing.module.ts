@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { unauthenticatedGuard } from './shared/guards/unauthenticated.guard';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
-import { authGuard } from './shared/guards/auth.guard';
+import { adminAuthGuard } from './shared/guards/admin-auth.guard';
 
 const routes: Routes = [
   {
@@ -45,7 +45,8 @@ const routes: Routes = [
       import('./admin/feature/admin-shell/admin-shell.module').then(
         (m) => m.AdminShellModule
       ),
-    // canActivate: [authGuard],
+    canActivate: [adminAuthGuard],
+    data: { layout: 'admin' },
   },
   {
     path: '**',

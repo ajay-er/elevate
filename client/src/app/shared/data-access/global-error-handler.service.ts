@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core';
 import { SnackbarService } from './snackbar.service';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',

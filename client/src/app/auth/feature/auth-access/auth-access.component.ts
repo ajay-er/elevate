@@ -44,9 +44,6 @@ export class AuthAccessComponent {
   // The function sets the current authentication tab based on the current route segment.
   constructor() {
     this.setAuthTabFromRoute();
-  }
-
-  ngOnInit() {
     this.subscribeSocialAuth();
   }
 
@@ -57,6 +54,8 @@ export class AuthAccessComponent {
           console.log(user);
           this.authService.sendGoogleToken(user.idToken).subscribe({
             next: (res: any) => {
+              console.log(res);
+              
               if (res?.user) {
                 const currentUser: ICurrentUser = {
                   name: res.user?.firstName,
@@ -155,8 +154,8 @@ export class AuthAccessComponent {
           isEmailVerified: res.user.isEmailVerified,
         };
 
-        if (res.profileImgUrl) {
-          currentUser.photo = res.profileImgUrl;
+        if (res.user.profileImgUrl) {
+          currentUser.photo = res.user.profileImgUrl;
         }
 
         this.store.dispatch(
@@ -164,7 +163,7 @@ export class AuthAccessComponent {
             accessToken:res.accessToken,
             tokenType: 'access_token',
           })
-        );
+        );        
 
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
       },

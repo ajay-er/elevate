@@ -9,7 +9,7 @@ interface JwtPayload {
   providedIn: 'root',
 })
 export class JwtService {
-  getUserRole(token: string): string {
+   getUserRole(token: string): string {
     if (token) {
       let tokenPrefix = '';
       if (token.startsWith('access:')) {
@@ -26,5 +26,22 @@ export class JwtService {
     }
 
     return '';
+  }
+
+   isTokenExpired(expirationTime: number): boolean {
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    if (expirationTime !== undefined) {
+      return expirationTime < currentTimestamp;
+    }
+
+    return false;
+  }
+
+   isAdmin(token:string):boolean{
+    return this.getUserRole(token) === 'ADMIN'
+  }
+
+   isUser(token:string):boolean{
+    return this.getUserRole(token) === 'USER'
   }
 }
