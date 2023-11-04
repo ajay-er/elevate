@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: investors-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: investors
+  template:
+    metadata:
+      labels:
+        app: investors
+    spec:
+      containers:
+        - name: investors
+          image: ajay404/investors
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: investors-srv
+spec:
+  selector:
+    app: investors
+  ports:
+    - name: investors
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

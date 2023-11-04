@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: founders-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: founders
+  template:
+    metadata:
+      labels:
+        app: founders
+    spec:
+      containers:
+        - name: founders
+          image: ajay404/founders
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: founders-srv
+spec:
+  selector:
+    app: founders
+  ports:
+    - name: founders
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
