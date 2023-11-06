@@ -49,8 +49,7 @@ export class AuthService {
     return this.http.post('/api/auth/confirm-password', data);
   }
 
-  adminLogin(data:ILogin):Observable<any>{
-    return this.http.post('/api/auth/admin/login', data);
+  adminLogin(data: ILogin): Observable<any> {
+    return this.http.post('/api/auth/admin-login', data);
   }
 }
-

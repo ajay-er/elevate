@@ -5,6 +5,7 @@ import { State } from './shared/data-access/state/auth';
 import { CheckLocalStorageAction } from './shared/data-access/state/auth/auth.action';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,12 @@ export class AppComponent {
   private routerSubscription!: Subscription;
   
   ngOnInit() {
+
+    if(environment.production) {
+      console.log('RUNNING IN PRODUCTION MODE!');
+      
+    }
+
     initFlowbite();
 
     this.routerSubscription =  this.router.events.subscribe((event) => {

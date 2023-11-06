@@ -33,6 +33,10 @@ export class UserRepository {
 		);
 	}
 
+	async updateData(email: string, user: Partial<UserDoc>) {
+		return await User.findOneAndUpdate({ email }, { $set: user }, { new: true });
+	}
+
 	async save(user: UserDoc) {
 		return await user.save();
 	}

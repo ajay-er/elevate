@@ -4,6 +4,7 @@ import express, { Request, Response } from "express";
 import morgan from "morgan";
 import "express-async-errors";
 import { authRoute } from "./lib/controllers/auth.controller";
+import { profileRoute } from "./lib/controllers/profile.controller";
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(morgan("dev"));
 
 // routes
 app.use("/api/v1/auth", authRoute);
+
+app.use("/api/v1/profile", profileRoute);
 
 app.all("*", async (req: Request, res: Response) => {
 	throw new NotFoundError();

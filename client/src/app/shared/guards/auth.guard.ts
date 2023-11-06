@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  if (jwtService.isTokenExpired(token) && jwtService.isUser(token)) {
+  if (jwtService.isUser(token) && !jwtService.isTokenExpired(token)) {
     return true;
   }
 

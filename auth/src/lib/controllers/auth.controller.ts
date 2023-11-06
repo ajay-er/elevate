@@ -271,6 +271,27 @@ router.post("/confirm-password", async (req: Request, res: Response) => {
 	res.status(200).json({ message: "Password reset successful" });
 });
 
+router.post("/admin-login", async (req: Request, res: Response) => {
+	const { email, password } = req.body;
+
+	if (email !== process.env.ADMIN || password !== process.env.ADMIN_PASSWORD) {
+		throw new BadRequestError("Invalid credentials");
+	}
+
+	let accessToken = jwt.sign(
+		{
+			email: process.env.ADMIN,
+			role: IRole.ADMIN
+		},
+		process.env.JWT_SECRET!
+	);
+
+	accessToken = "access:" + accessToken;
+
+	res.status(200).json({ message: `Login succesfull`, accessToken });
+});
+
+
 router.post("/logout", async (req: Request, res: Response) => {
 	res.status(200).json({ message: "logout succefully" });
 });

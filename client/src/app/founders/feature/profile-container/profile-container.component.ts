@@ -27,12 +27,19 @@ export class ProfileContainerComponent {
     this.getUserProfile();
   }
 
+  selectTab(tab: ProfileTab) {
+    if (this.currentTab === tab) {
+      this.currentTab = this.SelectTab.NothingSelected;
+      return;
+    }
+    this.currentTab = tab;
+  }
+
   getUserProfile() {
     this.currentUserProfile = {
-      email: 'Ajaya@gmail.com',
-      name: 'viajy',
-      phone: '92929922',
-      photo: undefined,
+      email: ' res.user.email',
+      name: ' res.user.name',
+      phone: ' res.user.phone',
       address: null,
     };
     this.profileService.getProfile().subscribe({
@@ -47,14 +54,6 @@ export class ProfileContainerComponent {
         };
       },
     });
-  }
-
-  selectTab(tab: ProfileTab) {
-    if (this.currentTab === tab) {
-      this.currentTab = this.SelectTab.NothingSelected;
-      return;
-    }
-    this.currentTab = tab;
   }
 
   updateName(data: IUpdateName) {
@@ -85,11 +84,14 @@ export class ProfileContainerComponent {
   }
 
   updateProfileImage(data: IUpdateImage) {
-    console.log(data);
-    this.profileService.updateProfileImage(data).subscribe({
-      next: (res) => {
-        this.snackbar.showSuccess('Profile image updated succeccfully');
-      },
+    this.profileService.uploadSignature(data).subscribe((imageData: any) => {
+      const profileImgUrl = imageData.secure_url;
+      this.profileService.updateProfileImage(profileImgUrl).subscribe({
+        next: (res: any) => {
+          this.snackbar.showSuccess('Profile image updated succeccfully');
+          this.currentUserProfile.photo = res.user.profileImgUrl;
+        },
+      });
     });
   }
 }

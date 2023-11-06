@@ -16,6 +16,11 @@ export class SpinnerInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    
+    if (request.url.includes('https://api.cloudinary.com/v1_1')) {
+      return next.handle(request);
+    }
+
     this.spinnerService.startSpin();
     return next.handle(request).pipe(
       finalize(() => {

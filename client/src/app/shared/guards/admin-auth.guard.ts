@@ -14,7 +14,7 @@ export const adminAuthGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  if (jwtService.isTokenExpired(token) && jwtService.isAdmin(token)) {
+  if (jwtService.isAdmin(token) && !jwtService.isTokenExpired(token)) {
     return true;
   }
 

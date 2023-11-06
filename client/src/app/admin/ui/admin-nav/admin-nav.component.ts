@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
 
 @Component({
   selector: 'app-admin-nav',
@@ -7,10 +9,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminNavComponent {
+  private localStoreService = inject(LocalStorageService);
+  private router = inject(Router);
+
   isDropdownOpen = false;
+
   toggleProfileDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  logOut(){}
+  logOut() {
+    this.localStoreService.clear();
+    this.router.navigateByUrl('/auth/admin/login');
+  }
 }

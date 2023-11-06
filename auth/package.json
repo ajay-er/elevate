@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ajay404/elevate": "^1.0.11",
+    "@ajay404/elevate": "^1.0.13",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^9.0.2",

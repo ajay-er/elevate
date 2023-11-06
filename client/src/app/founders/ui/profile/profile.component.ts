@@ -55,17 +55,26 @@ export class ProfileComponent {
     this.toggleEditBtn.emit(tab);
   }
 
-  sendTobackend(event?: any) {
+  addCloudData(data: File) {
     const formData = new FormData();
-    formData.append('image', event);
-    this.updateImage.emit(formData);
-    if (this.croppedImage) {
-      // this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-      //   event?.objectUrl!
-      // );
-      // formData.append('image', this.croppedImage);
-      // this.updateImage.emit(formData);
-    } else {
-    }
+    formData.append('file', data);
+    formData.append('upload_preset', 'elevate');
+    formData.append('cloud_name', 'elevate-connect');
+    return formData;
+  }
+
+  sendTobackend(event?: any) {
+    const file = event.target.files[0];
+    const data = this.addCloudData(file);
+    this.updateImage.emit(data);
+
+    // if (this.croppedImage) {
+    //   this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+    //     event?.objectUrl!
+    //   );
+    //   formData.append('image', this.croppedImage);
+    //   this.updateImage.emit(formData);
+    // } else {
+    // }
   }
 }

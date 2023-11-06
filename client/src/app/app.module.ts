@@ -31,6 +31,7 @@ import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.i
 import { AdminNavModule } from './admin/ui/admin-nav/admin-nav.module';
 import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 import { RouterModule } from '@angular/router';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -85,6 +86,11 @@ import { RouterModule } from '@angular/router';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingButtonInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],

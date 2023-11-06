@@ -35,4 +35,8 @@ export class AuthService {
 	public async updatePasswordByEmail(email: string, newPassword: string) {
 		return await this.userRepo.updatePasswordByEmail(email, newPassword);
 	}
+	
+	public async updateData(email: string, user: Partial<UserDoc>) {
+		return await this.userRepo.updateData(email, user);
+	}
 }

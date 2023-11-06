@@ -10,19 +10,20 @@
     </div>
 
     <label for="profile-image">
-      <img
-        [src]="
-          userData.photo || '../../../../assets/images/profile/profile.png'
-        "
-        alt="profile"
-        class="sm:w-32 sm:h-32 w-24 h-24 mx-auto rounded-full dark:bg-gray-500 aspect-square cursor-pointer"
-      />
+      <div class="relative">
+        <img
+          [src]="
+            userData.photo || '../../../../assets/images/profile/profile.png'
+          "
+          alt="profile"
+          class="sm:w-32 sm:h-32 w-24 h-24 mx-auto rounded-full dark:bg-gray-500 aspect-square cursor-pointer"
+        />
+      </div>
       <input
         type="file"
         id="profile-image"
         name="profile-image"
         class="hidden"
-        (change)="fileChangeEvent($event)"
         (change)="sendTobackend($event)"
         accept="image/*"
       />
