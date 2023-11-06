@@ -291,7 +291,6 @@ router.post("/admin-login", async (req: Request, res: Response) => {
 	res.status(200).json({ message: `Login succesfull`, accessToken });
 });
 
-
 router.post("/logout", async (req: Request, res: Response) => {
 	res.status(200).json({ message: "logout succefully" });
 });

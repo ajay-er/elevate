@@ -22,6 +22,7 @@ export interface IConfirmPass {
 
 export interface IUserProfile {
   name: string;
+  lastName?: string;
   email: string;
   phone?: string;
   photo?: string;

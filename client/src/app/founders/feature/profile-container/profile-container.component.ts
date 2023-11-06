@@ -36,18 +36,13 @@ export class ProfileContainerComponent {
   }
 
   getUserProfile() {
-    this.currentUserProfile = {
-      email: ' res.user.email',
-      name: ' res.user.name',
-      phone: ' res.user.phone',
-      address: null,
-    };
     this.profileService.getProfile().subscribe({
       next: (res: any) => {
         console.log(res);
         this.currentUserProfile = {
           email: res.user.email,
-          name: res.user.name,
+          name: res.user.firstName,
+          lastName: res.user?.lastName,
           phone: res.user.phone,
           photo: res.user.profileImgUrl,
           address: res.user.address ? res.user.address : null,
