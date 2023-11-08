@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-startup-cards',
@@ -7,5 +7,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartupCardsComponent {
+  @Input() description!:string
+  @Input() imgsrc!:string 
+  @Input() title!:string 
 
+
+  
 }

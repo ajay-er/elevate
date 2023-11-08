@@ -6,5 +6,21 @@
       "^/api": ""
     },
     "logLevel": "debug"
+  },
+  "/fou/*": {
+    "target": "http://founders-srv:3000/api/v1",
+    "secure": false,
+    "pathRewrite": {
+      "^/fou": ""
+    },
+    "logLevel": "debug"
+  },
+  "/wow/*": {
+    "target": "http://investors-srv:3000/api/v1",
+    "secure": false,
+    "pathRewrite": {
+      "^/wow": ""
+    },
+    "logLevel": "debug"
   }
 }

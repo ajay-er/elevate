@@ -1,7 +1,8 @@
-import mongoose,{Schema}from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const investorSchema = new Schema({
 	investorId: { type: String },
+	tempData: { profileImgUrl: String, name: String, email: String },
 	bio: String,
 	about: String,
 	description: String,
@@ -40,7 +41,7 @@ const investorSchema = new Schema({
 			investmentAmount: Number,
 			equityPercentage: Number,
 			investmentDate: Date,
-			notes: String,
+			notes: String
 		}
 	],
 	currentInvestments: [
@@ -51,7 +52,7 @@ const investorSchema = new Schema({
 			investmentStage: String,
 			investmentAmount: Number,
 			equityPercentage: Number,
-			notes: String,
+			notes: String
 		}
 	],
 	investmentInterests: [String],
@@ -64,7 +65,7 @@ const investorSchema = new Schema({
 	investmentGeographies: [String]
 });
 
-interface IInvestor extends mongoose.Document {
+export interface IInvestor extends mongoose.Document {
 	investorId: string;
 	bio: string;
 	about: string;

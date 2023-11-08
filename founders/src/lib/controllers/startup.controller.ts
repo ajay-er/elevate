@@ -7,7 +7,7 @@ let router = express.Router();
 const startupService = container.resolve(StartupService);
 
 router.post("/add-startup", async (req: Request, res: Response) => {
-	const result = await startupService.create();
+	const result = await startupService.create(req.body);
 	res.status(201).json({ result, message: "Startup added successfully" });
 });
 

@@ -7,8 +7,8 @@ let router = express.Router();
 const investorService = container.resolve(InvestorService);
 
 router.post("/add-investor", async (req: Request, res: Response) => {
-	const result = await investorService.create();
-	res.status(201).json({ message: "investor created successfully" });
+	const result = await investorService.create(req.body);
+	res.status(201).json({ message: "investor created successfully", result });
 });
 
 router.get("/investors", async (req: Request, res: Response) => {

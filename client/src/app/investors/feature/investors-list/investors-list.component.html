@@ -3,9 +3,12 @@
     TOP INVESTORS
   </p>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-    <app-investor-card></app-investor-card>
-    <app-investor-card></app-investor-card>
-    <app-investor-card></app-investor-card>
-    <app-investor-card></app-investor-card>
+    <ng-container *ngFor="let item of investors">
+      <app-investor-card
+        [name]="item?.tempData?.name"
+        [imgsrc]="item?.tempData?.profileImgUrl"
+        [description]="item?.description"
+      ></app-investor-card>
+    </ng-container>
   </div>
 </section>

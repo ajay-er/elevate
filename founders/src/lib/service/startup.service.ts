@@ -5,11 +5,15 @@ import { StartupRepository } from "../database/repository/startup.repository";
 export class StartupService {
 	constructor(private readonly startupRepo: StartupRepository) {}
 
-	public async create() {
-		return await this.startupRepo.create({});
+	public async create(data:any) {
+		return await this.startupRepo.create(data);
 	}
 
 	public async get() {
 		return await this.startupRepo.findAll();
+	}
+
+	public async delete() {
+		return await this.startupRepo.delete();
 	}
 }
