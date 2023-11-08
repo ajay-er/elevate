@@ -13,13 +13,13 @@ export class AdminNavComponent {
   private router = inject(Router);
 
   isDropdownOpen = false;
-
   toggleProfileDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   logOut() {
     this.localStoreService.clear();
-    this.router.navigateByUrl('/auth/admin/login');
+    this.router.navigateByUrl('/ideas');
   }
 }
+ 

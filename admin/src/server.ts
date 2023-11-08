@@ -9,11 +9,10 @@ const PORT = process.env.PORT || 3000;
 	}
 	try {
 		console.clear();
-		console.log("Connecting with MONGO");
 		await mongoConnect(process.env.MONGO_URI);
 
 		app.listen(PORT, () => {
-			console.log(`Server is Listening on port ${PORT}`);
+			console.log(`Server-Admin is Listening on port ${PORT}`);
 		});
 	} catch (error) {
 		console.error("Unable to connect.");

@@ -15,6 +15,28 @@ spec:
       containers:
         - name: admin
           image: ajay404/admin
+          env:
+          - name: PORT
+            value: '3000'
+          - name: NODE_ENV
+            value: 'dev'
+          - name: MONGO_URI
+            value: 'mongodb://mongo-srv:27017/admin'
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: JWT_SECRET
+          - name: CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: CLIENT_ID
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: SESSION_SECRET
 ---
 apiVersion: v1
 kind: Service

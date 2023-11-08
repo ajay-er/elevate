@@ -43,7 +43,7 @@ build:
       docker:
         dockerfile: Dockerfile
   local:
-    push: false
+    push: true
 manifests:
   rawYaml:
     - ./k8s/stateless/*

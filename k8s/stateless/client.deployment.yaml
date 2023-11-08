@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: ajay404/elevate-client
+          image: ajay404/client
 ---
 apiVersion: v1
 kind: Service

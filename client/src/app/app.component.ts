@@ -16,32 +16,31 @@ export class AppComponent {
   private store = inject(Store<State>);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  currentLayout:string = 'user';
+  currentLayout: string = 'user';
   private routerSubscription!: Subscription;
-  
-  ngOnInit() {
 
-    if(environment.production) {
+  ngOnInit() {
+    if (environment.production) {
       console.log('RUNNING IN PRODUCTION MODE!');
-      
     }
 
     initFlowbite();
 
-    this.routerSubscription =  this.router.events.subscribe((event) => {
+    this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route = this.activatedRoute;
         while (route.firstChild) {
           route.firstChild.data.subscribe((data) => {
             if (data['layout']) {
               this.currentLayout = data['layout'];
+            } else {
+              this.currentLayout = 'user';
             }
           });
           route = route.firstChild;
         }
       }
     });
-
 
     //checking user logged in or not
     this.store.dispatch(CheckLocalStorageAction());

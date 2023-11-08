@@ -1,7 +1,7 @@
 <my-spinner></my-spinner>
 <div
-  class="bg-cover bg-black text-white bg-center bg-no-repeat"
-  style="background-image: url(./assets/images/backgrounds/bg.png)"
+[ngClass]="{'bg-cover bg-black text-white bg-center bg-no-repeat': currentLayout !== 'admin', 'bg-white': currentLayout === 'admin'}"
+[style.backgroundImage]="currentLayout !== 'admin' ? 'url(./assets/images/backgrounds/bg.png)' : 'none'"
 >
   <ng-container *ngIf="currentLayout === 'admin'; else user">
     <app-admin-nav></app-admin-nav>
