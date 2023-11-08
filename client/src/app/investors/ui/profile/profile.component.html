@@ -4,14 +4,16 @@
   >
     <img
       loading="lazy"
-      src="../../../../assets/images/profile/profile.png"
+      [src]="
+        profileImg !== 'undefined'
+          ? profileImg
+          : '../../../../assets/images/profile/profile.png'
+      "
       class="aspect-[1.04] object-center rounded-full w-[108px] overflow-hidden self-center max-w-full"
     />
-    <h2 class="text-white text-center text-xl">Andreessen Horowitz</h2>
+    <h2 class="text-white text-center text-xl">{{ name }}</h2>
     <p class="text-white text-xs leading-[146%] self-stretch">
-      Founded by tech pioneers Marc Andreessen and Ben Horowitz in 2009,
-      Andreessen Horowitz (a16z) is a premier VC firm with a history of
-      high-profile tech investments.
+      {{ description }}
     </p>
   </div>
   <!-- grid 2 -->
@@ -19,6 +21,7 @@
     <p>Portfolio</p>
     <div class="grid sm:grid-cols-2 gap-2">
       <section
+        *ngFor="let item of portfolio"
         class="border flex justify-center gap-4 flex-1 pl-3.5 pr-14 py-5 rounded-lg border-solid border-slate-200"
       >
         <img
@@ -27,54 +30,10 @@
           class="aspect-[1.05] object-contain object-center min-w-[30px] max-w-[43px] overflow-hidden self-stretch w-full"
         />
         <div>
-          <p class="text-xl">Company</p>
+          <p class="text-xl">{{ item.companyName }}</p>
           <div class="text-white text-xs">
-            Invested <span class="text-gray-400">November 2020</span>
-          </div>
-        </div>
-      </section>
-      <section
-        class="border flex justify-center gap-4 flex-1 pl-3.5 pr-14 py-5 rounded-lg border-solid border-slate-200"
-      >
-        <img
-          loading="lazy"
-          src="../../../../assets/images/items/e855848d-b647-4538-83cc-fc068ef27db8.png"
-          class="aspect-[1.05] object-contain object-center min-w-[30px] max-w-[43px] overflow-hidden self-stretch w-full"
-        />
-        <div>
-          <p class="text-xl">Company</p>
-          <div class="text-white text-xs">
-            Invested <span class="text-gray-400">November 2020</span>
-          </div>
-        </div>
-      </section>
-      <section
-        class="border flex justify-center gap-4 flex-1 pl-3.5 pr-14 py-5 rounded-lg border-solid border-slate-200"
-      >
-        <img
-          loading="lazy"
-          src="../../../../assets/images/items/e855848d-b647-4538-83cc-fc068ef27db8.png"
-          class="aspect-[1.05] object-contain object-center min-w-[30px] max-w-[43px] overflow-hidden self-stretch w-full"
-        />
-        <div>
-          <p class="text-xl">Company</p>
-          <div class="text-white text-xs">
-            Invested <span class="text-gray-400">November 2020</span>
-          </div>
-        </div>
-      </section>
-      <section
-        class="border flex justify-center gap-4 flex-1 pl-3.5 pr-14 py-5 rounded-lg border-solid border-slate-200"
-      >
-        <img
-          loading="lazy"
-          src="../../../../assets/images/items/e855848d-b647-4538-83cc-fc068ef27db8.png"
-          class="aspect-[1.05] object-contain object-center min-w-[30px] max-w-[43px] overflow-hidden self-stretch w-full"
-        />
-        <div>
-          <p class="text-xl">Company</p>
-          <div class="text-white text-xs">
-            Invested <span class="text-gray-400">November 2020</span>
+            Invested:
+            <span class="text-gray-400">November 2020</span>
           </div>
         </div>
       </section>
@@ -92,10 +51,7 @@
     <div class="text-white text-sm leading-[150%] max-md:max-w-full pt-5">
       <p>About</p>
       <p class="text-white text-xs leading-[146%] self-start max-md:max-w-full">
-        Marc Andreessen is a co-founder of Netscape, the company behind one of
-        the first web browsers, while Ben Horowitz co-founded Opsware, which was
-        sold to HP for $1.6 billion. The firm has backed several highly
-        successful startups including Facebook...
+        {{ about }}
       </p>
       <p
         class="text-sky-600 text-center text-xs self-stretch max-md:max-w-full"

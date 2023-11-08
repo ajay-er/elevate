@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -8,13 +7,10 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
-
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      console.log(params.get('id'));
-    });
-  }
+@Input() profileImg!:string;
+@Input() name!:string;
+@Input() description!:string;
+@Input() portfolio!:any;
+@Input() about!:any;
 
 }

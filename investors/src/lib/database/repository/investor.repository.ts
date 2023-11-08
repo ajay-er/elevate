@@ -8,6 +8,6 @@ export class InvestorRepository {
 		return await Investor.find({});
 	}
 	async findById(id: string): Promise<any> {
-		return await Investor.findById({ id });
+		return await Investor.findById({ _id:id });
 	}
 }
