@@ -1,11 +1,7 @@
-import mongoose from "mongoose";
+import mongoose,{Schema}from "mongoose";
 
-const investorSchema = new mongoose.Schema({
-	investorId: { type: mongoose.Types.ObjectId },
-	isTopInvestor: {
-		type: Boolean,
-		default: false
-	},
+const investorSchema = new Schema({
+	investorId: { type: String },
 	bio: String,
 	about: String,
 	description: String,
@@ -44,7 +40,7 @@ const investorSchema = new mongoose.Schema({
 			investmentAmount: Number,
 			equityPercentage: Number,
 			investmentDate: Date,
-			notes: String
+			notes: String,
 		}
 	],
 	currentInvestments: [
@@ -55,7 +51,7 @@ const investorSchema = new mongoose.Schema({
 			investmentStage: String,
 			investmentAmount: Number,
 			equityPercentage: Number,
-			notes: String
+			notes: String,
 		}
 	],
 	investmentInterests: [String],
@@ -69,8 +65,7 @@ const investorSchema = new mongoose.Schema({
 });
 
 interface IInvestor extends mongoose.Document {
-	investorId: mongoose.Types.ObjectId;
-	isTopInvestor: boolean;
+	investorId: string;
 	bio: string;
 	about: string;
 	description: string;

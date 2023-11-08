@@ -8,4 +8,8 @@ export class InvestorService {
 	public async create() {
 		return await this.investorRepo.create();
 	}
+
+	public async get() {
+		return await this.investorRepo.findAll();
+	}
 }
