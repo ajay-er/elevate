@@ -7,4 +7,7 @@ export class InvestorRepository {
 	async findAll(): Promise<any> {
 		return await Investor.find({});
 	}
+	async findById(id: string): Promise<any> {
+		return await Investor.findById({ id });
+	}
 }

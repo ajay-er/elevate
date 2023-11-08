@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 @Injectable({
@@ -9,5 +9,9 @@ export class InvestorsService {
 
   getAllInvestors(){
     return this.http.get('/wow/investor/investors')
+  }
+
+  getInvestorData(investorId:any){
+    return this.http.get(`/wow/investor/profile/${investorId}`)
   }
 }

@@ -16,4 +16,10 @@ router.get("/investors", async (req: Request, res: Response) => {
 	res.status(200).json({ result });
 });
 
+router.get("/profile/:id", async (req: Request, res: Response) => {
+	const id = req.params.id;
+	const result = await investorService.findById(id);
+	res.status(200).json({ result });
+});
+
 export { router as investorRoute };
