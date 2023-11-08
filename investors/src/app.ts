@@ -2,6 +2,7 @@ import { NotFoundError, errorHandler } from "@ajay404/elevate";
 import express, { Request, Response } from "express";
 import morgan from "morgan";
 import "express-async-errors";
+import { investorRoute } from "./lib/controllers/investor.controller";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // routes
+app.use("/api/v1/investor", investorRoute);
 
 app.all("*", async (req: Request, res: Response) => {
 	throw new NotFoundError();
