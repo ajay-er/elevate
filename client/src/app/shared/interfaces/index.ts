@@ -48,3 +48,17 @@ export interface IAddress {
   zip: string;
   country: string;
 }
+
+
+
+export interface UserDoc {
+	userName?: string;
+	firstName?: string;
+	lastName?: string;
+	email: string;
+	phone?: string;
+	password: string;
+	otp?: string;
+	profileImgUrl?: string;
+	isEmailVerified: boolean;
+}

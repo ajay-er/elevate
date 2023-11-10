@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { container } from "tsyringe";
 import { StartupService } from "../service/startup.service";
 
-let router = express.Router();
+const router = express.Router();
 
 const startupService = container.resolve(StartupService);
 
