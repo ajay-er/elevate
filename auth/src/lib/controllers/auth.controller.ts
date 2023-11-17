@@ -10,6 +10,7 @@ import { IRole } from "../interfaces";
 import { AuthService } from "../service/auth.service";
 import { container } from "tsyringe";
 import { TokenService } from "../service/token.service";
+import { kProducer } from "../../config/dummytry";
 
 let router = express.Router();
 
@@ -120,6 +121,8 @@ router.post("/signup", async (req: Request, res: Response) => {
 	user.otp = otp;
 
 	user = await authService.saveUser(user);
+
+	await kProducer("wow", { name: "ajay", age: "😉🚀🥲🔼🌎" });
 
 	res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
 });
