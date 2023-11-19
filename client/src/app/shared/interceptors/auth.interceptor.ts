@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const token = this.localStorageService.get('access_token');
-    console.log('token localstore-->', token);
 
     if (request.url.includes('https://api.cloudinary.com/v1_1')) {
       return next.handle(request);
