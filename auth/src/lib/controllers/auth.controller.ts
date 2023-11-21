@@ -10,7 +10,8 @@ import { IRole } from "../interfaces";
 import { AuthService } from "../service/auth.service";
 import { container } from "tsyringe";
 import { TokenService } from "../service/token.service";
-import { kProducer } from "../../config/dummytry";
+import { kafka_client } from "../../config/kafka.config";
+import { USER_CREATED_PUBLISHER } from "../../events/publisher/user.created.publisher";
 
 let router = express.Router();
 
@@ -46,6 +47,9 @@ router.post("/googleauth", async (req: Request, res: Response) => {
 			isEmailVerified: oAuthuser.isEmailVerified
 		});
 		console.log(user);
+		// await new USER_CREATED_PUBLISHER().publish({
+		// 	email: user.email, firstName: user.firstName, id:user.id, profileImgUrl:user.profileImgUrl
+		// });
 		return res.status(201).json({ message: "google signup successfully completed", user, accessToken });
 	} else {
 		//if user already then update
@@ -122,8 +126,6 @@ router.post("/signup", async (req: Request, res: Response) => {
 
 	user = await authService.saveUser(user);
 
-	await kProducer("wow", { name: "ajay", age: "😉🚀🥲🔼🌎" });
-
 	res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
 });
 
@@ -179,6 +181,13 @@ router.post("/verify-otp", async (req: Request, res: Response) => {
 	user.otp = null;
 
 	await authService.saveUser(user);
+
+	await new USER_CREATED_PUBLISHER(kafka_client).publish({
+		email: user.email,
+		name: user.firstName,
+		id: user.id,
+		profileImgUrl: user.profileImgUrl
+	});
 
 	let accessToken = jwt.sign(
 		{

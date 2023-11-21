@@ -1,8 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
 const investorSchema = new Schema({
-	investorId: { type: String },
-	tempData: { profileImgUrl: String, name: String, email: String },
+	investorId: String,
+	profileImgUrl: String,
+	name: String,
+	email: String,
 	bio: String,
 	about: String,
 	description: String,
@@ -66,7 +68,6 @@ const investorSchema = new Schema({
 });
 
 export interface IInvestor extends mongoose.Document {
-	investorId: string;
 	bio: string;
 	about: string;
 	description: string;
