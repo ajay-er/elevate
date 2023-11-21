@@ -6,22 +6,23 @@ import { USER_CREATED_EVENT_CONSUMER } from "./events/consumers/user.created.con
 
 const PORT = process.env.PORT || 3000;
 
-const userCreated = new USER_CREATED_EVENT_CONSUMER(kafka_client);
 
 (async () => {
 	if (!process.env.MONGO_URI) {
 		throw new Error("MONGO_URI not found");
 	}
 	try {
-		console.clear();
+		console.clear();		
 		await mongoConnect(process.env.MONGO_URI);
 		
-		await userCreated.subscribe();
+		await new USER_CREATED_EVENT_CONSUMER(kafka_client).subscribe();
 
 		app.listen(PORT, () => {
 			console.log(`Server-Investors is Listening on port ${PORT}`);
 		})
-			.on("error", async () => {})
+			.on("error", async () => {
+				console.log('oops something goes wrong');
+			})
 			.on("close", async () => {});
 	} catch (error) {
 		console.error("Unable to connect.");

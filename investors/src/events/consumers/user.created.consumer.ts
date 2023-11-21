@@ -11,8 +11,7 @@ export interface USER_CREATED {
 	};
 }
 export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
-	groupId: string = TOPIC.USER_CREATED;
-
+	groupId: string = TOPIC.USER_CREATED as string;
 	topic: TOPIC.USER_CREATED = TOPIC.USER_CREATED;
 
 	constructor(client: Kafka) {
