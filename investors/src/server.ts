@@ -6,7 +6,6 @@ import { USER_CREATED_EVENT_CONSUMER } from "./events/consumers/user.created.con
 
 const PORT = process.env.PORT || 3000;
 
-
 (async () => {
 	if (!process.env.MONGO_URI) {
 		throw new Error("MONGO_URI not found");
