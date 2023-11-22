@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: founders-depl
+  name: startups-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: founders
+      app: startups
   template:
     metadata:
       labels:
-        app: founders
+        app: startups
     spec:
       containers:
-        - name: founders
-          image: ajay404/founders
+        - name: startups
+          image: ajay404/startups
           env:
           - name: PORT
             value: '3000'
           - name: NODE_ENV
             value: 'dev'
           - name: MONGO_URI
-            value: 'mongodb://mongo-srv:27017/founder'
+            value: 'mongodb://mongo-srv:27017/startups'
           - name: JWT_SECRET
             valueFrom:
               secretKeyRef:
@@ -41,12 +41,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: founders-srv
+  name: startups-srv
 spec:
   selector:
-    app: founders
+    app: startups
   ports:
-    - name: founders
+    - name: startups
       protocol: TCP
       port: 3000
       targetPort: 3000

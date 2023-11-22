@@ -10,8 +10,8 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
-    - image: ajay404/founders
-      context: founders
+    - image: ajay404/startups
+      context: startups
       sync:
         manual:
           - src: src/**/*.ts

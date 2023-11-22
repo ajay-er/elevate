@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3000;
 		await PingElasticSearch();
 
 		app.listen(PORT, () => {
-			console.log(`Server-Founders is Listening on port ${PORT}`);
+			console.log(`Server-search is Listening on port ${PORT}`);
 		});
 	} catch (error) {
 		console.error("Unable to connect.");

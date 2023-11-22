@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // routes
-app.use("/api/v1/founders", startupRoute);
+app.use("/api/v1/startups", startupRoute);
 
 app.all("*", async (req: Request, res: Response) => {
 	throw new NotFoundError();

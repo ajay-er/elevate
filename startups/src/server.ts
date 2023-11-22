@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 		await mongoConnect(process.env.MONGO_URI);
 
 		app.listen(PORT, () => {
-			console.log(`Server-Founders is Listening on port ${PORT}`);
+			console.log(`Server-Startups is Listening on port ${PORT}`);
 		});
 	} catch (error) {
 		console.error("Unable to connect.");

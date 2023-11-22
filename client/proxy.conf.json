@@ -8,7 +8,7 @@
     "logLevel": "debug"
   },
   "/fou/*": {
-    "target": "http://founders-srv:3000/api/v1",
+    "target": "http://startups-srv:3000/api/v1",
     "secure": false,
     "pathRewrite": {
       "^/fou": ""

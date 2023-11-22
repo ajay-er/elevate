@@ -8,7 +8,7 @@ export class AdminService {
   private http = inject(HttpClient);
 
   getStartups(){
-    return this.http.get('/fou/founders/startups');
+    return this.http.get('/fou/startups/startups');
   }
 
   getInvestors(){

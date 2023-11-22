@@ -24,10 +24,4 @@ spec:
                 name: client-srv
                 port:
                   number: 4200
-          # - path: /api/founders/?(.*)
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: founders-srv
-          #       port:
-          #         number: 3000
+        

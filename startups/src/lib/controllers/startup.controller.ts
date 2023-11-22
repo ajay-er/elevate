@@ -12,8 +12,8 @@ router.post("/add-startup", async (req: Request, res: Response) => {
 });
 
 router.get("/startups", async (req: Request, res: Response) => {
-    const result = await startupService.get();
-	res.status(200).json({result});
+	const result = await startupService.get();
+	res.status(200).json({ result });
 });
 
 export { router as startupRoute };
