@@ -41,10 +41,34 @@ const startupSchema = new Schema({
 	exitStrategy: String,
 	investmentInterests: [String],
 	investmentGeographies: [String],
-	preferredDealStructure: {
-		type: String,
-		enum: ["Equity", "Convertible Note", "SAFE", "Loan", "Other"]
-	}
+
+	currentValuation: {
+		type: Number,
+		default: 0
+	},
+	availableEquityShares: {
+		type: Number,
+		default: 0
+	},
+	totalEquityShares: {
+		type: Number,
+		default: 0
+	},
+	equitySharePrice: {
+		type: Number,
+		default: 0
+	},
+	equitySales: [
+		{
+			investorId: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Investor"
+			},
+			investedAmount: Number,
+			numberOfShares: Number,
+			purchaseDate: Date
+		}
+	]
 });
 
 interface ITeamMember {
@@ -52,39 +76,51 @@ interface ITeamMember {
 	title: string;
 }
 
-export interface IStartup extends mongoose.Document {
+interface IInvestor {
+	investorId: mongoose.Schema.Types.ObjectId;
+	investedAmount: number;
+	numberOfShares: number;
+	purchaseDate: Date;
+}
+
+interface IStartup extends mongoose.Document {
 	companyName: string;
 	logo: string;
-	description?: string;
-	industry?: string;
-	businessModel?: string;
-	foundingDate?: Date;
-	location?: string;
+	description: string;
+	industry: string;
+	businessModel: string;
+	foundingDate: Date;
+	location: string;
 	founders: { name: string; role: string }[];
-	teamMembers?: ITeamMember[];
-	fundingStatus?: "Bootstrapped" | "Seed Stage" | "Early Stage" | "Series A" | "Series B" | "Series C" | "Late Stage" | "Other";
-	fundingAmount?: number;
-	targetInvestmentAmount?: number;
-	pitchDeckLink?: string;
-	website?: string;
-	socialMediaLinks?: string[];
-	productDemoLink?: string;
-	traction?: string;
-	marketProblem?: string;
-	solution?: string;
-	targetAudience?: string;
-	competitiveAdvantage?: string;
-	revenueModel?: string;
-	businessGoals?: string;
-	growthStrategy?: string;
-	currentChallenges?: string;
-	keyMetrics?: string;
-	exitStrategy?: string;
-	investmentInterests?: string[];
-	investmentGeographies?: string[];
-	preferredDealStructure?: "Equity" | "Convertible Note" | "SAFE" | "Loan" | "Other";
+	teamMembers: ITeamMember[];
+	fundingStatus: "Bootstrapped" | "Seed Stage" | "Early Stage" | "Series A" | "Series B" | "Series C" | "Late Stage" | "Other";
+	fundingAmount: number;
+	targetInvestmentAmount: number;
+	pitchDeckLink: string;
+	website: string;
+	socialMediaLinks: string[];
+	productDemoLink: string;
+	traction: string;
+	marketProblem: string;
+	solution: string;
+	targetAudience: string;
+	competitiveAdvantage: string;
+	revenueModel: string;
+	businessGoals: string;
+	growthStrategy: string;
+	currentChallenges: string;
+	keyMetrics: string;
+	exitStrategy: string;
+	investmentInterests: string[];
+	investmentGeographies: string[];
+
+	currentValuation: number;
+	availableEquityShares: number;
+	totalEquityShares: number;
+	equitySharePrice: number;
+	equitySales: IInvestor[];
 }
 
 const Startup = mongoose.model<IStartup>("Startup", startupSchema);
 
-export { Startup };
+export { Startup, IStartup };

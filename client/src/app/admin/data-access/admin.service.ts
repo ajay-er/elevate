@@ -7,11 +7,11 @@ import { Injectable, inject } from '@angular/core';
 export class AdminService {
   private http = inject(HttpClient);
 
-  getStartups(){
+  getStartups() {
     return this.http.get('/fou/startups/startups');
   }
 
-  getInvestors(){
+  getInvestors() {
     return this.http.get('/wow/investor/investors');
   }
   
