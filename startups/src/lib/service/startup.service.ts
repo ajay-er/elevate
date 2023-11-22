@@ -3,17 +3,17 @@ import { StartupRepository } from "../database/mongo/repository/startup.reposito
 
 @autoInjectable()
 export class StartupService {
-	constructor(private readonly startupRepo: StartupRepository) {}
+    constructor(private readonly startupRepo: StartupRepository) {}
 
-	public async create(data:any) {
-		return await this.startupRepo.create(data);
-	}
+    public async create(data:any) {
+        return await this.startupRepo.create(data);
+    }
 
-	public async get() {
-		return await this.startupRepo.findAll();
-	}
+    public async get() {
+        return await this.startupRepo.findAll();
+    }
 
-	public async delete() {
-		return await this.startupRepo.delete();
-	}
+    public async delete() {
+        return await this.startupRepo.delete();
+    }
 }
