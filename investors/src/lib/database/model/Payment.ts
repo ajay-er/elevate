@@ -12,8 +12,19 @@ const payment = new mongoose.Schema({
 	paymentStatus: {
 		type: String,
 		enum: ["pending", "completed", "failed"]
+	},
+	razorpay: {
+		order_id: String,
+		payment_id: String,
+		signature: String
 	}
 });
+
+interface IRazorpayDetails {
+	order_id: string;
+	payment_id: string;
+	signature: string;
+}
 
 interface IPayment extends Document {
 	investorId: string;
@@ -22,6 +33,7 @@ interface IPayment extends Document {
 	amountPaid: number;
 	paymentDate: Date;
 	paymentStatus: "pending" | "completed" | "failed";
+	razorpay: IRazorpayDetails;
 }
 
 const Payment = mongoose.model<IPayment>("Payment", payment);
