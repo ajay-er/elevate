@@ -12,4 +12,8 @@ export class FoundersService {
   getStartups() {
     return this.http.get(`${this.startupApi}/startups/startups`);
   }
+
+  addNewStartup(data:any) {
+    return this.http.post(`${this.startupApi}/startups/add-startup`,data);
+  }
 }

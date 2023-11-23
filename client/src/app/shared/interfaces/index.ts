@@ -61,3 +61,30 @@ export interface UserDoc {
 	profileImgUrl?: string;
 	isEmailVerified: boolean;
 }
+
+
+export interface IFounder {
+  name: string;
+  role: string;
+}
+
+export interface IStartup {
+  companyName: string;
+  logo: File | null;
+  bannerImage: File | null;
+  description: string;
+  industry: string;
+  location: string;
+  businessModel: string;
+  foundingDate: string;
+  targetAudience: string;
+  solution: string;
+  marketProblem: string;
+  founders: IFounder[];
+  fundingStatus: string;
+  fundingAmount: string;
+  totalEquityShares: string;
+  exitStrategy: string;
+  currentValuation: string;
+  availableEquityShares: string;
+}

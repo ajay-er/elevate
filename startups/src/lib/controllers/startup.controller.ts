@@ -8,9 +8,17 @@ const router = express.Router();
 const startupService = container.resolve(StartupService);
 
 router.post("/add-startup", async (req: Request, res: Response) => {
-    const { companyName, description, industry, location } = req.body;
+    const { companyName, logo, description, industry, location } = req.body;
     const result = await startupService.create(req.body);
-    await PUT_TO_ELASTIC("startups", { companyName, description, industry, location });
+    console.log(result);
+    await PUT_TO_ELASTIC("startups", {
+        companyName,
+        logo,
+        description,
+        industry,
+        location,
+        id:result._id
+    });
     res.status(201).json({ result, message: "Startup added successfully" });
 });
 

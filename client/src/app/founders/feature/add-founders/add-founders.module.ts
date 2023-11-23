@@ -13,7 +13,7 @@ import { AddFounderFormModule } from '../../ui/add-founder-form/add-founder-form
   imports: [
     CommonModule,
     AddFounderFormModule,
-    AddFoundersRoutingModule
+    AddFoundersRoutingModule,
   ]
 })
 export class AddFoundersModule { }

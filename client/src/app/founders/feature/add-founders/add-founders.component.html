@@ -1,1 +1,8 @@
-<app-add-founder-form></app-add-founder-form>
+<section class="w-80% min-h-screen py-5 px-5 pt-32 md:py-32 md:px-32">
+    <p class="sm:text-5xl text-2xl font-extrabold font-geologica pb-2 sm:pb-10">
+      ADD STARTUPS
+    </p>
+    <app-add-founder-form (startupSubmit)="addStartup($event)">
+    </app-add-founder-form>
+  </section>
+  
