@@ -16,39 +16,39 @@ export interface UserDoc extends mongoose.Document {
 }
 
 const userSchema = new mongoose.Schema(
-	{
-		userName: String,
-		firstName: String,
-		lastName: String,
-		email: String,
-		phone: String,
-		password: String,
-		otp: String,
-		profileImgUrl: String,
-		isEmailVerified: {
-			type: Boolean,
-			default: false
-		}
-	},
-	{
-		toJSON: {
-			transform(doc, ret) {
-				ret.id = ret._id;
-				delete ret._id;
-				delete ret.password;
-				delete ret.__v;
-			}
-		},
-		timestamps: true
-	}
+    {
+        userName: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        phone: String,
+        password: String,
+        otp: String,
+        profileImgUrl: String,
+        isEmailVerified: {
+            type: Boolean,
+            default: false
+        }
+    },
+    {
+        toJSON: {
+            transform(doc, ret) {
+                ret.id = ret._id;
+                delete ret._id;
+                delete ret.password;
+                delete ret.__v;
+            }
+        },
+        timestamps: true
+    }
 );
 
 userSchema.pre("save", async function (next) {
-	if (this.isModified("password")) {
-		const hashed = await Password.toHash(this.get("password")!);
-		this.set("password", hashed);
-	}
-	next();
+    if (this.isModified("password")) {
+        const hashed = await Password.toHash(this.get("password")!);
+        this.set("password", hashed);
+    }
+    next();
 });
 
 const User = mongoose.model<UserDoc>("User", userSchema);

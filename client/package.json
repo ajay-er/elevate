@@ -6,8 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+    "test": "ng test",
+    "lint": "eslint ."
+ },
   "private": true,
   "dependencies": {
     "@abacritt/angularx-social-login": "^2.1.0",

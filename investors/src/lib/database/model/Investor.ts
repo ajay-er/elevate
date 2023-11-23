@@ -16,73 +16,73 @@ enum RiskAppetite {
 }
 
 const investorSchema = new Schema(
-	{
-		investorId: String,
-		profileImgUrl: String,
-		name: String,
-		email: String,
-		bio: String,
-		about: String,
-		description: String,
-		investmentCriteria: {
-			investmentStage: {
-				type: String,
-				enum: ["Seed", "Early Stage", "Series A", "Series B", "Series C", "Late Stage", "Other"]
-			},
-			industries: [String],
-			investmentSize: {
-				type: String,
-				enum: Object.values(InvestmentSize)
-			},
-			geographicPreference: [String],
-			investmentExperience: {
-				type: Number,
-				min: 0
-			},
-			preferredCommunicationMethod: {
-				type: String,
-				enum: ["Email", "Phone", "In-person", "Other"]
-			},
-			investmentInterests: [String]
-		},
-		investmentHistory: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "InvestmentDetail"
-			}
-		],
-		portfolio: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "InvestmentDetail"
-			}
-		],
-		currentInvestments: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "InvestmentDetail"
-			}
-		],
-		investmentStrategy: String,
-		riskAppetite: {
-			type: String,
-			enum: Object.values(RiskAppetite)
-		},
-		preferredDealStructure: {
-			type: String,
-			enum: ["Equity", "Convertible Note", "SAFE", "Loan", "Other"]
-		},
-		investmentGeographies: [String],
-		transactionHistory: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: "Transaction"
-			}
-		]
-	},
-	{
-		timestamps: true
-	}
+    {
+        investorId: String,
+        profileImgUrl: String,
+        name: String,
+        email: String,
+        bio: String,
+        about: String,
+        description: String,
+        investmentCriteria: {
+            investmentStage: {
+                type: String,
+                enum: ["Seed", "Early Stage", "Series A", "Series B", "Series C", "Late Stage", "Other"]
+            },
+            industries: [String],
+            investmentSize: {
+                type: String,
+                enum: Object.values(InvestmentSize)
+            },
+            geographicPreference: [String],
+            investmentExperience: {
+                type: Number,
+                min: 0
+            },
+            preferredCommunicationMethod: {
+                type: String,
+                enum: ["Email", "Phone", "In-person", "Other"]
+            },
+            investmentInterests: [String]
+        },
+        investmentHistory: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "InvestmentDetail"
+            }
+        ],
+        portfolio: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "InvestmentDetail"
+            }
+        ],
+        currentInvestments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "InvestmentDetail"
+            }
+        ],
+        investmentStrategy: String,
+        riskAppetite: {
+            type: String,
+            enum: Object.values(RiskAppetite)
+        },
+        preferredDealStructure: {
+            type: String,
+            enum: ["Equity", "Convertible Note", "SAFE", "Loan", "Other"]
+        },
+        investmentGeographies: [String],
+        transactionHistory: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Transaction"
+            }
+        ]
+    },
+    {
+        timestamps: true
+    }
 );
 
 interface IInvestmentCriteria {

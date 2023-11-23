@@ -1,5 +1,5 @@
 export const verifyEmailTemplate = function (otp: string) {
-	const html = `
+    const html = `
     <!DOCTYPE html>
     <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -43,11 +43,11 @@ export const verifyEmailTemplate = function (otp: string) {
     </body>
 
     </html>`;
-	const text = `
+    const text = `
         Verify Email, A request to create your Elevate account was received.
         Use this OTP to confirm your account and log in`;
-	return {
-		html: html,
-		text: text
-	};
+    return {
+        html: html,
+        text: text
+    };
 };

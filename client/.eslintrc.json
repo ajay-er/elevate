@@ -16,6 +16,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "no-console": "warn",
 		"no-undef": "error",
 		"semi": "error",
@@ -34,7 +35,7 @@
 		"space-in-parens": "error",
 		"space-infix-ops": "error",
 		"space-unary-ops": "error",
-		"quotes": ["error", "single"],
+		"quotes": ["error", "double"],
 		"max-len": ["error", { "code": 200 }],
 		"max-lines": ["error", { "max": 500 }],
 		"keyword-spacing": "error",

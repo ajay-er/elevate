@@ -11,6 +11,7 @@
 	},
 	"plugins": ["@typescript-eslint"],
 	"rules": {
+		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
 		"no-undef": "error",
 		"semi": "error",
 		"semi-spacing": "error",
@@ -43,7 +44,6 @@
 		"no-duplicate-imports": "error",
 		"no-var": "error",
 		"object-shorthand": "off",
-		"prefer-const": "error",
-		"prefer-template": "warn"
+		"prefer-const": "error"
 	}
 }

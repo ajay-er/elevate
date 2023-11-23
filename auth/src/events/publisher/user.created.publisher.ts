@@ -11,5 +11,5 @@ export interface USER_CREATED {
 }
 
 export class USER_CREATED_PUBLISHER extends kafkaPublisher<USER_CREATED> {
-	topic: TOPIC.USER_CREATED = TOPIC.USER_CREATED;
+    topic: TOPIC.USER_CREATED = TOPIC.USER_CREATED;
 }

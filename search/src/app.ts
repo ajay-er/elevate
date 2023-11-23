@@ -15,8 +15,8 @@ app.use(morgan("dev"));
 // routes
 app.use("/api/v1/search/startup", startupRoute);
 
-app.all("*", async (req: Request, res: Response) => {
-	throw new NotFoundError();
+app.all("*", async (_req: Request, _res: Response) => {
+    throw new NotFoundError();
 });
 
 app.use(errorHandler);

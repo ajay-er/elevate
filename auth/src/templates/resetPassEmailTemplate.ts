@@ -1,5 +1,5 @@
 export const resetPassEmailTemplate = function (token: string) {
-	const html = `
+    const html = `
     <!DOCTYPE html>
     <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -25,7 +25,9 @@ export const resetPassEmailTemplate = function (token: string) {
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Elevate</a>
     </div>
     <p style="font-size:1.1em">Hi,</p>
-    <p>Thank you for choosing Elevate. To reset your password, please click on the following link. This link is valid for a limited time. For security reasons, we recommend that you reset your password promptly and do not share this link with anyone. If you did not request this password reset, please disregard this email
+    <p>Thank you for choosing Elevate. To reset your password, please click on the following link. This link is valid for a
+     limited time. For security reasons, we recommend that you reset your password promptly and do not share this link with anyone.
+      If you did not request this password reset, please disregard this email
     </p>
     <a href="http://localhost:4200/auth/reset-password/${token}">
     click here to verify
@@ -42,10 +44,10 @@ export const resetPassEmailTemplate = function (token: string) {
     </body>
 
     </html>`;
-	const text = `
+    const text = `
   Password Reset Initiated: A request has been made to reset your Elevate account password. Please follow the provided instructions to securely reset your password and regain access to your account`;
-	return {
-		html: html,
-		text: text
-	};
+    return {
+        html: html,
+        text: text
+    };
 };

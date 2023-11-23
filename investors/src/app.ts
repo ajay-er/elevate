@@ -21,8 +21,8 @@ app.use("/api/v1/investor", investorRoute);
 
 app.use("/api/v1/payment", paymentRoute);
 
-app.all("*", async (req: Request, res: Response) => {
-	throw new NotFoundError();
+app.all("*", async (_req: Request, _res: Response) => {
+    throw new NotFoundError();
 });
 
 app.use(errorHandler);

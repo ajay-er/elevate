@@ -19,7 +19,7 @@ app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/profile", profileRoute);
 
 app.all("*", async (req: Request, res: Response) => {
-	throw new NotFoundError();
+    throw new NotFoundError();
 });
 
 app.use(errorHandler);

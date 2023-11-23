@@ -1,32 +1,32 @@
-import mongoose from "mongoose";
+import mongoose,{ Document } from "mongoose";
 
 const investmentDetails = new mongoose.Schema(
-	{
-		investorId: String,
-		startup: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Startup",
-			required: true
-		},
-		investmentAmount: Number,
-		equityPercentage: Number,
-		valuation: Number,
-		shares: Number,
-		investmentDate: Date,
-		investmentStage: String,
-		paymentDetails: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Payment"
-		},
-		investmentStatus: {
-			type: String,
-			enum: ["pending", "completed", "ongoing"]
-		},
-		investmentTerm: String,
-		exitStrategy: String,
-		notes: String
-	},
-	{ timestamps: true }
+    {
+        investorId: String,
+        startup: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Startup",
+            required: true
+        },
+        investmentAmount: Number,
+        equityPercentage: Number,
+        valuation: Number,
+        shares: Number,
+        investmentDate: Date,
+        investmentStage: String,
+        paymentDetails: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Payment"
+        },
+        investmentStatus: {
+            type: String,
+            enum: ["pending", "completed", "ongoing"]
+        },
+        investmentTerm: String,
+        exitStrategy: String,
+        notes: String
+    },
+    { timestamps: true }
 );
 
 interface IInvestmentDetail extends Document {
