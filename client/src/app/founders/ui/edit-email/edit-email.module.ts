@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { EditEmailComponent } from "./edit-email.component";
-import { LoadingButtonModule } from "src/app/shared/ui/loading-button/loading-button.module";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EditEmailComponent } from './edit-email.component';
+import { LoadingButtonModule } from 'src/app/shared/ui/loading-button/loading-button.module';
 
 @NgModule({
   declarations: [EditEmailComponent],

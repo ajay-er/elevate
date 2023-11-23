@@ -8,7 +8,7 @@ const paymentService = container.resolve(PaymentService);
 
 router.post("/razorpay-order", async (req: Request, res: Response) => {
     const { amount } = req.body;
-    const order = await paymentService.createOrder(amount);
+    const order = await paymentService.createOrder(req.body);
     if (!order) throw new Error("Some error occured razorpay order creation failed");
     return res.status(200).json({ orderId: order.id!, amount });
 });

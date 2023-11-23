@@ -6,12 +6,12 @@ import {
   Output,
   QueryList,
   ViewChildren,
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-  selector: "app-verify-otp-form",
-  templateUrl: "./verify-otp-form.component.html",
-  styleUrls: ["./verify-otp-form.component.css"],
+  selector: 'app-verify-otp-form',
+  templateUrl: './verify-otp-form.component.html',
+  styleUrls: ['./verify-otp-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VerifyOtpFormComponent {
@@ -21,7 +21,7 @@ export class VerifyOtpFormComponent {
 
   display: any;
   submitted: boolean = false;
-  otp: string = "";
+  otp: string = '';
 
   constructor() {
     this.timer();
@@ -35,18 +35,18 @@ export class VerifyOtpFormComponent {
     if (isOtpValid) {
       this.otp = this.otpInputs
         .map((input) => input.nativeElement.value)
-        .join("");
+        .join('');
       this.submitted = false;
 
       this.submitVerifyOtpForm.emit({ otp: this.otp });
     } else {
       this.submitted = true;
-      console.error("Oops enter valid otp");
+      console.error('Oops enter valid otp');
     }
   }
 
   inputs: number[] = [0, 0, 0, 0, 0, 0];
-  @ViewChildren("otpInput") otpInputs!: QueryList<ElementRef>;
+  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
   onInput(index: number) {
     if (index < this.otpInputs.length - 1) {
       this.otpInputs.toArray()[index + 1].nativeElement.focus();
@@ -54,20 +54,20 @@ export class VerifyOtpFormComponent {
   }
 
   onKeyDown(event: KeyboardEvent, index: number) {
-    if (event.key === "Backspace" && index > 0) {
+    if (event.key === 'Backspace' && index > 0) {
       event.preventDefault();
       this.inputs[index] = 0;
-      this.otpInputs.toArray()[index].nativeElement.value = "";
+      this.otpInputs.toArray()[index].nativeElement.value = '';
       this.otpInputs.toArray()[index - 1].nativeElement.focus();
     }
   }
 
   timer(minute = 1) {
     let seconds: number = minute * 60;
-    let textSec: any = "0";
+    let textSec: any = '0';
     let statSec: number = 60;
 
-    const prefix = minute < 10 ? "0" : "";
+    const prefix = minute < 10 ? '0' : '';
 
     const timer = setInterval(() => {
       seconds--;
@@ -82,7 +82,7 @@ export class VerifyOtpFormComponent {
 
       if (seconds == 0) {
         clearInterval(timer);
-        this.display = "";
+        this.display = '';
       }
     }, 1000);
   }

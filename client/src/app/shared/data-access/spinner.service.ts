@@ -1,8 +1,8 @@
-import { Injectable, inject } from "@angular/core";
-import { NgxSpinnerService } from "ngx-spinner";
+import { Injectable, inject } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SpinnerService {
   private spinner = inject(NgxSpinnerService);

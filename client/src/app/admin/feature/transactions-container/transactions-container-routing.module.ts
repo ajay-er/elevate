@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { TransactionsContainerComponent } from "./transactions-container.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { TransactionsContainerComponent } from './transactions-container.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: TransactionsContainerComponent,
   },
 ];

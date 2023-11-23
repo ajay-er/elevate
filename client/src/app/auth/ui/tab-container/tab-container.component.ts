@@ -4,13 +4,13 @@ import {
   EventEmitter,
   Input,
   Output,
-} from "@angular/core";
-import { Tab } from "src/app/shared/types";
+} from '@angular/core';
+import { Tab } from 'src/app/shared/types';
 
 @Component({
-  selector: "app-tab-container",
-  templateUrl: "./tab-container.component.html",
-  styleUrls: ["./tab-container.component.css"],
+  selector: 'app-tab-container',
+  templateUrl: './tab-container.component.html',
+  styleUrls: ['./tab-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabContainerComponent {

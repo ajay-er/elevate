@@ -1,19 +1,19 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { adminUnauthGuard } from "src/app/shared/guards/admin-unauth.guard";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { adminUnauthGuard } from 'src/app/shared/guards/admin-unauth.guard';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     loadChildren: () =>
-      import("../auth-access/auth-access.module").then(
+      import('../auth-access/auth-access.module').then(
         (m) => m.AuthAccessModule
       ),
   },
   {
-    path: "admin",
+    path: 'admin',
     loadChildren: () =>
-      import("../admin-access/admin-access.module").then(
+      import('../admin-access/admin-access.module').then(
         (m) => m.AdminAccessModule
       ),
   },

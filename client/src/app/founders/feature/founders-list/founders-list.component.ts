@@ -1,10 +1,10 @@
-import { Component, inject } from "@angular/core";
-import { FoundersService } from "../../data-access/founders.service";
+import { Component, inject } from '@angular/core';
+import { FoundersService } from '../../data-access/founders.service';
 
 @Component({
-  selector: "app-founders-list",
-  templateUrl: "./founders-list.component.html",
-  styleUrls: ["./founders-list.component.css"],
+  selector: 'app-founders-list',
+  templateUrl: './founders-list.component.html',
+  styleUrls: ['./founders-list.component.css'],
 })
 export class FoundersListComponent {
   private foundersService = inject(FoundersService);

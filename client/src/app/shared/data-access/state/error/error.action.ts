@@ -1,8 +1,8 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
 export const SetError = createAction(
-  "[Auth] Set Error",
+  '[Auth] Set Error',
   props<{ errorMessage: string; errorType: string }>()
 );
 
-export const ClearError = createAction("[Auth] Clear Error");
+export const ClearError = createAction('[Auth] Clear Error');

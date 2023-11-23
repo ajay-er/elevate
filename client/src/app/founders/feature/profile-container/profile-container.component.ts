@@ -1,19 +1,19 @@
-import { Component, inject } from "@angular/core";
-import { ProfileTab } from "src/app/shared/types";
-import { ProfileService } from "../../data-access/profile.service";
+import { Component, inject } from '@angular/core';
+import { ProfileTab } from 'src/app/shared/types';
+import { ProfileService } from '../../data-access/profile.service';
 import {
   IAddress,
   IUpdateImage,
   IUpdateName,
   IUpdatePhone,
   IUserProfile,
-} from "src/app/shared/interfaces";
-import { SnackbarService } from "src/app/shared/data-access/snackbar.service";
+} from 'src/app/shared/interfaces';
+import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 
 @Component({
-  selector: "app-profile-container",
-  templateUrl: "./profile-container.component.html",
-  styleUrls: ["./profile-container.component.css"],
+  selector: 'app-profile-container',
+  templateUrl: './profile-container.component.html',
+  styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
   protected SelectTab: typeof ProfileTab = ProfileTab;
@@ -55,7 +55,7 @@ export class ProfileContainerComponent {
     console.log(data);
     this.profileService.updateName(data).subscribe({
       next: (res) => {
-        this.snackbar.showSuccess("Name changed successfully");
+        this.snackbar.showSuccess('Name changed successfully');
       },
     });
   }
@@ -64,7 +64,7 @@ export class ProfileContainerComponent {
     console.log(data);
     this.profileService.updatePhone(data).subscribe({
       next: (res) => {
-        this.snackbar.showSuccess("Phone number changed successfully");
+        this.snackbar.showSuccess('Phone number changed successfully');
       },
     });
   }
@@ -73,7 +73,7 @@ export class ProfileContainerComponent {
     console.log(data);
     this.profileService.upsertAddress(data).subscribe({
       next: (res) => {
-        this.snackbar.showSuccess("address succesfully added!");
+        this.snackbar.showSuccess('address succesfully added!');
       },
     });
   }
@@ -83,7 +83,7 @@ export class ProfileContainerComponent {
       const profileImgUrl = imageData.secure_url;
       this.profileService.updateProfileImage(profileImgUrl).subscribe({
         next: (res: any) => {
-          this.snackbar.showSuccess("Profile image updated succeccfully");
+          this.snackbar.showSuccess('Profile image updated succeccfully');
           this.currentUserProfile.photo = res.user.profileImgUrl;
         },
       });

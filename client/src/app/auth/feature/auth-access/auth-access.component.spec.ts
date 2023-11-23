@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthAccessComponent } from "./auth-access.component";
+import { AuthAccessComponent } from './auth-access.component';
 
-describe("AuthAccessComponent", () => {
+describe('AuthAccessComponent', () => {
   let component: AuthAccessComponent;
   let fixture: ComponentFixture<AuthAccessComponent>;
 
@@ -15,7 +15,7 @@ describe("AuthAccessComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

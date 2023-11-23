@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { IdeaDetailsRoutingModule } from "./idea-details-routing.module";
-import { IdeaComponent } from "./idea.component";
+import { IdeaDetailsRoutingModule } from './idea-details-routing.module';
+import { IdeaComponent } from './idea.component';
 
 
 @NgModule({

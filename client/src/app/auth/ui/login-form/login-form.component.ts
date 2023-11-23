@@ -4,13 +4,13 @@ import {
   EventEmitter,
   Output,
   inject,
-} from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { ILogin } from "src/app/shared/interfaces";
+} from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ILogin } from 'src/app/shared/interfaces';
 
 @Component({
-  selector: "app-login-form",
-  templateUrl: "./login-form.component.html",
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
@@ -19,8 +19,8 @@ export class LoginFormComponent {
   private fb = inject(FormBuilder);
 
   loginForm = this.fb.group({
-    email: ["", [Validators.required, Validators.email]],
-    password: ["", Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
   });
 
   onSubmit() {

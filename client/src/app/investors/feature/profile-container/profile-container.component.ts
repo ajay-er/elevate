@@ -1,11 +1,11 @@
-import { Component, inject } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { InvestorsService } from "../../data-access/investors.service";
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { InvestorsService } from '../../data-access/investors.service';
 
 @Component({
-  selector: "app-profile-container",
-  templateUrl: "./profile-container.component.html",
-  styleUrls: ["./profile-container.component.css"],
+  selector: 'app-profile-container',
+  templateUrl: './profile-container.component.html',
+  styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
   private route = inject(ActivatedRoute);
@@ -19,7 +19,7 @@ export class ProfileContainerComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get("id");
+      const id = params.get('id');
       this.investorService.getInvestorData(id).subscribe((res: any) => {
         console.log(res);
         this.profileImg  = res.result.tempData.profileImgUrl;

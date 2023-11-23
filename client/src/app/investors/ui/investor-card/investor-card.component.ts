@@ -1,12 +1,12 @@
 import {
   Component,
   Input,
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-  selector: "app-investor-card",
-  templateUrl: "./investor-card.component.html",
-  styleUrls: ["./investor-card.component.css"],
+  selector: 'app-investor-card',
+  templateUrl: './investor-card.component.html',
+  styleUrls: ['./investor-card.component.css'],
 })
 export class InvestorCardComponent {
   @Input() imgsrc!: string;

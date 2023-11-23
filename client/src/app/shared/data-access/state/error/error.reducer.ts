@@ -1,5 +1,5 @@
-import { createReducer, on } from "@ngrx/store";
-import { ClearError, SetError } from "./error.action";
+import { createReducer, on } from '@ngrx/store';
+import { ClearError, SetError } from './error.action';
 
 export interface ErrorState {
   errorMessage: string | null;

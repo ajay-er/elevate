@@ -142,12 +142,7 @@
               >Ideas
             </a>
           </li>
-          <li>
-            <a
-              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
-              >Blog
-            </a>
-          </li>
+         
           <li
             *ngIf="!(isUserLoggedIn$ | async)"
             (click)="toggleNavbar()"

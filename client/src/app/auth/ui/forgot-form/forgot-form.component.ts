@@ -4,19 +4,19 @@ import {
   EventEmitter,
   Output,
   inject,
-} from "@angular/core";
+} from '@angular/core';
 import {
   AbstractControlOptions,
   FormBuilder,
   Validators,
-} from "@angular/forms";
-import { CustomValidationService } from "../../data-access/custom-validation.service";
-import { IConfirmPass } from "src/app/shared/interfaces";
+} from '@angular/forms';
+import { CustomValidationService } from '../../data-access/custom-validation.service';
+import { IConfirmPass } from 'src/app/shared/interfaces';
 
 @Component({
-  selector: "app-forgot-form",
-  templateUrl: "./forgot-form.component.html",
-  styleUrls: ["./forgot-form.component.css"],
+  selector: 'app-forgot-form',
+  templateUrl: './forgot-form.component.html',
+  styleUrls: ['./forgot-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotFormComponent {
@@ -27,18 +27,18 @@ export class ForgotFormComponent {
   forgotForm = this.fb.group(
     {
       password: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.customValidator.patternValidator(),
         ]),
       ],
-      confirmPassword: ["", [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
     },
     {
       validator: this.customValidator.MatchPassword(
-        "password",
-        "confirmPassword"
+        'password',
+        'confirmPassword'
       ),
     } as AbstractControlOptions
   );
@@ -49,11 +49,11 @@ export class ForgotFormComponent {
 
   onSubmit() {
     const url = window.location.pathname;
-    const path = url.split("/");
+    const path = url.split('/');
     const token = path[3];
 
     if (this.forgotForm.valid && token) {
-      const newPasswordControl = this.forgotForm.get("password");
+      const newPasswordControl = this.forgotForm.get('password');
       if (newPasswordControl && newPasswordControl.value) {
         const data: IConfirmPass = {
           newPassword: newPasswordControl.value,
@@ -62,7 +62,7 @@ export class ForgotFormComponent {
         this.submitForgotForm.emit(data);
       }
     } else {
-      console.log("Oops something wrong!Please try again later");
+      console.log('Oops something wrong!Please try again later');
     }
   }
 }

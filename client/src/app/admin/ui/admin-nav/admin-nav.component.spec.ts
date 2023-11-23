@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminNavComponent } from "./admin-nav.component";
+import { AdminNavComponent } from './admin-nav.component';
 
-describe("AdminNavComponent", () => {
+describe('AdminNavComponent', () => {
   let component: AdminNavComponent;
   let fixture: ComponentFixture<AdminNavComponent>;
 
@@ -15,7 +15,7 @@ describe("AdminNavComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

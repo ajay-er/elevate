@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditEmailComponent } from "./edit-email.component";
+import { EditEmailComponent } from './edit-email.component';
 
-describe("EditEmailComponent", () => {
+describe('EditEmailComponent', () => {
   let component: EditEmailComponent;
   let fixture: ComponentFixture<EditEmailComponent>;
 
@@ -15,7 +15,7 @@ describe("EditEmailComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

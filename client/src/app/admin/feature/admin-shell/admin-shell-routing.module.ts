@@ -1,37 +1,37 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "dashboard",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     loadChildren: () =>
-      import("../dashboard-container/dashboard-container.module").then(
+      import('../dashboard-container/dashboard-container.module').then(
         (m) => m.DashboardContainerModule
       ),
   },
   {
-    path: "investors",
+    path: 'investors',
     loadChildren: () =>
-      import("../investors-container/investors-container.module").then(
+      import('../investors-container/investors-container.module').then(
         (m) => m.InvestorsContainerModule
       ),
   },
   {
-    path: "founders",
+    path: 'founders',
     loadChildren: () =>
-      import("../founders-container/founders-container.module").then(
+      import('../founders-container/founders-container.module').then(
         (m) => m.FoundersContainerModule
       ),
   },
   {
-    path: "transactions",
+    path: 'transactions',
     loadChildren: () =>
-      import("../transactions-container/transactions-container.module").then(
+      import('../transactions-container/transactions-container.module').then(
         (m) => m.TransactionsContainerModule
       ),
   },

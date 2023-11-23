@@ -1,12 +1,12 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-} from "@angular/common/http";
-import { Observable, finalize } from "rxjs";
-import { LoadingButtonService } from "../data-access/loading-button.service";
+} from '@angular/common/http';
+import { Observable, finalize } from 'rxjs';
+import { LoadingButtonService } from '../data-access/loading-button.service';
 
 @Injectable()
 export class LoadingButtonInterceptor implements HttpInterceptor {

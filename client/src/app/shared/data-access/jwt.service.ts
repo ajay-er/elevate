@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { jwtDecode } from "jwt-decode";
+import { Injectable } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   role: string;
@@ -7,16 +7,16 @@ interface JwtPayload {
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class JwtService {
   getUserRole(token: string): string {
     if (token) {
-      let tokenPrefix = "";
-      if (token.startsWith("access:")) {
-        tokenPrefix = "access:";
-      } else if (token.startsWith("google:")) {
-        tokenPrefix = "google:";
+      let tokenPrefix = '';
+      if (token.startsWith('access:')) {
+        tokenPrefix = 'access:';
+      } else if (token.startsWith('google:')) {
+        tokenPrefix = 'google:';
       }
       if (tokenPrefix) {
         const decodedToken: JwtPayload = jwtDecode(
@@ -26,16 +26,16 @@ export class JwtService {
       }
     }
 
-    return "";
+    return '';
   }
 
   private getDecodedToken(token: string): JwtPayload | undefined {
     if (token) {
-      let tokenPrefix = "";
-      if (token.startsWith("access:")) {
-        tokenPrefix = "access:";
-      } else if (token.startsWith("google:")) {
-        tokenPrefix = "google:";
+      let tokenPrefix = '';
+      if (token.startsWith('access:')) {
+        tokenPrefix = 'access:';
+      } else if (token.startsWith('google:')) {
+        tokenPrefix = 'google:';
       }
       if (tokenPrefix) {
         const decodedToken: JwtPayload = jwtDecode(
@@ -58,10 +58,10 @@ export class JwtService {
   }
 
   isAdmin(token: string): boolean {
-    return this.getUserRole(token) === "ADMIN";
+    return this.getUserRole(token) === 'ADMIN';
   }
 
   isUser(token: string): boolean {
-    return this.getUserRole(token) === "USER";
+    return this.getUserRole(token) === 'USER';
   }
 }

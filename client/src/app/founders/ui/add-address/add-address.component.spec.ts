@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddAddressComponent } from "./add-address.component";
+import { AddAddressComponent } from './add-address.component';
 
-describe("AddAddressComponent", () => {
+describe('AddAddressComponent', () => {
   let component: AddAddressComponent;
   let fixture: ComponentFixture<AddAddressComponent>;
 
@@ -15,7 +15,7 @@ describe("AddAddressComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

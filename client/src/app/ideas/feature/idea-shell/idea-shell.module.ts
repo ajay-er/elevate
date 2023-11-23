@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { IdeaShellRoutingModule } from "./idea-shell-routing.module";
+import { IdeaShellRoutingModule } from './idea-shell-routing.module';
 
 @NgModule({
   declarations: [],

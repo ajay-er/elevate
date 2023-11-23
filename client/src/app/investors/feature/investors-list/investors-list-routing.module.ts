@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { InvestorsListComponent } from "./investors-list.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { InvestorsListComponent } from './investors-list.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: InvestorsListComponent,
   },
 ];

@@ -3,34 +3,34 @@ import {
   ErrorHandler,
   NgModule,
   isDevMode,
-} from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { FooterModule } from "./shared/ui/footer/footer.module";
-import { NavModule } from "./shared/ui/nav/nav.module";
-import { StoreModule } from "@ngrx/store";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FooterModule } from './shared/ui/footer/footer.module';
+import { NavModule } from './shared/ui/nav/nav.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
   GoogleLoginProvider,
-} from "@abacritt/angularx-social-login";
-import { EffectsModule } from "@ngrx/effects";
-import { AuthEffects } from "./shared/data-access/state/auth/auth.effects";
-import { authReducer } from "./shared/data-access/state/auth/auth.reducer";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { NoopAnimationsModule, BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { errorReducer } from "./shared/data-access/state/error/error.reducer";
-import { GlobalErrorHandler } from "./shared/data-access/global-error-handler.service";
-import { SpinnerInterceptor } from "./shared/interceptors/spinner.interceptor";
-import { SpinnerModule } from "./shared/ui/spinner/spinner.module";
-import { LoadingButtonInterceptor } from "./shared/interceptors/loading-button.interceptor";
-import { AdminNavModule } from "./admin/ui/admin-nav/admin-nav.module";
-import { AdminAsideModule } from "./admin/ui/admin-aside/admin-aside.module";
-import { RouterModule } from "@angular/router";
-import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
+} from '@abacritt/angularx-social-login';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './shared/data-access/state/auth/auth.effects';
+import { authReducer } from './shared/data-access/state/auth/auth.reducer';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { errorReducer } from './shared/data-access/state/error/error.reducer';
+import { GlobalErrorHandler } from './shared/data-access/global-error-handler.service';
+import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+import { SpinnerModule } from './shared/ui/spinner/spinner.module';
+import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.interceptor';
+import { AdminNavModule } from './admin/ui/admin-nav/admin-nav.module';
+import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
+import { RouterModule } from '@angular/router';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,10 +43,10 @@ import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
     AdminAsideModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
-    StoreModule.forFeature("auth", authReducer),
-    StoreModule.forFeature("error", errorReducer),
+    StoreModule.forFeature('auth', authReducer),
+    StoreModule.forFeature('error', errorReducer),
     StoreDevtoolsModule.instrument({
-      name: "Elevate",
+      name: 'Elevate',
       maxAge: 25,
       logOnly: !isDevMode(),
     }),
@@ -64,14 +64,14 @@ import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
       useClass: GlobalErrorHandler,
     },
     {
-      provide: "SocialAuthServiceConfig",
+      provide: 'SocialAuthServiceConfig',
       useValue: {
         autoLogin: false,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              "136905288035-rfcs7jag9gh9e4ne4454jri50lec2p9s.apps.googleusercontent.com"
+              '136905288035-rfcs7jag9gh9e4ne4454jri50lec2p9s.apps.googleusercontent.com'
             ),
           },
         ],

@@ -1,12 +1,12 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-} from "@angular/common/http";
-import { Observable, finalize } from "rxjs";
-import { SpinnerService } from "../data-access/spinner.service";
+} from '@angular/common/http';
+import { Observable, finalize } from 'rxjs';
+import { SpinnerService } from '../data-access/spinner.service';
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
@@ -17,7 +17,7 @@ export class SpinnerInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     
-    if (request.url.includes("https://api.cloudinary.com/v1_1")) {
+    if (request.url.includes('https://api.cloudinary.com/v1_1')) {
       return next.handle(request);
     }
 

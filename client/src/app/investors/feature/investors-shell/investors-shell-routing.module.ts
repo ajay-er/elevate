@@ -1,18 +1,18 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     loadChildren: () =>
-      import("../investors-list/investors-list.module").then(
+      import('../investors-list/investors-list.module').then(
         (m) => m.InvestorsListModule
       ),
   },
   {
-    path: "profile/:id",
+    path: 'profile/:id',
     loadChildren: () =>
-      import("../profile-container/profile-container.module").then(
+      import('../profile-container/profile-container.module').then(
         (m) => m.ProfileContainerModule
       ),
   },

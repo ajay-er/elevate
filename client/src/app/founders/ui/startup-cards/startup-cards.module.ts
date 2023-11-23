@@ -1,6 +1,6 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { StartupCardsComponent } from "./startup-cards.component";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { StartupCardsComponent } from './startup-cards.component';
 
 @NgModule({
   declarations: [StartupCardsComponent],
