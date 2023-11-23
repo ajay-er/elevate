@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: startups-depl
+  name: search-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: startups
+      app: search
   template:
     metadata:
       labels:
-        app: startups
+        app: search
     spec:
       containers:
-        - name: startups
-          image: ajay404/startups
+        - name: search
+          image: ajay404/search
           env:
           - name: PORT
             value: '3000'
           - name: NODE_ENV
             value: 'dev'
           - name: MONGO_URI
-            value: 'mongodb://mongo-srv:27017/startups'
+            value: 'mongodb://mongo-srv:27017/search'
           - name: JWT_SECRET
             valueFrom:
               secretKeyRef:
@@ -42,17 +42,16 @@ spec:
               secretKeyRef:
                 name: elevate-es-elastic-user
                 key: elastic
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: startups-srv
+  name: search-srv
 spec:
   selector:
-    app: startups
+    app: search
   ports:
-    - name: startups
+    - name: search
       protocol: TCP
       port: 3000
       targetPort: 3000

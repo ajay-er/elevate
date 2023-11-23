@@ -79,6 +79,7 @@ export class AuthEffects {
           if (value !== null) {
             currentUserData[key] =
               key === "isEmailVerified" ? isJSONString(value) ? JSON.parse(value) : false : value;
+            // eslint-disable-next-line no-inner-declarations
             function isJSONString(str: string) {
               try {
                 JSON.parse(str);

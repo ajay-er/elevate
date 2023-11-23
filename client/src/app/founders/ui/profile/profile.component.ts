@@ -36,10 +36,10 @@ export class ProfileComponent {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-      event?.objectUrl!
-    );
-  }
+    if (event && event.objectUrl) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+    }
+  }  
 
   imageLoaded(image: LoadedImage) {
     console.log("image loaded", image);

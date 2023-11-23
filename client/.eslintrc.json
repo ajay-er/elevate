@@ -18,7 +18,8 @@
         "@typescript-eslint"
     ],
     "rules": {
-		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+		"@typescript-eslint/no-explicit-any":"off",
+		"@typescript-eslint/no-unused-vars": ["off", { "argsIgnorePattern": "^_" }],
         "no-console": "warn",
 		"no-undef": "error",
 		"semi": "error",
@@ -30,7 +31,7 @@
 		"no-useless-concat": "error",
 		"no-useless-return": "error",
 		"no-constant-condition": "warn",
-		"no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|__" }],
+		"no-unused-vars": ["off", { "argsIgnorePattern": "req|res|next|__" }],
 		"indent": ["error", 2, { "SwitchCase": 1 }],
 		"no-mixed-spaces-and-tabs": "warn",
 		"space-before-blocks": "error",

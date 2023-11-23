@@ -42,6 +42,14 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+    - image: ajay404/search
+      context: search
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
   local:
     push: true
 manifests:

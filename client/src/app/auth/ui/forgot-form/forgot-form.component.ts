@@ -48,10 +48,9 @@ export class ForgotFormComponent {
   }
 
   onSubmit() {
-    let token;
     const url = window.location.pathname;
     const path = url.split("/");
-    token = path[3];
+    const token = path[3];
 
     if (this.forgotForm.valid && token) {
       const newPasswordControl = this.forgotForm.get("password");
