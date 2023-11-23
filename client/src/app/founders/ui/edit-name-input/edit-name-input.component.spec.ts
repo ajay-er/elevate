@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { EditNameInputComponent } from './edit-name-input.component';
+import { EditNameInputComponent } from "./edit-name-input.component";
 
-describe('EditNameInputComponent', () => {
+describe("EditNameInputComponent", () => {
   let component: EditNameInputComponent;
   let fixture: ComponentFixture<EditNameInputComponent>;
 
@@ -15,7 +15,7 @@ describe('EditNameInputComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,18 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable, inject } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AdminService {
   private http = inject(HttpClient);
 
   getStartups() {
-    return this.http.get('/fou/startups/startups');
+    return this.http.get("/fou/startups/startups");
   }
 
   getInvestors() {
-    return this.http.get('/wow/investor/investors');
+    return this.http.get("/wow/investor/investors");
   }
   
 }

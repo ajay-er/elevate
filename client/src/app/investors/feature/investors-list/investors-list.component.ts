@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { InvestorsService } from '../../data-access/investors.service';
+import { Component, inject } from "@angular/core";
+import { InvestorsService } from "../../data-access/investors.service";
 
 @Component({
-  selector: 'app-investors-list',
-  templateUrl: './investors-list.component.html',
-  styleUrls: ['./investors-list.component.css'],
+  selector: "app-investors-list",
+  templateUrl: "./investors-list.component.html",
+  styleUrls: ["./investors-list.component.css"],
 })
 export class InvestorsListComponent {
   protected investors!: any;
@@ -16,7 +16,6 @@ export class InvestorsListComponent {
       this.investors = res.result;
     });
   }
-
 
 
 }

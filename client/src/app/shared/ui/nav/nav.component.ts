@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { UnsetCurrentUser } from 'src/app/shared/data-access/state/auth/auth.action';
-import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
-import { State, getCurrentUserData, isUserLoggedIn } from '../../data-access/state/auth';
+import { Component } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { UnsetCurrentUser } from "src/app/shared/data-access/state/auth/auth.action";
+import { ICurrentUser } from "src/app/shared/data-access/state/auth/auth.reducer";
+import { State, getCurrentUserData, isUserLoggedIn } from "../../data-access/state/auth";
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css'],
+  selector: "app-nav",
+  templateUrl: "./nav.component.html",
+  styleUrls: ["./nav.component.css"],
 })
 export class NavComponent {
   currentUser$!: Observable<ICurrentUser>;

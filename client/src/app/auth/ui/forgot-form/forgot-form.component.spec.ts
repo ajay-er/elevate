@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ForgotFormComponent } from './forgot-form.component';
+import { ForgotFormComponent } from "./forgot-form.component";
 
-describe('ForgotFormComponent', () => {
+describe("ForgotFormComponent", () => {
   let component: ForgotFormComponent;
   let fixture: ComponentFixture<ForgotFormComponent>;
 
@@ -15,7 +15,7 @@ describe('ForgotFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,11 +1,11 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '../data-access/auth.service';
+import { inject } from "@angular/core";
+import { CanActivateFn, Router } from "@angular/router";
+import { AuthService } from "../data-access/auth.service";
 
 export const resetPasswordGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const token = route.params['token'];
+  const token = route.params["token"];
 
   // Create a Promise to wait for the API call result
   const checkTokenValidation = (): Promise<boolean> => {
@@ -24,11 +24,11 @@ export const resetPasswordGuard: CanActivateFn = async (route, state) => {
   };
 
   try {
-    let isValid = await checkTokenValidation();
+    const isValid = await checkTokenValidation();
     if (isValid) {
       return true;
     } else {
-      router.navigateByUrl('/ideas');
+      router.navigateByUrl("/ideas");
       return false;
     }
   } catch (error) {

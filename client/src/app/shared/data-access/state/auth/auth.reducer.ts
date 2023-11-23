@@ -1,5 +1,5 @@
-import { createReducer, on } from '@ngrx/store';
-import { Tab } from 'src/app/shared/types';
+import { createReducer, on } from "@ngrx/store";
+import { Tab } from "src/app/shared/types";
 import {
   GetLocalStorageData,
   SetCurrentUser,
@@ -7,7 +7,7 @@ import {
   SetUserLoggedInTrue,
   ToogleAuthTab,
   UnsetCurrentUser,
-} from './auth.action';
+} from "./auth.action";
 
 export interface ICurrentUser {
   name: string;
@@ -25,9 +25,9 @@ const initialState: AuthState = {
   currentAuthTab: Tab.Login,
   isUserLoggedIn: false,
   currentUser: {
-    name: '',
-    photo: '',
-    email: '',
+    name: "",
+    photo: "",
+    email: "",
     isEmailVerified: false,
   },
 };
@@ -50,9 +50,9 @@ export const authReducer = createReducer(
     return {
       ...state,
       currentUser: {
-        name: '',
-        photo: '',
-        email: '',
+        name: "",
+        photo: "",
+        email: "",
         isEmailVerified: false,
       },
       isUserLoggedIn: false,

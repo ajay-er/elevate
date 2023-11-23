@@ -1,6 +1,6 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { LocalStorageService } from '../data-access/local-storage.service';
+import { inject } from "@angular/core";
+import { CanActivateFn, Router } from "@angular/router";
+import { LocalStorageService } from "../data-access/local-storage.service";
 
 export const verifyOTPGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
@@ -15,6 +15,6 @@ export const verifyOTPGuard: CanActivateFn = (route, state) => {
       return true;
     }
   }
-  router.navigate(['/not-found']);
+  router.navigate(["/not-found"]);
   return false;
 };

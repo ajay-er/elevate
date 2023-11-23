@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ProfileContainerComponent } from './profile-container.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ProfileContainerComponent } from "./profile-container.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ProfileContainerComponent,
   },
 ];

@@ -4,20 +4,20 @@ import {
   EventEmitter,
   Output,
   inject,
-} from '@angular/core';
+} from "@angular/core";
 import {
   Validators,
   FormBuilder,
   AbstractControlOptions,
-} from '@angular/forms';
-import { CustomValidationService } from '../../data-access/custom-validation.service';
-import { ISignup } from 'src/app/shared/interfaces';
-import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
+} from "@angular/forms";
+import { CustomValidationService } from "../../data-access/custom-validation.service";
+import { ISignup } from "src/app/shared/interfaces";
+import { LocalStorageService } from "src/app/shared/data-access/local-storage.service";
 
 @Component({
-  selector: 'app-signup-form',
-  templateUrl: './signup-form.component.html',
-  styleUrls: ['./signup-form.component.css'],
+  selector: "app-signup-form",
+  templateUrl: "./signup-form.component.html",
+  styleUrls: ["./signup-form.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupFormComponent {
@@ -28,22 +28,22 @@ export class SignupFormComponent {
 
   registerForm = this.fb.group(
     {
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
       password: [
-        '',
+        "",
         Validators.compose([
           Validators.required,
           this.customValidator.patternValidator(),
         ]),
       ],
-      confirmPassword: ['', [Validators.required]],
+      confirmPassword: ["", [Validators.required]],
     },
     {
       validator: this.customValidator.MatchPassword(
-        'password',
-        'confirmPassword'
+        "password",
+        "confirmPassword"
       ),
     } as AbstractControlOptions
   );

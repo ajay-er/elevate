@@ -1,14 +1,14 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject } from "@angular/core";
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
-} from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
-import { LocalStorageService } from '../data-access/local-storage.service';
-import { Router } from '@angular/router';
+} from "@angular/common/http";
+import { Observable, catchError, throwError } from "rxjs";
+import { LocalStorageService } from "../data-access/local-storage.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -19,9 +19,9 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = this.localStorageService.get('access_token');
+    const token = this.localStorageService.get("access_token");
 
-    if (request.url.includes('https://api.cloudinary.com/v1_1')) {
+    if (request.url.includes("https://api.cloudinary.com/v1_1")) {
       return next.handle(request);
     }
 
@@ -35,10 +35,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('unauth-response catcher works well');
-
         if (error.status === 401) {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(["/auth/login"]);
         }
 
         return throwError(() => error);

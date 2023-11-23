@@ -6,16 +6,16 @@ import {
   Output,
   ViewChild,
   inject,
-} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
-import { IUserProfile } from 'src/app/shared/interfaces';
-import { ProfileTab } from 'src/app/shared/types';
+} from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
+import { ImageCroppedEvent, LoadedImage } from "ngx-image-cropper";
+import { IUserProfile } from "src/app/shared/interfaces";
+import { ProfileTab } from "src/app/shared/types";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
@@ -23,12 +23,12 @@ export class ProfileComponent {
   @Output() toggleEditBtn = new EventEmitter<ProfileTab>();
   @Output() updateImage = new EventEmitter<any>();
   @Input() userData!: IUserProfile;
-  @ViewChild('toogleButton') toggleButton!: any;
+  @ViewChild("toogleButton") toggleButton!: any;
 
   //TODO: complete croping
   private sanitizer = inject(DomSanitizer);
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
+  imageChangedEvent: any = "";
+  croppedImage: any = "";
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -42,13 +42,13 @@ export class ProfileComponent {
   }
 
   imageLoaded(image: LoadedImage) {
-    console.log('image loaded', image);
+    console.log("image loaded", image);
   }
   cropperReady() {
-    console.log('croper is ready');
+    console.log("croper is ready");
   }
   loadImageFailed() {
-    console.log('image loading is failed');
+    console.log("image loading is failed");
   }
 
   toogleEditButton(tab: ProfileTab) {
@@ -57,9 +57,9 @@ export class ProfileComponent {
 
   addCloudData(data: File) {
     const formData = new FormData();
-    formData.append('file', data);
-    formData.append('upload_preset', 'elevate');
-    formData.append('cloud_name', 'elevate-connect');
+    formData.append("file", data);
+    formData.append("upload_preset", "elevate");
+    formData.append("cloud_name", "elevate-connect");
     return formData;
   }
 

@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { InvestorsContainerComponent } from './investors-container.component';
+import { InvestorsContainerComponent } from "./investors-container.component";
 
-describe('InvestorsContainerComponent', () => {
+describe("InvestorsContainerComponent", () => {
   let component: InvestorsContainerComponent;
   let fixture: ComponentFixture<InvestorsContainerComponent>;
 
@@ -15,7 +15,7 @@ describe('InvestorsContainerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

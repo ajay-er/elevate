@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { LocalStorageService } from '../../local-storage.service';
-import * as AuthActions from './auth.action';
-import { Store } from '@ngrx/store';
-import { AuthService } from '../../auth.service';
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
+import { LocalStorageService } from "../../local-storage.service";
+import * as AuthActions from "./auth.action";
+import { Store } from "@ngrx/store";
+import { AuthService } from "../../auth.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
@@ -15,7 +15,7 @@ export class AuthEffects {
         ofType(AuthActions.SetCurrentUser),
         tap((action) => {
           this.localstorageService.saveKeys(action.currentUser);
-          this.router.navigate(['/ideas']);
+          this.router.navigate(["/ideas"]);
         })
       );
     },
@@ -46,7 +46,7 @@ export class AuthEffects {
             ];
           }),
           catchError((error) => {
-            console.error('Logout API Error:', error);
+            console.error("Logout API Error:", error);
             return [
               AuthActions.ClearLocalStorageAction(),
               AuthActions.LogoutFailer(),
@@ -72,17 +72,13 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.CheckLocalStorageAction),
       map(() => {
-        const keys = ['name', 'photo', 'email', 'isEmailVerified'];
+        const keys = ["name", "photo", "email", "isEmailVerified"];
         const currentUserData: any = {};
         for (const key of keys) {
           const value = this.localstorageService.get(key);
           if (value !== null) {
             currentUserData[key] =
-              key === 'isEmailVerified'
-                ? isJSONString(value)
-                  ? JSON.parse(value)
-                  : false
-                : value;
+              key === "isEmailVerified" ? isJSONString(value) ? JSON.parse(value) : false : value;
             function isJSONString(str: string) {
               try {
                 JSON.parse(str);

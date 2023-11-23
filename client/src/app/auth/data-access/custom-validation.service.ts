@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { Injectable } from "@angular/core";
+import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CustomValidationService {
   patternValidator(): ValidatorFn {
@@ -10,7 +10,7 @@ export class CustomValidationService {
       if (!control.value) {
         return {};
       }
-      const regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+      const regex = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
       const valid = regex.test(control.value);
       return valid ? {} : { invalidPassword: true };
     };
@@ -27,7 +27,7 @@ export class CustomValidationService {
 
       if (
         confirmPasswordControl.errors &&
-        !confirmPasswordControl.errors?.['passwordMismatch']
+        !confirmPasswordControl.errors?.["passwordMismatch"]
       ) {
         return {};
       }

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class LocalStorageService {
   saveKeys(data: any) {
@@ -23,12 +23,12 @@ export class LocalStorageService {
   }
 
   getOtpVerifyTimeLimitToken(): string | null {
-    return window.localStorage.getItem('verify_otp_timestamp');
+    return window.localStorage.getItem("verify_otp_timestamp");
   }
 
   setOtpVerifyTimeLimitToken() {
     window.localStorage.setItem(
-      'verify_otp_timestamp',
+      "verify_otp_timestamp",
       new Date().getTime().toString()
     );
   }

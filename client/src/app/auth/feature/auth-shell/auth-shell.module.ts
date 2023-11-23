@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { AuthShellRoutingModule } from './auth-routing.module';
+import { NgModule } from "@angular/core";
+import { AuthShellRoutingModule } from "./auth-routing.module";
 
 @NgModule({
   imports: [AuthShellRoutingModule],

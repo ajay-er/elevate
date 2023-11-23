@@ -1,26 +1,26 @@
-import { Component, inject } from '@angular/core';
-import { Tab } from 'src/app/shared/types';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { State } from '../../../shared/data-access/state/auth';
-import { Store } from '@ngrx/store';
-import * as AuthActions from '../../../shared/data-access/state/auth/auth.action';
-import { Subscription, filter } from 'rxjs';
+import { Component, inject } from "@angular/core";
+import { Tab } from "src/app/shared/types";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { State } from "../../../shared/data-access/state/auth";
+import { Store } from "@ngrx/store";
+import * as AuthActions from "../../../shared/data-access/state/auth/auth.action";
+import { Subscription, filter } from "rxjs";
 import {
   IConfirmPass,
   ILogin,
   ISignup,
   IVerifyOTP,
-} from 'src/app/shared/interfaces';
-import { AuthService } from '../../../shared/data-access/auth.service';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
-import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
-import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
+} from "src/app/shared/interfaces";
+import { AuthService } from "../../../shared/data-access/auth.service";
+import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
+import { SnackbarService } from "src/app/shared/data-access/snackbar.service";
+import { ICurrentUser } from "src/app/shared/data-access/state/auth/auth.reducer";
+import { LocalStorageService } from "src/app/shared/data-access/local-storage.service";
 
 @Component({
-  selector: 'app-auth-access',
-  templateUrl: './auth-access.component.html',
-  styleUrls: ['./auth-access.component.css'],
+  selector: "app-auth-access",
+  templateUrl: "./auth-access.component.html",
+  styleUrls: ["./auth-access.component.css"],
 })
 export class AuthAccessComponent {
   protected TabType: typeof Tab = Tab;
@@ -70,10 +70,10 @@ export class AuthAccessComponent {
                 this.store.dispatch(
                   AuthActions.SetAccessToken({
                     accessToken: res.accessToken,
-                    tokenType: 'access_token',
+                    tokenType: "access_token",
                   })
                 );
-                this.snackbar.showSuccess('Login successfull');
+                this.snackbar.showSuccess("Login successfull");
               }
             },
           });
@@ -84,15 +84,15 @@ export class AuthAccessComponent {
 
   private setAuthTabFromRoute(): void {
     //whenever user refresh the page
-    let url = window.location.pathname;
-    const path = url.split('/');
+    const url = window.location.pathname;
+    const path = url.split("/");
     this.processUrlSegments(path);
 
     //listen for routes and change the tab accordingly
     this.routeSubscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        const segments = event.url.split('/');
+        const segments = event.url.split("/");
         this.processUrlSegments(segments);
       });
   }
@@ -147,8 +147,8 @@ export class AuthAccessComponent {
     this.authService.login(formData).subscribe({
       next: (res) => {
         console.log(res);
-        this.snackbar.showSuccess('Login successfull');
-        let currentUser: ICurrentUser = {
+        this.snackbar.showSuccess("Login successfull");
+        const currentUser: ICurrentUser = {
           name: res.user.firstName,
           email: res.user.email,
           isEmailVerified: res.user.isEmailVerified,
@@ -161,7 +161,7 @@ export class AuthAccessComponent {
         this.store.dispatch(
           AuthActions.SetAccessToken({
             accessToken:res.accessToken,
-            tokenType: 'access_token',
+            tokenType: "access_token",
           })
         );        
 
@@ -183,13 +183,13 @@ export class AuthAccessComponent {
 
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
-        this.router.navigateByUrl('/auth/verify-otp');
+        this.router.navigateByUrl("/auth/verify-otp");
       },
     });
   }
 
   verifyOtpSubmit(otpSubmisstion: IVerifyOTP) {
-    const email = this.localstorageService.get('email');
+    const email = this.localstorageService.get("email");
     if (email) {
       otpSubmisstion.email = email;
     }
@@ -199,17 +199,17 @@ export class AuthAccessComponent {
         this.store.dispatch(
           AuthActions.SetAccessToken({
             accessToken: res.accessToken,
-            tokenType: 'access_token',
+            tokenType: "access_token",
           })
         );
-        this.snackbar.showSuccess('Login successfully');
+        this.snackbar.showSuccess("Login successfully");
         const currentUser = {
           name: res.user.firstName,
           email: res.user.email,
           isEmailVerified: res.user.isEmailVerified,
         };
         this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
-        this.router.navigateByUrl('/ideas');
+        this.router.navigateByUrl("/ideas");
       },
     });
   }
@@ -219,7 +219,7 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         this.snackbar.showSuccess(res.message);
-        this.router.navigateByUrl('/auth/login');
+        this.router.navigateByUrl("/auth/login");
       },
     });
   }
@@ -227,14 +227,14 @@ export class AuthAccessComponent {
   verifyForgotFormSubmit(data: IConfirmPass) {
     this.authService.confirmPassWord(data).subscribe({
       next: (res) => {
-        this.snackbar.showSuccess('Password reset succesfull,Please login');
-        this.router.navigateByUrl('/auth/login');
+        this.snackbar.showSuccess("Password reset succesfull,Please login");
+        this.router.navigateByUrl("/auth/login");
       },
     });
   }
 
   resendOtp() {
-    const email = this.localstorageService.get('email');
+    const email = this.localstorageService.get("email");
     if (email) {
       this.authService.resendOtp({ email }).subscribe({
         next: (res) => {
@@ -243,7 +243,7 @@ export class AuthAccessComponent {
         },
       });
     } else {
-      this.snackbar.showError('oops something wrong! please signup again');
+      this.snackbar.showError("oops something wrong! please signup again");
     }
   }
 }

@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { InvestorsShellRoutingModule } from './investors-shell-routing.module';
+import { InvestorsShellRoutingModule } from "./investors-shell-routing.module";
 
 
 @NgModule({

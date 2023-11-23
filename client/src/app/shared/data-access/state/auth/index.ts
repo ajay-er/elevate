@@ -1,12 +1,12 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AuthState } from './auth.reducer';
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { AuthState } from "./auth.reducer";
 
 export interface State {
   auth: AuthState;
 }
 
 //selecters
-const getAuthFeatureState = createFeatureSelector<AuthState>('auth');
+const getAuthFeatureState = createFeatureSelector<AuthState>("auth");
 
 //selecting each data from the slice
 export const toggleAuthPage = createSelector(getAuthFeatureState, (state) => {

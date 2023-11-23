@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { TabContainerComponent } from './tab-container.component';
+import { TabContainerComponent } from "./tab-container.component";
 
-describe('TabContainerComponent', () => {
+describe("TabContainerComponent", () => {
   let component: TabContainerComponent;
   let fixture: ComponentFixture<TabContainerComponent>;
 
@@ -15,7 +15,7 @@ describe('TabContainerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

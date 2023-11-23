@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from 'src/app/shared/guards/auth.guard';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { authGuard } from "src/app/shared/guards/auth.guard";
 
 const routes: Routes = [
   {
-    path: 'profile',
+    path: "profile",
     loadChildren: () =>
-      import('../profile-container/profile-container.module').then(
+      import("../profile-container/profile-container.module").then(
         (m) => m.ProfileContainerModule
       ),
     // canActivate: [authGuard],
   },
   {
-    path: '',
+    path: "",
     loadChildren: () =>
-      import('../founders-list/founders-list.module').then(
+      import("../founders-list/founders-list.module").then(
         (m) => m.FoundersListModule
       ),
   },
   {
-    path: '',
-    redirectTo: 'founders',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "founders",
+    pathMatch: "full",
   },
 ];
 

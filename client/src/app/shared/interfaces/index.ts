@@ -50,7 +50,6 @@ export interface IAddress {
 }
 
 
-
 export interface UserDoc {
 	userName?: string;
 	firstName?: string;

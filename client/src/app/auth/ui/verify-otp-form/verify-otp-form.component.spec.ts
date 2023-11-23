@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { VerifyOtpFormComponent } from './verify-otp-form.component';
+import { VerifyOtpFormComponent } from "./verify-otp-form.component";
 
-describe('VerifyOtpFormComponent', () => {
+describe("VerifyOtpFormComponent", () => {
   let component: VerifyOtpFormComponent;
   let fixture: ComponentFixture<VerifyOtpFormComponent>;
 
@@ -15,7 +15,7 @@ describe('VerifyOtpFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -3,12 +3,12 @@ import {
   Component,
   EventEmitter,
   Output,
-} from '@angular/core';
+} from "@angular/core";
 
 @Component({
-  selector: 'app-edit-name-input',
-  templateUrl: './edit-name-input.component.html',
-  styleUrls: ['./edit-name-input.component.css'],
+  selector: "app-edit-name-input",
+  templateUrl: "./edit-name-input.component.html",
+  styleUrls: ["./edit-name-input.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditNameInputComponent {

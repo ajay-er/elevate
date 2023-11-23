@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { FoundersContainerComponent } from './founders-container.component';
+import { FoundersContainerComponent } from "./founders-container.component";
 
-describe('FoundersContainerComponent', () => {
+describe("FoundersContainerComponent", () => {
   let component: FoundersContainerComponent;
   let fixture: ComponentFixture<FoundersContainerComponent>;
 
@@ -15,7 +15,7 @@ describe('FoundersContainerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
