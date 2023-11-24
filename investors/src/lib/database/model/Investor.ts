@@ -1,18 +1,18 @@
-import mongoose, { Schema } from "mongoose";
-import { IInvestmentDetail } from "./InvestmentDetails";
-import { ITransaction } from "./Transaction";
+import mongoose, { Schema } from 'mongoose';
+import { IInvestmentDetail } from './InvestmentDetails';
+import { ITransaction } from './Transaction';
 
 enum InvestmentSize {
-	Micro = "Micro",
-	Small = "Small",
-	Medium = "Medium",
-	Large = "Large"
+	Micro = 'Micro',
+	Small = 'Small',
+	Medium = 'Medium',
+	Large = 'Large'
 }
 
 enum RiskAppetite {
-	Low = "Low",
-	Medium = "Medium",
-	High = "High"
+	Low = 'Low',
+	Medium = 'Medium',
+	High = 'High'
 }
 
 const investorSchema = new Schema(
@@ -27,7 +27,7 @@ const investorSchema = new Schema(
         investmentCriteria: {
             investmentStage: {
                 type: String,
-                enum: ["Seed", "Early Stage", "Series A", "Series B", "Series C", "Late Stage", "Other"]
+                enum: ['Seed', 'Early Stage', 'Series A', 'Series B', 'Series C', 'Late Stage', 'Other']
             },
             industries: [String],
             investmentSize: {
@@ -41,26 +41,26 @@ const investorSchema = new Schema(
             },
             preferredCommunicationMethod: {
                 type: String,
-                enum: ["Email", "Phone", "In-person", "Other"]
+                enum: ['Email', 'Phone', 'In-person', 'Other']
             },
             investmentInterests: [String]
         },
         investmentHistory: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "InvestmentDetail"
+                ref: 'InvestmentDetail'
             }
         ],
         portfolio: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "InvestmentDetail"
+                ref: 'InvestmentDetail'
             }
         ],
         currentInvestments: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "InvestmentDetail"
+                ref: 'InvestmentDetail'
             }
         ],
         investmentStrategy: String,
@@ -70,13 +70,13 @@ const investorSchema = new Schema(
         },
         preferredDealStructure: {
             type: String,
-            enum: ["Equity", "Convertible Note", "SAFE", "Loan", "Other"]
+            enum: ['Equity', 'Convertible Note', 'SAFE', 'Loan', 'Other']
         },
         investmentGeographies: [String],
         transactionHistory: [
             {
                 type: Schema.Types.ObjectId,
-                ref: "Transaction"
+                ref: 'Transaction'
             }
         ]
     },
@@ -114,6 +114,6 @@ export interface IInvestor extends mongoose.Document {
 	transactionHistory: ITransaction[];
 }
 
-const Investor = mongoose.model<IInvestor>("Investor", investorSchema);
+const Investor = mongoose.model<IInvestor>('Investor', investorSchema);
 
 export { Investor };

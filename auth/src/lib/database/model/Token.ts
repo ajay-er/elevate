@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 // Define the user schema
 const tokenSchema = new Schema({
@@ -19,6 +19,6 @@ interface IToken extends mongoose.Document {
 }
 
 // Create the User model
-const TokenModel = mongoose.model<IToken>("Token", tokenSchema);
+const TokenModel = mongoose.model<IToken>('Token', tokenSchema);
 
 export default TokenModel;

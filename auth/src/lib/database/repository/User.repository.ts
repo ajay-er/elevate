@@ -1,6 +1,6 @@
-import { ISignupUser, IUpdateUser } from "../../interfaces";
-import { Password } from "../../service/password.service";
-import { User, UserDoc } from "../model/User";
+import { ISignupUser, IUpdateUser } from '../../interfaces';
+import { Password } from '../../service/password.service';
+import { User, UserDoc } from '../model/User';
 
 export class UserRepository {
     async findByEmail(email: string): Promise<any> {

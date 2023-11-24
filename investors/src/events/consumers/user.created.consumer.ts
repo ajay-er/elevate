@@ -1,7 +1,7 @@
-import { KafkaConsumer, TOPIC } from "@ajay404/elevate";
-import { Kafka, KafkaMessage } from "kafkajs";
-import { container } from "tsyringe";
-import { InvestorService } from "../../lib/service/investor.service";
+import { KafkaConsumer, TOPIC } from '@ajay404/elevate';
+import { Kafka, KafkaMessage } from 'kafkajs';
+import { container } from 'tsyringe';
+import { InvestorService } from '../../lib/service/investor.service';
 
 export interface USER_CREATED {
 	topic: TOPIC.USER_CREATED;
@@ -23,7 +23,7 @@ export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
         super(client);
     }
 
-    async onMessage(data: USER_CREATED["data"], message: KafkaMessage): Promise<void> {
+    async onMessage(data: USER_CREATED['data'], message: KafkaMessage): Promise<void> {
         try {
             await investorService.create({
                 name: data.name,

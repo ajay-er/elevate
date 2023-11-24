@@ -1,6 +1,6 @@
-import { autoInjectable } from "tsyringe";
-import { IrazorpayOrderData, IPaymentDetails } from "../interfaces";
-import { RazorpayService } from "./razorpay.service";
+import { autoInjectable } from 'tsyringe';
+import { IrazorpayOrderData, IPaymentDetails } from '../interfaces';
+import { RazorpayService } from './razorpay.service';
 
 @autoInjectable()
 export class PaymentService {

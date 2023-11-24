@@ -1,9 +1,9 @@
-import { Client } from "@elastic/elasticsearch";
+import { Client } from '@elastic/elasticsearch';
 
 const client = new Client({
-    node: "https://elevate-es-http:9200",
+    node: 'https://elevate-es-http:9200',
     auth: {
-        username: "elastic",
+        username: 'elastic',
         password: process.env.ELASTIC_PASSWORD!
     },
     tls:{
@@ -14,7 +14,7 @@ const client = new Client({
 export const PingElasticSearch = async () => {
     try {
         await client.ping();
-        console.log("elastic search is up and running");
+        console.log('elastic search is up and running');
     } catch (error) {
         console.log(error);
     }

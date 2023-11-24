@@ -1,5 +1,5 @@
-import { IToken } from "../../interfaces";
-import Token from "../model/Token";
+import { IToken } from '../../interfaces';
+import Token from '../model/Token';
 
 export class TokenRepository {
     async createNew(token: IToken): Promise<IToken> {

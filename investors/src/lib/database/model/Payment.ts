@@ -1,17 +1,17 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document } from 'mongoose';
 
 const payment = new mongoose.Schema({
     investorId: String,
     paymentType: String,
     transactionId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Transaction",
+        ref: 'Transaction',
     },
     amountPaid: Number,
     paymentDate: Date,
     paymentStatus: {
         type: String,
-        enum: ["pending", "completed", "failed"],
+        enum: ['pending', 'completed', 'failed'],
     },
     razorpay: {
         order_id: String,
@@ -32,10 +32,10 @@ interface IPayment extends Document {
   transactionId: mongoose.Types.ObjectId;
   amountPaid: number;
   paymentDate: Date;
-  paymentStatus: "pending" | "completed" | "failed";
+  paymentStatus: 'pending' | 'completed' | 'failed';
   razorpay: IRazorpayDetails;
 }
 
-const Payment = mongoose.model<IPayment>("Payment", payment);
+const Payment = mongoose.model<IPayment>('Payment', payment);
 
 export { Payment };

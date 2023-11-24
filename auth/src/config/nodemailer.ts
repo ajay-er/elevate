@@ -1,9 +1,9 @@
-import nodemailer from "nodemailer";
-import { MailInterface } from "../lib/interfaces";
+import nodemailer from 'nodemailer';
+import { MailInterface } from '../lib/interfaces';
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
+    service: 'gmail',
+    host: 'smtp.gmail.com',
     port: 587,
     secure: false,
     auth: {
@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 export const sendMail = async (options: MailInterface) => {
     return await transporter
         .sendMail({
-            from: "Elevate",
+            from: 'Elevate',
             to: options.to,
             cc: options.cc,
             bcc: options.bcc,
@@ -24,7 +24,7 @@ export const sendMail = async (options: MailInterface) => {
             html: options.html
         })
         .then((info) => {
-            console.log("Mail sent successfully!!");
+            console.log('Mail sent successfully!!');
             return info;
         }).catch((err) => {
             console.error(err);

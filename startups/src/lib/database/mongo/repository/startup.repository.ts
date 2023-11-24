@@ -1,4 +1,4 @@
-import { IStartup, Startup } from "../model/Startup";
+import { IStartup, Startup } from '../model/Startup';
 
 export class StartupRepository {
     async create(data:Partial<IStartup>): Promise<any> {

@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-mongoose.connection.once("open", () => {
-    console.log("MongoDB connection ready!💰");
+mongoose.connection.once('open', () => {
+    console.log('MongoDB connection ready!💰');
 });
 
-mongoose.connection.on("error", (err) => {
+mongoose.connection.on('error', (err) => {
     console.error(`Database not connected🫡!!!${  err}`);
 });
 

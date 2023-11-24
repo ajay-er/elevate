@@ -1,13 +1,13 @@
-import "reflect-metadata";
-import app from "./app";
-import mongoConnect from "./config/mongo";
-import { PingElasticSearch } from "./config/elastic.search.config";
+import 'reflect-metadata';
+import app from './app';
+import mongoConnect from './config/mongo';
+import { PingElasticSearch } from './config/elastic.search.config';
 
 const PORT = process.env.PORT || 3000;
 
 (async () => {
     if (!process.env.MONGO_URI) {
-        throw new Error("MONGO_URI not found");
+        throw new Error('MONGO_URI not found');
     }
     try {
         console.clear();
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
             console.log(`Server-search is Listening on port ${PORT}`);
         });
     } catch (error) {
-        console.error("Unable to connect.");
+        console.error('Unable to connect.');
         console.error(error);
     }
 })();

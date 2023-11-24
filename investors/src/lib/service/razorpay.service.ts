@@ -1,14 +1,14 @@
-import { autoInjectable } from "tsyringe";
-import { razorpay } from "../../config/razor.config";
-import crypto from "crypto";
+import { autoInjectable } from 'tsyringe';
+import { razorpay } from '../../config/razor.config';
+import crypto from 'crypto';
 
 @autoInjectable()
 export class RazorpayService {
     public async createOrder(amount: number): Promise<any> {
         const options = {
             amount: amount * 100,
-            currency: "INR",
-            receipt: "paymentId",
+            currency: 'INR',
+            receipt: 'paymentId',
             payment_capture: 1
         };
 
@@ -16,9 +16,9 @@ export class RazorpayService {
     }
 
     public verifySignature(orderId: string, paymentId: string, signature: string): boolean {
-        const body = orderId + "|" + paymentId;
+        const body = orderId + '|' + paymentId;
 
-        const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!).update(body).digest("hex");
+        const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!).update(body).digest('hex');
 
         return expectedSignature === signature;
     }

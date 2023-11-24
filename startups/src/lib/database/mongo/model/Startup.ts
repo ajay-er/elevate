@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 const startupSchema = new Schema({
     companyName: {
@@ -28,14 +28,14 @@ const startupSchema = new Schema({
     fundingStatus: {
         type: String,
         enum: [
-            "Bootstrapped",
-            "Seed Stage",
-            "Early Stage",
-            "Series A",
-            "Series B",
-            "Series C",
-            "Late Stage",
-            "Other",
+            'Bootstrapped',
+            'Seed Stage',
+            'Early Stage',
+            'Series A',
+            'Series B',
+            'Series C',
+            'Late Stage',
+            'Other',
         ],
     },
     fundingAmount: Number,
@@ -66,7 +66,7 @@ const startupSchema = new Schema({
         {
             investorId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Investor",
+                ref: 'Investor',
             },
             investedAmount: Number,
             numberOfShares: Number,
@@ -98,14 +98,14 @@ interface IStartup extends mongoose.Document {
   founders: { name: string; role: string }[];
   teamMembers: ITeamMember[];
   fundingStatus:
-    | "Bootstrapped"
-    | "Seed Stage"
-    | "Early Stage"
-    | "Series A"
-    | "Series B"
-    | "Series C"
-    | "Late Stage"
-    | "Other";
+    | 'Bootstrapped'
+    | 'Seed Stage'
+    | 'Early Stage'
+    | 'Series A'
+    | 'Series B'
+    | 'Series C'
+    | 'Late Stage'
+    | 'Other';
   fundingAmount: number;
   targetInvestmentAmount: number;
   pitchDeckLink: string;
@@ -132,6 +132,6 @@ interface IStartup extends mongoose.Document {
   equitySales: IInvestor[];
 }
 
-const Startup = mongoose.model<IStartup>("Startup", startupSchema);
+const Startup = mongoose.model<IStartup>('Startup', startupSchema);
 
 export { Startup, IStartup };

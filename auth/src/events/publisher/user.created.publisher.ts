@@ -1,4 +1,4 @@
-import { kafkaPublisher, TOPIC } from "@ajay404/elevate";
+import { kafkaPublisher, TOPIC } from '@ajay404/elevate';
 
 export interface USER_CREATED {
 	topic: TOPIC.USER_CREATED;

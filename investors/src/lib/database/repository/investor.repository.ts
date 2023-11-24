@@ -1,4 +1,4 @@
-import { IInvestor, Investor } from "../model/Investor";
+import { IInvestor, Investor } from '../model/Investor';
 
 export class InvestorRepository {
     async create(investor: Partial<IInvestor>): Promise<any> {

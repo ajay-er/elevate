@@ -1,27 +1,28 @@
-import { NotFoundError, errorHandler } from "@ajay404/elevate";
-import express, { Request, Response } from "express";
-import morgan from "morgan";
-import "express-async-errors";
-import cors from "cors";
-import { investorRoute } from "./lib/controllers/investor.controller";
-import { paymentRoute } from "./lib/controllers/payment.controller";
+import { NotFoundError, errorHandler } from '@ajay404/elevate';
+import express, { Request, Response } from 'express';
+import morgan from 'morgan';
+import 'express-async-errors';
+import cors from 'cors';
+import { investorRoute } from './lib/controllers/investor.controller';
+import { paymentRoute } from './lib/controllers/payment.controller';
 
 const app = express();
 
-app.set("trust proxy", true);
-
-app.use(express.json());
-
-app.use(morgan("dev"));
+app.set('trust proxy', true);
 
 app.use(cors());
 
+app.use(express.json());
+
+app.use(morgan('dev'));
+
+
 // routes
-app.use("/api/v1/investor", investorRoute);
+app.use('/api/v1/investor', investorRoute);
 
-app.use("/api/v1/payment", paymentRoute);
+app.use('/api/v1/payment', paymentRoute);
 
-app.all("*", async (_req: Request, _res: Response) => {
+app.all('*', async (_req: Request, _res: Response) => {
     throw new NotFoundError();
 });
 

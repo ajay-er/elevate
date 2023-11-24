@@ -1,6 +1,6 @@
-import { autoInjectable } from "tsyringe";
-import { InvestorRepository } from "../database/repository/investor.repository";
-import { IInvestor } from "../database/model/Investor";
+import { autoInjectable } from 'tsyringe';
+import { InvestorRepository } from '../database/repository/investor.repository';
+import { IInvestor } from '../database/model/Investor';
 
 @autoInjectable()
 export class InvestorService {

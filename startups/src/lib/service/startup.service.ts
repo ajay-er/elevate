@@ -1,5 +1,5 @@
-import { autoInjectable } from "tsyringe";
-import { StartupRepository } from "../database/mongo/repository/startup.repository";
+import { autoInjectable } from 'tsyringe';
+import { StartupRepository } from '../database/mongo/repository/startup.repository';
 
 @autoInjectable()
 export class StartupService {

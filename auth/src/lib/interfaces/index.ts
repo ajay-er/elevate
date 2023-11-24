@@ -36,6 +36,6 @@ export interface MailInterface {
 }
 
 export enum IRole {
-	USER = "USER",
-	ADMIN = "ADMIN"
+	USER = 'USER',
+	ADMIN = 'ADMIN'
 }

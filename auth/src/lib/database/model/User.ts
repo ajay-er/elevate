@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { Password } from "../../service/password.service";
+import mongoose from 'mongoose';
+import { Password } from '../../service/password.service';
 
 // An interface that describes the properties
 // that a User Document has
@@ -43,14 +43,14 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-userSchema.pre("save", async function (next) {
-    if (this.isModified("password")) {
-        const hashed = await Password.toHash(this.get("password")!);
-        this.set("password", hashed);
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        const hashed = await Password.toHash(this.get('password')!);
+        this.set('password', hashed);
     }
     next();
 });
 
-const User = mongoose.model<UserDoc>("User", userSchema);
+const User = mongoose.model<UserDoc>('User', userSchema);
 
 export { User };

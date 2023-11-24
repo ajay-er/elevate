@@ -1,11 +1,11 @@
-import mongoose,{ Document } from "mongoose";
+import mongoose,{ Document } from 'mongoose';
 
 const investmentDetails = new mongoose.Schema(
     {
         investorId: String,
         startup: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Startup",
+            ref: 'Startup',
             required: true
         },
         investmentAmount: Number,
@@ -16,11 +16,11 @@ const investmentDetails = new mongoose.Schema(
         investmentStage: String,
         paymentDetails: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Payment"
+            ref: 'Payment'
         },
         investmentStatus: {
             type: String,
-            enum: ["pending", "completed", "ongoing"]
+            enum: ['pending', 'completed', 'ongoing']
         },
         investmentTerm: String,
         exitStrategy: String,
@@ -39,12 +39,12 @@ interface IInvestmentDetail extends Document {
 	investmentDate: Date;
 	investmentStage: string;
 	paymentDetails: mongoose.Types.ObjectId;
-	investmentStatus: "pending" | "completed" | "ongoing";
+	investmentStatus: 'pending' | 'completed' | 'ongoing';
 	investmentTerm: string;
 	exitStrategy: string;
 	notes: string;
 }
 
-const Investor = mongoose.model<IInvestmentDetail>("InvestmentDetail", investmentDetails);
+const Investor = mongoose.model<IInvestmentDetail>('InvestmentDetail', investmentDetails);
 
 export { Investor, IInvestmentDetail };

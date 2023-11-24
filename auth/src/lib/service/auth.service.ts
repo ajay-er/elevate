@@ -1,8 +1,8 @@
-import { autoInjectable } from "tsyringe";
-import { UserRepository } from "../database/repository/User.repository";
-import { verifyGoogleOAuth2 } from "@ajay404/elevate";
-import { ISignupUser, IUpdateUser } from "../interfaces";
-import { UserDoc } from "../database/model/User";
+import { autoInjectable } from 'tsyringe';
+import { UserRepository } from '../database/repository/User.repository';
+import { verifyGoogleOAuth2 } from '@ajay404/elevate';
+import { ISignupUser, IUpdateUser } from '../interfaces';
+import { UserDoc } from '../database/model/User';
 
 @autoInjectable()
 export class AuthService {

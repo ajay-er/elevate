@@ -1,6 +1,6 @@
-import { autoInjectable } from "tsyringe";
-import { TokenRepository } from "../database/repository/Token.repository";
-import { IToken } from "../interfaces";
+import { autoInjectable } from 'tsyringe';
+import { TokenRepository } from '../database/repository/Token.repository';
+import { IToken } from '../interfaces';
 
 @autoInjectable()
 export class TokenService {
