@@ -9,11 +9,18 @@ import { FoundersService } from '../../data-access/founders.service';
 export class FoundersListComponent {
   private foundersService = inject(FoundersService);
   protected startups!: any;
+  searchQuery: string = '';
 
   ngOnInit() {
     this.foundersService.getStartups().subscribe((res: any) => {
       console.log(res.result);
       this.startups = res.result;
+    });
+  }
+
+  onSearch() {
+    this.foundersService.search(this.searchQuery).subscribe((res: any) => {
+      console.log(res);
     });
   }
 }
