@@ -6,14 +6,13 @@ import { environment } from 'src/environments/environment';
 })
 export class AdminService {
   private http = inject(HttpClient);
-  private startupApi = environment.apiUrl_startups;
-  private investorApi = environment.apiUrl_investors;
+  private apiUrl = environment.apiUrl;
   
   getStartups() {
-    return this.http.get(`${this.startupApi}/startups/startups`);
+    return this.http.get(`${this.apiUrl}/startups/startups`);
   }
 
   getInvestors() {
-    return this.http.get(`${this.investorApi}/investor/investors`);
+    return this.http.get(`${this.apiUrl}/investor/investors`);
   }
 }

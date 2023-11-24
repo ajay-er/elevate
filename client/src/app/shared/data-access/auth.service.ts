@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private authApi = environment.apiUrl_auth;
+  private authApi = environment.apiUrl;
 
   sendGoogleToken(data: string): Observable<any> {
     return this.http.post(`${this.authApi}/auth/googleauth`, { googleToken: data });

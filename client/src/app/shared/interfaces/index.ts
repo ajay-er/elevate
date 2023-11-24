@@ -87,4 +87,5 @@ export interface IStartup {
   exitStrategy: string;
   currentValuation: string;
   availableEquityShares: string;
+  [key: string]: any;
 }

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProfileService {
   private http = inject(HttpClient);
-  private authApi = environment.apiUrl_auth;
+  private authApi = environment.apiUrl;
 
   getProfile() {
     return this.http.get(`${this.authApi}/profile/get-profile`);

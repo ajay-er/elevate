@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IStartup } from 'src/app/shared/interfaces';
+import { FoundersService } from '../../data-access/founders.service';
 
 @Component({
   selector: 'app-add-founder-form',
@@ -18,13 +19,13 @@ export class AddFounderFormComponent {
   currentTab = 0;
   @Output() startupSubmit: EventEmitter<IStartup> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private foundersService:FoundersService) {}
 
   ngOnInit() {
     this.myForm = this.fb.group({
       companyName: ['', Validators.required],
-      logo: [''],
-      bannerImage: [''],
+      logo: [null],
+      bannerImage: [null],
       description: [''],
       industry: [''],
       location: [''],
@@ -51,19 +52,28 @@ export class AddFounderFormComponent {
   onLogoChange(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     const files = fileInput.files;
+  
     if (files && files.length > 0) {
       const file = files[0];
-      this.myForm.patchValue({ logo: file });
+      const formData = new FormData();
+      formData.append('logo', file, file.name);
+      this.foundersService.getLogoUrl(formData).subscribe((res:any) => {
+        this.myForm.patchValue({logo:res.url});
+      });
     }
   }
 
   onBannerImageChange(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     const files = fileInput.files;
-
+  
     if (files && files.length > 0) {
       const file = files[0];
-      this.myForm.patchValue({ bannerImage: file });
+      const formData = new FormData();
+      formData.append('bannerImage', file, file.name);
+      this.foundersService.getBannerUrl(formData).subscribe((res:any) => {
+        this.myForm.patchValue({bannerImage:res.url});
+      });
     }
   }
 

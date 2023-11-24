@@ -7,13 +7,13 @@ import { environment } from 'src/environments/environment';
 })
 export class InvestorsService {
   private http = inject(HttpClient);
-  private investorApi = environment.apiUrl_investors;
+  private apiUrl = environment.apiUrl;
 
   getAllInvestors() {
-    return this.http.get(`${this.investorApi}/investor/investors`);
+    return this.http.get(`${this.apiUrl}/investor/investors`);
   }
 
   getInvestorData(investorId:any) {
-    return this.http.get(`${this.investorApi}/investor/profile/${investorId}`);
+    return this.http.get(`${this.apiUrl}/investor/profile/${investorId}`);
   }
 }

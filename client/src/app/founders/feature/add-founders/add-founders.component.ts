@@ -9,10 +9,10 @@ import { IStartup } from 'src/app/shared/interfaces';
 })
 export class AddFoundersComponent {
   private founderService = inject(FoundersService);
-
-  addStartup(data: IStartup) {    
+  addStartup(data: IStartup) {  
     this.founderService.addNewStartup(data).subscribe((res) => {
       console.log(res);
     });
   }
+
 }

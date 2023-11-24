@@ -38,6 +38,7 @@ const startupSchema = new Schema({
             'Other',
         ],
     },
+    isVerified: { type: Boolean, default: false },
     fundingAmount: Number,
     targetInvestmentAmount: Number,
     traction: String,
