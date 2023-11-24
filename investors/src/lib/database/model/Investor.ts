@@ -24,6 +24,16 @@ const investorSchema = new Schema(
         bio: String,
         about: String,
         description: String,
+        investmentStrategy: String,
+        riskAppetite: {
+            type: String,
+            enum: Object.values(RiskAppetite)
+        },
+        preferredDealStructure: {
+            type: String,
+            enum: ['Equity', 'Convertible Note', 'SAFE', 'Loan', 'Other']
+        },
+        investmentGeographies: [String],
         investmentCriteria: {
             investmentStage: {
                 type: String,
@@ -63,16 +73,6 @@ const investorSchema = new Schema(
                 ref: 'InvestmentDetail'
             }
         ],
-        investmentStrategy: String,
-        riskAppetite: {
-            type: String,
-            enum: Object.values(RiskAppetite)
-        },
-        preferredDealStructure: {
-            type: String,
-            enum: ['Equity', 'Convertible Note', 'SAFE', 'Loan', 'Other']
-        },
-        investmentGeographies: [String],
         transactionHistory: [
             {
                 type: Schema.Types.ObjectId,

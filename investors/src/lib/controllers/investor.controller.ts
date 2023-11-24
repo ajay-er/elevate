@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { InvestorService } from '../service/investor.service';
+import { requireAuth } from '@ajay404/elevate';
 
 const router = express.Router();
 
 const investorService = container.resolve(InvestorService);
 
-router.post('/add-investor', async (req: Request, res: Response) => {
+router.post('/add-investor',requireAuth, async (req: Request, res: Response) => {
     const result = await investorService.create(req.body);
     res.status(201).json({ message: 'investor created successfully', result });
 });

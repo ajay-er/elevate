@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FoundersService } from '../../data-access/founders.service';
 import { IStartup } from 'src/app/shared/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-founders',
@@ -9,10 +10,11 @@ import { IStartup } from 'src/app/shared/interfaces';
 })
 export class AddFoundersComponent {
   private founderService = inject(FoundersService);
-  addStartup(data: IStartup) {  
+  private router = inject(Router);
+
+  addStartup(data: IStartup) {
     this.founderService.addNewStartup(data).subscribe((res) => {
-      console.log(res);
+      this.router.navigateByUrl('/founders');
     });
   }
-
 }

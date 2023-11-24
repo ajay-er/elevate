@@ -16,4 +16,8 @@ export class InvestorsService {
   getInvestorData(investorId:any) {
     return this.http.get(`${this.apiUrl}/investor/profile/${investorId}`);
   }
+
+  completeInvestorDetails(IInvestor:any) {
+    return this.http.get(`${this.apiUrl}/investor/add-investor`);
+  }
 }
