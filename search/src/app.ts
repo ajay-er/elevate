@@ -3,13 +3,10 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import 'express-async-errors';
 import { startupRoute } from './lib/controller/startup.controller';
-import cors from 'cors';
 
 const app = express();
 
 app.set('trust proxy', true);
-
-app.use(cors());
 
 app.use(express.json());
 

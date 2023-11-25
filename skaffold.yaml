@@ -34,14 +34,14 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
-    # - image: ajay404/admin
-    #   context: admin
-    #   sync:
-    #     manual:
-    #       - src: src/**/*.ts
-    #         dest: .
-    #   docker:
-    #     dockerfile: Dockerfile
+    - image: ajay404/admin
+      context: admin
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: ajay404/search
       context: search
       sync:
