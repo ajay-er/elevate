@@ -5,41 +5,12 @@
   <div class="flex flex-col items-center p-10">
     <img
       class="w-24 h-24 mb-3 rounded-full shadow-lg"
-      [src]="
-        imgsrc !== 'undefined'
-          ? imgsrc
-          : '../../../../assets//images/profile/profile.png'
-      "
-      alt="Bonnie image"
+      [src]="imgsrc ? imgsrc : '../../../../assets//images/profile/profile.png'"
+      alt="profile"
     />
     <h5 class="mb-1 text-xl font-medium text-white">{{ name }}</h5>
     <p class="text-sm text-gray-200">
       {{ description }}
     </p>
   </div>
-
-  <!-- <div class="bg-gray-400 h-24 rounded-lg bg-opacity-90 w-full">
-    <p class="px-3 py-1 text-black">portfolio</p>
-    <div class="px-3 flex gap-1">
-      <img
-        class="w-12 h-12 dark:border-gray-800"
-        src="../../../../assets/images/profile/profile.png"
-        alt=""
-      />
-      <img
-        class="w-12 h-12 dark:border-gray-800"
-        src="../../../../assets/images/profile/profile.png"
-        alt=""
-      />
-      <img
-        class="w-12 h-12 dark:border-gray-800"
-        src="../../../../assets/images/profile/profile.png"
-        alt=""
-      />
-      <a
-        class="flex items-center justify-center w-12 h-12 text-xs font-medium text-white bg-gray-700"
-        >+99</a
-      >
-    </div>
-  </div> -->
 </div>

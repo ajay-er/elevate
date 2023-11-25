@@ -1,4 +1,4 @@
-import { NotFoundError, errorHandler } from '@ajay404/elevate';
+import { NotFoundError, currentUser, errorHandler } from '@ajay404/elevate';
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import 'express-async-errors';
@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use(morgan('dev'));
 
-
+app.use(currentUser);
 // routes
 app.use('/api/v1/investor', investorRoute);
 

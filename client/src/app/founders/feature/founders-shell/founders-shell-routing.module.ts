@@ -17,6 +17,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'startup/:id',
+    loadChildren: () =>
+      import('../startup-details/startup-details.module').then(
+        (m) => m.StartupDetailsModule
+      ),
+  },
+  {
     path: '',
     redirectTo: 'founders',
     pathMatch: 'full',

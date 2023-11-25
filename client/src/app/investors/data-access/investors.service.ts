@@ -18,6 +18,6 @@ export class InvestorsService {
   }
 
   completeInvestorDetails(IInvestor:any) {
-    return this.http.get(`${this.apiUrl}/investor/add-investor`);
+    return this.http.post(`${this.apiUrl}/investor/complete-details`,IInvestor);
   }
 }

@@ -27,7 +27,7 @@ export class ProfileService {
   }
 
   updateProfileImage(data:IUpdateImage) {    
-    return this.http.patch(`${this.authApi}/profile/update-image`, data);
+    return this.http.post(`${this.authApi}/profile/update-image`, data);
   }
 
   uploadSignature(vals:any) {

@@ -10,6 +10,10 @@ export class InvestorService {
         return await this.investorRepo.create(investor);
     }
 
+    public async updateData(investor: Partial<IInvestor>) {
+        return await this.investorRepo.update(investor);
+    }
+
     public async get() {
         return await this.investorRepo.findAll();
     }

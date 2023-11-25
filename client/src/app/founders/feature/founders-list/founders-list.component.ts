@@ -10,6 +10,7 @@ export class FoundersListComponent {
   private foundersService = inject(FoundersService);
   protected startups!: any;
   searchQuery: string = '';
+  searchResult: any[] = [];
 
   ngOnInit() {
     this.foundersService.getStartups().subscribe((res: any) => {
@@ -20,7 +21,7 @@ export class FoundersListComponent {
 
   onSearch() {
     this.foundersService.search(this.searchQuery).subscribe((res: any) => {
-      console.log(res);
+      this.searchResult = res;
     });
   }
 }

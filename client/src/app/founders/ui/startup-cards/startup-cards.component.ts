@@ -10,6 +10,7 @@ export class StartupCardsComponent {
   @Input() description!:string;
   @Input() imgsrc!:string; 
   @Input() title!:string; 
+  @Input() id!:string; 
 
   
 }

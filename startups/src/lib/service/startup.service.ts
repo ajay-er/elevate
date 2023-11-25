@@ -13,6 +13,10 @@ export class StartupService {
         return await this.startupRepo.findAll();
     }
 
+    public async getStartup(id:string) {
+        return await this.startupRepo.findOne(id);
+    }
+
     public async delete() {
         return await this.startupRepo.delete();
     }

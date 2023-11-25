@@ -7,10 +7,15 @@ const router = express.Router();
 
 const investorService = container.resolve(InvestorService);
 
-router.post('/add-investor',requireAuth, async (req: Request, res: Response) => {
-    const result = await investorService.create(req.body);
-    res.status(201).json({ message: 'investor created successfully', result });
-});
+router.post(
+    '/complete-details',
+    requireAuth,
+    async (req: Request, res: Response) => {
+        const investorDetails = { email: req.currentUser?.email, ...req.body };
+        const result = await investorService.updateData(investorDetails);
+        res.status(200).json({ message: 'investor updated successfully', result });
+    }
+);
 
 router.get('/investors', async (req: Request, res: Response) => {
     const result = await investorService.get();

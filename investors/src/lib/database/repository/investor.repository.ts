@@ -8,6 +8,15 @@ export class InvestorRepository {
         return await Investor.find({});
     }
     async findById(id: string): Promise<any> {
-        return await Investor.findById({ _id:id });
+        return await Investor.findById({ _id: id });
+    }
+
+    async update(investorDetails: any): Promise<any> {
+        const { email } = investorDetails;
+        return await Investor.findOneAndUpdate(
+            { email },
+            { investorDetails },
+            { new: true }
+        );
     }
 }
