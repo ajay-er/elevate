@@ -1,8 +1,12 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
 WORKDIR /app
 COPY package.json ./
 RUN npm install -g npm@latest
 RUN npm install -g @angular/cli
 RUN npm install
 COPY . .
-CMD ng serve --host 0.0.0.0  --disable-host-check true
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=builder /app/dist/client/browser /usr/share/nginx/html
+COPY static.conf /etc/nginx/conf.d/default.conf
