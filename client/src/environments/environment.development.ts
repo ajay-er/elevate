@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl:'https://elevate.test/api/v1'
+  apiUrl:'http://elevate.test/api/v1'
 };
