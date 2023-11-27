@@ -7,8 +7,7 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterModule } from './shared/ui/footer/footer.module';
-import { NavModule } from './shared/ui/nav/nav.module';
+import { FooterModule } from './core/footer/footer.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -31,6 +30,7 @@ import { AdminNavModule } from './admin/ui/admin-nav/admin-nav.module';
 import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { NavModule } from './core/nav/nav.module';
 
 @NgModule({
   declarations: [AppComponent],

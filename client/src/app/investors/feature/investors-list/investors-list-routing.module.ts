@@ -7,13 +7,6 @@ const routes: Routes = [
     path: '',
     component: InvestorsListComponent,
   },
-  {
-    path: 'add',
-    loadChildren: () =>
-      import('../fill-investor-details/fill-investor-details.module').then(
-        (m) => m.FillInvestorDetailsModule
-      ),
-  }
 ];
 
 @NgModule({

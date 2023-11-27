@@ -107,27 +107,13 @@
       </div>
       <!-- navbar items -->
       <div
-        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+        class="hidden w-full md:flex md:w-auto md:order-1"
         id="navbar-user"
         [ngClass]="{ block: isNavbarOpen, hidden: !isNavbarOpen }"
       >
         <ul
           class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-600 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 text-center"
         >
-          <li>
-            <a
-              routerLink="/home"
-              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
-              >Home
-            </a>
-          </li>
-          <li>
-            <a
-              routerLink="/founders"
-              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
-              >Founders
-            </a>
-          </li>
           <li>
             <a
               routerLink="/investors"
@@ -142,7 +128,7 @@
               >Ideas
             </a>
           </li>
-         
+
           <li
             *ngIf="!(isUserLoggedIn$ | async)"
             (click)="toggleNavbar()"
