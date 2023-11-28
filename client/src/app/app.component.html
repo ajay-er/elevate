@@ -1,6 +1,6 @@
 <my-spinner></my-spinner>
 
-<ng-container *ngIf="(pageLayoutService.layout$ | async) === PageLayout.Admin">
+<ng-container *ngIf="(pageLayoutService.layout$ | async) === IRole.ADMIN">
   <div class="bg-white">
     <app-admin-nav></app-admin-nav>
     <router-outlet></router-outlet>
@@ -9,7 +9,7 @@
 </ng-container>
 
 <ng-container
-  *ngIf="(pageLayoutService.layout$ | async) === PageLayout.Founder"
+  *ngIf="(pageLayoutService.layout$ | async) === IRole.FOUNDER"
 >
   <div
     class="bg-cover bg-black text-white bg-center bg-no-repeat"
@@ -22,7 +22,7 @@
 </ng-container>
 
 <ng-container
-  *ngIf="(pageLayoutService.layout$ | async) === PageLayout.Investor"
+  *ngIf="(pageLayoutService.layout$ | async) === IRole.INVESTOR"
 >
   <app-investor-aside></app-investor-aside>
   <router-outlet></router-outlet>

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
-
-interface JwtPayload {
-  role: string;
-  exp: number;
-}
+import { IRole } from '../types';
+import { IJwtPayload } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +9,15 @@ interface JwtPayload {
 export class JwtService {
   getUserRole(token: string): string {
     if (token) {
-      const decodedToken: JwtPayload = jwtDecode(token);
+      const decodedToken: IJwtPayload = jwtDecode(token);
       return decodedToken.role;
     }
     return '';
   }
 
-  private getDecodedToken(token: string): JwtPayload | null {
+  getDecodedToken(token: string): IJwtPayload | null {
     if (token) {
-      const decodedToken: JwtPayload = jwtDecode(token);
+      const decodedToken: IJwtPayload = jwtDecode(token);
       return decodedToken;
     }
     return null;
@@ -31,16 +28,21 @@ export class JwtService {
     const expirationTime = decodedToken?.exp;
     const currentTimestamp = Math.floor(Date.now() / 1000);
     if (expirationTime !== undefined) {
-      return expirationTime < currentTimestamp;
+      const expirationTimeAsNumber = +expirationTime;
+      return expirationTimeAsNumber < currentTimestamp;
     }
     return false;
   }
 
   isAdmin(token: string): boolean {
-    return this.getUserRole(token) === 'ADMIN';
+    return this.getUserRole(token) === IRole.ADMIN;
   }
 
-  isUser(token: string): boolean {
-    return this.getUserRole(token) === 'USER';
+  isFounder(token: string): boolean {
+    return this.getUserRole(token) === IRole.FOUNDER;
+  }
+
+  isInvestor(token: string): boolean {
+    return this.getUserRole(token) === IRole.INVESTOR;
   }
 }

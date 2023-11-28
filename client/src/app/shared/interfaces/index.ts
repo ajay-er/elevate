@@ -1,8 +1,11 @@
+import { IRole } from '../types';
+
 export interface ISignup {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  role:string;
 }
 
 export interface ILogin {
@@ -49,19 +52,17 @@ export interface IAddress {
   country: string;
 }
 
-
 export interface UserDoc {
-	userName?: string;
-	firstName?: string;
-	lastName?: string;
-	email: string;
-	phone?: string;
-	password: string;
-	otp?: string;
-	profileImgUrl?: string;
-	isEmailVerified: boolean;
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  phone?: string;
+  password: string;
+  otp?: string;
+  profileImgUrl?: string;
+  isEmailVerified: boolean;
 }
-
 
 export interface IFounder {
   name: string;
@@ -88,4 +89,15 @@ export interface IStartup {
   currentValuation: string;
   availableEquityShares: string;
   [key: string]: any;
+}
+
+export interface IJwtPayload {
+  id: string;
+  name: string;
+  email: string;
+  profileImgUrl: string;
+  isEmailVerified: boolean;
+  role: IRole;
+  iat?: string;
+  exp?: string;
 }

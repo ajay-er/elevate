@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { unauthenticatedGuard } from './shared/guards/unauthenticated.guard';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
 import { adminAuthGuard } from './shared/guards/admin-auth.guard';
+import { IRole } from './shared/types';
 
 const routes: Routes = [
   {
@@ -46,7 +47,7 @@ const routes: Routes = [
         (m) => m.AdminShellModule
       ),
     canActivate: [adminAuthGuard],
-    data: { layout: 'admin' },
+    data: { layout: IRole.ADMIN },
   },
   {
     path: 'not-found',

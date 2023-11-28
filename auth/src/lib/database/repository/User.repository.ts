@@ -3,7 +3,7 @@ import { Password } from '../../service/password.service';
 import { User, UserDoc } from '../model/User';
 
 export class UserRepository {
-    async findByEmail(email: string): Promise<any> {
+    async findByEmail(email: string): Promise<UserDoc | null> {
         return await User.findOne({ email });
     }
 
@@ -19,7 +19,7 @@ export class UserRepository {
         return await User.updateOne({ email }, { $set: { password } });
     }
 
-    async updateUser(email: string, user: ISignupUser) {
+    async updateUser(email: string, user: Partial<UserDoc>) {
         user.password = await Password.toHash(user.password!);
         return await User.findOneAndUpdate({ email }, { $set: user }, { new: true });
     }
@@ -28,13 +28,9 @@ export class UserRepository {
     async update(user: IUpdateUser) {
         return await User.findOneAndUpdate(
             { email: user.email },
-            { $set: { email: user.email, name: user.name, profileImgUrl: user?.photo } },
+            { $set: { email: user.email, first: user.name, profileImgUrl: user?.photo } },
             { new: true }
         );
-    }
-
-    async updateData(email: string, user: Partial<UserDoc>) {
-        return await User.findOneAndUpdate({ email }, { $set: user }, { new: true });
     }
 
     async save(user: UserDoc) {

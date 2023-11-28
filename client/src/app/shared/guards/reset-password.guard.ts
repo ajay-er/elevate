@@ -12,11 +12,9 @@ export const resetPasswordGuard: CanActivateFn = async (route, state) => {
     return new Promise<boolean>((resolve, reject) => {
       authService.checkTokenValidation(token).subscribe({
         next: (res) => {
-          console.log(res);
           resolve(true); // Token is valid
         },
         error: (err) => {
-          console.log(err);
           resolve(false); // Token is not valid
         },
       });
@@ -32,7 +30,6 @@ export const resetPasswordGuard: CanActivateFn = async (route, state) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
     return false; // Handle any errors appropriately
   }
 };

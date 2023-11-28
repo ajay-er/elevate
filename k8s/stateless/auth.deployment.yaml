@@ -20,6 +20,8 @@ spec:
               value: '3000'
             - name: NODE_ENV
               value: 'dev'
+            - name: JWT_EXPIRES_IN
+              value: '1h'
             - name: MONGO_URI
               value: 'mongodb://mongo-srv:27017/clients'
             - name: JWT_SECRET

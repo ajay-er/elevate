@@ -21,10 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const token = this.localStorageService.get('access_token');
 
-    if (request.url.includes('https://api.cloudinary.com/v1_1')) {
-      return next.handle(request);
-    }
-
     if (token) {
       request = request.clone({
         setHeaders: {

@@ -6,6 +6,9 @@ import * as AuthActions from './auth.action';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import { JwtService } from '../../jwt.service';
+import { IJwtPayload } from 'src/app/shared/interfaces';
+import { PagelayoutService } from '../../pagelayout.service';
 
 @Injectable()
 export class AuthEffects {
@@ -46,7 +49,6 @@ export class AuthEffects {
             ];
           }),
           catchError((error) => {
-            console.error('Logout API Error:', error);
             return [
               AuthActions.ClearLocalStorageAction(),
               AuthActions.LogoutFailer(),
@@ -72,25 +74,15 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.CheckLocalStorageAction),
       map(() => {
-        const keys = ['name', 'photo', 'email', 'isEmailVerified'];
-        const currentUserData: any = {};
-        for (const key of keys) {
-          const value = this.localstorageService.get(key);
-          if (value !== null) {
-            currentUserData[key] =
-              key === 'isEmailVerified' ? isJSONString(value) ? JSON.parse(value) : false : value;
-            // eslint-disable-next-line no-inner-declarations
-            function isJSONString(str: string) {
-              try {
-                JSON.parse(str);
-                return true;
-              } catch (e) {
-                return false;
-              }
-            }
-          }
+        const currentUserData:any = {};
+        const token = this.localstorageService.get('access_token');
+        if (token) {
+          const payLoad:IJwtPayload | null = this.jwtService.getDecodedToken(token);
+          currentUserData.name = payLoad?.name;
+          currentUserData.email = payLoad?.email;
+          currentUserData.photo = payLoad?.profileImgUrl;
+          currentUserData.isEmailVerified = payLoad?.isEmailVerified;
         }
-        console.log(currentUserData);
 
         const isUserPresent =
           Object.keys(currentUserData).length > 0 &&
@@ -112,6 +104,8 @@ export class AuthEffects {
     private localstorageService: LocalStorageService,
     private store: Store,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private jwtService :JwtService,
+    private pageLayout :PagelayoutService,
   ) {}
 }

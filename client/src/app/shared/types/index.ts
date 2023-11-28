@@ -14,14 +14,8 @@ export enum ProfileTab {
   NothingSelected = 'none'
 }
 
-export enum PageLayout {
-  Admin = 'admin',
-  Investor = 'investor',
-  Founder = 'founder'
-}
-
-export enum User {
-  Admin = 'admin',
-  Investor = 'investor',
-  Founder = 'founder'
+export enum IRole {
+  ADMIN = 'ADMIN',
+  INVESTOR = 'INVESTOR',
+  FOUNDER = 'FOUNDER'
 }

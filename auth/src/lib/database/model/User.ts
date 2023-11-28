@@ -1,19 +1,21 @@
 import mongoose from 'mongoose';
 import { Password } from '../../service/password.service';
+import { IRole } from '../../interfaces';
 
 // An interface that describes the properties
 // that a User Document has
 export interface UserDoc extends mongoose.Document {
-	userName?: string;
-	firstName?: string;
-	lastName?: string;
-	email: string;
-	phone?: string;
-	password: string;
-	otp?: string;
-	profileImgUrl?: string;
-	isEmailVerified: boolean;
-    isBlocked:boolean
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  phone?: string;
+  password: string;
+  otp?: string | null;
+  profileImgUrl?: string;
+  isEmailVerified: boolean;
+  isBlocked: boolean;
+  role: IRole;
 }
 
 const userSchema = new mongoose.Schema(
@@ -28,9 +30,14 @@ const userSchema = new mongoose.Schema(
         profileImgUrl: String,
         isEmailVerified: {
             type: Boolean,
-            default: false
+            default: false,
         },
-        isBlocked:Boolean
+        role: {
+            type: String,
+            enum: Object.values(IRole),
+            default: IRole.FOUNDER,
+        },
+        isBlocked: { type: Boolean, default: false },
     },
     {
         toJSON: {
@@ -39,9 +46,9 @@ const userSchema = new mongoose.Schema(
                 delete ret._id;
                 delete ret.password;
                 delete ret.__v;
-            }
+            },
         },
-        timestamps: true
+        timestamps: true,
     }
 );
 

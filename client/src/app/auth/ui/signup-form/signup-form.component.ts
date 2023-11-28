@@ -28,6 +28,7 @@ export class SignupFormComponent {
 
   registerForm = this.fb.group(
     {
+      role:['FOUNDER',Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

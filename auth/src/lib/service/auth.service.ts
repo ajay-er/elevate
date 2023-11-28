@@ -37,6 +37,6 @@ export class AuthService {
     }
 	
     public async updateData(email: string, user: Partial<UserDoc>) {
-        return await this.userRepo.updateData(email, user);
+        return await this.userRepo.updateUser(email, user);
     }
 }

@@ -27,8 +27,9 @@ const routes: Routes = [
         component: ForgotFormComponent,
         canActivate: [resetPasswordGuard],
       },
+      { path: '', redirectTo: '', pathMatch: 'full' },
     ],
-  }
+  },
 ];
 
 @NgModule({

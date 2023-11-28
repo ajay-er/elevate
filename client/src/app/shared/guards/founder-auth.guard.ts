@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { LocalStorageService } from '../data-access/local-storage.service';
 import { JwtService } from '../data-access/jwt.service';
+import { LocalStorageService } from '../data-access/local-storage.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const founderAuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const jwtService = inject(JwtService);
   const localStoreService = inject(LocalStorageService);
@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  if (jwtService.isUser(token) && !jwtService.isTokenExpired(token)) {
+  if (jwtService.isFounder(token) && !jwtService.isTokenExpired(token)) {
     return true;
   }
 

@@ -13,6 +13,7 @@ export interface ISignupUser {
 	firstName: string;
 	lastName?: string;
 	isEmailVerified?: boolean;
+	role:IRole
 }
 
 export interface ILoginUser {
@@ -36,6 +37,7 @@ export interface MailInterface {
 }
 
 export enum IRole {
-	USER = 'USER',
-	ADMIN = 'ADMIN'
+	FOUNDER = 'FOUNDER',
+	ADMIN = 'ADMIN',
+	INVESTOR = 'INVESTOR'
 }

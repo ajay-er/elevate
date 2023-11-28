@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
 import { PagelayoutService } from 'src/app/shared/data-access/pagelayout.service';
-import { PageLayout } from 'src/app/shared/types';
+import { IRole } from 'src/app/shared/types';
 
 @Component({
   selector: 'app-admin-nav',
@@ -22,7 +22,7 @@ export class AdminNavComponent {
 
   logOut() {
     this.localStoreService.clear();
-    this.pageLayoutService.setLayout(PageLayout.Founder);
+    this.pageLayoutService.setLayout(IRole.FOUNDER);
     this.router.navigateByUrl('/ideas');
   }
 }

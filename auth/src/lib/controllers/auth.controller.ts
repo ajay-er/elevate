@@ -10,58 +10,54 @@ import { IRole } from '../interfaces';
 import { AuthService } from '../service/auth.service';
 import { container } from 'tsyringe';
 import { TokenService } from '../service/token.service';
-import { kafka_client } from '../../config/kafka.config';
-import { USER_CREATED_PUBLISHER } from '../../events/publisher/user.created.publisher';
 
 const router = express.Router();
 
 const authService = container.resolve(AuthService);
 const tokenService = container.resolve(TokenService);
 
-router.post('/googleauth', async (req: Request, res: Response) => {
-    const { googleToken } = req.body;
-    if (!googleToken) throw new BadRequestError('Please provide google id_token');
+// router.post('/googleauth', async (req: Request, res: Response) => {
+//     const { googleToken } = req.body;
+//     if (!googleToken) throw new BadRequestError('Please provide google id_token');
 
-    const oAuthuser = await authService.verifyOauthToken(googleToken, process.env.CLIENT_ID!);
+//     const oAuthuser = await authService.verifyOauthToken(googleToken, process.env.CLIENT_ID!);
 
-    if (!oAuthuser) throw new BadRequestError('oops user not found in the google_token');
+//     if (!oAuthuser) throw new BadRequestError('oops user not found in the google_token');
 
-    const userexist = await authService.findUserByEmail(oAuthuser.email);
+//     const userexist = await authService.findUserByEmail(oAuthuser.email);
 
-    let accessToken = jwt.sign(
-        {
-            id: userexist?._id,
-            email: userexist?.email,
-            role: IRole.USER
-        },
-		process.env.JWT_SECRET!
-    );
+//     const accessToken = jwt.sign(
+//         {
+//             id: userexist?._id,
+//             email: userexist?.email,
+//             role: IRole.USER
+//         },
+// 		process.env.JWT_SECRET!
+//     );
 
-    accessToken = `google:${accessToken}`;
-
-    if (!userexist) {
-        //if user doen't exist,then create
-        const user = await authService.signup({
-            email: oAuthuser.email,
-            firstName: oAuthuser.name,
-            isEmailVerified: oAuthuser.isEmailVerified
-        });
-        console.log(user);
-        // await new USER_CREATED_PUBLISHER().publish({
-        // 	email: user.email, firstName: user.firstName, id:user.id, profileImgUrl:user.profileImgUrl
-        // });
-        return res.status(201).json({ message: 'google signup successfully completed', user, accessToken });
-    } else {
-        //if user already then update
-        const user = await authService.update(oAuthuser);
-        console.log(user);
-        return res.status(200).json({ message: 'google login successfully completed', user, accessToken });
-    }
-});
+//     if (!userexist) {
+//         //if user doen't exist,then create
+//         const user = await authService.signup({
+//             email: oAuthuser.email,
+//             firstName: oAuthuser.name,
+//             isEmailVerified: oAuthuser.isEmailVerified
+//         });
+//         console.log(user);
+//         // await new USER_CREATED_PUBLISHER().publish({
+//         // 	email: user.email, firstName: user.firstName, id:user.id, profileImgUrl:user.profileImgUrl
+//         // });
+//         return res.status(201).json({ message: 'google signup successfully completed', user, accessToken });
+//     } else {
+//         //if user already then update
+//         const user = await authService.update(oAuthuser);
+//         console.log(user);
+//         return res.status(200).json({ message: 'google login successfully completed', user, accessToken });
+//     }
+// });
 
 router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
-
+    
     const user = await authService.findUserByEmail(email);
 
     if (!user || !user?.password) {
@@ -69,25 +65,30 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     if (!user.isEmailVerified) {
-        throw new BadRequestError('You are not a verified user. Please Signup and verify your email');
+        throw new BadRequestError(
+            'You are not a verified user. Please Signup and verify your email'
+        );
     }
-
     const passwordsMatch = await Password.compare(user.password, password);
 
     if (!passwordsMatch) {
         throw new BadRequestError('Invalid credentials');
     }
 
-    let accessToken = jwt.sign(
+    const accessToken = jwt.sign(
         {
-            id: user?._id,
-            email: user?.email,
-            role: IRole.USER
+            id: user.id,
+            name: `${user.firstName} ${user?.lastName}`.trim(),
+            email: user.email,
+            profileImgUrl: user.profileImgUrl,
+            role: user.role,
+            isEmailVerified: user.isEmailVerified,
         },
-		process.env.JWT_SECRET!
+    process.env.JWT_SECRET!,
+    {
+        expiresIn: process.env.JWT_EXPIRES_IN!,
+    }
     );
-
-    accessToken = `access:${accessToken}`;
 
     res.status(200).json({ message: 'Login succesfull', user, accessToken });
 });
@@ -114,11 +115,13 @@ router.post('/signup', async (req: Request, res: Response) => {
         to: email,
         subject: 'Elevate-verification',
         html: emailTemplate.html,
-        text: emailTemplate.text
+        text: emailTemplate.text,
     });
 
     if (!result) {
-        throw new BadRequestError('Oops something went wrong!Please try again later!');
+        throw new BadRequestError(
+            'Oops something went wrong!Please try again later!'
+        );
     }
 
     user.isEmailVerified = false;
@@ -126,7 +129,10 @@ router.post('/signup', async (req: Request, res: Response) => {
 
     user = await authService.saveUser(user);
 
-    res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
+    res.status(200).json({
+        message: `Email verification OTP sent successfully to ${email}`,
+        user,
+    });
 });
 
 router.post('/resend-otp', async (req: Request, res: Response) => {
@@ -150,19 +156,21 @@ router.post('/resend-otp', async (req: Request, res: Response) => {
         to: email,
         subject: 'Elevate-verification',
         html: emailTemplate.html,
-        text: emailTemplate.text
+        text: emailTemplate.text,
     });
 
     user.otp = otp;
 
     user = await authService.saveUser(user);
 
-    res.status(200).json({ message: `Email verification OTP sent successfully to ${email}`, user });
+    res.status(200).json({
+        message: `Email verification OTP sent successfully to ${email}`,
+        user,
+    });
 });
 
 router.post('/verify-otp', async (req: Request, res: Response) => {
     const { email, otp } = req.body;
-
     const user = await authService.findUserByEmail(email);
 
     if (!user) {
@@ -174,7 +182,9 @@ router.post('/verify-otp', async (req: Request, res: Response) => {
     }
 
     if (otp !== user.otp) {
-        throw new BadRequestError('Invalid OTP. Please check your OTP and try again.');
+        throw new BadRequestError(
+            'Invalid OTP. Please check your OTP and try again.'
+        );
     }
 
     user.isEmailVerified = true;
@@ -182,25 +192,24 @@ router.post('/verify-otp', async (req: Request, res: Response) => {
 
     await authService.saveUser(user);
 
-    await new USER_CREATED_PUBLISHER(kafka_client).publish({
-        email: user.email,
-        name: user.firstName,
-        id: user.id,
-        profileImgUrl: user.profileImgUrl
-    });
-
-    let accessToken = jwt.sign(
+    const accessToken = jwt.sign(
         {
-            id: user?._id,
-            email: user?.email,
-            role: IRole.USER
+            id: user.id,
+            name: `${user.firstName} ${user.lastName}`,
+            email: user.email,
+            profileImgUrl: user.profileImgUrl,
+            role: user.role,
+            isEmailVerified: user.isEmailVerified,
         },
-		process.env.JWT_SECRET!
+    process.env.JWT_SECRET!,
+    {
+        expiresIn: process.env.JWT_EXPIRES_IN!,
+    }
     );
 
-    accessToken = `access:${accessToken}`;
-
-    res.status(200).json({ message: 'OTP verified successfully', user, accessToken });
+    res
+        .status(200)
+        .json({ message: 'OTP verified successfully', user, accessToken });
 });
 
 router.post('/forgot-password', async (req: Request, res: Response) => {
@@ -214,10 +223,10 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
 
     const resetToken = jwt.sign(
         {
-            email: user?.email
+            email: user?.email,
         },
-		process.env.JWT_SECRET!,
-		{ expiresIn: '15m' }
+    process.env.JWT_SECRET!,
+    { expiresIn: '15m' }
     );
 
     await tokenService.createNew({ email, token: resetToken });
@@ -228,10 +237,12 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
         to: email,
         subject: 'Elevate-Reset password',
         html: emailTemplate.html,
-        text: emailTemplate.text
+        text: emailTemplate.text,
     });
 
-    res.status(200).json({ message: `Please reset new password using the link provided to ${email}` });
+    res.status(200).json({
+        message: `Please reset new password using the link provided to ${email}`,
+    });
 });
 
 router.post('/reset-password', async (req: Request, res: Response) => {
@@ -241,9 +252,10 @@ router.post('/reset-password', async (req: Request, res: Response) => {
         throw new BadRequestError('Please provide token');
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { exp: number; email: string };
-
-    console.log(decoded);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+    exp: number;
+    email: string;
+  };
 
     const email = decoded.email;
 
@@ -263,7 +275,10 @@ router.post('/reset-password', async (req: Request, res: Response) => {
 router.post('/confirm-password', async (req: Request, res: Response) => {
     const { newPassword, token } = req.body;
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { exp: number; email: string };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+    exp: number;
+    email: string;
+  };
 
     if (decoded.exp * 1000 < Date.now()) {
         throw new BadRequestError('Token has expired.');
@@ -290,15 +305,13 @@ router.post('/admin-login', async (req: Request, res: Response) => {
         throw new BadRequestError('Invalid credentials');
     }
 
-    let accessToken = jwt.sign(
+    const accessToken = jwt.sign(
         {
             email: process.env.ADMIN,
-            role: IRole.ADMIN
+            role: IRole.ADMIN,
         },
-		process.env.JWT_SECRET!
+    process.env.JWT_SECRET!
     );
-
-    accessToken = `access:${accessToken}`;
 
     res.status(200).json({ message: 'Login succesfull', accessToken });
 });

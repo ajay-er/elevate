@@ -10,13 +10,7 @@
         </span>
       </a>
       <div class="flex items-center md:order-2">
-        <button
-          *ngIf="isUserLoggedIn$ | async"
-          type="button"
-          class="electric-violet hover:electric-violet-hover mr-3 rounded-xl hidden md:block border border-gray-500 px-5 py-1"
-        >
-          Become an investor
-        </button>
+        
         <button
           *ngIf="!(isUserLoggedIn$ | async)"
           routerLink="/auth/login"
@@ -116,6 +110,13 @@
         >
           <li>
             <a
+              routerLink="/ideas"
+              class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
+              >Ideas
+            </a>
+          </li>
+          <li>
+            <a
               routerLink="/investors"
               class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Investors
@@ -123,9 +124,9 @@
           </li>
           <li>
             <a
-              routerLink="/ideas"
+              routerLink="/pricing"
               class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
-              >Ideas
+              >Pricing
             </a>
           </li>
 
