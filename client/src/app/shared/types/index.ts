@@ -13,3 +13,15 @@ export enum ProfileTab {
   EditAddress = 'editaddress',
   NothingSelected = 'none'
 }
+
+export enum PageLayout {
+  Admin = 'admin',
+  Investor = 'investor',
+  Founder = 'founder'
+}
+
+export enum User {
+  Admin = 'admin',
+  Investor = 'investor',
+  Founder = 'founder'
+}

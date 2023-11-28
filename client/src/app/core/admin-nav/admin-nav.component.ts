@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
+import { PagelayoutService } from 'src/app/shared/data-access/pagelayout.service';
+import { PageLayout } from 'src/app/shared/types';
 
 @Component({
   selector: 'app-admin-nav',
@@ -10,6 +12,7 @@ import { LocalStorageService } from 'src/app/shared/data-access/local-storage.se
 })
 export class AdminNavComponent {
   private localStoreService = inject(LocalStorageService);
+  private pageLayoutService = inject(PagelayoutService);
   private router = inject(Router);
 
   isDropdownOpen = false;
@@ -19,7 +22,7 @@ export class AdminNavComponent {
 
   logOut() {
     this.localStoreService.clear();
+    this.pageLayoutService.setLayout(PageLayout.Founder);
     this.router.navigateByUrl('/ideas');
   }
 }
- 

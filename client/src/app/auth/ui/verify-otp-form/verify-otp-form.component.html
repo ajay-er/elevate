@@ -23,11 +23,13 @@
     Please enter a valid OTP
   </p>
   <div class="flex flex-col items-center justify-center">
-    <button type="submit" 
-      class="bg-black  shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4"
-    >
-      Verify
-    </button>
+    <app-loading-button
+    [label]="'Verify'"
+    [type]="'submit'"
+    [buttonClass]="
+      'bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4'
+    "
+  ></app-loading-button>
     <div class="flex flex-row mt-4 gap-1 items-baseline">
       <p class="text-gray-400">Didn't receive code?</p>
       <button (click)="resend()" type="reset"

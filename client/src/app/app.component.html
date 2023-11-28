@@ -1,20 +1,30 @@
 <my-spinner></my-spinner>
-<div
-[ngClass]="{'bg-cover bg-black text-white bg-center bg-no-repeat': currentLayout !== 'admin', 'bg-white': currentLayout === 'admin'}"
-[style.backgroundImage]="currentLayout !== 'admin' ? 'url(./assets/images/backgrounds/bg.png)' : 'none'"
->
-  <ng-container *ngIf="currentLayout === 'admin'; else user">
+
+<ng-container *ngIf="(pageLayoutService.layout$ | async) === PageLayout.Admin">
+  <div class="bg-white">
     <app-admin-nav></app-admin-nav>
+    <router-outlet></router-outlet>
     <app-admin-aside></app-admin-aside>
-  </ng-container>
+  </div>
+</ng-container>
 
-  <ng-template #user>
+<ng-container
+  *ngIf="(pageLayoutService.layout$ | async) === PageLayout.Founder"
+>
+  <div
+    class="bg-cover bg-black text-white bg-center bg-no-repeat"
+    [style.backgroundImage]="'url(./assets/images/backgrounds/bg.png)'"
+  >
     <app-nav></app-nav>
-  </ng-template>
-
-  <router-outlet></router-outlet>
-
-  <ng-container *ngIf="currentLayout !== 'admin'">
+    <router-outlet></router-outlet>
     <app-footer></app-footer>
-  </ng-container>
-</div>
+  </div>
+</ng-container>
+
+<ng-container
+  *ngIf="(pageLayoutService.layout$ | async) === PageLayout.Investor"
+>
+  <app-investor-aside></app-investor-aside>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</ng-container>

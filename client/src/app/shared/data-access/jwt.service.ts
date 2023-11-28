@@ -12,39 +12,18 @@ interface JwtPayload {
 export class JwtService {
   getUserRole(token: string): string {
     if (token) {
-      let tokenPrefix = '';
-      if (token.startsWith('access:')) {
-        tokenPrefix = 'access:';
-      } else if (token.startsWith('google:')) {
-        tokenPrefix = 'google:';
-      }
-      if (tokenPrefix) {
-        const decodedToken: JwtPayload = jwtDecode(
-          token.substring(tokenPrefix.length)
-        );
-        return decodedToken.role;
-      }
+      const decodedToken: JwtPayload = jwtDecode(token);
+      return decodedToken.role;
     }
-
     return '';
   }
 
-  private getDecodedToken(token: string): JwtPayload | undefined {
+  private getDecodedToken(token: string): JwtPayload | null {
     if (token) {
-      let tokenPrefix = '';
-      if (token.startsWith('access:')) {
-        tokenPrefix = 'access:';
-      } else if (token.startsWith('google:')) {
-        tokenPrefix = 'google:';
-      }
-      if (tokenPrefix) {
-        const decodedToken: JwtPayload = jwtDecode(
-          token.substring(tokenPrefix.length)
-        );
-        return decodedToken;
-      }
+      const decodedToken: JwtPayload = jwtDecode(token);
+      return decodedToken;
     }
-    return undefined;
+    return null;
   }
 
   isTokenExpired(token: string): boolean {

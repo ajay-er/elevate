@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store';
 import { initFlowbite } from 'flowbite';
 import { State } from './shared/data-access/state/auth';
 import { CheckLocalStorageAction } from './shared/data-access/state/auth/auth.action';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { PagelayoutService } from './shared/data-access/pagelayout.service';
+import { PageLayout } from './shared/types';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,16 +15,14 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
   private store = inject(Store<State>);
+  private routerSubscription!: Subscription;
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  currentLayout: string = 'user';
-  private routerSubscription!: Subscription;
-
+  readonly pageLayoutService = inject(PagelayoutService);
+  readonly PageLayout = PageLayout;
+  
+  
   ngOnInit() {
-    if (environment.production) {
-      console.log('RUNNING IN PRODUCTION MODE!');
-    }
-
     initFlowbite();
 
     this.routerSubscription = this.router.events.subscribe((event) => {
@@ -32,9 +31,9 @@ export class AppComponent {
         while (route.firstChild) {
           route.firstChild.data.subscribe((data) => {
             if (data['layout']) {
-              this.currentLayout = data['layout'];
+              this.pageLayoutService.setLayout(data['layout']);
             } else {
-              this.currentLayout = 'user';
+              this.pageLayoutService.setLayout(PageLayout.Founder);
             }
           });
           route = route.firstChild;

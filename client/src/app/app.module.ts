@@ -26,11 +26,12 @@ import { GlobalErrorHandler } from './shared/data-access/global-error-handler.se
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 import { LoadingButtonInterceptor } from './shared/interceptors/loading-button.interceptor';
-import { AdminNavModule } from './admin/ui/admin-nav/admin-nav.module';
-import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
+import { AdminNavModule } from './core/admin-nav/admin-nav.module';
+import { AdminAsideModule } from './core/admin-aside/admin-aside.module';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { NavModule } from './core/nav/nav.module';
+import { InvestorAsideModule } from './core/investor-aside/investor-aside.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { NavModule } from './core/nav/nav.module';
     NavModule,
     AdminNavModule,
     AdminAsideModule,
+    InvestorAsideModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
     StoreModule.forFeature('auth', authReducer),

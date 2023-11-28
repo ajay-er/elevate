@@ -52,11 +52,11 @@ spec:
                 name: search-srv
                 port:
                   number: 3000
-          - path: /api/v1/startups/?(.*)
+          - path: /api/v1/founders/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: startups-srv
+                name: founders-srv
                 port:
                   number: 3000
           

@@ -3,19 +3,19 @@
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
-      <a href="#">
+      <a>
         <span
-          class="self-center text-2xl font-semibold whitespace-nowrap text-white hover:text-violet-300"
+          class="cursor-pointer self-center text-2xl font-semibold whitespace-nowrap text-white hover:text-violet-300"
           >Elevate
         </span>
       </a>
       <div class="flex items-center md:order-2">
         <button
-          *ngIf="!(isUserLoggedIn$ | async)"
+          *ngIf="isUserLoggedIn$ | async"
           type="button"
           class="electric-violet hover:electric-violet-hover mr-3 rounded-xl hidden md:block border border-gray-500 px-5 py-1"
         >
-          Get started
+          Become an investor
         </button>
         <button
           *ngIf="!(isUserLoggedIn$ | async)"

@@ -31,11 +31,12 @@
   >
     Password is required
   </p>
-  <button
-    type="submit"
-    class="bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4"
+  <app-loading-button
     [disabled]="!loginForm.valid"
-  >
-    Submit
-  </button>
+    [label]="'Submit'"
+    [type]="'submit'"
+    [buttonClass]="
+      'bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4'
+    "
+  ></app-loading-button>
 </form>

@@ -13,6 +13,7 @@ export interface UserDoc extends mongoose.Document {
 	otp?: string;
 	profileImgUrl?: string;
 	isEmailVerified: boolean;
+    isBlocked:boolean
 }
 
 const userSchema = new mongoose.Schema(
@@ -28,7 +29,8 @@ const userSchema = new mongoose.Schema(
         isEmailVerified: {
             type: Boolean,
             default: false
-        }
+        },
+        isBlocked:Boolean
     },
     {
         toJSON: {

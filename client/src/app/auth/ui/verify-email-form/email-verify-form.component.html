@@ -17,10 +17,12 @@
   >
     Please enter a valid email address
   </p>
-  <button
-    [disabled]="verifyForm.invalid" 
-    class="bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4"
-  >
-    Submit 
-  </button>
+  <app-loading-button
+  [disabled]="!verifyForm.valid"
+  [label]="'Submit'"
+  [type]="'submit'"
+  [buttonClass]="
+    'bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4'
+  "
+></app-loading-button>
 </form>
