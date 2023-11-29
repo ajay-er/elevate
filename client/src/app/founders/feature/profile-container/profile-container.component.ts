@@ -43,8 +43,8 @@ export class ProfileContainerComponent {
           email: res.user.email,
           name: res.user.firstName,
           lastName: res.user?.lastName,
-          phone: res.user.phone,
-          photo: res.user.profileImgUrl,
+          phone: res.user?.phone,
+          photo: res.user?.profileImgUrl,
           address: res.user.address ? res.user.address : null,
         };
       },

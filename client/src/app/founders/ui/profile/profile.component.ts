@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -16,7 +15,6 @@ import { ProfileTab } from 'src/app/shared/types';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
   protected SelectTab: typeof ProfileTab = ProfileTab;

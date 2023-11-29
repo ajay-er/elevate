@@ -1,8 +1,12 @@
 <section class="py-8">
   <div class="sm:px-24 sm:pt-24 pt-32 lg:grid lg:grid-cols-2">
     <!-- elevate -->
-    <div class="hidden lg:block text-7xl pt-44 text-center h-96">Elevate</div>
-
+    <div class="hidden lg:flex flex-col items-center justify-center text-7xl text-center h-96">
+      <span>Elevate</span>
+      <span class="text-sm mt-4 text-violet-300">
+        <button [routerLink]="['/auth/investor/login']" >Login as a investor?</button>
+      </span>
+    </div>
     <!-- login/signup  -->
     <div class="flex flex-col items-center justify-center">
       <!--login/signup tab -->

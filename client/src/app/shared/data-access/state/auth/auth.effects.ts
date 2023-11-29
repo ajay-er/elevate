@@ -3,34 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
 import * as AuthActions from './auth.action';
-import { Store } from '@ngrx/store';
 import { AuthService } from '../../auth.service';
-import { Router } from '@angular/router';
 import { JwtService } from '../../jwt.service';
 import { IJwtPayload } from 'src/app/shared/interfaces';
-import { PagelayoutService } from '../../pagelayout.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
-  storeCurrentUser$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(AuthActions.SetCurrentUser),
-        tap((action) => {
-          this.localstorageService.saveKeys(action.currentUser);
-          this.router.navigate(['/ideas']);
-        })
-      );
-    },
-    { dispatch: false }
-  );
-
   storeToken$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(AuthActions.SetAccessToken),
         tap((action) => {
-          this.localstorageService.save(action.tokenType,action.accessToken);
+          this.localstorageService.save(action.tokenType, action.accessToken);
         })
       );
     },
@@ -74,26 +59,27 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.CheckLocalStorageAction),
       map(() => {
-        const currentUserData:any = {};
+        const currentUserData: any = {};
         const token = this.localstorageService.get('access_token');
         if (token) {
-          const payLoad:IJwtPayload | null = this.jwtService.getDecodedToken(token);
+          const payLoad: IJwtPayload | null =
+            this.jwtService.getDecodedToken(token);
           currentUserData.name = payLoad?.name;
           currentUserData.email = payLoad?.email;
           currentUserData.photo = payLoad?.profileImgUrl;
           currentUserData.isEmailVerified = payLoad?.isEmailVerified;
+          currentUserData.role = payLoad?.role;
         }
 
-        const isUserPresent =
-          Object.keys(currentUserData).length > 0 &&
-          currentUserData.isEmailVerified;
+        const isFounder = token ? this.jwtService.isFounder(token) : false;
+        const isInvestor = token ? this.jwtService.isInvestor(token) : false;
 
-        if (isUserPresent) {
-          this.store.dispatch(AuthActions.SetUserLoggedInTrue());
-        }
+        // isInvestor ? this.router.navigateByUrl('/investor/ideas') : this.router.navigateByUrl('/founder/ideas');
 
-        return AuthActions.GetLocalStorageData({
+        return AuthActions.SetCurrentUser({
           currentUser: currentUserData,
+          isFounderLoggedIn: isFounder,
+          isInvestorLoggedIn: isInvestor,
         });
       })
     )
@@ -102,10 +88,8 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private localstorageService: LocalStorageService,
-    private store: Store,
     private authService: AuthService,
-    private router: Router,
-    private jwtService :JwtService,
-    private pageLayout :PagelayoutService,
+    private jwtService: JwtService,
+    private router: Router
   ) {}
 }

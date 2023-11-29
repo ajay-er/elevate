@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Tab } from 'src/app/shared/types';
+import { IRole, Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { State } from '../../../shared/data-access/state/auth';
 import { Store } from '@ngrx/store';
@@ -55,18 +55,8 @@ export class AuthAccessComponent {
           this.authService.sendGoogleToken(user.idToken).subscribe({
             next: (res: any) => {
               console.log(res);
-              
+
               if (res?.user) {
-                const currentUser: ICurrentUser = {
-                  name: res.user?.firstName,
-                  photo: res.user?.profileImgUrl,
-                  email: res.user?.email,
-                  isEmailVerified: res.user?.isEmailVerified,
-                };
-                //*dispatch
-                this.store.dispatch(
-                  AuthActions.SetCurrentUser({ currentUser })
-                );
                 this.store.dispatch(
                   AuthActions.SetAccessToken({
                     accessToken: res.accessToken,
@@ -99,7 +89,7 @@ export class AuthAccessComponent {
 
   private processUrlSegments(segments: string[]) {
     if (segments.length > 2) {
-      const secondSegment = segments[2];
+      const secondSegment = segments[3];
       switch (secondSegment) {
         case this.TabType.Login:
           this.currentTab = this.TabType.Login;
@@ -147,25 +137,41 @@ export class AuthAccessComponent {
     this.authService.login(formData).subscribe({
       next: (res) => {
         console.log(res);
-        this.snackbar.showSuccess('Login successfull');
-        const currentUser: ICurrentUser = {
-          name: res.user.firstName,
-          email: res.user.email,
-          isEmailVerified: res.user.isEmailVerified,
-        };
+        if (res.user.role === IRole.FOUNDER) {
+          this.snackbar.showSuccess('Login successfull');
+          const currentUser: ICurrentUser = {
+            name: res.user.firstName,
+            email: res.user.email,
+            isEmailVerified: res.user.isEmailVerified,
+            role: res.user.role,
+          };
 
-        if (res.user.profileImgUrl) {
-          currentUser.photo = res.user.profileImgUrl;
+          if (res.user.profileImgUrl) {
+            currentUser.photo = res.user.profileImgUrl;
+          }
+
+          this.store.dispatch(
+            AuthActions.SetAccessToken({
+              accessToken: res.accessToken,
+              tokenType: 'access_token',
+            })
+          );
+          const isFounderLoggedIn =
+            res.user.role === IRole.FOUNDER ? true : false;
+          const isInvestorLoggedIn =
+            res.user.role === IRole.INVESTOR ? true : false;
+
+          this.store.dispatch(
+            AuthActions.SetCurrentUser({
+              currentUser,
+              isFounderLoggedIn,
+              isInvestorLoggedIn,
+            })
+          );
+          this.router.navigateByUrl('/founder/ideas');
+        } else {
+          this.snackbar.showError('Invalid credentials');
         }
-
-        this.store.dispatch(
-          AuthActions.SetAccessToken({
-            accessToken:res.accessToken,
-            tokenType: 'access_token',
-          })
-        );        
-
-        this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
       },
     });
   }
@@ -175,15 +181,9 @@ export class AuthAccessComponent {
     this.authService.signup(formData).subscribe({
       next: (res) => {
         console.log(res);
-        const currentUser = {
-          name: res.user.firstName,
-          email: res.user.email,
-          isEmailVerified: res.user.isEmailVerified,
-        };
-
-        this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
+        this.localstorageService.save('email', res.user.email);
         this.snackbar.showSuccess(res.message);
-        this.router.navigateByUrl('/auth/verify-otp');
+        this.router.navigateByUrl('/auth/founder/verify-otp');
       },
     });
   }
@@ -207,9 +207,21 @@ export class AuthAccessComponent {
           name: res.user.firstName,
           email: res.user.email,
           isEmailVerified: res.user.isEmailVerified,
+          role: res.user.role,
         };
-        this.store.dispatch(AuthActions.SetCurrentUser({ currentUser }));
-        this.router.navigateByUrl('/ideas');
+        const isFounderLoggedIn =
+          res.user.role === IRole.FOUNDER ? true : false;
+        const isInvestorLoggedIn =
+          res.user.role === IRole.INVESTOR ? true : false;
+
+        this.store.dispatch(
+          AuthActions.SetCurrentUser({
+            currentUser,
+            isFounderLoggedIn,
+            isInvestorLoggedIn,
+          })
+        );
+        this.router.navigateByUrl('/founder/ideas');
       },
     });
   }
@@ -219,7 +231,7 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         this.snackbar.showSuccess(res.message);
-        this.router.navigateByUrl('/auth/login');
+        this.router.navigateByUrl('/auth/founder/login');
       },
     });
   }
@@ -228,7 +240,7 @@ export class AuthAccessComponent {
     this.authService.confirmPassWord(data).subscribe({
       next: (res) => {
         this.snackbar.showSuccess('Password reset succesfull,Please login');
-        this.router.navigateByUrl('/auth/login');
+        this.router.navigateByUrl('/auth/founder/login');
       },
     });
   }

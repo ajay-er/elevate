@@ -1,0 +1,38 @@
+<nav class="w-full bg-white">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex justify-end">
+      <div class="flex items-center">
+        <div class="flex items-center ml-3">
+          <button
+            type="button"
+            class="flex text-sm bg-gray-500 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-400"
+            aria-expanded="false"
+            (click)="toggleProfileDropdown()"
+          >
+            <span class="sr-only">Open user menu</span>
+            <img
+              class="w-8 h-8 rounded-full"
+              src="../../../../assets/images/profile/IMAGE.png"
+              alt="user photo"
+            />
+          </button>
+          <div
+            *ngIf="isDropdownOpen"
+            class="z-50 absolute top-10 right-5 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded border border-black shadow-2xl dark:bg-gray-700 dark:divide-gray-600"
+          >
+            <ul class="py-1" role="none">
+              <li>
+                <a
+                  (click)="logOut()"
+                  class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem"
+                  >Sign out</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

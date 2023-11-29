@@ -32,6 +32,7 @@ import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { NavModule } from './core/nav/nav.module';
 import { InvestorAsideModule } from './core/investor-aside/investor-aside.module';
+import { InvestorNavModule } from './core/investor-nav/investor-nav.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,7 @@ import { InvestorAsideModule } from './core/investor-aside/investor-aside.module
     AdminNavModule,
     AdminAsideModule,
     InvestorAsideModule,
+    InvestorNavModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
     StoreModule.forFeature('auth', authReducer),

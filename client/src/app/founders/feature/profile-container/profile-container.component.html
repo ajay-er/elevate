@@ -2,7 +2,6 @@
   (toggleEditBtn)="selectTab($event)"
   (updateImage)="updateProfileImage($event)"
   [userData]="currentUserProfile"
-  *ngIf="currentUserProfile; else somethingwrong"
 >
   <app-edit-name-input
     class="name-input-edit"
@@ -19,15 +18,10 @@
     (updatePhoneNum)="updatePhone($event)"
   >
   </app-phone-input>
-  <app-add-address
+  <!-- <app-add-address
     class="address-input-edit"
     *ngIf="currentTab === SelectTab.EditAddress"
     (updateAddress)="upsertAddress($event)"
-  ></app-add-address>
+  ></app-add-address> -->
 </app-profile>
 
-<ng-template #somethingwrong>
-  <div class="h-screen flex justify-center items-center">
-    <p class="w-96 text-6xl">Oops! something wrong please try again later</p>
-  </div>
-</ng-template>

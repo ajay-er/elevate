@@ -4,21 +4,17 @@ import { LocalStorageService } from '../data-access/local-storage.service';
 import { JwtService } from '../data-access/jwt.service';
 
 export const adminUnauthGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
   const jwtService = inject(JwtService);
   const localStoreService = inject(LocalStorageService);
   const token = localStoreService.get('access_token');
 
   if (!token) {
-    router.navigateByUrl('/ideas');
-    return false;
+    return true;
   }
 
-  if (jwtService.isAdmin(token)) {
-    router.navigateByUrl('/not-found');
-    return false;
+  if (!jwtService.isAdmin(token)) {
+    return true;
   }
 
-  router.navigateByUrl('/admin/dashboard');
-  return true;
+  return false;
 };

@@ -5,12 +5,12 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('../investors-list/investors-list.module').then(
-        (m) => m.InvestorsListModule
+      import('../investor-container/investor-container.module').then(
+        (m) => m.InvestorContainerModule
       ),
   },
   {
-    path: 'profile/:id',
+    path: ':profile_id',
     loadChildren: () =>
       import('../profile-container/profile-container.module').then(
         (m) => m.ProfileContainerModule

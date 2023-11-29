@@ -20,8 +20,12 @@ export const getCurrentUserData = createSelector(
   }
 );
 
-export const isUserLoggedIn = createSelector(getAuthFeatureState, (state) => {
-  return state.isUserLoggedIn;
+export const isFounderLoggedIn = createSelector(getAuthFeatureState, (state) => {
+  return state.isFounderLoggedIn;
+});
+
+export const isInvestorLoggedIn = createSelector(getAuthFeatureState, (state) => {
+  return state.isInvestorLoggedIn;
 });
 
 export const getUserEmail = createSelector(getAuthFeatureState, (state) => {

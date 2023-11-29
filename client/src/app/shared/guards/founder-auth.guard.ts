@@ -10,14 +10,17 @@ export const founderAuthGuard: CanActivateFn = (route, state) => {
   const token = localStoreService.get('access_token');
 
   if (!token) {
-    router.navigateByUrl('/auth/login');
+    router.navigateByUrl('/auth/founder/login');
     return false;
   }
 
-  if (jwtService.isFounder(token) && !jwtService.isTokenExpired(token)) {
+  if (jwtService.isFounder(token)) {
+    if (jwtService.isTokenExpired(token)) {
+      localStoreService.clear();
+    }
     return true;
   }
 
-  router.navigateByUrl('/auth/login');
+  router.navigateByUrl('/auth/founder/login');
   return false;
 };

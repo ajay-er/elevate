@@ -12,14 +12,14 @@
       <div class="flex items-center md:order-2">
         
         <button
-          *ngIf="!(isUserLoggedIn$ | async)"
-          routerLink="/auth/login"
+          *ngIf="!(isFounderLoggedIn$ | async)"
+          routerLink="/auth/founder/login"
           type="button"
           class="md:block hidden"
         >
           Login
         </button>
-        <ng-container *ngIf="isUserLoggedIn$ | async">
+        <ng-container *ngIf="isFounderLoggedIn$ | async">
           <button
             (click)="toggleProfileDropdown()"
             type="button"
@@ -110,30 +110,30 @@
         >
           <li>
             <a
-              routerLink="/ideas"
+              routerLink="/founder/ideas"
               class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Ideas
             </a>
           </li>
           <li>
             <a
-              routerLink="/investors"
+              routerLink="/founder/investors"
               class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Investors
             </a>
           </li>
           <li>
             <a
-              routerLink="/pricing"
+              routerLink="/founder/pricing"
               class="cursor-pointer block py-2 pl-3 pr-4 rounded md:p-0 text-white md:hover:text-violet-300 hover:bg-gray-600 md:hover:bg-transparent"
               >Pricing
             </a>
           </li>
 
           <li
-            *ngIf="!(isUserLoggedIn$ | async)"
+            *ngIf="!(isFounderLoggedIn$ | async)"
             (click)="toggleNavbar()"
-            routerLink="/auth/login"
+            routerLink="/auth/founder/login"
             class="cursor-pointer"
           >
             <a

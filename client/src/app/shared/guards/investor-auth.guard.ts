@@ -10,14 +10,16 @@ export const investorAuthGuard: CanActivateFn = (route, state) => {
   const token = localStoreService.get('access_token');
 
   if (!token) {
-    router.navigateByUrl('/auth/login');
+    router.navigateByUrl('/auth/investor/login');
     return false;
   }
 
-  if (jwtService.isInvestor(token) && !jwtService.isTokenExpired(token)) {
+  if (jwtService.isInvestor(token)) {
+    if (jwtService.isTokenExpired(token)) {
+      localStoreService.clear();
+    }
     return true;
   }
-
-  router.navigateByUrl('/auth/login');
+  router.navigateByUrl('/auth/investor/login');
   return false;
 };

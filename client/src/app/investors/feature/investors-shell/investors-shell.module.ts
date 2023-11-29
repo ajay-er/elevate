@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { InvestorsShellRoutingModule } from './investors-shell-routing.module';
 
-
 @NgModule({
   declarations: [],
   imports: [

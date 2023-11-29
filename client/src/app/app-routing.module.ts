@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { unauthenticatedGuard } from './shared/guards/unauthenticated.guard';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
 import { adminAuthGuard } from './shared/guards/admin-auth.guard';
-import { IRole } from './shared/types';
+import { roleLayoutResolver } from './shared/resolvers/role-layout.resolver';
+import { investorAuthGuard } from './shared/guards/investor-auth.guard';
 
 const routes: Routes = [
   {
@@ -17,28 +17,24 @@ const routes: Routes = [
       import('./auth/feature/auth-shell/auth-shell.module').then(
         (m) => m.AuthShellModule
       ),
-    canActivate: [unauthenticatedGuard],
+    resolve: { layout: roleLayoutResolver },
   },
   {
-    path: 'founders',
+    path: 'founder',
     loadChildren: () =>
       import('./founders/feature/founders-shell/founders-shell.module').then(
         (m) => m.FoundersShellModule
       ),
+    resolve: { layout: roleLayoutResolver },
   },
   {
-    path: 'investors',
+    path: 'investor',
     loadChildren: () =>
       import('./investors/feature/investors-shell/investors-shell.module').then(
         (m) => m.InvestorsShellModule
       ),
-  },
-  {
-    path: 'ideas',
-    loadChildren: () =>
-      import('./ideas/feature/idea-shell/idea-shell.module').then(
-        (m) => m.IdeaShellModule
-      ),
+    canActivate: [investorAuthGuard],
+    resolve: { layout: roleLayoutResolver },
   },
   {
     path: 'admin',
@@ -47,7 +43,7 @@ const routes: Routes = [
         (m) => m.AdminShellModule
       ),
     canActivate: [adminAuthGuard],
-    data: { layout: IRole.ADMIN },
+    resolve: { layout: roleLayoutResolver },
   },
   {
     path: 'not-found',

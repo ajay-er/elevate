@@ -8,9 +8,7 @@
   </div>
 </ng-container>
 
-<ng-container
-  *ngIf="(pageLayoutService.layout$ | async) === IRole.FOUNDER"
->
+<ng-container *ngIf="(pageLayoutService.layout$ | async) === IRole.FOUNDER">
   <div
     class="bg-cover bg-black text-white bg-center bg-no-repeat"
     [style.backgroundImage]="'url(./assets/images/backgrounds/bg.png)'"
@@ -21,10 +19,8 @@
   </div>
 </ng-container>
 
-<ng-container
-  *ngIf="(pageLayoutService.layout$ | async) === IRole.INVESTOR"
->
+<ng-container *ngIf="(pageLayoutService.layout$ | async) === IRole.INVESTOR">
   <app-investor-aside></app-investor-aside>
+  <app-investor-nav></app-investor-nav>
   <router-outlet></router-outlet>
-  <app-footer></app-footer>
 </ng-container>

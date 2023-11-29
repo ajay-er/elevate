@@ -7,11 +7,6 @@ export const ToogleAuthTab = createAction(
   props<{ currentAuthTab: Tab }>()
 );
 
-export const SetCurrentUser = createAction(
-  '[Auth] Set Current User',
-  props<{ currentUser: ICurrentUser }>()
-);
-
 export const SetAccessToken = createAction(
   '[Auth] Save Token In Local Store',
   props<{ accessToken: string; tokenType: 'access_token' }>()
@@ -19,9 +14,15 @@ export const SetAccessToken = createAction(
 
 export const UnsetCurrentUser = createAction('[Auth] Unset Current User');
 
-export const SetUserLoggedInFalse = createAction('[Auth] SetUserLoggedInFalse');
+export const ToggleFounderLoggedIn = createAction(
+  '[Auth] Toggle Founder LoggedIn',
+  props<{ isFounderLoggedIn: boolean }>()
+);
 
-export const SetUserLoggedInTrue = createAction('[Auth] SetUserLoggedInTrue');
+export const ToggleInvestorLoggedIn = createAction(
+  '[Auth] Toggle Investor LoggedIn',
+  props<{ isInvestorLoggedIn: boolean }>()
+);
 
 export const CheckLocalStorageAction = createAction(
   '[Auth] Check User LocalSession'
@@ -35,7 +36,11 @@ export const LogoutSuccess = createAction('[Auth] LogoutSuccess');
 
 export const LogoutFailer = createAction('[Auth] LogoutFailer');
 
-export const GetLocalStorageData = createAction(
-  '[Auth] Get LocalSession',
-  props<{ currentUser: ICurrentUser }>()
+export const SetCurrentUser = createAction(
+  '[Auth] Set Current User',
+  props<{
+    currentUser: ICurrentUser;
+    isInvestorLoggedIn: boolean;
+    isFounderLoggedIn: boolean;
+  }>()
 );

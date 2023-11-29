@@ -1,10 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import { Tab } from 'src/app/shared/types';
+import { IRole, Tab } from 'src/app/shared/types';
 import {
-  GetLocalStorageData,
   SetCurrentUser,
-  SetUserLoggedInFalse,
-  SetUserLoggedInTrue,
+  ToggleFounderLoggedIn,
+  ToggleInvestorLoggedIn,
   ToogleAuthTab,
   UnsetCurrentUser,
 } from './auth.action';
@@ -14,21 +13,25 @@ export interface ICurrentUser {
   photo?: string;
   email: string;
   isEmailVerified: boolean;
+  role: IRole | null;
 }
 export interface AuthState {
   currentAuthTab: Tab;
-  isUserLoggedIn: boolean;
+  isFounderLoggedIn: boolean;
+  isInvestorLoggedIn: boolean;
   currentUser: ICurrentUser;
 }
 
 const initialState: AuthState = {
   currentAuthTab: Tab.Login,
-  isUserLoggedIn: false,
+  isFounderLoggedIn: false,
+  isInvestorLoggedIn: false,
   currentUser: {
     name: '',
     photo: '',
     email: '',
     isEmailVerified: false,
+    role: null,
   },
 };
 
@@ -37,14 +40,11 @@ export const authReducer = createReducer(
   on(ToogleAuthTab, (state, action): AuthState => {
     return { ...state, currentAuthTab: action.currentAuthTab };
   }),
-  on(SetUserLoggedInFalse, (state): AuthState => {
-    return { ...state, isUserLoggedIn: false };
+  on(ToggleFounderLoggedIn, (state, action): AuthState => {
+    return { ...state, isFounderLoggedIn: !action.isFounderLoggedIn };
   }),
-  on(SetUserLoggedInTrue, (state): AuthState => {
-    return { ...state, isUserLoggedIn: true };
-  }),
-  on(SetCurrentUser, (state, action): AuthState => {
-    return { ...state, currentUser: action.currentUser, isUserLoggedIn: action.currentUser.isEmailVerified };
+  on(ToggleInvestorLoggedIn, (state, action): AuthState => {
+    return { ...state, isInvestorLoggedIn: !action.isInvestorLoggedIn };
   }),
   on(UnsetCurrentUser, (state): AuthState => {
     return {
@@ -54,11 +54,13 @@ export const authReducer = createReducer(
         photo: '',
         email: '',
         isEmailVerified: false,
+        role: null,
       },
-      isUserLoggedIn: false,
+      isFounderLoggedIn: false,
+      isInvestorLoggedIn: false,
     };
   }),
-  on(GetLocalStorageData, (state, action): AuthState => {
+  on(SetCurrentUser, (state, action): AuthState => {
     return {
       ...state,
       currentUser: {
@@ -66,7 +68,10 @@ export const authReducer = createReducer(
         photo: action.currentUser?.photo,
         email: action.currentUser.email,
         isEmailVerified: action.currentUser.isEmailVerified,
+        role: action.currentUser.role,
       },
+      isFounderLoggedIn: action.isFounderLoggedIn,
+      isInvestorLoggedIn: action.isInvestorLoggedIn,
     };
   })
 );

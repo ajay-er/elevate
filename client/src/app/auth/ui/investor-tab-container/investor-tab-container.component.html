@@ -1,0 +1,59 @@
+<section class="py-8">
+  <div class="sm:px-24 sm:pt-24 pt-32 lg:grid lg:grid-cols-2">
+    <!-- login/signup  -->
+    <div class="flex flex-col items-center justify-center">
+      <!--login/signup tab -->
+      <div
+        class="bg-white mb-2 shadow-2xl shadow-blue-500/50 rounded-md text-lg flex gap-1 justify-around md:w-96 w-64 p-2"
+      >
+        <button
+          [ngClass]="{
+            'bg-black': currentTab !== TabType.Signup,
+            'text-black': currentTab === TabType.Signup,
+            'hover:bg-slate-300': currentTab === TabType.Signup
+          }"
+          (click)="selectTab(TabType.Login)"
+          class="rounded-lg py-1 px-7 md:px-10"
+        >
+          Login
+        </button>
+        <button
+          [ngClass]="{
+            'bg-black': currentTab === TabType.Signup,
+            'text-black': currentTab !== TabType.Signup,
+            'hover:bg-slate-300': currentTab !== TabType.Signup
+          }"
+          (click)="selectTab(TabType.Signup)"
+          class="rounded-lg py-1 px-7 md:px-10"
+        >
+          Signup
+        </button>
+      </div>
+
+      <ng-content></ng-content>
+
+      <div
+        *ngIf="currentTab === TabType.Login"
+        class="flex justify-center items-center"
+      >
+        <button (click)="selectTab(TabType.Verify)" class="text-white my-4">
+          forgot password?
+        </button>
+      </div>
+
+      <span class="md:block hidden text-gray-50"
+        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . .</span
+      >
+      <span class="block md:hidden text-gray-50"
+        >. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span
+      >
+    </div>
+
+    <div class="hidden lg:block text-7xl pt-16 text-center h-96">
+      Elevate <br />
+      Investor <br />
+      login
+    </div>
+  </div>
+</section>
