@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { InvestorsService } from '../../data-access/investors.service';
+import { SharedService } from '../../data-access/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-container',
@@ -8,10 +9,21 @@ import { InvestorsService } from '../../data-access/investors.service';
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
-  private route = inject(ActivatedRoute);
+  private sharedService = inject(SharedService);
   private investorService = inject(InvestorsService);
+  private subscription$: Subscription;
 
-  ngOnInit() {
-   
+  constructor() {
+    this.subscription$ = this.sharedService
+      .getData()
+      .subscribe((file: File) => {
+        const formData = new FormData();
+        formData.append('profile', file);
+        this.investorService.updateProfileImage(formData);
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

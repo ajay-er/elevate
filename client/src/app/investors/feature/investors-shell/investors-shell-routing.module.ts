@@ -10,7 +10,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: ':profile_id',
+    path: 'profile',
     loadChildren: () =>
       import('../profile-container/profile-container.module').then(
         (m) => m.ProfileContainerModule

@@ -1,13 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { IUserProfile } from 'src/app/shared/interfaces';
 import { ProfileTab } from 'src/app/shared/types';
 
@@ -19,60 +12,53 @@ import { ProfileTab } from 'src/app/shared/types';
 export class ProfileComponent {
   protected SelectTab: typeof ProfileTab = ProfileTab;
   @Output() toggleEditBtn = new EventEmitter<ProfileTab>();
-  @Output() updateImage = new EventEmitter<any>();
+  @Output() updateImage = new EventEmitter<FormData>();
   @Input() userData!: IUserProfile;
-  @ViewChild('toogleButton') toggleButton!: any;
 
-  //TODO: complete croping
   private sanitizer = inject(DomSanitizer);
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  croppedFile!: File;
+  modalOpen: boolean = false;
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
-    this.toggleButton.nativeElement.click();
   }
 
   imageCropped(event: ImageCroppedEvent) {
     if (event && event.objectUrl) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+        event.objectUrl
+      );
+      this.croppedFile = this.blobToFile(
+        this.croppedImage,
+        `${Date.now()}_profile.png`
+      );
     }
-  }  
+  }
 
-  imageLoaded(image: LoadedImage) {
-    console.log('image loaded', image);
+  blobToFile(blob: Blob, fileName: string): File {
+    const file = new File([blob], fileName, { type: blob.type });
+    return file;
   }
-  cropperReady() {
-    console.log('croper is ready');
+
+  imageLoaded() {
+    this.modalOpen = true;
   }
-  loadImageFailed() {
-    console.log('image loading is failed');
+
+  cancelModal() {
+    this.modalOpen = false;
   }
 
   toogleEditButton(tab: ProfileTab) {
     this.toggleEditBtn.emit(tab);
   }
 
-  addCloudData(data: File) {
-    const formData = new FormData();
-    formData.append('file', data);
-    formData.append('upload_preset', 'elevate');
-    formData.append('cloud_name', 'elevate-connect');
-    return formData;
-  }
-
-  sendTobackend(event?: any) {
-    const file = event.target.files[0];
-    const data = this.addCloudData(file);
-    this.updateImage.emit(data);
-
-    // if (this.croppedImage) {
-    //   this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-    //     event?.objectUrl!
-    //   );
-    //   formData.append('image', this.croppedImage);
-    //   this.updateImage.emit(formData);
-    // } else {
-    // }
+  sendTobackend() {
+    if (this.croppedFile) {
+      const formData = new FormData();
+      formData.append('profile', this.croppedFile);
+      this.updateImage.emit(formData);
+    }
   }
 }

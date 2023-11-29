@@ -8,7 +8,7 @@ import { investorAuthGuard } from './shared/guards/investor-auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'ideas',
+    redirectTo: 'founder',
     pathMatch: 'full',
   },
   {

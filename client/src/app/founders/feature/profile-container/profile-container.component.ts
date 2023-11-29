@@ -2,8 +2,6 @@ import { Component, inject } from '@angular/core';
 import { ProfileTab } from 'src/app/shared/types';
 import { ProfileService } from '../../data-access/profile.service';
 import {
-  IAddress,
-  IUpdateImage,
   IUpdateName,
   IUpdatePhone,
   IUserProfile,
@@ -45,14 +43,12 @@ export class ProfileContainerComponent {
           lastName: res.user?.lastName,
           phone: res.user?.phone,
           photo: res.user?.profileImgUrl,
-          address: res.user.address ? res.user.address : null,
         };
       },
     });
   }
 
   updateName(data: IUpdateName) {
-    console.log(data);
     this.profileService.updateName(data).subscribe({
       next: (res) => {
         this.snackbar.showSuccess('Name changed successfully');
@@ -61,7 +57,6 @@ export class ProfileContainerComponent {
   }
 
   updatePhone(data: IUpdatePhone) {
-    console.log(data);
     this.profileService.updatePhone(data).subscribe({
       next: (res) => {
         this.snackbar.showSuccess('Phone number changed successfully');
@@ -69,24 +64,12 @@ export class ProfileContainerComponent {
     });
   }
 
-  upsertAddress(data: IAddress) {
-    console.log(data);
-    this.profileService.upsertAddress(data).subscribe({
-      next: (res) => {
-        this.snackbar.showSuccess('address succesfully added!');
+  updateProfileImage(data: FormData) {
+    this.profileService.updateProfileImage(data).subscribe({
+      next: (res: any) => {
+        this.snackbar.showSuccess('Profile image updated succeccfully');
+        this.currentUserProfile.photo = res.user.profileImgUrl;
       },
-    });
-  }
-
-  updateProfileImage(data: IUpdateImage) {
-    this.profileService.uploadSignature(data).subscribe((imageData: any) => {
-      const profileImgUrl = imageData.secure_url;
-      this.profileService.updateProfileImage(profileImgUrl).subscribe({
-        next: (res: any) => {
-          this.snackbar.showSuccess('Profile image updated succeccfully');
-          this.currentUserProfile.photo = res.user.profileImgUrl;
-        },
-      });
     });
   }
 }

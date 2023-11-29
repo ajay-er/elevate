@@ -1,0 +1,40 @@
+<div class="w-full sm:w-[50%]">
+  <label class="block text-sm font-medium text-black"> Image </label>
+  <div
+    class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+  >
+    <div class="space-y-1 text-center">
+      <img
+        [src]="
+          croppedImage
+            ? croppedImage
+            : '../../../../assets/images/profile/profile.png'
+        "
+        alt="profile"
+        class="sm:w-32 sm:h-32 w-24 h-24 mx-auto rounded-full dark:bg-gray-500 aspect-square cursor-pointer"
+      />
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 3"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+      ></image-cropper>
+    </div>
+  </div>
+  <div class="mt-4">
+    <input
+      (change)="fileChangeEvent($event)"
+      class="block w-full text-sm text-gray-900 border border-black cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+      type="file"
+    />
+  </div>
+
+  <button
+    [disabled]="!croppedImage"
+    (click)="crop()"
+    class="bg-black text-white p-2 mt-2"
+  >
+    CROP
+  </button>
+</div>

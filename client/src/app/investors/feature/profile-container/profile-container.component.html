@@ -1,4 +1,30 @@
-<section class="w-80% min-h-screen py-5 px-5 pt-32 md:py-32 md:px-32">
-
-wonder
+<section class="min-h-screen ml-16 px-10 md:px-20 pb-20">
+  <p class="md:text-4xl text-xl">Profile & Settings</p>
+  <div
+    class="text-xl mb-7 font-bold text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700"
+  >
+    <ul class="flex flex-wrap -mb-px">
+      <li class="me-2">
+        <a
+          routerLink="/investor/profile/details"
+          routerLinkActive="border-b-2 border-blue-600 text-blue-600 dark:border-blue-500 dark:text-blue-500"
+          class="inline-block p-3 cursor-pointer rounded-t-lg"
+          aria-current="page"
+        >
+          Elevate Profile
+        </a>
+      </li>
+      <li class="me-2">
+        <a
+          routerLink="/investor/profile/picture"
+          routerLinkActive="border-b-2 border-blue-600 text-blue-600 dark:border-blue-500 dark:text-blue-500"
+          class="inline-block p-3 cursor-pointer rounded-t-lg"
+          aria-current="page"
+        >
+          Profile picture
+        </a>
+      </li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
 </section>
