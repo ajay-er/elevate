@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [FoundersContainerComponent],
-  imports: [CommonModule,FoundersContainerRoutingModule,TableModule],
+  imports: [
+    CommonModule,
+    FoundersContainerRoutingModule,
+    TableModule,
+  ],
 })
 export class FoundersContainerModule {}

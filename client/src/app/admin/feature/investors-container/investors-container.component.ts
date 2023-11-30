@@ -11,9 +11,5 @@ export class InvestorsContainerComponent {
 
   private adminService = inject(AdminService);
 
-  ngOnInit() {
-    this.adminService.getInvestors().subscribe((res: any) => {
-      this.investors = res.result;
-    });
-  }
+  
 }

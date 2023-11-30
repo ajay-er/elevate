@@ -1,0 +1,11 @@
+<div class="flex items-center p-8 bg-white shadow rounded-lg">
+  <div [class]="bgColor" class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16  rounded-full mr-6">
+    <ng-content select="[svg-slot]"></ng-content>
+  </div>
+  <div>
+    <span class="block text-2xl font-bold">{{ studentCount }}</span>
+    <span class="block text-gray-500">{{ label }}</span>
+  </div>
+</div>
+
+

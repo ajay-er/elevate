@@ -8,4 +8,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class PaginationComponent {
   @Input() pageClass: string = '';
+  @Input() positionClass: string = '';
 }

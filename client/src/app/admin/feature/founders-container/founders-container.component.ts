@@ -7,14 +7,5 @@ import { AdminService } from '../../data-access/admin.service';
   styleUrls: ['./founders-container.component.css'],
 })
 export class FoundersContainerComponent {
-  protected startup: any;
 
-  private adminService = inject(AdminService);
-
-  ngOnInit() {
-    this.adminService.getStartups().subscribe((res: any) => {
-      console.log(res);
-      this.startup = res.result;
-    });
-  }
 }
