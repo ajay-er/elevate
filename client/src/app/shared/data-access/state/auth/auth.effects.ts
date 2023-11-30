@@ -62,6 +62,10 @@ export class AuthEffects {
         const currentUserData: any = {};
         const token = this.localstorageService.get('access_token');
         if (token) {
+          if (this.jwtService.isTokenExpired(token)) {
+            this.localstorageService.clear();
+            return AuthActions.UnsetCurrentUser();
+          }
           const payLoad: IJwtPayload | null =
             this.jwtService.getDecodedToken(token);
           currentUserData.name = payLoad?.name;

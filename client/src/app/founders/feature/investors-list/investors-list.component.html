@@ -1,3 +1,19 @@
-<section class="w-80% min-h-screen py-5 px-5 pt-32 md:py-32 md:px-32">
-  
+<section>
+  <div class="min-h-screen pt-20 sm:flex">
+    <div class="ml-4 mr-4 hidden sm:block w-1/6 max-h-[44rem]">
+      <app-aside-investors></app-aside-investors>
+    </div>
+    <div class="mr-4 ml-2 sm:w-5/6 max-h-[43rem] overflow-auto">
+      <app-investor-tab></app-investor-tab>
+    </div>
+  </div>
+  <div class="sm:flex">
+    <div class="ml-4 mr-4 hidden sm:block w-1/6 max-h-[33rem]"></div>
+    <div class="mr-4 ml-2 sm:w-5/6 max-h-[33rem] flex justify-center mt-4">
+      <app-pagination
+        [pageClass]="'bg-white hover:bg-opacity-90 hover:text-black'"
+      >
+      </app-pagination>
+    </div>
+  </div>
 </section>
