@@ -19,10 +19,10 @@ export class InvestorNavComponent {
     private pageLayout: PagelayoutService
   ) {}
 
-  logOut(): void {
+  logOut(): void {    
+    this.router.navigateByUrl('/founder/ideas');
     this.store.dispatch(UnsetCurrentUser());
     this.pageLayout.setLayout(IRole.FOUNDER);
-    this.router.navigateByUrl('/auth/investor/login');
   }
 
   isDropdownOpen = false;

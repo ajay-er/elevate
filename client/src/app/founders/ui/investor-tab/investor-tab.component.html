@@ -61,7 +61,7 @@
             </tr>
           </thead>
           <tbody
-            class="divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+            class="divide-y divide-gray-200 bg-white bg-opacity-5"
           >
             <tr>
               <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
@@ -85,7 +85,7 @@
               <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                 Redacted
               </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap" [routerLink]="['/founder/investor/name']">
                 <app-loading-button
                   [label]="'Details'"
                   [buttonClass]="'bg-blue-500 p-2 text-white'"

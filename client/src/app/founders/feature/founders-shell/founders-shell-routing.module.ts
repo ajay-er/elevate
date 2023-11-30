@@ -17,6 +17,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'investor/:id',
+    loadChildren: () =>
+      import('../investor-detail/investor-detail.module').then(
+        (m) => m.InvestorDetailModule
+      ),
+  },
+  {
     path: 'ideas',
     loadChildren: () =>
       import('../ideas/ideas.module').then((m) => m.IdeasModule),
