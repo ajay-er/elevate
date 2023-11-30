@@ -1,0 +1,124 @@
+<div class="text-center">
+  <p class="font-bold text-4xl text-white">Pricing Plans</p>
+  <p class="text-light text-gray-500 text-xl">
+    Access the best investors in the world for the price of a coffee a day
+  </p>
+</div>
+<div class="py-12 flex items-center justify-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Pricing Card 1 -->
+    <div
+      class="border-gray-300 border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105"
+    >
+      <div class="p-1 bg-blue-200"></div>
+      <div class="p-8">
+        <h2 class="text-3xl font-bold text-white mb-4">Basic Plan</h2>
+        <p class="text-4xl font-bold text-white mb-6">₹199</p>
+        <ul class="text-sm text-white mb-6">
+          <app-pricing-li [label]="'Access all investors.'"></app-pricing-li>
+          <app-pricing-li [label]="'Unlimited searches'"></app-pricing-li>
+          <app-pricing-li [label]="'Search filtering'"></app-pricing-li>
+          <app-pricing-li [label]="'Social media links'"></app-pricing-li>
+          <app-pricing-li [label]="'Investment stages'"></app-pricing-li>
+          <app-pricing-li
+            [label]="'Unlimited investor lists'"
+            [right]="false"
+          ></app-pricing-li>
+          <app-pricing-li
+            [label]="'Email Addresses'"
+            [right]="false"
+          ></app-pricing-li>
+          <app-pricing-li
+            [label]="'Phone Numbers'"
+            [right]="false"
+          ></app-pricing-li>
+          <app-pricing-li
+            [label]="'Direct Message'"
+            [right]="false"
+          ></app-pricing-li>
+          <app-pricing-li
+            [label]="'Priority customer support'"
+            [right]="false"
+          ></app-pricing-li>
+        </ul>
+      </div>
+      <div class="p-4">
+        <button
+          class="w-full bg-blue-500 text-white rounded-full px-4 py-2 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+        >
+          Subscribe
+        </button>
+      </div>
+    </div>
+
+    <!-- Pricing Card 2 -->
+    <div
+      class="border-gray-300 border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105"
+    >
+      <div class="p-1 bg-green-200"></div>
+      <div class="p-8">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Pro Plan <span class="text-sm text-gray-400">(popular)</span>
+        </h2>
+        <p class="text-4xl font-bold text-white mb-6">₹599</p>
+        <ul class="text-sm mb-6">
+          <app-pricing-li [label]="'Access all investors.'"></app-pricing-li>
+          <app-pricing-li [label]="'Unlimited searches'"></app-pricing-li>
+          <app-pricing-li [label]="'Search filtering'"></app-pricing-li>
+          <app-pricing-li [label]="'Social media links'"></app-pricing-li>
+          <app-pricing-li [label]="'Investment stages'"></app-pricing-li>
+          <app-pricing-li [label]="'Unlimited investor lists'"></app-pricing-li>
+          <app-pricing-li [label]="'Email Addresses'"></app-pricing-li>
+          <app-pricing-li [label]="'Phone Numbers'"></app-pricing-li>
+          <app-pricing-li
+            [label]="'Direct Message'"
+            [right]="false"
+          ></app-pricing-li>
+          <app-pricing-li
+            [label]="'Priority customer support'"
+            [right]="false"
+          ></app-pricing-li>
+        </ul>
+      </div>
+      <div class="p-4">
+        <button
+          class="w-full bg-green-500 text-white rounded-full px-4 py-2 hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800"
+        >
+          Subscribe
+        </button>
+      </div>
+    </div>
+
+    <!-- Pricing Card 3 -->
+    <div
+      class="border-gray-300 border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105"
+    >
+      <div class="p-1 bg-purple-200"></div>
+      <div class="p-8">
+        <h2 class="text-3xl font-bold text-white mb-4">Premium Plan</h2>
+        <p class="text-4xl font-bold text-white mb-6">₹1599</p>
+        <ul class="text-sm mb-6">
+          <app-pricing-li [label]="'Access all investors.'"></app-pricing-li>
+          <app-pricing-li [label]="'Unlimited searches'"></app-pricing-li>
+          <app-pricing-li [label]="'Search filtering'"></app-pricing-li>
+          <app-pricing-li [label]="'Social media links'"></app-pricing-li>
+          <app-pricing-li [label]="'Investment stages'"></app-pricing-li>
+          <app-pricing-li [label]="'Unlimited investor lists'"></app-pricing-li>
+          <app-pricing-li [label]="'Email Addresses'"></app-pricing-li>
+          <app-pricing-li [label]="'Phone Numbers'"></app-pricing-li>
+          <app-pricing-li [label]="'Direct Message'"></app-pricing-li>
+          <app-pricing-li
+            [label]="'Priority customer support'"
+          ></app-pricing-li>
+        </ul>
+      </div>
+      <div class="p-4">
+        <button
+          class="w-full bg-purple-500 text-white rounded-full px-4 py-2 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple active:bg-purple-800"
+        >
+          Subscribe
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

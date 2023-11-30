@@ -9,27 +9,8 @@ export class FoundersService {
   private http = inject(HttpClient);
   api = environment.apiUrl;
 
-  getStartups() {
-    return this.http.get(`${this.api}/startups/startups`);
-  }
-
-  addNewStartup(data: any) {
-    return this.http.post(`${this.api}/startups/add-startup`, data);
-  }
-
-  getLogoUrl(data: any) {
-    return this.http.post(`${this.api}/startups/send-logo`, data);
-  }
-
-  getBannerUrl(data: any) {
-    return this.http.post(`${this.api}/startups/send-banner`, data);
-  }
-
   search(input: any) {
     return this.http.get(`${this.api}/search/startup?q=${input}`);
   }
   
-  getStartupData(id: string) {
-    return this.http.get(`${this.api}/startups/${id}`);
-  }
 }

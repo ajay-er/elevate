@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { PricingRoutingModule } from './pricing-routing.module';
 import { PricingComponent } from './pricing.component';
+import { PricingPlansModule } from '../../ui/pricing-plans/pricing-plans.module';
 
 @NgModule({
-  declarations: [
-    PricingComponent
-  ],
+  declarations: [PricingComponent],
   imports: [
     CommonModule,
-    PricingRoutingModule
-  ]
+    PricingRoutingModule,
+    PricingPlansModule
+  ],
 })
-export class PricingModule { }
+export class PricingModule {}
