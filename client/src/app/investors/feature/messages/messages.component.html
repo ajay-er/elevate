@@ -1,1 +1,13 @@
-<p>messages works!</p>
+<section>
+  <p class="md:text-4xl text-xl mb-2">Messages</p>
+  <div class="flex border border-black shadow-xl">
+    <!-- Left -->
+    <div class="sm:w-1/3 w-full border-r border-black  flex flex-col">
+      <app-chat-list></app-chat-list>
+    </div>
+    <!-- Right -->
+    <div class="sm:w-2/3 w-full hidden border sm:flex flex-col">
+      <app-chat-details></app-chat-details>
+    </div>
+  </div>
+</section>

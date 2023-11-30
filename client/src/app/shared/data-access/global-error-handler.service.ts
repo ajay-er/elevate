@@ -20,7 +20,8 @@ export class GlobalErrorHandler implements ErrorHandler {
         this.router.navigateByUrl('/auth/founder/login');
       }
       console.log('Error from the server', error);
-      errorMsg = error.error?.errors?.[0]?.message || error.statusText;
+      errorMsg =
+        error.error?.errors?.[0]?.message || 'oops something went wrong';
     } else {
       console.log('Error from the client', error);
       errorMsg = error.message;
