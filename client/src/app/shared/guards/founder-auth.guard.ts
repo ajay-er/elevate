@@ -17,6 +17,7 @@ export const founderAuthGuard: CanActivateFn = (route, state) => {
   if (jwtService.isFounder(token)) {
     if (jwtService.isTokenExpired(token)) {
       localStoreService.clear();
+      return false;
     }
     return true;
   }

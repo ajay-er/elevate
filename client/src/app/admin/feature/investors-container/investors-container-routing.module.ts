@@ -7,6 +7,13 @@ const routes: Routes = [
     path: '',
     component: InvestorsContainerComponent,
   },
+  {
+    path: ':id',
+    loadChildren: () =>
+      import('../edit-investor/edit-investor.module').then(
+        (m) => m.EditInvestorModule
+      ),
+  },
 ];
 
 @NgModule({

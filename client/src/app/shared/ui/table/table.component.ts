@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -6,10 +6,17 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent {
-  @Input() startup!: any;
+  @Input() columnArray: string[] = [];
+  @Input() gridArray: any[] = [];
 
-  ngViewAfterInit() {
-    console.log(this.startup,'table');
+  @Output() onEdit = new EventEmitter<any>();
+  @Output() onDelete = new EventEmitter<any>();
+
+  edit(item: any) {
+    this.onEdit.emit(item);
   }
 
+  toggleBlock(item: any) {
+    this.onDelete.emit(item);
+  }
 }

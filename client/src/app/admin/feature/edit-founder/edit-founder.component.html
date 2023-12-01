@@ -1,0 +1,46 @@
+<div class="p-10 pt-24 sm:p-24 sm:ml-64 min-h-screen">
+  <form>
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">First Name</label>
+        <input
+          placeholder="john"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Last Name</label>
+        <input
+          placeholder="doe"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Email</label>
+        <input
+          placeholder="arun@gmail.com"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Phone</label>
+        <input
+          placeholder="9999999999"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <app-loading-button
+      [type]="'submit'"
+      [buttonClass]="'bg-black text-white p-2 mt-2'"
+    ></app-loading-button>
+  </form>
+</div>

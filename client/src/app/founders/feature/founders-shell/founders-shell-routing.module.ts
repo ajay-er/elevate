@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { founderAuthGuard } from 'src/app/shared/guards/founder-auth.guard';
 
 const routes: Routes = [
   {
@@ -8,6 +9,7 @@ const routes: Routes = [
       import('../profile-container/profile-container.module').then(
         (m) => m.ProfileContainerModule
       ),
+    canActivate: [founderAuthGuard],
   },
   {
     path: 'investors',

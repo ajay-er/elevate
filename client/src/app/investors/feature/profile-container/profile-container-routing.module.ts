@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileContainerComponent } from './profile-container.component';
-import { UpdateProfileComponent } from '../../ui/update-profile/update-profile.component';
-import { UpdateImageComponent } from '../../ui/update-image/update-image.component';
+import { UpdateProfileComponent } from '../../../shared/ui/update-profile/update-profile.component';
+import { UpdateImageComponent } from 'src/app/shared/ui/update-image/update-image.component';
 
 const routes: Routes = [
   {

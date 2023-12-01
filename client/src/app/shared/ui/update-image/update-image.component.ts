@@ -1,8 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   inject,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';

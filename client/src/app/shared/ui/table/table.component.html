@@ -36,23 +36,80 @@
       class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
       <tr>
-        <th scope="col" class="px-6 py-3">Name</th>
-        <th scope="col" class="px-6 py-3">Industry</th>
-        <th scope="col" class="px-6 py-3">Location</th>
+        <th>No</th>
+        <th *ngFor="let item of columnArray">{{ item }}</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr
         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-      >
-        <td class="px-6 py-4">good</td>
-        <td class="px-6 py-4">
-          <div class="flex items-center">
-            <div class="h-2.5 w-2.5 rounded-full mr-2"></div>
-            super
-          </div>
+      ></tr>
+      <tr *ngFor="let item of gridArray; let no = index">
+        <td class="py-4">{{ no + 1 }}</td>
+        <td class="py-4" *ngFor="let column of columnArray">
+          {{ item[column] }}
         </td>
-        <td class="px-6 py-4">fanta</td>
+        <td>
+          <button class="" (click)="edit(item)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z"
+              />
+              <path
+                d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z"
+              />
+            </svg>
+          </button>
+
+          <button
+            class="ml-4 rounded-full p-2"
+            (click)="toggleBlock(item)"
+            [ngClass]="{
+              'bg-green-100': !item.isBlocked,
+              'bg-red-100': item.isBlocked
+            }"
+          >
+            <svg
+              *ngIf="item.isBlocked; else unblockIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-red-500"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+
+            <ng-template #unblockIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-green-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                />
+              </svg>
+            </ng-template>
+            
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

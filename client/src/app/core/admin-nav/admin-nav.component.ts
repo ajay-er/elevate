@@ -23,6 +23,6 @@ export class AdminNavComponent {
   logOut() {
     this.localStoreService.clear();
     this.pageLayoutService.setLayout(IRole.FOUNDER);
-    this.router.navigateByUrl('/admin/login');
+    this.router.navigateByUrl('/auth/admin/login');
   }
 }

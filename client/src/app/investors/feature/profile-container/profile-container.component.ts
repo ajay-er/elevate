@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { InvestorsService } from '../../data-access/investors.service';
-import { SharedService } from '../../data-access/shared.service';
+import { SharedService } from '../../../shared/data-access/shared.service';
 import { Subscription } from 'rxjs';
 
 @Component({

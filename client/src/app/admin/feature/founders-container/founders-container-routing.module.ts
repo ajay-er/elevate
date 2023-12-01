@@ -7,6 +7,13 @@ const routes: Routes = [
     path: '',
     component: FoundersContainerComponent,
   },
+  {
+    path: ':id',
+    loadChildren: () =>
+      import('../edit-founder/edit-founder.module').then(
+        (m) => m.EditFounderModule
+      ),
+  },
 ];
 
 @NgModule({
