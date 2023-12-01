@@ -3,15 +3,10 @@ import mongoose, { Document } from 'mongoose';
 const payment = new mongoose.Schema({
     investorId: String,
     paymentType: String,
-    transactionId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Transaction',
-    },
-    amountPaid: Number,
     paymentDate: Date,
     paymentStatus: {
         type: String,
-        enum: ['pending', 'completed', 'failed'],
+        enum: ['PENDING', 'COMPLETED', 'FAILTED'],
     },
     razorpay: {
         order_id: String,
@@ -29,10 +24,9 @@ interface IRazorpayDetails {
 interface IPayment extends Document {
   investorId: string;
   paymentType: string;
-  transactionId: mongoose.Types.ObjectId;
   amountPaid: number;
   paymentDate: Date;
-  paymentStatus: 'pending' | 'completed' | 'failed';
+  paymentStatus: 'PENDING' | 'COMPLETED' | 'FAILTED';
   razorpay: IRazorpayDetails;
 }
 

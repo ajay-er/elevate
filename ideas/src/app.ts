@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import 'express-async-errors';
 import cors from 'cors';
-import { investorRoute } from './lib/routes/investor.router';
+import { ideasRoute } from './lib/routes/ideas.router';
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(morgan('dev'));
 
 app.use(currentUser);
 // routes
-app.use(investorRoute);
+app.use(ideasRoute);
 
 app.all('*', async (_req: Request, _res: Response) => {
     throw new NotFoundError();

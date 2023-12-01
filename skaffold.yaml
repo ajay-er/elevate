@@ -26,6 +26,14 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+    - image: ajay404/ideas
+      context: ideas
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: ajay404/investors
       context: investors
       sync:

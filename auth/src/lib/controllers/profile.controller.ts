@@ -33,7 +33,4 @@ router.post('/update-image', requireAuth, async (req: Request, res: Response) =>
     res.status(200).json({ message: 'profile image updated successfully', user });
 });
 
-// TODO:complete address
-router.post('/upsert-address', requireAuth, async (req: Request, res: Response) => {});
-
 export { router as profileRoute };

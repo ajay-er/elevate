@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import app from './app';
-import mongoConnect from './config/mongo';
 import { PingElasticSearch } from './config/elastic.search.config';
 
 const PORT = process.env.PORT || 3000;
@@ -11,8 +10,7 @@ const PORT = process.env.PORT || 3000;
     }
     try {
         console.clear();
-        await mongoConnect(process.env.MONGO_URI);
-
+        
         await PingElasticSearch();
 
         app.listen(PORT, () => {

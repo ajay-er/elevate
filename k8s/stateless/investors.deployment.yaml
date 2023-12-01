@@ -21,7 +21,7 @@ spec:
           - name: NODE_ENV
             value: 'dev'
           - name: MONGO_URI
-            value: 'mongodb://mongo-srv:27017/investor'
+            value: 'mongodb://mongo-srv:27017/investors'
           - name: JWT_SECRET
             valueFrom:
               secretKeyRef:

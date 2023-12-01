@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ideas-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ideas
+  template:
+    metadata:
+      labels:
+        app: ideas
+    spec:
+      containers:
+        - name: ideas
+          image: ajay404/ideas
+          env:
+          - name: PORT
+            value: '3000'
+          - name: NODE_ENV
+            value: 'dev'
+          - name: MONGO_URI
+            value: 'mongodb://mongo-srv:27017/ideas'
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: JWT_SECRET
+          - name: CLOUDINARY_CLOUD_NAME
+            valueFrom:
+              secretKeyRef:
+                name: cloudinary-secrets
+                key: CLOUDINARY_CLOUD_NAME
+          - name: CLOUDINARY_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: cloudinary-secrets
+                key: CLOUDINARY_API_KEY
+          - name: CLOUDINARY_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: cloudinary-secrets
+                key: CLOUDINARY_API_SECRET
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ideas-srv
+spec:
+  selector:
+    app: ideas
+  ports:
+    - name: ideas
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
