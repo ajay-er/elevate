@@ -24,6 +24,8 @@ spec:
               value: '1h'
             - name: MONGO_URI
               value: 'mongodb://mongo-srv:27017/auth'
+            - name: DEFAULT_IMG_URL
+              value: 'https://res.cloudinary.com/elevate-connect/image/upload/f_auto,q_auto/v1/elevate/xtt1vpogqccibkkc06oj'
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:

@@ -6,13 +6,13 @@ import { IRole } from '../../interfaces';
 // that a User Document has
 export interface UserDoc extends mongoose.Document {
   userName?: string;
-  firstName?: string;
+  firstName: string;
   lastName?: string;
   email: string;
   phone?: string;
   password: string;
   otp?: string | null;
-  profileImgUrl?: string;
+  profileImgUrl: string;
   isEmailVerified: boolean;
   isBlocked: boolean;
   role: IRole;
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
         phone: String,
         password: String,
         otp: String,
-        profileImgUrl: String,
+        profileImgUrl: { type: String, default: process.env.DEFAULT_IMG_URL },
         isEmailVerified: {
             type: Boolean,
             default: false,

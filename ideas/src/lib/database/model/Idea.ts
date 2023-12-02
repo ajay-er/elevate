@@ -20,7 +20,16 @@ const ideaSchema = new mongoose.Schema(
         dislikes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     },
-    { timestamps: true }
+    { 
+        toJSON: {
+            transform(doc, ret) {
+                ret.id = ret._id;
+                delete ret._id;
+                delete ret.__v;
+            },
+        },
+        timestamps: true 
+    }
 );
 
 const Idea = mongoose.model<IIdea>('Idea', ideaSchema);

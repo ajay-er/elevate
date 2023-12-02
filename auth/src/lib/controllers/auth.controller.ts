@@ -10,6 +10,8 @@ import { IRole } from '../interfaces';
 import { AuthService } from '../service/auth.service';
 import { container } from 'tsyringe';
 import { TokenService } from '../service/token.service';
+import { USER_CREATED_PUBLISHER } from '../../events/publisher/user.created.publisher';
+import { kafka_client } from '../../config/kafka.config';
 
 const router = express.Router();
 
@@ -191,6 +193,15 @@ router.post('/verify-otp', async (req: Request, res: Response) => {
     user.otp = null;
 
     await authService.saveUser(user);
+
+    await new USER_CREATED_PUBLISHER(kafka_client).publish({
+        userId: user.id,
+        firstName: user.firstName,
+        lastName:user?.lastName,
+        email: user.email,
+        profileImgUrl: user.profileImgUrl,
+        role: user.role,
+    });
 
     const accessToken = jwt.sign(
         {

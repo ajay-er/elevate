@@ -1,5 +1,10 @@
-
 export enum IRole {
-	FOUNDER = 'FOUNDER',
-	INVESTOR = 'INVESTOR'
+  FOUNDER = 'FOUNDER',
+  INVESTOR = 'INVESTOR',
 }
+
+export interface ICommentByUser {
+  text: string;
+  commentedUser: string;
+}
+
