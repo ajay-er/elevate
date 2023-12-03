@@ -25,7 +25,7 @@ export interface USER_CREATED {
 const userService = container.resolve(UserService);
 
 export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
-    groupId: string = TOPIC.USER_CREATED;
+    groupId: string = 'investors-service';
     topic: TOPIC.USER_CREATED = TOPIC.USER_CREATED;
 
     constructor(client: Kafka) {
@@ -34,8 +34,6 @@ export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
 
     async onMessage(data: USER_CREATED['data'], message: KafkaMessage): Promise<void> {
         try {
-            console.log(data,'from ivesto');
-            
             userService.createUser(data as IUser);
         } catch (error) {
             console.log(error);

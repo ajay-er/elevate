@@ -25,7 +25,7 @@ export interface USER_CREATED {
 const userService = container.resolve(UserService);
 
 export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
-    groupId: string = TOPIC.USER_CREATED;
+    groupId: string = 'founders-service';
     topic: TOPIC.USER_CREATED = TOPIC.USER_CREATED;
 
     constructor(client: Kafka) {

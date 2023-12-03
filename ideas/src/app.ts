@@ -2,14 +2,11 @@ import { NotFoundError, currentUser, errorHandler } from '@ajay404/elevate';
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import 'express-async-errors';
-import cors from 'cors';
 import { ideasRoute } from './lib/routes/ideas.router';
 
 const app = express();
 
 app.set('trust proxy', true);
-
-app.use(cors());
 
 app.use(express.json());
 

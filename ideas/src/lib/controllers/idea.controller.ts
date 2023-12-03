@@ -19,8 +19,8 @@ class ideaController {
 
         const user = await userService.findUserById(userId);
         if (!user) throw new BadRequestError('User not found');
-        await ideaService.createIdea({ user: user.id, ...req.body });
-        res.json({ status: 'OK', message: 'Idea created successfully' });
+        const idea = await ideaService.createIdea({ user: user.id, ...req.body });
+        res.json({ idea ,status: 'OK', message: 'Idea created successfully' });
     }
 
     async deleteIdea(req: Request, res: Response) {
@@ -30,7 +30,7 @@ class ideaController {
     }
 
     async getIdea(req: Request, res: Response) {
-        const { ideaId } = req.body;
+        const  ideaId  = req.params.ideaId;
         const idea = await ideaService.findIdea(ideaId);
         if (!idea) throw new BadRequestError('Idea not found');
         res.json({ idea, message: 'Idea found successfully' });
@@ -39,8 +39,10 @@ class ideaController {
     async addComment(req: Request, res: Response) {
         const { text, ideaId } = req.body;
         const userId = req.currentUser?.id;
-
         if (!userId) throw new UnAuthorizedError();
+
+        const isIdea = await ideaService.findIdea(ideaId);
+        if (!isIdea) throw new BadRequestError('Idea not found');
 
         const user = await userService.findUserById(userId);
 
@@ -50,9 +52,7 @@ class ideaController {
 
         if (!comment) throw new Error('oops something wrong!');
 
-        const idea = await ideaService.findIdeaAddComment(ideaId, comment.id);
-
-        if (!idea) throw new BadRequestError('idea not found');
+        await ideaService.addCommentToIdea(ideaId, comment.id);
 
         res.json({ message: 'comment added successfully' });
     }
@@ -73,15 +73,16 @@ class ideaController {
 
         const idea = await ideaService.findIdea(ideaId);
         if (!idea) throw new BadRequestError('idea not found');
-
+        const isUserDisliked = idea.dislikes?.includes(user.id);
         const isUserLiked = idea.likes?.includes(user.id);
 
         let tag;
         if (isUserLiked) {
-            await ideaService.removeLike(ideaId, likeUserId);
+            await ideaService.removeLike(ideaId, user.id);
             tag = 'removed';
         } else {
-            await ideaService.addLike(ideaId, likeUserId);
+            if (isUserDisliked)  await ideaService.removeDislike(ideaId,user.id);
+            await ideaService.addLike(ideaId, user.id);
             tag = 'added';
         }
         res.json({ status: 'OK', message: `like ${tag}` });
@@ -99,13 +100,15 @@ class ideaController {
         if (!idea) throw new BadRequestError('idea not found');
 
         const isUserDisliked = idea.dislikes?.includes(user.id);
+        const isUserLiked = idea.likes?.includes(user.id);
 
         let tag;
         if (isUserDisliked) {
-            await ideaService.removeDislike(ideaId, dislikedUserid);
+            await ideaService.removeDislike(ideaId, user.id);
             tag = 'removed';
         } else {
-            await ideaService.addDislike(ideaId, dislikedUserid);
+            if (isUserLiked) ideaService.removeLike(ideaId,user.id);
+            await ideaService.addDislike(ideaId, user.id);
             tag = 'added';
         }
         res.json({ status: 'OK', message: `dislike ${tag}` });

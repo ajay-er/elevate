@@ -27,7 +27,7 @@ export class IdeaService {
         return await this.ideaRepo.addComment(comment);
     }
 
-    public async findIdeaAddComment(id: string, commentId: string) {
+    public async addCommentToIdea(id: string, commentId: string) {
         return await this.ideaRepo.addCommentIdInIdea(id, commentId);
     }
 

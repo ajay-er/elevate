@@ -8,7 +8,7 @@ router.get('/api/v1/ideas/all',IdeaController.allIdeas);
 router.post('/api/v1/ideas/create',requireAuth,IdeaController.createIdea);
 router.delete('/api/v1/ideas/delete',requireAuth,IdeaController.deleteIdea);
 
-router.get('/api/v1/ideas/:id',IdeaController.getIdea);
+router.get('/api/v1/ideas/:ideaId',IdeaController.getIdea);
 
 router.post('/api/v1/ideas/comments/add',requireAuth, IdeaController.addComment);
 router.delete('/api/v1/ideas/comments/delete',requireAuth,IdeaController.deleteComment);

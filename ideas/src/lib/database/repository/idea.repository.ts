@@ -12,11 +12,11 @@ export class IdeaRepository {
     }
 
     async deleteIdea(id: string) {
-        return await Idea.findByIdAndDelete({ id });
+        return await Idea.findByIdAndDelete({ _id:id });
     }
 
     async findIdeaById(id: string) {
-        return await Idea.findById({ id }).populate('comments');
+        return await Idea.findById({ _id:id }).populate('comments');
     }
 
     async addComment(comment: ICommentByUser) {
@@ -25,35 +25,35 @@ export class IdeaRepository {
     }
 
     async deleteComment(id: string) {
-        return await Comment.findByIdAndDelete({ id });
+        return await Comment.findByIdAndDelete({ _id:id });
     }
 
     async updateIdeaById(id:string,updation: Partial<IIdea>) {
-        return await Idea.findByIdAndUpdate({ id }, updation);
+        return await Idea.findByIdAndUpdate({ _id:id }, updation);
     }
 
     async addCommentIdInIdea(id:string,commentId:string) {
-        return await Idea.findByIdAndUpdate({ id }, { $addToSet: { comments: commentId } });
+        return await Idea.findByIdAndUpdate({ _id:id }, { $addToSet: { comments: commentId } });
     }
 
     async removeCommentIdFromIdea(id:string,commentId:string) {
-        return await Idea.findByIdAndUpdate({ id }, { $pull: { comments: commentId } });
+        return await Idea.findByIdAndUpdate({ _id:id }, { $pull: { comments: commentId } });
     }
 
     async removeLike(id:string,likedUserid:string) {
-        return await Idea.updateOne({ id }, { $pull: { likes: likedUserid } });
+        return await Idea.updateOne({ _id:id }, { $pull: { likes: likedUserid } });
     }
 
     async addLike(id:string,likedUserid:string) {
-        return await Idea.updateOne({ id }, { $addToSet: { likes: likedUserid } });
+        return await Idea.updateOne({ _id:id }, { $addToSet: { likes: likedUserid } });
     }
 
     async removeDislike(id:string,dislikedUserid:string) {
-        return await Idea.updateOne({ id }, { $pull: { dislikes: dislikedUserid } });
+        return await Idea.updateOne({ _id:id }, { $pull: { dislikes: dislikedUserid } });
     }
 
     async addDislike(id:string,dislikedUserid:string) {
-        return await Idea.updateOne({ id }, { $addToSet: { dislikes: dislikedUserid } });
+        return await Idea.updateOne({ _id:id }, { $addToSet: { dislikes: dislikedUserid } });
     }
 
 }
