@@ -7,10 +7,19 @@ import { environment } from 'src/environments/environment';
 })
 export class FoundersService {
   private http = inject(HttpClient);
-  api = environment.apiUrl;
+  private api = environment.apiUrl;
 
-  search(input: any) {
-    return this.http.get(`${this.api}/search/startup?q=${input}`);
+  createSubscription(plan: string) {
+    return this.http.post(`${this.api}/founder/payment/razorpay-order`, {
+      plan,
+    });
   }
+
+  updateSubscription(data:any) {
+    return this.http.post(`${this.api}/founder/payment/razorpay-verification`, {
+      data,
+    });
+  }
+
   
 }

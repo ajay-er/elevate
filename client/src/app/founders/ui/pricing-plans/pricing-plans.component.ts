@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { PlanType } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-pricing-plans',
@@ -7,5 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PricingPlansComponent {
-
+  @Output() sub = new EventEmitter<PlanType>;
+  Plan = PlanType;
+  subscribe(plan:PlanType) {
+    this.sub.emit(plan);
+  }
 }

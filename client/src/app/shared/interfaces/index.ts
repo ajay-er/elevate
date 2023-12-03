@@ -101,3 +101,9 @@ export interface IJwtPayload {
   iat?: string;
   exp?: string;
 }
+
+export enum PlanType {
+  BASIC = 'BASIC',
+  PRO = 'PRO',
+  PREMIUM = 'PREMIUM',
+}
