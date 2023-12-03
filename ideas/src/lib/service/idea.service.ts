@@ -14,7 +14,7 @@ export class IdeaService {
     public async createIdea(data: IIdea) {
         return await this.ideaRepo.create(data);
     }
-
+    
     public async deleteIdea(id: string) {
         return await this.ideaRepo.deleteIdea(id);
     }
@@ -31,6 +31,7 @@ export class IdeaService {
         return await this.ideaRepo.addCommentIdInIdea(id, commentId);
     }
 
+    // TODO:delete have some bugs
     public async deleteComment(ideaId: string,commentId: string) {
         await this.ideaRepo.deleteComment(commentId);
         return this.ideaRepo.removeCommentIdFromIdea(ideaId, commentId);

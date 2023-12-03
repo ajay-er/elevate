@@ -25,6 +25,15 @@ class ideaController {
 
     async deleteIdea(req: Request, res: Response) {
         const { ideaId } = req.body;
+        const userId = req.currentUser?.id;
+        if (!userId) throw new UnAuthorizedError();
+        const user = await userService.findUserById(userId);
+        if (!user) throw new BadRequestError('user not found');
+        const idea = await ideaService.findIdea(ideaId);
+        if (!idea) throw new BadRequestError('Ideaid is not valid');
+        if (idea.user !== user.id) { 
+            throw new BadRequestError('You are not suppose to delete this post!');
+        }
         await ideaService.deleteIdea(ideaId);
         res.json({ status: 'OK', message: 'Idea deleted successfully' });
     }
