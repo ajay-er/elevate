@@ -57,6 +57,16 @@ spec:
               secretKeyRef:
                 name: cloudinary-secrets
                 key: CLOUDINARY_API_SECRET
+          - name: RAZORPAY_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: razorypay-secrets
+                key: RAZORPAY_KEY_ID
+          - name: RAZORPAY_KEY_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: razorypay-secrets
+                key: RAZORPAY_KEY_SECRET
 ---
 apiVersion: v1
 kind: Service

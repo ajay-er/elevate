@@ -1,8 +1,8 @@
 import { KafkaConsumer, TOPIC } from '@ajay404/elevate';
 import { Kafka, KafkaMessage } from 'kafkajs';
 import { container } from 'tsyringe';
+import { IUser } from '../../lib/database/mongo/model/User';
 import { UserService } from '../../lib/service/user.service';
-import { IUser } from '../../lib/database/model/User';
 
 
 enum IRole {
@@ -32,10 +32,8 @@ export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
         super(client);
     }
 
-    async onMessage(data: USER_CREATED['data'], message: KafkaMessage): Promise<void> {
+    async onMessage(data: USER_CREATED['data'], _message: KafkaMessage): Promise<void> {
         try {
-            console.log(data,'from ivesto');
-            
             userService.createUser(data as IUser);
         } catch (error) {
             console.log(error);

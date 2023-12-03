@@ -1,5 +1,6 @@
+import { IRole } from '@ajay404/elevate';
 import mongoose ,{ Document } from 'mongoose';
-import { IRole } from '../../interfaces';
+
 export interface IUser extends Document {
   userId: string;
   firstName: string;
