@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chat-details',
@@ -7,5 +7,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatDetailsComponent {
-
+  @Output() send = new EventEmitter<string>();
+  msg:string = '';
+  sendMessage() { 
+    this.send.emit(this.msg);
+  }
 }

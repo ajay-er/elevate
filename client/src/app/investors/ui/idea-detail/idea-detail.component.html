@@ -1,35 +1,31 @@
-<div class="p-4 flex sm:w-2/3  border border-black shadow-lg">
+<div class="p-4 mb-6 flex sm:w-2/3  border border-black shadow-lg">
   <div class="bg-white">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <img
           class="mr-2 h-10 w-10 rounded-full object-cover"
-          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          [src]="idea.user.profileImgUrl"
           alt="profile"
         />
         <div class="mt-2">
-          <p class="font-semibold text-sm text-gray-900">Alex Stanton</p>
+          <p class="font-semibold text-sm text-gray-900">{{idea.user.firstName}}</p>
         </div>
       </div>
     </div>
-    <div
+    <div (click)="openIdea(idea.id)"
       class="my-6 text-sm cursor-pointer font-normal text-gray-500"
     >
-      Hi, I'm Jessica Jane. I am a doctoral student at Harvard University
-      majoring in Web good Lorem ipsum dolor sit, amet consectetur adipisicing
-      elit. Tempore modi nemo quaerat nobis repellat possimus, nisi pariatur
-      illo omnis odio quo minima voluptatem obcaecati cum sit iste nesciunt
-      cumque. Dolorem.
+     {{idea.caption}}
     </div>
     <div class="flex items-center gap-2 text-sm font-semibold text-gray-900">
       <div class="border p-2 gap-1 rounded-xl border-black flex">
-        <svg
+        <svg (click)="addLike(idea.id)"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6 hover:text-blue-500"
+          class="w-6 h-6 hover:text-blue-500 cursor-pointer"
         >
           <path
             stroke-linecap="round"
@@ -38,14 +34,14 @@
           />
         </svg>
 
-        <span>40</span>
-        <svg
+        <span>{{idea.likes?.length}}</span>
+        <svg (click)="addDislike(idea.id)"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6 hover:text-red-500"
+          class="w-6 h-6 hover:text-red-500 cursor-pointer"
         >
           <path
             stroke-linecap="round"
@@ -61,7 +57,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6 hover:text-violet-600"
+          class="w-6 h-6 hover:text-violet-600 cursor-pointer"
         >
           <path
             stroke-linecap="round"
@@ -70,7 +66,7 @@
           />
         </svg>
 
-        <span>40</span>
+        <span>{{idea.comments?.length}}</span>
       </div>
     </div>
   </div>

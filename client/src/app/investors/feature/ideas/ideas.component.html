@@ -1,6 +1,56 @@
 <section>
   <p class="md:text-4xl text-xl">Ideas</p>
-  <app-create-idea></app-create-idea>
-  <app-idea-detail></app-idea-detail>
+  <app-create-idea (createIdea)="idea($event)"></app-create-idea>
+  <ng-container *ngFor="let idea of ideas">
+  <app-idea-detail (like)="like($event)" (dislike)="dislike($event)" (openModal)="ideaSelected($event)" [idea]="idea"></app-idea-detail>
+  </ng-container>
 </section>
-<app-modal></app-modal>
+<app-modal [modalOpen]="selectedIdea !== null" (close)="closeModal()">
+    <div class="bg-white one" >
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <img
+            class="mr-2 h-10 w-10 rounded-full object-cover"
+            [src]="selectedIdea?.user?.profileImgUrl"
+            alt="profile"
+          />
+          <div class="mt-2">
+            <p class="font-semibold text-sm text-gray-900">{{selectedIdea?.user?.firstName}}</p>
+          </div>
+        </div>
+      </div>
+      <div 
+        class="my-6 text-sm font-normal text-gray-500"
+      >
+       {{selectedIdea?.caption}}
+      </div>
+    </div>
+    <div class="bg-white two">
+      <div class="my-2 w-full text-sm font-normal text-gray-500">
+        <input
+           [(ngModel)]="comment"
+          class="text-grey-darker border border-black w-full"
+          placeholder="add comment.."
+        >
+        <app-loading-button (click)="addComment(selectedIdea?.id)" [buttonClass]="'bg-black text-white p-2 mt-1'" [label]="'ADD'"></app-loading-button>
+      </div>
+      <p>comments</p>
+      <div class="flex items-center justify-between" *ngFor="let comments of selectedIdea?.comments">
+        <div class="flex items-center">
+          <img
+            class="mr-2 h-6 w-6 rounded-full object-cover"
+            [src]="comments?.user?.profileImgUrl"
+            alt="profile"
+          />
+          <div class="mt-2">
+            <p class="font-semibold text-sm text-gray-900">{{comments?.user?.firstName}}</p>
+          </div>
+        </div>
+        <div 
+        class="my-6 text-sm font-normal text-gray-500"
+      >
+       {{comments?.text}}
+      </div>
+      </div>
+    </div>
+</app-modal>

@@ -4,11 +4,11 @@ import { IIdea, Idea } from '../model/Idea';
 
 export class IdeaRepository {
     async allIdeas(): Promise<IIdea[]> {
-        return await Idea.find({}).sort({ createdAt: -1 });
+        return await Idea.find({}).populate('user').sort({ createdAt: -1 });
     }
 
     async create(data: IIdea): Promise<IIdea> {
-        return await Idea.create(data);
+        return (await Idea.create(data)).populate('user');
     }
 
     async deleteIdea(id: string) {
@@ -16,7 +16,10 @@ export class IdeaRepository {
     }
 
     async findIdeaById(id: string) {
-        return await Idea.findById({ _id:id }).populate('comments');
+        return await Idea.findById({ _id:id }).populate({
+            path: 'comments',
+            populate: { path: 'user' } 
+        });
     }
 
     async addComment(comment: ICommentByUser) {

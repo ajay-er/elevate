@@ -107,3 +107,29 @@ export enum PlanType {
   PRO = 'PRO',
   PREMIUM = 'PREMIUM',
 }
+
+export interface IUser {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  profileImgUrl: string;
+  email: string;
+  role: IRole;
+}
+
+export interface IIdeaComment {
+  user: IUser;
+  text: string;
+}
+
+export interface IIdea {
+  id:string,
+  user: IUser;
+  caption: string;
+  image?: string;
+  likes?: string[]; 
+  dislikes?: string[];
+  comments?: IIdeaComment[];
+  createdAt: Date;
+  updatedAt: Date;
+} 

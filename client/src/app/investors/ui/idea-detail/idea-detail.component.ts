@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IIdea } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-idea-detail',
@@ -7,5 +8,20 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IdeaDetailComponent {
-  
+  @Input() idea!:IIdea;
+  @Output() openModal = new EventEmitter<any>;
+  @Output() like = new EventEmitter<any>;
+  @Output() dislike = new EventEmitter<any>;
+
+  openIdea(id:string) {
+    this.openModal.emit(id);
+  }
+
+  addLike(ideaId:string) {
+    this.like.emit(ideaId);
+  }
+
+  addDislike(ideaId:string) {
+    this.dislike.emit(ideaId);
+  }
 }

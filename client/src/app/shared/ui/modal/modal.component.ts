@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -7,9 +7,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
-  modalOpen: boolean = false;
-
+  @Input() modalOpen: boolean = false;
+  @Output() close = new EventEmitter<any>();
+  
   toogleModal() {
     this.modalOpen = !this.modalOpen;
+    if (!this.modalOpen) this.close.emit();
   }
 }

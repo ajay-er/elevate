@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import app from './app';
+import httpServer from './app';
 import mongoConnect from './config/mongo';
 import { PingElasticSearch } from './config/elastic.search.config';
 import { USER_CREATED_EVENT_CONSUMER } from './events/consumers/user.created.consumer';
@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 
         await PingElasticSearch();
 
-        app.listen(PORT, () => {
+        httpServer.listen(PORT, () => {
             console.log(`Server-Startups is Listening on port ${PORT}`);
         });
     } catch (error) {

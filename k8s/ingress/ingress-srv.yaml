@@ -3,20 +3,25 @@ kind: Ingress
 metadata:
   name: ingress-service
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
+  tls:
+    - hosts:
+      - ajay404.online
+      secretName: letsencrypt-prod
   rules:
-    - host: elevate.test
+    - host: ajay404.online
       http:
         paths:
-          # - path: /?(.*)
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: client-srv
-          #       port:
-          #         number: 80
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 80
           - path: /api/v1/auth/?(.*)
             pathType: Prefix
             backend:

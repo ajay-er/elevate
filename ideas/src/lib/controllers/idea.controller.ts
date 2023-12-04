@@ -10,7 +10,7 @@ const userService = container.resolve(UserService);
 class ideaController {
     async allIdeas(req: Request, res: Response) {
         const ideas = await ideaService.allIdeas();
-        res.status(200).send(ideas);
+        res.status(200).json({ideas});
     }
 
     async createIdea(req: Request, res: Response) {
