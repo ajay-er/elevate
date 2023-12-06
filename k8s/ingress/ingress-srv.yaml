@@ -5,7 +5,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
 spec:
   rules:
     - host: elevate.test
@@ -60,7 +59,7 @@ spec:
                 name: ideas-srv
                 port:
                   number: 3000
-          - path: /?(.*)
+          - path: /api/v1/chat/?(.*)
             pathType: Prefix
             backend:
               service:

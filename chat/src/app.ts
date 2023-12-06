@@ -16,25 +16,20 @@ app.use(morgan('dev'));
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
+    path:'/api/v1/chat/socket.io',
     cors: {
         origin: 'http://elevate.test',
-        methods: ['GET', 'POST'],
-        credentials: true,
+        methods:['GET','POST'],
     },
 });
 
-const test = io.of('/api');
+// const test = io.of('/api/v1/chat');
 
-test.use((socket, next) => {
-    socket.handshake.headers.origin = 'http://elevate.test';
-    next();
-});
-
-test.on('connection', (socket) => {
+io.on('connection', (socket) => {
     console.log('user connected');
     socket.on('message', (message) => {
         console.log(`Received message from user: ${message.message}`);
-        test.emit('message', { message: message.message });
+        io.emit('message', { message: message.message });
     });
 
     socket.on('disconnect', () => {
