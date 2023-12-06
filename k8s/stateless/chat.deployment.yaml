@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat
+  template:
+    metadata:
+      labels:
+        app: chat
+    spec:
+      containers:
+        - name: chat
+          image: ajay404/chat
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-srv
+spec:
+  selector:
+    app: chat
+  ports:
+    - name: chat
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

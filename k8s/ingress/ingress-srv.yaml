@@ -3,25 +3,21 @@ kind: Ingress
 metadata:
   name: ingress-service
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
 spec:
-  tls:
-    - hosts:
-      - ajay404.online
-      secretName: letsencrypt-prod
   rules:
-    - host: ajay404.online
+    - host: elevate.test
       http:
         paths:
-          - path: /?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: client-srv
-                port:
-                  number: 80
+          # - path: /?(.*)
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: client-srv
+          #       port:
+          #         number: 80
           - path: /api/v1/auth/?(.*)
             pathType: Prefix
             backend:
@@ -62,6 +58,13 @@ spec:
             backend:
               service:
                 name: ideas-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: chat-srv
                 port:
                   number: 3000
           

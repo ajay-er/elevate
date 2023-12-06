@@ -58,6 +58,14 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+    - image: ajay404/chat
+      context: chat
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
   local:
     push: true
 manifests:
