@@ -5,7 +5,7 @@ export interface ISignup {
   lastName: string;
   email: string;
   password: string;
-  role:string;
+  role: string;
 }
 
 export interface ILogin {
@@ -123,13 +123,19 @@ export interface IIdeaComment {
 }
 
 export interface IIdea {
-  id:string,
+  id: string;
   user: IUser;
   caption: string;
   image?: string;
-  likes?: string[]; 
+  likes?: string[];
   dislikes?: string[];
   comments?: IIdeaComment[];
   createdAt: Date;
   updatedAt: Date;
-} 
+}
+
+export interface IMessage {
+  sender: string;
+  recipient: string;
+  text: string;
+}

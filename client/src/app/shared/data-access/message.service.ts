@@ -1,36 +1,47 @@
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { io } from 'socket.io-client';
-import { environment } from 'src/environments/environment';
-import { LocalStorageService } from './local-storage.service';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Socket, io } from 'socket.io-client';
+import { IMessage } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
-  private apiUrl = environment.apiUrl;
-  private localstorageService = inject(LocalStorageService);
-  private token = '';
+  private socket:Socket;
+
   constructor() {
-    this.localstorageService.get('access_token');
-  }
-  
-  socket = io(`${this.apiUrl}/founder/chat`, {
-    withCredentials: true,
-    extraHeaders: {
-      'Authorization': `Bearer ${this.token}`
-    }
-  });
-
-  public sendMessage(message: any) {
-    this.socket.emit('message', message);
-  }
-
-  public getNewMessage = () => {
-    this.socket.on('message', (msg: any) => {
-      this.message$.next(msg);
+    this.socket = io('http://elevate.test', {
+      transports:['websocket'],
+      path:'/api/v1/chat/socket.io',
+      withCredentials:true,
     });
-    return this.message$.asObservable();
-  };
+  }
+
+  joinRoom(sender: string, recipient: string): void {
+    this.socket.emit('join', { sender, recipient });
+  }
+
+  // Send a message
+  sendMessage(data: IMessage): void {
+    this.socket.emit('message', data);
+  }
+
+  // Receive messages
+  receiveMessages(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('message', (message: any) => {
+        observer.next(message);
+      });
+    });
+  }
+
+  // Handle disconnect
+  handleDisconnect(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('disconnect', () => {
+        observer.next();
+      });
+    });
+  }
 }

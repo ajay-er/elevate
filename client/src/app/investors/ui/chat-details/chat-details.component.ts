@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IMessage } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-chat-details',
@@ -7,9 +8,16 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatDetailsComponent {
-  @Output() send = new EventEmitter<string>();
-  msg:string = '';
+  @Output() send = new EventEmitter<IMessage>();
+  @Input() msgs:any = [];
+  protected  msg:string = '';
   sendMessage() { 
-    this.send.emit(this.msg);
+    this.send.emit({sender:'user1',recipient:'user2',text:this.msg});
   }
+
+  ngAfterViewInit() {
+    console.log(this.msgs);
+    
+  }
+
 }

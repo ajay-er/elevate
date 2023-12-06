@@ -7,7 +7,7 @@
     </div>
     <!-- Right -->
     <div class="sm:w-2/3 w-full hidden border sm:flex flex-col">
-      <app-chat-details (send)="sendMessage($event)"></app-chat-details>
+      <app-chat-details [msgs]="messageList" (send)="sendMessage($event)"></app-chat-details>
     </div>
   </div>
 </section>

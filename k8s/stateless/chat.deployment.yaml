@@ -15,6 +15,9 @@ spec:
       containers:
         - name: chat
           image: ajay404/chat
+          env:
+          - name: MONGO_URI
+            value: 'mongodb://mongo-srv:27017/chat'
 ---
 apiVersion: v1
 kind: Service

@@ -8,7 +8,7 @@ import { paymentRoute } from './lib/routes/payment.router';
 
 const app = express();
 
-// app.set('trust proxy', true);
+app.set('trust proxy', true);
 
 app.use(cors());
 
