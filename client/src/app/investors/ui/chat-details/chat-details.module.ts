@@ -6,6 +6,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [ChatDetailsComponent],
   imports: [CommonModule,FormsModule],
-  exports:[ChatDetailsComponent]
+  exports:[ChatDetailsComponent],
 })
 export class ChatDetailsModule {}

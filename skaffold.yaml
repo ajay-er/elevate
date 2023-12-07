@@ -9,7 +9,7 @@ build:
     #       - src: src/**/*.ts
     #         dest: .
     #   docker:
-    #     dockerfile: Dockerfile
+    #     dockerfile: Dockerfile.dev
     - image: ajay404/auth
       context: auth
       sync:

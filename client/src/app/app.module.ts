@@ -95,8 +95,7 @@ import { InvestorNavModule } from './core/investor-nav/investor-nav.module';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    },
-  ],
+    },  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

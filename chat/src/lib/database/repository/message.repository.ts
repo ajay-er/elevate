@@ -12,7 +12,7 @@ export class MessageRepository {
     async getAllMessages(userId: string) {
         return await Message.find({ users: userId }).populate('users');
     }
-
+ 
     async getChatList(userId: string) {
         return await Message.find({ users: userId }).populate(
             'users',
@@ -21,7 +21,7 @@ export class MessageRepository {
     }
 
     async chatDetails(participant: string, userId: string) {
-        return await Message.find({ users: { $in: [participant, userId] } })
+        return await Message.find({ users: { $all: [participant, userId] } })
             .sort({ createdAt: 1 })
             .populate('sender', 'firstName');
     }

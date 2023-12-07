@@ -19,7 +19,7 @@ export class IdeaRepository {
         return await Idea.findById({ _id:id }).populate({
             path: 'comments',
             populate: { path: 'user' } 
-        });
+        }).populate('user');
     }
 
     async addComment(comment: ICommentByUser) {

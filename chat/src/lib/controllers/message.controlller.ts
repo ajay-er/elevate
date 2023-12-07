@@ -52,7 +52,7 @@ export class MesssageController {
         if (!currentUser) throw new BadRequestError('User not found');
 
         const participant = await userService.findUser(participantId);
-        const messages = await messageService.getChatHistory(participantId, userId);
+        const messages = await messageService.getChatHistory(participantId, currentUser.id);
         res.json({ history: { messages, participant } });
     }
 }

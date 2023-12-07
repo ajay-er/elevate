@@ -18,5 +18,4 @@ export class UserRepository {
     public async findAllInvestors() {
         return await User.find({role:IRole.INVESTOR}).select('firstName profileImgUrl id role');
     }
-
 }
