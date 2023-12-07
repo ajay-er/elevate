@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ChatService } from 'src/app/shared/data-access/message.service';
-import { IMessage } from 'src/app/shared/interfaces';
+import { InvestorsService } from '../../data-access/investors.service';
+import { ChatDetailsService } from '../../data-access/shared.service';
 
 @Component({
   selector: 'app-messages',
@@ -8,23 +9,22 @@ import { IMessage } from 'src/app/shared/interfaces';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {
-  protected messageList: string[] = [];
   private chatService = inject(ChatService);
+  private chatDetailsService = inject(ChatDetailsService);
+  private investorService = inject(InvestorsService);
+  protected users = [];
+  private currentUserId = '';
 
   ngOnInit() {
-    // this.chatService.joinRoom('user1','user2');
-
-    this.chatService.receiveMessages().subscribe((message: string) => {
-      console.log(message);
-      this.messageList.push(message);
+    this.investorService.getAllChatList().subscribe((res:any) => {
+      console.log(res);
+      this.users = res.chat;
+      this.currentUserId = res.currentUserId;
+      this.chatDetailsService.setCurrentUser(this.currentUserId);
     });
 
     this.chatService.handleDisconnect().subscribe(() => {
       console.log('Disconnected from the server');
     });
-  }
-
-  sendMessage(msg:IMessage) {
-    this.chatService.sendMessage(msg);
   }
 }

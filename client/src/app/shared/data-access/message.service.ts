@@ -16,6 +16,10 @@ export class ChatService {
       path:'/api/v1/chat/socket.io',
       withCredentials:true,
     });
+
+    this.socket.on('message', (message: any) => {
+      console.log(message,'yes');
+    });
   }
 
   joinRoom(sender: string, recipient: string): void {
@@ -25,15 +29,6 @@ export class ChatService {
   // Send a message
   sendMessage(data: IMessage): void {
     this.socket.emit('message', data);
-  }
-
-  // Receive messages
-  receiveMessages(): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on('message', (message: any) => {
-        observer.next(message);
-      });
-    });
   }
 
   // Handle disconnect

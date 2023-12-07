@@ -10,7 +10,16 @@ export class UserService {
         return await this.userRepo.findUser(userId);
     }
 
+    public async findUser(userId:string):Promise<IUser | null> {
+        return await this.userRepo.findUserbyId(userId);
+    }
+
     public async createUser(userData:IUser) {
         return await this.userRepo.createUser(userData);
     }
+
+    public async findInvestors() {
+        return await this.userRepo.findAllInvestors();
+    }
+
 }

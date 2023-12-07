@@ -14,6 +14,14 @@ export class InvestorsService {
   }
 
   updateProfileImage(imageData: FormData) {
-    return this.http.post(`${this.apiUrl}/`, imageData);
+    return this.http.post(`${this.apiUrl}`, imageData);
+  }
+
+  getAllChatList() {
+    return this.http.get(`${this.apiUrl}/chat/chatList`);
+  }
+
+  getChatHistory(participantId:string) {
+    return this.http.get(`${this.apiUrl}/chat/history/${participantId}`);
   }
 }

@@ -6,11 +6,11 @@
     <div>
       <img
         class="w-10 h-10 rounded-full"
-        src="https://darrenjameseeley.files.wordpress.com/2014/09/expendables3.jpeg"
+        [src]="participant?.profileImgUrl"
       />
     </div>
     <div class="ml-4 mt-2">
-      <p class="text-grey-darkest">New Movie! Expendables 4</p>
+      <p class="text-grey-darkest">{{participant?.firstName}}</p>
     </div>
   </div>
 </div>
@@ -24,30 +24,25 @@
       </div>
     </div>
 
-    <div class="flex mb-2">
-      <div class="rounded py-2 px-3" style="background-color: #f2f2f2">
-        <p class="text-sm text-teal">Sylverter Stallone</p>
-        <p class="text-sm mt-1">
-          Hi everyone! Glad you could join! I am making a new movie.
-        </p>
-        <p class="text-right text-xs text-grey-dark mt-1">12:45 pm</p>
+    <ng-container *ngFor="let msg of msgs">
+      
+      <div class="flex mb-2" *ngIf="!isSendByUser(msg)">
+        <div class="rounded py-2 px-3" style="background-color: #f2f2f2">
+          <p class="text-sm text-purple">{{msg.sender.firstName}}</p>
+          <p class="text-sm mt-1">{{msg.text}}</p>
+          <p class="text-right text-xs text-grey-dark mt-1">12:45 pm</p>
+        </div>
       </div>
-    </div>
+  
+      <div class="flex justify-end mb-2" *ngIf="isSendByUser(msg)">
+        <div class="rounded py-2 px-3" style="background-color: #e2f7cb">
+          <p class="text-sm mt-1">{{msg.text}}</p>
+          <p class="text-right text-xs text-grey-dark mt-1">12:45 pm</p>
+        </div>
+      </div>
 
-    <div class="flex mb-2">
-      <div class="rounded py-2 px-3" style="background-color: #f2f2f2">
-        <p class="text-sm text-purple">Tom Cruise</p>
-        <p class="text-sm mt-1">Hi all! I have one question for the movie</p>
-        <p class="text-right text-xs text-grey-dark mt-1">12:45 pm</p>
-      </div>
-    </div>
+    </ng-container>
 
-    <div class="flex justify-end mb-2">
-      <div class="rounded py-2 px-3" style="background-color: #e2f7cb">
-        <p class="text-sm mt-1">Count me in</p>
-        <p class="text-right text-xs text-grey-dark mt-1">12:45 pm</p>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -68,10 +63,15 @@
     </svg>
   </div>
   <div class="flex-1 mx-4">
-    <input [(ngModel)]="msg" class="w-full border rounded px-2 py-2" type="text" />
+    <input
+      [(ngModel)]="message"
+      class="w-full border rounded px-2 py-2"
+      type="text"
+    />
   </div>
-  <div >
-    <svg (click)="sendMessage()"
+  <div>
+    <svg
+      (click)="sendMessage()"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

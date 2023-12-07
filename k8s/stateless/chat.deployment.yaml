@@ -18,6 +18,11 @@ spec:
           env:
           - name: MONGO_URI
             value: 'mongodb://mongo-srv:27017/chat'
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: JWT_SECRET
 ---
 apiVersion: v1
 kind: Service
