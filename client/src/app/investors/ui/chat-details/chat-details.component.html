@@ -16,13 +16,13 @@
 </div>
  
 <!-- Messages -->
-<div class="flex-1 overflow-auto h-[24rem] bg-[#dad3cc]">
+<div class="flex-1 overflow-auto h-[24rem]  bg-[#dad3cc]" #scrollMe>
   <div class="py-2 px-3">
-    <div class="flex justify-center mb-2">
+    <!-- <div class="flex justify-center mb-2">
       <div class="rounded py-2 px-4" style="background-color: #ddecf2">
         <p class="text-sm uppercase">February 20, 2023</p>
       </div>
-    </div>
+    </div> -->
 
     <ng-container *ngFor="let msg of msgs">
       <div class="flex mb-2" [ngClass]="{'justify-end': isSendByUser(msg)}">
@@ -30,7 +30,7 @@
           class="rounded py-2 px-3"
           [style.background-color]="isSendByUser(msg) ? '#e2f7cb' : '#f2f2f2'"
         >
-          <p *ngIf="!isSendByUser(msg)" class="text-sm text-purple">{{msg.sender.firstName}}</p>
+          <p *ngIf="!isSendByUser(msg)" class="text-sm text-purple">{{participant?.firstName}}</p>
           <p class="text-sm mt-1">{{msg.text}}</p>
           <p class="text-right text-xs text-grey-dark mt-1">{{msg.createdAt | date :'h:mm a'}}</p>
         </div>

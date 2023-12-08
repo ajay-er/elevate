@@ -1,24 +1,26 @@
 <!-- Contacts -->
 <div class="bg-grey-lighter flex-1 overflow-auto h-[28rem]">
   <ng-container *ngIf="users.length">
+    <ng-container *ngFor="let user of users" >
     <div
-      *ngFor="let user of users"
-      class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
+    [routerLink]="['/investor/messages', user.id]"
+    routerLinkActive="bg-stone-300"
+      class="bg-white   px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
     >
       <div>
         <img class="h-12 w-12 rounded-full" [src]="user?.profileImgUrl" />
       </div>
       <div
-        class="ml-4 flex-1 border-b border-grey-lighter py-4 cursor-pointer"
-        [routerLink]="['/investor/messages', user.id]"
-        routerLinkActive="bg-grey-300"
+        class="ml-4 flex-1 border-b border-grey-lighter py-4 cursor-pointer "
+        routerLinkActive="border-none"
       >
-        <div class="flex items-bottom justify-between">
+        <!-- <div class="flex items-bottom justify-between">
           <p class="text-grey-darkest">{{ user?.firstName }}</p>
           <p class="text-xs text-grey-darkest">12:45 pm</p>
-        </div>
-        <p class="text-grey-dark mt-1 text-sm">Show me the money!</p>
+        </div> -->
+        <p class="text-grey-dark mt-1 text-sm">{{user?.firstName}}</p>
       </div>
     </div>
   </ng-container>
+</ng-container>
 </div>

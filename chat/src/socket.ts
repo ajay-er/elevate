@@ -20,31 +20,53 @@ export const  setupSocketIO = async (server: http.Server) => {
     });
 };
 
-const onSocketConnection = (io: Server, socket: Socket) => {
-    console.log('User connected');
+let users: any[] = [];
 
-    socket.on('message', async (data) => {
-        const { sender, recipient, text } = data;
-        const message = await messageService.addMessage(sender, recipient, text);
-        io.to(sender).to(recipient).emit('message', message);
+const addUser = (userId: any, socketId: any) => {
+    // eslint-disable-next-line no-unused-expressions
+    !users.some((user) => user.userId === userId) && users.push({ userId, socketId });
+};
+
+const removeUser = (socketId: any) => {
+    users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (userId: any) => {
+    return users.find((user) => user.userId === userId);
+};
+
+const onSocketConnection = (io: Server, socket: Socket) => {
+    console.log('User connected');    
+
+    socket.on('addUser', (userId:any) => {
+        console.log(userId,'user added');
+        addUser(userId, socket.id);
+        io.emit('getUsers', users);
     });
 
-    socket.on('join', ({ sender, recipient }) => {
-        const room = `${sender}-${recipient}`;
-        socket.join(room);
-        console.log(`Users ${sender} and ${recipient} joined the room ${room}`);
+    socket.on('message', async (data:any) => {
+        try {
+            const { sender, recipient, text } = data;
+            const message = await messageService.addMessage(sender, recipient, text);
+            const user1 = getUser(sender);
+            const user2 = getUser(recipient);
+
+            if (user1?.socketId) {
+                io.to(user1.socketId).emit('receiveMessage', message);
+            }
+
+            if (user2?.socketId) {
+                io.to(user2.socketId).emit('receiveMessage', message);
+            }
+        } catch (error) {
+            console.error('Error processing message:', error);
+        }
     });
 
     socket.on('disconnect', () => {
-        handleSocketDisconnect(io, socket);
+        console.log('User disconnected');
+        removeUser(socket.id);
+        io.emit('getUsers', users);
     });
 };
 
-const handleSocketDisconnect = (io: Server, socket: Socket) => {
-    console.log('User disconnected');
-    const rooms = Object.keys(socket.rooms);
-    rooms.forEach((room) => {
-        socket.leave(room);
-        console.log(`User left room ${room}`);
-    });
-};

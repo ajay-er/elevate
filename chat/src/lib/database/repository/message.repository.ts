@@ -2,17 +2,19 @@ import { Message } from '../model/Message';
 
 export class MessageRepository {
     async addMessage(sender: string, recipient: string, text: string) {
-        return await Message.create({
-            text,
-            users: [sender, recipient],
-            sender,
-        });
+        return await Message.create(
+            {
+                text,
+                users: [sender, recipient],
+                sender,
+            }
+        );
     }
 
     async getAllMessages(userId: string) {
         return await Message.find({ users: userId }).populate('users');
     }
- 
+
     async getChatList(userId: string) {
         return await Message.find({ users: userId }).populate(
             'users',
