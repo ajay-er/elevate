@@ -18,4 +18,8 @@ export class UserRepository {
     public async findAllInvestors() {
         return await User.find({role:IRole.INVESTOR}).select('firstName profileImgUrl id role');
     }
+
+    public async update(userId:string,user:IUser) {
+        return await User.updateOne({userId},user);
+    }
 }

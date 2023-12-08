@@ -16,8 +16,8 @@
       <image-cropper
         [imageChangedEvent]="imageChangedEvent"
         [maintainAspectRatio]="true"
-        [aspectRatio]="4 / 3"
-        format="png"
+        [aspectRatio]="1"
+        format="jpeg"
         (imageCropped)="imageCropped($event)"
       ></image-cropper>
     </div>
@@ -30,11 +30,7 @@
     />
   </div>
 
-  <button
-    [disabled]="!croppedImage"
-    (click)="crop()"
-    class="bg-black text-white p-2 mt-2"
-  >
-    CROP
-  </button>
+  <app-loading-button [disabled]="!croppedImage" [label]="'CROP'"
+  (click)="crop()" [buttonClass]="'bg-black text-white p-2 mt-2'"></app-loading-button>
+  
 </div>

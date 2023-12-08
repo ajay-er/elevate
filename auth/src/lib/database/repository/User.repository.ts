@@ -24,6 +24,10 @@ export class UserRepository {
         return await User.findOneAndUpdate({ email }, { $set: user }, { new: true });
     }
 
+    async findByid(id:string) {
+        return await User.findById({_id:id});
+    }
+
     //TODO: change this to reusable one!
     async update(user: IUpdateUser) {
         return await User.findOneAndUpdate(

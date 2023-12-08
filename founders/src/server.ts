@@ -4,6 +4,7 @@ import mongoConnect from './config/mongo';
 import { PingElasticSearch } from './config/elastic.search.config';
 import { USER_CREATED_EVENT_CONSUMER } from './events/consumers/user.created.consumer';
 import { kafka_client } from './config/kafka.config';
+import { USER_UPDATED_EVENT_CONSUMER } from './events/consumers/user.updated.consumer';
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 3000;
         console.clear();
         await mongoConnect(process.env.MONGO_URI);
         await new USER_CREATED_EVENT_CONSUMER(kafka_client).subscribe();
+        await new USER_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
 
         await PingElasticSearch();
 

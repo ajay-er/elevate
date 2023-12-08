@@ -1,12 +1,15 @@
+import 'express-async-errors';
 import { NotFoundError, currentUser, errorHandler } from '@ajay404/elevate';
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
-import 'express-async-errors';
 import { investorRoute } from './lib/routes/investor.router';
+import cors from 'cors';
 
 const app = express();
 
 app.set('trust proxy', true);
+
+app.use(cors());
 
 app.use(express.json());
 

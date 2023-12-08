@@ -5,9 +5,9 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class SharedService {
-  private dataSubject = new Subject<File>();
+  private dataSubject = new Subject<Blob>();
 
-  sendImageFile(data: File) {
+  sendImageFile(data: Blob) {
     this.dataSubject.next(data);
   }
 

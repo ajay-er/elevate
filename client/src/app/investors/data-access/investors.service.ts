@@ -14,7 +14,7 @@ export class InvestorsService {
   }
 
   updateProfileImage(imageData: FormData) {
-    return this.http.post(`${this.apiUrl}`, imageData);
+    return this.http.put(`${this.apiUrl}/investor/profile-img`, imageData);
   }
 
   getAllChatList() {

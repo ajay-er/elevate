@@ -18,27 +18,15 @@ export class UpdateImageComponent {
   private sanitizer = inject(DomSanitizer);
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  croppedFile!: File;
+  croppedFile!: Blob;
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    if (event && event.objectUrl) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-        event.objectUrl
-      );
-      this.croppedFile = this.blobToFile(
-        this.croppedImage,
-        `${Date.now()}_profile.png`
-      );
-    }
-  }
-
-  blobToFile(blob: Blob, fileName: string): File {
-    const file = new File([blob], fileName, { type: blob.type });
-    return file;
+    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl || event.base64 || ''); 
+    this.croppedFile = event.blob!;       
   }
 
   crop() {

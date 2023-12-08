@@ -1,5 +1,6 @@
 import { autoInjectable } from 'tsyringe';
 import { InvestorRepository } from '../database/repository/investor.repository';
+import { IInvestor } from '../database/model/Investor';
 
 @autoInjectable()
 export class InvestorService {
@@ -15,5 +16,9 @@ export class InvestorService {
 
     public async findById(id: string) {
         return await this.investorRepo.findById(id);
+    }
+
+    public async update(investorId:string,update: Partial<IInvestor>) {
+        return await this.investorRepo.updateProfile(investorId,update);
     }
 }

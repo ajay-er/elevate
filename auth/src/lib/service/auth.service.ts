@@ -28,6 +28,10 @@ export class AuthService {
         return await this.userRepo.updateUser(email, user);
     }
 
+    public async findById(id:string) {
+        return await this.userRepo.findByid(id);
+    }
+
     public async saveUser(user: UserDoc) {
         return await this.userRepo.save(user);
     }

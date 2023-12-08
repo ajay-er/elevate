@@ -29,6 +29,19 @@ const investorSchema = new Schema(
     }
 );
 
+interface IInvestor extends Document {
+  user: Schema.Types.ObjectId;
+  bio?: string;
+  website?: string;
+  socialMediaLinks?: SocialMediaLinks;
+  investmentLocations?: InvestmentLocations;
+  investmentMarkets?: InvestmentMarkets;
+  totalInvestmentCount?: number;
+  investmentAmount?: typeof investmentAmountVariants;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface SocialMediaLinks {
   twitter?: string;
   youtube?: string;
@@ -44,21 +57,6 @@ interface InvestmentMarkets {
   type: string[];
 }
 
-interface Investor extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  investorId: string;
-  profileImgUrl: string;
-  bio: string;
-  website: string;
-  socialMediaLinks: SocialMediaLinks;
-  investmentLocations: InvestmentLocations;
-  investmentMarkets: InvestmentMarkets;
-  totalInvestmentCount: number;
-  investmentAmount: string;
-}
+const Investor = mongoose.model<IInvestor>('Investor', investorSchema);
 
-const Investor = mongoose.model<Investor>('Investor', investorSchema);
-
-export { Investor };
+export { Investor , IInvestor};
