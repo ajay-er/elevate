@@ -5,7 +5,7 @@ RUN npm install -g npm@latest
 RUN npm install -g @angular/cli
 RUN npm install
 COPY . .
-RUN npm run build
+RUN ng build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist/client/browser /usr/share/nginx/html

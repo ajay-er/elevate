@@ -8,17 +8,6 @@ on:
       - 'auth/**'
 
 jobs:
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: |
-          cd auth
-          npm install
-          
   build:
     runs-on: ubuntu-latest
     steps:
