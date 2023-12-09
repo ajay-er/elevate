@@ -1,8 +1,9 @@
-<form>
+<form [formGroup]="updateInvestorForm">
   <div class="md:flex flex-row md:space-x-4 w-full text-xs">
     <div class="mb-3 space-y-2 w-full text-xs">
       <label class="font-semibold text-black py-2">First Name</label>
       <input
+        formControlName="firstName"
         placeholder="john"
         class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
         type="text"
@@ -11,6 +12,7 @@
     <div class="mb-3 space-y-2 w-full text-xs">
       <label class="font-semibold text-black py-2">Last Name</label>
       <input
+      formControlName="lastName"
         placeholder="doe"
         class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
         type="text"
@@ -21,15 +23,17 @@
   <div class="md:flex flex-row md:space-x-4 w-full text-xs">
     <div class="mb-3 space-y-2 w-full text-xs">
       <label class="font-semibold text-black py-2">Email</label>
-      <input
+      <input 
+        formControlName="email"
         placeholder="arun@gmail.com"
-        class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+        class="appearance-none  block w-full text-grey-darker border border-black h-10 px-4"
         type="text"
       />
     </div>
     <div class="mb-3 space-y-2 w-full text-xs">
       <label class="font-semibold text-black py-2">Phone</label>
       <input
+      formControlName="phone"
         placeholder="9999999999"
         class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
         type="text"
@@ -41,6 +45,7 @@
     <div class="mb-3 space-y-2 w-full text-xs">
       <label class="font-semibold text-black py-2">website</label>
       <input
+      formControlName="website"
         placeholder="url"
         class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
         type="text"
@@ -50,6 +55,7 @@
       <label class="font-semibold text-black py-2">Bio</label>
       <textarea
         rows="1"
+      formControlName="bio"
         class="appearance-none block w-full text-grey-darker border border-black"
         placeholder="your bio..."
       ></textarea>
@@ -66,6 +72,7 @@
           http://www.twitter.com/
         </span>
         <input
+      formControlName="twitter"
           class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
           type="text"
         />
@@ -80,6 +87,8 @@
           http://www.linkedin.com/
         </span>
         <input
+      formControlName="linkedin"
+
           class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
           type="text"
         />
@@ -97,6 +106,8 @@
           http://www.facebook.com/
         </span>
         <input
+      formControlName="facebook"
+
           class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
           type="text"
         />
@@ -111,7 +122,9 @@
           http://www.youtube.com/
         </span>
         <input
-          class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
+
+        formControlName="youtube"
+        class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
           type="text"
         />
       </div>
@@ -124,6 +137,7 @@
       <input
         (click)="selectCountryDropDown = !selectCountryDropDown"
         type="text"
+
         class="appearance-none block w-full text-grey-darker border border-black h-10"
         placeholder="Search coutry..."
       />
@@ -139,19 +153,17 @@
           aria-labelledby="dropdownSearchButton"
         >
           <li>
-            <div
+            <div *ngFor="let item of countriesArray; let i = index" 
               class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
             >
               <input
-                id="checkbox-item-11"
                 type="checkbox"
-                value=""
+                [formControl]="getCountryFormControl(i)" (change)="updateCountryArray(i)"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="checkbox-item-11"
                 class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                >India</label
+                >{{Countries[i].name}}</label
               >
             </div>
           </li>
@@ -159,7 +171,7 @@
       </div>
 
       <!-- tag -->
-      <div class="my-3 flex flex-wrap -m-1">
+      <!-- <div class="my-3 flex flex-wrap -m-1">
         <span
           class="m-1 flex flex-wrap justify-between items-center text-xs sm:text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded px-4 py-2 font-bold leading-loose cursor-pointer dark:text-gray-300"
         >
@@ -177,7 +189,7 @@
             />
           </svg>
         </span>
-      </div>
+      </div> -->
     </div>
 
     <div class="mb-3 space-y-2 w-full text-xs">
@@ -201,18 +213,18 @@
         >
           <li>
             <div
+            *ngFor="let item of technologiesArray; let i = index" 
               class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
             >
               <input
-                id="checkbox-item-11"
                 type="checkbox"
-                value=""
+                [formControl]="getMarketFormControl(i)" (change)="updateMarketsArray(i)"
+
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="checkbox-item-11"
                 class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                >Technology</label
+                >{{Technologies[i].name}}</label
               >
             </div>
           </li>
@@ -220,7 +232,7 @@
       </div>
 
       <!-- tag -->
-      <div class="my-3 flex flex-wrap -m-1">
+      <!-- <div class="my-3 flex flex-wrap -m-1">
         <span
           class="m-1 flex flex-wrap justify-between items-center text-xs sm:text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded px-4 py-2 font-bold leading-loose cursor-pointer dark:text-gray-300"
         >
@@ -238,7 +250,7 @@
             />
           </svg>
         </span>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -248,6 +260,7 @@
         >Total Investment Count</label
       >
       <input
+      formControlName="totalInvestmentCount"
         placeholder="10"
         class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
         type="text"
@@ -255,16 +268,17 @@
     </div>
     <div class="mb-3 space-y-2 w-full text-xs">
       <label class="font-semibold text-black py-2">Investment amount</label>
-      <select
-        class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+      <select 
+      formControlName="investmentAmount"
+
+        class="appearance-none block w-full text-grey-darker border border-black h-10 px-4" (change)="onInvestmentAmountChange($event)"
       >
-        <option value="5000-50000">₹5,000 - ₹50,0000</option>
-        <option value="450000-500000">₹500,000 - ₹10000,00</option>
-        <option value="450000-500000">₹10000,00 - ₹10000,000</option>
+      <option *ngFor="let amountVariant of investmentAmountVariants" [value]="amountVariant">₹{{ amountVariant }}</option>
       </select>
     </div>
   </div>
   <app-loading-button
+    (click)="submit()"
     [type]="'submit'"
     [buttonClass]="'bg-black text-white p-2 mt-2'"
   ></app-loading-button>

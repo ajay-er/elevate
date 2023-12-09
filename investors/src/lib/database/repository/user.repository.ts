@@ -10,7 +10,7 @@ export class UserRepository {
         return await User.create(user);
     }
 
-    public async update(userId:string,user:IUser) {
+    public async update(userId:string,user:Partial<IUser>) {
         return await User.updateOne({userId},user);
     }
 }

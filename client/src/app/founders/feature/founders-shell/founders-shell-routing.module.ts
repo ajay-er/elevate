@@ -31,6 +31,11 @@ const routes: Routes = [
       import('../ideas/ideas.module').then((m) => m.IdeasModule),
   },
   {
+    path: 'idea/:id',
+    loadChildren: () =>
+      import('../idea-with-comments/ideas-comment.module').then((m) => m.IdeasCommentsModule),
+  },
+  {
     path: 'pricing',
     loadChildren: () =>
       import('../pricing/pricing.module').then((m) => m.PricingModule),

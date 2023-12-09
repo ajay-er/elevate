@@ -139,3 +139,20 @@ export interface IMessage {
   recipient: string;
   text: string;
 }
+
+
+export interface Countries {
+  code:string,
+  code3:string,
+  name:string,
+  number:string,
+  selected?: boolean;
+}
+
+
+export interface Technology {
+  name: string;
+  category: string;
+  description: string;
+  selected?: boolean;
+}

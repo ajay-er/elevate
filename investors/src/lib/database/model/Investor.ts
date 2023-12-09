@@ -3,6 +3,7 @@ import { investmentAmountVariants } from '../../interfaces';
 
 const investorSchema = new Schema(
     {
+        phone:String,
         user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         bio: String,
         website: String,
@@ -32,6 +33,7 @@ const investorSchema = new Schema(
 interface IInvestor extends Document {
   user: Schema.Types.ObjectId;
   bio?: string;
+  phone:string;
   website?: string;
   socialMediaLinks?: SocialMediaLinks;
   investmentLocations?: InvestmentLocations;

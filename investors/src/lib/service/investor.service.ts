@@ -18,6 +18,10 @@ export class InvestorService {
         return await this.investorRepo.findById(id);
     }
 
+    public async findByUserId(id: string) {
+        return await this.investorRepo.findByUserId(id);
+    }
+
     public async update(investorId:string,update: Partial<IInvestor>) {
         return await this.investorRepo.updateProfile(investorId,update);
     }

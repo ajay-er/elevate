@@ -24,6 +24,15 @@ export class InvestorController {
         res.status(200).json({ result });
     }
     
+    async getInvestorDetails(req: Request, res: Response) {
+        const id = req.currentUser?.id;
+        if (!id) throw new UnAuthorizedError();
+        const user = await userService.findUserById(id);
+        if (!user) throw new BadRequestError('oops user not found');
+        const result = await investorService.findByUserId(user.id);
+        res.status(200).json({ result , user});
+    }
+    
     async updateProfileImage(req: Request, res: Response) {
         const userId = req.currentUser?.id;
         if (!userId) throw new UnAuthorizedError();
@@ -51,11 +60,13 @@ export class InvestorController {
         if (!userId) throw new UnAuthorizedError();
         const user = await userService.findUserById(userId);
         if (!user) throw new BadRequestError('user not found');
-        await investorService.update(user.id,req.body);
-       
+        const {firstName,lastName } = req.body;
+        const {phone,website,bio,twitter,facebook,youtube,linkedin,investmentAmount,totalInvestmentCount } = req.body;
+        await userService.update(userId,{firstName,lastName});
+        const r = await investorService.update(user.id,{socialMediaLinks:{twitter,linkedin,facebook,youtube},investmentAmount,totalInvestmentCount,phone,website,bio});
+        console.log(r,'this is updated');
         res.json({message:'Investor profile updated successfully'});
     }
-
 }
 
 export const investorController = new InvestorController();

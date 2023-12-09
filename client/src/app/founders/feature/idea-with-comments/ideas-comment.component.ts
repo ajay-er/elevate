@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IdeaService } from 'src/app/shared/data-access/idea.service';
@@ -8,10 +8,9 @@ import { IIdea } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-ideas',
-  templateUrl: './ideas.component.html',
-  styleUrls: ['./ideas.component.css']
+  templateUrl: './ideas-comment.component.html',
 })
-export class IdeasComponent {
+export class IdeasCommentComponent {
   isFounderLoggedIn$!: Observable<boolean>;
 
   constructor(private store: Store<State>,private router:Router) {
@@ -19,26 +18,25 @@ export class IdeasComponent {
   }
 
   readonly ideaService = inject(IdeaService);
-  protected ideas: IIdea[] = [];
+  readonly route = inject(ActivatedRoute);
+  protected idea!: IIdea;
   comment:string = '';
 
   ngOnInit() {
-    this.ideaService.getAllIdeas().subscribe((res:any) => {
-      this.ideas = res.ideas;
+    this.route.params.subscribe((params: Params) => {
+      const id = params['id'];      
+      this.ideaService.fetchCurrentIdea(id).subscribe((res:any) => {
+        console.log(res);
+        this.idea = res.idea;
+      });
     });
+    
   }
 
-  createIdea(caption:any) {
-    this.ideaService.createIdea(caption).subscribe((res:any) => {
-      this.ideas.unshift(res.idea);
-    });
-  }
-
-  ideaSelected(ideaId: any) {
-    this.ideaService.fetchCurrentIdea(ideaId).subscribe((res:any) => {   
-      const idea = res.idea;
-      this.router.navigateByUrl(`/founder/idea/${idea.id}`);
-    });
+  value(e:any) {
+    this.comment = e;
+    console.log(e);
+    
   }
 
   addComment(ideaId:any) {
