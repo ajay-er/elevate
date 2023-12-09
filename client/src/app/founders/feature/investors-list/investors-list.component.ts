@@ -8,9 +8,12 @@ import { InvestorsService } from '../../../investors/data-access/investors.servi
 })
 export class InvestorsListComponent {
   private investorsService = inject(InvestorsService);
-  
+  protected investors:any;
   ngOnInit() {
-    
+    this.investorsService.getAllInvestors().subscribe((res:any) => {
+      this.investors = res.result;
+      
+    });
   }
 
 

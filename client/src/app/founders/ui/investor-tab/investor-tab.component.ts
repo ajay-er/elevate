@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-investor-tab',
@@ -7,5 +7,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InvestorTabComponent {
+@Input() investors:any;
 
+protected tableHeader = {
+  
+};
+
+ngOnInit() {
+  
+}
+  
 }

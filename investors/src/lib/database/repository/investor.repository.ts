@@ -6,7 +6,7 @@ export class InvestorRepository {
     }
     
     async findAll(): Promise<any> {
-        return await Investor.find({});
+        return await Investor.find({}).populate('user');
     }
 
     async findById(id: string): Promise<any> {

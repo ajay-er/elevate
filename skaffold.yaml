@@ -2,14 +2,14 @@ apiVersion: skaffold/v4beta6
 kind: Config
 build:
   artifacts:
-    # - image: ajay404/client
-    #   context: client
-    #   sync:
-    #     manual:
-    #       - src: src/**/*.ts
-    #         dest: .
-    #   docker:
-    #     dockerfile: Dockerfile.dev
+    - image: ajay404/client
+      context: client
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: ajay404/auth
       context: auth
       sync:

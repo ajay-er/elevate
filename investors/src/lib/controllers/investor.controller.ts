@@ -63,8 +63,7 @@ export class InvestorController {
         const {firstName,lastName } = req.body;
         const {phone,website,bio,twitter,facebook,youtube,linkedin,investmentAmount,totalInvestmentCount } = req.body;
         await userService.update(userId,{firstName,lastName});
-        const r = await investorService.update(user.id,{socialMediaLinks:{twitter,linkedin,facebook,youtube},investmentAmount,totalInvestmentCount,phone,website,bio});
-        console.log(r,'this is updated');
+        await investorService.update(user.id,{socialMediaLinks:{twitter,linkedin,facebook,youtube},investmentAmount,totalInvestmentCount,phone,website,bio});
         res.json({message:'Investor profile updated successfully'});
     }
 }
