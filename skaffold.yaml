@@ -1,7 +1,6 @@
 apiVersion: skaffold/v4beta6
 kind: Config
 build:
-  namespace: dev-namespace
   artifacts:
     # - image: ajay404/client
     #   context: client
