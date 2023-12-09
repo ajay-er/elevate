@@ -2,5 +2,5 @@
     <ng-container *ngIf="idea">
  <app-idea-detail (like)="like($event)" (dislike)="dislike($event)" [idea]="idea"></app-idea-detail>
 </ng-container>
-<app-idea-comment (valueComment)="value($event)" (commentemit)="addComment($event)" [idea]="idea"></app-idea-comment>
+<app-idea-comment  (commentemit)="addComment($event)" [idea]="idea"></app-idea-comment>
 </section>

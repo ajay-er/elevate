@@ -21,5 +21,13 @@ export class FoundersService {
     });
   }
 
+  getAllChatList() {
+    return this.http.get(`${this.api}/chat/chatList`);
+  }
+
+  getChatHistory(participantId:string) {
+    return this.http.get(`${this.api}/chat/history/${participantId}`);
+  }
+
   
 }

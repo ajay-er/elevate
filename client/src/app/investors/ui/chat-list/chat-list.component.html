@@ -4,7 +4,7 @@
     <ng-container *ngFor="let user of users" >
     <div
     [routerLink]="['/investor/messages', user.id]"
-    routerLinkActive="bg-stone-300"
+    routerLinkActive="bg-stone-400"
       class="bg-white   px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
     >
       <div>
@@ -14,10 +14,6 @@
         class="ml-4 flex-1 border-b border-grey-lighter py-4 cursor-pointer "
         routerLinkActive="border-none"
       >
-        <!-- <div class="flex items-bottom justify-between">
-          <p class="text-grey-darkest">{{ user?.firstName }}</p>
-          <p class="text-xs text-grey-darkest">12:45 pm</p>
-        </div> -->
         <p class="text-grey-dark mt-1 text-sm">{{user?.firstName}}</p>
       </div>
     </div>

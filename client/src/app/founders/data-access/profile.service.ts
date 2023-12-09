@@ -22,7 +22,7 @@ export class ProfileService {
     return this.http.patch(`${this.authApi}/profile/update-phone`, data);
   }
 
-  updateProfileImage(data: FormData) {
-    return this.http.post(`${this.authApi}`, data);
+  updateProfileImage(imageData: FormData) {
+    return this.http.put(`${this.authApi}/founder/profile-img`, imageData);
   }
 }

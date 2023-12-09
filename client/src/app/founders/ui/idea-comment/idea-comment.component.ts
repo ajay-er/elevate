@@ -19,7 +19,6 @@ import { LoadingButtonModule } from 'src/app/shared/ui/loading-button/loading-bu
       <div class="my-6 w-full text-sm font-normal text-gray-500">
       <input
       [(ngModel)]="comment"
-      (ngModelChange)="onChildValueChange()"
       rows="1" 
       class="text-grey-darker rounded-lg border border-black w-full"
         placeholder="add comment"
@@ -61,16 +60,12 @@ import { LoadingButtonModule } from 'src/app/shared/ui/loading-button/loading-bu
 export class IdeaCommentComponent { 
     @Input() idea:any;
     @Output() commentemit = new EventEmitter();
-    @Output() valueComment = new EventEmitter<string>();
     comment:string = '';
-
-    onChildValueChange() {
-      this.valueComment.emit(this.comment);
-    }
 
     addComment() {
       if (this.comment) {
-        this.commentemit.emit(this.idea.id);
+        const data = {comment:this.comment,ideaId:this.idea.id};
+        this.commentemit.emit(data);
         this.comment = '';
       }
     }

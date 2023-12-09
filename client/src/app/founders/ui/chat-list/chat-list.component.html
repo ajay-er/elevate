@@ -1,0 +1,29 @@
+<!-- Contacts -->
+<div class="bg-white bg-opacity-25 rounded-lg flex-1 overflow-auto h-[28rem]">
+  <ng-container *ngIf="users.length">
+    <ng-container *ngFor="let user of users" >
+    <div
+    [routerLink]="['/founder/messages', user.id]"
+      class="bg-gray-200  px-3 flex m-2 rounded-lg items-center hover:bg-grey-lighter cursor-pointer"
+    >
+      <div>
+        <img class="h-12 w-12 rounded-full" [src]="user?.profileImgUrl" />
+      </div>
+      <div
+        class="ml-4 flex-1 border-b border-grey-lighter py-4 cursor-pointer "
+        routerLinkActive="border-none"
+      >
+      <div class="flex justify-between items-center">
+      <div>
+        <p class="text-black mt-1 text-sm">{{user?.firstName}}</p>
+
+      </div>
+      <div>
+        <p class="text-black mt-1 text-sm">{{user?.role}}</p>
+      </div>
+      </div>
+    </div>
+    </div>
+  </ng-container>
+</ng-container>
+</div>

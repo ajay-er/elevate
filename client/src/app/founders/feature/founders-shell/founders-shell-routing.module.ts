@@ -12,6 +12,14 @@ const routes: Routes = [
     canActivate: [founderAuthGuard],
   },
   {
+    path: 'messages',
+    loadChildren: () =>
+      import('../messages/messages.module').then(
+        (m) => m.MessagesModule
+      ),
+    canActivate: [founderAuthGuard],
+  },
+  {
     path: 'investors',
     loadChildren: () =>
       import('../investors-list/investors-list.module').then(

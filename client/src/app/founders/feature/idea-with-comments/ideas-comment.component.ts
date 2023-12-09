@@ -20,7 +20,6 @@ export class IdeasCommentComponent {
   readonly ideaService = inject(IdeaService);
   readonly route = inject(ActivatedRoute);
   protected idea!: IIdea;
-  comment:string = '';
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -33,16 +32,9 @@ export class IdeasCommentComponent {
     
   }
 
-  value(e:any) {
-    this.comment = e;
-    console.log(e);
-    
-  }
-
-  addComment(ideaId:any) {
-    this.ideaService.addComment(this.comment,ideaId).subscribe((res) => {
+  addComment(data:{comment:string,ideaId:string}) {
+    this.ideaService.addComment(data.comment,data.ideaId).subscribe((res) => {
       console.log(res);
-      this.comment = '';
     });
   }
 

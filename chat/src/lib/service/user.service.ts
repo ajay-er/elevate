@@ -22,6 +22,10 @@ export class UserService {
         return await this.userRepo.findAllInvestors();
     }
 
+    public async findFounders() {
+        return await this.userRepo.findAllFounders();
+    }
+
     public async update(userId:string,userData:IUser) {
         return await this.userRepo.update(userId,userData);
     }

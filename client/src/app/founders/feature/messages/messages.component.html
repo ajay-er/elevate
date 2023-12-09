@@ -1,0 +1,28 @@
+  <section class="min-h-screen ml-16 px-10 md:px-20 pt-24">
+  <p class="md:text-4xl text-xl mb-2">Messages</p>
+  <div class="flex  gap-3 shadow-xl">
+    <!-- Left -->
+    <div class="sm:w-1/3 w-full flex flex-col">
+      
+      <app-chat-list [users]="users"></app-chat-list>
+    </div>
+    <!-- Right -->
+    <div class="sm:w-1/2 w-full rounded-lg bg-opacity-25 bg-white hidden  sm:flex flex-col">
+      <router-outlet #outlet="outlet"></router-outlet>
+
+      <div *ngIf="!outlet.isActivated" class="bg-gray-200  bg-opacity-5 min-h-full">
+        <div
+          class="py-2 px-3 bg-white  rounded-lg  flex flex-row justify-between items-center "
+        >
+          <div class="flex items-center">
+            <div class="ml-4 mt-2">
+              <p class="text-black">
+                elevate chat
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { MessageService } from '../service/message.service';
-import { BadRequestError, UnAuthorizedError } from '@ajay404/elevate';
+import { BadRequestError, IRole, UnAuthorizedError } from '@ajay404/elevate';
 import { UserService } from '../service/user.service';
 
 const messageService = container.resolve(MessageService);
@@ -14,8 +14,16 @@ export class MesssageController {
 
         const currentUser = await userService.findUserById(userId);
         if (!currentUser) throw new BadRequestError('User not found');
-        const allInvestors = await userService.findInvestors();
-        const filteredInvestors = allInvestors.filter(
+        let  allUsers;
+        if (currentUser.role === IRole.INVESTOR) {
+            allUsers = await userService.findInvestors();
+        }
+        
+        if (currentUser.role === IRole.FOUNDER) {
+            allUsers = await userService.findFounders();
+        }
+
+        const filteredInvestors = allUsers?.filter(
             (investor) => investor.id !== currentUser.id
         );
         const chatList = await messageService.getChatListUserMessaged(
@@ -33,13 +41,13 @@ export class MesssageController {
 
         const participantsArray = Array.from(participants);
 
-        const uniqueInvestors = filteredInvestors.filter(
+        const uniqueInvestors = filteredInvestors?.filter(
             (investor) =>
                 !participantsArray.some(
                     (participant: any) => participant.id === investor.id
                 )
         );
-        const chat = [...participantsArray, ...uniqueInvestors];
+        const chat = [...participantsArray, ...uniqueInvestors!];
 
         res.status(200).json({ chat: chat, currentUserId: currentUser.id });
     }
