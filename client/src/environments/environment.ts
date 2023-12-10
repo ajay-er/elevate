@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl:'http://elevate.test/api/v1'
+  apiUrl:'https://ajay404.online/api/v1'
 };
