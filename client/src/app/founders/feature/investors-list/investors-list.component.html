@@ -7,15 +7,18 @@
       </p>
   </div>
   <div class="pt-8 sm:flex">
-    <div class="ml-4 mr-4 hidden sm:block w-1/6 max-h-[44rem]">
-      <app-aside-investors></app-aside-investors>
+    <div class="ml-4 mr-4 hidden sm:block w-1/6  max-h-[44rem]">
+      <app-aside-investors [values]="{fieldName:'category',label:'Markets',items:markets}"></app-aside-investors>
+      <app-aside-investors  [values]="{fieldName:'name',label:'Locations',items:countries}"></app-aside-investors>
     </div>
     <div class="mr-4 ml-2 sm:w-5/6 max-h-[43rem] overflow-auto">
       <app-investor-tab [investorDetail]="investors" [columnArray]="coloumnArray"></app-investor-tab>
     </div>
   </div>
   <div class="sm:flex">
-    <div class="ml-4 mr-4 hidden sm:block w-1/6 max-h-[33rem]"></div>
+    <div class="ml-4 mr-4 hidden sm:block w-1/6 max-h-[33rem]">
+      
+    </div>
     <div class="mr-4 ml-2 sm:w-5/6 max-h-[33rem] flex justify-center mt-4">
       <app-pagination
         [pageClass]="'bg-white hover:bg-opacity-90 hover:text-black'"

@@ -17,9 +17,14 @@ router.get('/api/v1/auth/profile/get-profile', requireAuth, async (req: Request,
     res.status(200).json({user});
 });
 
-router.post('/api/v1/auth/profile/update-name', requireAuth, async (req: Request, res: Response) => {
-    const email = req.currentUser?.email;
-    const user = await authService.updateData(email!, req.body);
+router.patch('/api/v1/auth/profile/update-name', requireAuth, async (req: Request, res: Response) => {
+    const id = req.currentUser?.id;
+    if (!id) throw new UnAuthorizedError();
+    const user = await authService.findById(id!);
+    if (!user) throw new BadRequestError('user not found');
+    user.firstName = req.body.firstName;
+    user.lastName = req.body?.lastName;
+    authService.saveUser(user);
     res.status(200).json({ message: 'name updated successfully', user });
 });
 

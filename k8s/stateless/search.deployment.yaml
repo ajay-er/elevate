@@ -43,7 +43,6 @@ spec:
                 name: elevate-es-elastic-user
                 key: elastic
 ---
-
 apiVersion: v1
 kind: Service
 metadata:

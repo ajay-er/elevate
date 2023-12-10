@@ -11,7 +11,13 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req:any, file:any, cb:any) => {
-    cb(null, true);
+    if (file.size > 2 * 1024 * 1024) {
+        const fileSizeError = new Error('File size limit exceeded (2MB)');
+        fileSizeError.name = 'FileUploadError';
+        cb(fileSizeError, false);
+    } else {
+        cb(null, true);
+    }
 };
 
 const upload = multer({

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { SharedService } from 'src/app/shared/data-access/shared.service';
 import { IUserProfile } from 'src/app/shared/interfaces';
 import { ProfileTab } from 'src/app/shared/types';
 
@@ -12,30 +13,14 @@ import { ProfileTab } from 'src/app/shared/types';
 export class ProfileComponent {
   protected SelectTab: typeof ProfileTab = ProfileTab;
   @Output() toggleEditBtn = new EventEmitter<ProfileTab>();
-  @Output() updateImage = new EventEmitter<FormData>();
   @Input() userData!: IUserProfile;
-
+  
+  private sharedService = inject(SharedService);
   private sanitizer = inject(DomSanitizer);
   imageChangedEvent: any = '';
   croppedImage: any = '';
   croppedFile!: Blob;
   modalOpen: boolean = false;
-
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
-
-  imageCropped(event: ImageCroppedEvent) {
-    if (event && event.objectUrl) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-        event.objectUrl
-      );
-      if (event.blob) {
-        this.croppedFile = event.blob;
-      }
-    }
-
-  }
 
   imageLoaded() {
     this.modalOpen = true;
@@ -49,11 +34,20 @@ export class ProfileComponent {
     this.toggleEditBtn.emit(tab);
   }
 
-  sendTobackend() {
-    if (this.croppedFile) {
-      const formData = new FormData();
-      formData.append('profile', this.croppedFile);
-      this.updateImage.emit(formData);
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl || event.base64 || ''); 
+    this.croppedFile = event.blob!;       
+  }
+
+  crop() {
+    if (this.croppedFile) {      
+      this.sharedService.sendImageFile(this.croppedFile);
+      this.modalOpen = false;
     }
   }
 }

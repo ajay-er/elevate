@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { IUpdateName, IUpdatePhone } from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
@@ -23,6 +23,6 @@ export class ProfileService {
   }
 
   updateProfileImage(imageData: FormData) {
-    return this.http.put(`${this.authApi}/founder/profile-img`, imageData);
+    return this.http.post(`${this.authApi}/auth/profile/profile-img`, imageData);
   }
 }

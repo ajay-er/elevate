@@ -52,8 +52,8 @@ spec:
               secretKeyRef:
                 name: cloudinary-secrets
                 key: CLOUDINARY_API_SECRET
+         
 ---
-
 apiVersion: v1
 kind: Service
 metadata:

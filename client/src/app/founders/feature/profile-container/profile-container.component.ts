@@ -7,6 +7,8 @@ import {
   IUserProfile,
 } from 'src/app/shared/interfaces';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
+import { SharedService } from 'src/app/shared/data-access/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-container',
@@ -21,9 +23,31 @@ export class ProfileContainerComponent {
   private profileService = inject(ProfileService);
   private snackbar = inject(SnackbarService);
 
+  private sharedService = inject(SharedService);
+  private subscription$: Subscription;
+
+
   ngOnInit() {
     this.getUserProfile();
   }
+
+  constructor() {
+    this.subscription$ = this.sharedService
+      .getData()
+      .subscribe((blob: Blob) => {
+        const formData = new FormData();
+        formData.append('profile',blob);
+        this.profileService.updateProfileImage(formData).subscribe((res:any) => {
+          console.log(res);
+          this.snackbar.showSuccess(res.message);
+        });
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
+
 
   selectTab(tab: ProfileTab) {
     if (this.currentTab === tab) {
@@ -64,14 +88,4 @@ export class ProfileContainerComponent {
     });
   }
 
-  updateProfileImage(data: FormData) {
-    console.log(data);
-    
-    this.profileService.updateProfileImage(data).subscribe({
-      next: (res: any) => {
-        this.snackbar.showSuccess('Profile image updated succeccfully');
-        this.currentUserProfile.photo = res.user.profileImgUrl;
-      },
-    });
-  }
 }
