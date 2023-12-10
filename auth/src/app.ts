@@ -15,10 +15,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use(morgan('dev'));
-// routes
-app.use('/api/v1/auth', authRoute);
 
-app.use('/api/v1/profile', profileRoute);
+// routes
+app.use(authRoute);
+
+app.use(profileRoute);
 
 app.all('*', async (req: Request, res: Response) => {
     throw new NotFoundError();

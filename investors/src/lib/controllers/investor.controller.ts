@@ -20,8 +20,11 @@ export class InvestorController {
 
     async getInvestorProfile(req: Request, res: Response) {
         const id = req.params.id;
-        const result = await investorService.findById(id);
-        res.status(200).json({ result });
+        const investor = await investorService.findById(id);
+        if (!investor?.isVerified) {
+            throw new BadRequestError('Investor is not verified'); 
+        }
+        res.status(200).json({ investor });
     }
     
     async getInvestorDetails(req: Request, res: Response) {

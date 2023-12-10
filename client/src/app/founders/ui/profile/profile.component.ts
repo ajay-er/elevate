@@ -18,7 +18,7 @@ export class ProfileComponent {
   private sanitizer = inject(DomSanitizer);
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  croppedFile!: File;
+  croppedFile!: Blob;
   modalOpen: boolean = false;
 
   fileChangeEvent(event: any): void {
@@ -30,16 +30,11 @@ export class ProfileComponent {
       this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
         event.objectUrl
       );
-      this.croppedFile = this.blobToFile(
-        this.croppedImage,
-        `${Date.now()}_profile.png`
-      );
+      if (event.blob) {
+        this.croppedFile = event.blob;
+      }
     }
-  }
 
-  blobToFile(blob: Blob, fileName: string): File {
-    const file = new File([blob], fileName, { type: blob.type });
-    return file;
   }
 
   imageLoaded() {

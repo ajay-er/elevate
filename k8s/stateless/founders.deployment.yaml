@@ -42,21 +42,6 @@ spec:
               secretKeyRef:
                 name: elevate-es-elastic-user
                 key: elastic
-          - name: CLOUDINARY_CLOUD_NAME
-            valueFrom:
-              secretKeyRef:
-                name: cloudinary-secrets
-                key: CLOUDINARY_CLOUD_NAME
-          - name: CLOUDINARY_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: cloudinary-secrets
-                key: CLOUDINARY_API_KEY
-          - name: CLOUDINARY_API_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: cloudinary-secrets
-                key: CLOUDINARY_API_SECRET
           - name: RAZORPAY_KEY_ID
             valueFrom:
               secretKeyRef:

@@ -17,6 +17,10 @@ export class InvestorsService {
     return this.http.put(`${this.apiUrl}/investor/profile-img`, imageData);
   }
 
+  getInvestorDetails(id:string) {
+    return this.http.get(`${this.apiUrl}/investor/profile/${id}`);
+  }
+
   getAllChatList() {
     return this.http.get(`${this.apiUrl}/chat/chatList`);
   }

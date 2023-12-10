@@ -6,11 +6,11 @@ export class InvestorRepository {
     }
     
     async findAll(): Promise<any> {
-        return await Investor.find({}).populate('user');
+        return await Investor.find({isVerified:true}).populate('user');
     }
 
-    async findById(id: string): Promise<any> {
-        return await Investor.findById({ _id: id });
+    async findById(id: string): Promise<IInvestor | null> {
+        return await Investor.findOne({ _id: id }).populate('user');
     }
 
     async findByUserId(id: string): Promise<any> {

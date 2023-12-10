@@ -65,6 +65,8 @@ export class ProfileContainerComponent {
   }
 
   updateProfileImage(data: FormData) {
+    console.log(data);
+    
     this.profileService.updateProfileImage(data).subscribe({
       next: (res: any) => {
         this.snackbar.showSuccess('Profile image updated succeccfully');

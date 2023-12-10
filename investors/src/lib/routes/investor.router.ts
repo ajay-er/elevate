@@ -7,11 +7,11 @@ const router = express.Router();
 
 router.get('/api/v1/investor/investors', investorController.getAllInvestors);
 
-// // for founders
-// router.get(
-//     '/api/v1/investor/profile/:id',
-//     investorController.getInvestorProfile
-// );
+// for founders
+router.get(
+    '/api/v1/investor/profile/:id',
+    investorController.getInvestorProfile
+);
  
 // for investors - their own profile
 router.get('/api/v1/investor/investor-profile', requireAuth,

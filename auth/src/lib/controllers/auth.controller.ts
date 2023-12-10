@@ -18,7 +18,7 @@ const router = express.Router();
 const authService = container.resolve(AuthService);
 const tokenService = container.resolve(TokenService);
 
-// router.post('/googleauth', async (req: Request, res: Response) => {
+// router.post('/api/v1/auth/googleauth', async (req: Request, res: Response) => {
 //     const { googleToken } = req.body;
 //     if (!googleToken) throw new BadRequestError('Please provide google id_token');
 
@@ -57,7 +57,7 @@ const tokenService = container.resolve(TokenService);
 //     }
 // });
 
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
     
     const user = await authService.findUserByEmail(email);
@@ -95,7 +95,7 @@ router.post('/login', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Login succesfull', user, accessToken });
 });
 
-router.post('/signup', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/signup', async (req: Request, res: Response) => {
     const { email } = req.body;
 
     let user = await authService.findUserByEmail(email);
@@ -137,7 +137,7 @@ router.post('/signup', async (req: Request, res: Response) => {
     });
 });
 
-router.post('/resend-otp', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/resend-otp', async (req: Request, res: Response) => {
     const { email } = req.body;
 
     let user = await authService.findUserByEmail(email);
@@ -171,7 +171,7 @@ router.post('/resend-otp', async (req: Request, res: Response) => {
     });
 });
 
-router.post('/verify-otp', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/verify-otp', async (req: Request, res: Response) => {
     const { email, otp } = req.body;
     const user = await authService.findUserByEmail(email);
 
@@ -223,7 +223,7 @@ router.post('/verify-otp', async (req: Request, res: Response) => {
         .json({ message: 'OTP verified successfully', user, accessToken });
 });
 
-router.post('/forgot-password', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/forgot-password', async (req: Request, res: Response) => {
     const { email } = req.body;
 
     const user = await authService.findUserByEmail(email);
@@ -256,7 +256,7 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
     });
 });
 
-router.post('/reset-password', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/reset-password', async (req: Request, res: Response) => {
     const { token } = req.body;
 
     if (!token) {
@@ -283,7 +283,7 @@ router.post('/reset-password', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Please reset the password' });
 });
 
-router.post('/confirm-password', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/confirm-password', async (req: Request, res: Response) => {
     const { newPassword, token } = req.body;
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
@@ -309,7 +309,7 @@ router.post('/confirm-password', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Password reset successful' });
 });
 
-router.post('/admin-login', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/admin-login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     if (email !== process.env.ADMIN || password !== process.env.ADMIN_PASSWORD) {
@@ -327,7 +327,7 @@ router.post('/admin-login', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Login succesfull', accessToken });
 });
 
-router.post('/logout', async (req: Request, res: Response) => {
+router.post('/api/v1/auth/logout', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'logout succefully' });
 });
 

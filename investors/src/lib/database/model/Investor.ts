@@ -24,9 +24,17 @@ const investorSchema = new Schema(
             type: String,
             enum: investmentAmountVariants,
         },
+        isVerified: {type:Boolean,default:false}
     },
-    {
-        timestamps: true,
+    { 
+        toJSON: {
+            transform(doc, ret) {
+                ret.id = ret._id;
+                delete ret._id;
+                delete ret.__v;
+            },
+        },
+        timestamps: true 
     }
 );
 
@@ -40,6 +48,7 @@ interface IInvestor extends Document {
   investmentMarkets?: InvestmentMarkets;
   totalInvestmentCount?: number;
   investmentAmount?: typeof investmentAmountVariants;
+  isVerified:boolean;
   createdAt: Date;
   updatedAt: Date;
 }

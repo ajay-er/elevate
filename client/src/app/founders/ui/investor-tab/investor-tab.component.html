@@ -9,48 +9,16 @@
             <tr>
               <th
                 scope="col"
-                class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-700"
-              >
-                <div class="flex items-center gap-x-2">Investor Name</div>
-              </th>
-
-              <!-- <th
-                scope="col"
                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-700"
               >
-                Locations
-              </th> -->
-
-              <!-- <th
-                scope="col"
-                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-700"
-              >
-                Markets
-              </th> -->
-
-              <th
-                scope="col"
-                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-700"
-              >
-                Investment count
+                No
               </th>
               <th
+                *ngFor="let column of columnArray"
                 scope="col"
-                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-700"
+                class="px-4  text-sm border border-x-black font-normal text-left rtl:text-right text-gray-700"
               >
-                Investment amount
-              </th>
-              <th
-                scope="col"
-                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-700"
-              >
-                Linkedin
-              </th>
-              <th
-                scope="col"
-                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-700"
-              >
-                Email
+                {{ column.header }}
               </th>
               <th
                 scope="col"
@@ -60,35 +28,26 @@
               </th>
             </tr>
           </thead>
-          <tbody
-            class="divide-y divide-gray-200 bg-white bg-opacity-5"
-          >
-            <tr>
+          <tbody class="divide-y divide-gray-200 bg-white bg-opacity-5">
+            <tr *ngFor="let item of investorDetail; let no = index">
               <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                
+                {{ no + 1 }}
               </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                Design Director
+              <td
+                *ngFor="let entry of columnArray"
+                class="px-4 py-4 text-sm border text-center text-gray-300 whitespace-nowrap"
+              >
+              <ng-container *ngIf="entry.datatype !== 'amount';else amount">{{ getValue(item, entry.fieldName) }} </ng-container>              
+              <ng-template #amount>
+                {{ getValue(item, entry.fieldName) | appFormatInvestmentAmount }} 
+              </ng-template>
               </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                wow super
-              </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                wow super
-              </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                wow super
-              </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                Redacted
-              </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                Redacted
-              </td>
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap" [routerLink]="['/founder/investor/name']">
-                <app-loading-button
-                  [label]="'Details'"
-                  [buttonClass]="'bg-blue-500 p-2 text-white'"
+              <td
+                class="px-4 py-4 text-sm text-gray-300 text-center whitespace-nowrap"
+                [routerLink]="['/founder/investor',item.id]"
+              >
+                <app-loading-button [label]="'Details'" 
+                  [buttonClass]="'bg-blue-500 p-2  text-white'"
                 ></app-loading-button>
               </td>
             </tr>

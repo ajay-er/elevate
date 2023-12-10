@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { founderAuthGuard } from 'src/app/shared/guards/founder-auth.guard';
+import { investorProfileResolver } from 'src/app/shared/resolvers/InvestorProfile.resolver';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
       import('../investor-detail/investor-detail.module').then(
         (m) => m.InvestorDetailModule
       ),
+    resolve: {investor:investorProfileResolver}
   },
   {
     path: 'ideas',

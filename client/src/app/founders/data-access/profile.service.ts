@@ -11,15 +11,15 @@ export class ProfileService {
   private authApi = environment.apiUrl;
 
   getProfile() {
-    return this.http.get(`${this.authApi}/profile/get-profile`);
+    return this.http.get(`${this.authApi}/auth/profile/get-profile`);
   }
 
   updateName(data: IUpdateName) {
-    return this.http.patch(`${this.authApi}/profile/update-name`, data);
+    return this.http.patch(`${this.authApi}/auth/profile/update-name`, data);
   }
 
   updatePhone(data: IUpdatePhone) {
-    return this.http.patch(`${this.authApi}/profile/update-phone`, data);
+    return this.http.patch(`${this.authApi}/auth/profile/update-phone`, data);
   }
 
   updateProfileImage(imageData: FormData) {
