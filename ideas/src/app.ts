@@ -17,7 +17,7 @@ app.use(morgan('dev'));
 
 app.use(currentUser);
 // routes
-app.use(ideasRoute);
+app.use(ideasRoute); 
 
 app.all('*', async (_req: Request, _res: Response) => {
     throw new NotFoundError();

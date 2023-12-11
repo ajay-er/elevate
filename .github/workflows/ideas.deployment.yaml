@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'ideas/**'
-
 jobs:
   build:
     runs-on: ubuntu-latest
