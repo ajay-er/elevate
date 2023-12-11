@@ -15,7 +15,7 @@ spec:
       containers:
         - name: client
           image: ajay404/client
----
+--- 
 apiVersion: v1
 kind: Service
 metadata:
