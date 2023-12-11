@@ -7,17 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: EditInvestorComponent,
-    children: [
-      {
-        path: 'details',
-        component: UpdateProfileComponent,
-      },
-      {
-        path: '',
-        redirectTo: 'details',
-        pathMatch: 'full',
-      },
-    ],
   },
 ];
 

@@ -28,6 +28,7 @@ export class ChatDetailsComponent {
       this.participantId = params['id'];
       this.chatService.setCurrentParticipent(this.participantId);
       this.fouderservice.getChatHistory(this.participantId).subscribe((res:any) => {
+        console.log(res.history);
         this.chatService.setChatHistory(res.history);
       });
     });
@@ -44,8 +45,8 @@ export class ChatDetailsComponent {
   }
 
   isSendByUser(msg:any) {
-    if (msg.sender?.id) return msg.sender.id !== this.participantId;
-    else return msg.sender !== this.participantId;
+    if (this.participant.id) return msg.sender.id !== this.participant.id;
+    else return msg.sender !== this.participant.id;
   }
 
   ngOnDestroy() {

@@ -18,7 +18,7 @@ export class MessageRepository {
     async getChatList(userId: string) {
         return await Message.find({ users: userId }).populate(
             'users',
-            'firstName email id role profileImgUrl'
+            'firstName email id userId role profileImgUrl'
         );
     }
 

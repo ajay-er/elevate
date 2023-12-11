@@ -3,6 +3,7 @@ import { Kafka, KafkaMessage } from 'kafkajs';
 import { container } from 'tsyringe';
 import { IUser } from '../../lib/database/model/User';
 import { UserService } from '../../lib/service/user.service';
+import { AdminService } from '../../lib/service/admin.service';
 
 enum IRole {
   FOUNDER = 'FOUNDER',
@@ -22,6 +23,7 @@ export interface USER_CREATED {
 }
 
 const userService = container.resolve(UserService);
+const adminService = container.resolve(AdminService);
 
 export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
     groupId: string = 'admin-1';
@@ -36,7 +38,10 @@ export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
         _message: KafkaMessage
     ): Promise<void> {
         try {
-            await userService.createUser(data as IUser);
+            const user = await userService.createUser(data as IUser);
+            const investor = await adminService.createInvestor(user.id);
+            console.log(investor,'investor created');
+            
         } catch (error) {
             console.log(error);
         }

@@ -16,7 +16,9 @@ export class MessagesComponent {
   ngOnInit() {   
     this.chatService.connect(); 
     this.founderService.getAllChatList().subscribe((res:any) => {
-      this.users = res.chat;      
+      this.users = res.chat;  
+      console.log(res);
+      
       this.currentUserId = res.currentUserId;  
       this.chatService.setCurrentUser(this.currentUserId);
       this.chatService.addUser();

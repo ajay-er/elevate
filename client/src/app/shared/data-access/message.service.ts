@@ -60,6 +60,10 @@ export class ChatService {
     this.currentUserId.next(user);
   }
 
+  getCurrentUserId():Observable<any> {
+    return this.currentUserId.asObservable();
+  }
+
   sendMessage(msg: string) {
     const participantId = this.participantId.getValue();
     const senderId = this.currentUserId.getValue();

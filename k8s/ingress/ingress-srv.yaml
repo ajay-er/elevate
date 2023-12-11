@@ -65,6 +65,13 @@ spec:
                 name: chat-srv
                 port:
                   number: 3000
+          - path: /api/v1/admin/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: admin-srv
+                port:
+                  number: 3000
 ---  
 apiVersion: v1
 kind: Service
