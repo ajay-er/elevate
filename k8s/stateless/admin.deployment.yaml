@@ -37,7 +37,7 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: SESSION_SECRET
----
+--- 
 apiVersion: v1
 kind: Service
 metadata:
