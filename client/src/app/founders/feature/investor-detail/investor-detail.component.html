@@ -2,19 +2,20 @@
   <div class="container mx-auto py-8">
     <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
       <div class="col-span-4 sm:col-span-3">
-        <div class="bg-white bg-opacity-10 shadow rounded-lg p-6">
+        <div class="bg-white bg-opacity-20 shadow rounded-lg p-6">
           <div class="flex flex-col items-center">
             <img
-              src="../../../../assets/images/profile/profile.png"
+              [src]="investor.user.profileImgUrl"
               class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
             />
 
-            <p class="text-2xl uppercase font-bold">John Doe</p>
-            <p class="font-bold">ajaygmail.com</p>
-            <p class="font-bold">9293939399</p>
+            <p class="text-2xl uppercase font-bold">{{investor.user.firstName + ' ' + investor.user.lastName }}</p>
+            <p class="font-bold">{{investor.user.email}}</p>
+            <p class="font-bold">{{investor.phone}}</p>
             <div class="mt-3 flex flex-wrap gap-4 justify-center">
               <app-loading-button
                 [label]="'Message'"
+                [routerLink]="['/founder/messages',investor.user.userId]"
                 [buttonClass]="'bg-blue-700 text-white px-6 py-2'"
               ></app-loading-button>
             </div>
@@ -26,7 +27,7 @@
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds LinkedIn"
-                href=""
+                [href]="investor.socialMediaLinks.linkedin"
                 target="_blank"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +46,7 @@
               <a
                 class="text-white hover:text-orange-500"
                 aria-label="Visit TrendyMinds YouTube"
-                href=""
+                [href]="investor.socialMediaLinks.youtube"
                 target="_blank"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +65,7 @@
               <a
                 class="text-white hover:text-blue-600"
                 aria-label="Visit TrendyMinds Facebook"
-                href=""
+                [href]="investor.socialMediaLinks.facebook"
                 target="_blank"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +84,7 @@
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds Twitter"
-                href=""
+                [href]="investor.socialMediaLinks.twitter"
                 target="_blank"
                 ><svg
                   class="h-6"
@@ -101,59 +102,54 @@
         </div>
       </div>
       <div class="col-span-4 sm:col-span-9">
-        <div class="bg-white bg-opacity-10 shadow rounded-lg p-6">
+        <div class="bg-white bg-opacity-20 shadow rounded-lg p-6">
           <h2 class="text-xl font-bold mb-4">Bio</h2>
           <p class="text-white opacity-80">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus
-            est vitae tortor ullamcorper, ut vestibulum velit convallis. Aenean
-            posuere risus non velit egestas suscipit. Nunc finibus vel ante id
-            euismod. Vestibulum ante ipsum primis in faucibus orci luctus et
-            ultrices posuere cubilia Curae; Aliquam erat volutpat. Nulla
-            vulputate pharetra tellus, in luctus risus rhoncus id.
+            {{investor.bio}}
           </p>
 
           <h2 class="text-xl font-bold mt-6 mb-4">Locations</h2>
-          <div class="flex-wrap flex gap-2">
-            <div
+          <div class="flex-wrap flex gap-2" *ngFor="let location of investor.investmentLocations">
+            <div 
               class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
             >
-              India
+              {{ location }}
             </div>
           </div>
           <div class="mt-6">
             <h2 class="text-xl font-bold">Markets</h2>
-            <div class="flex-wrap flex gap-2">
-              <div
+            <div class="flex-wrap flex gap-2" *ngFor="let market of investor.investmentMarkets">
+              <div 
                 class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
               >
-                Tech
+                {{market}}
               </div>
             </div>
           </div>
           <div class="mt-4">
             <p class="font-extrabold text-lg">
               Investment Count:
-              <span class="text-blue-400 text-md"> 23 investments</span>
+              <span class="text-blue-400 text-md"> {{investor.totalInvestmentCount }}  <span class="text-sm text-blue-200">investments</span></span>
             </p>
           </div>
           <div class="mt-4">
             <p class="font-extrabold text-lg">
               Investment Amount:
-              <span class="text-blue-400 text-md">$5k to $5000k</span>
+              <span class="text-blue-400 text-md"> {{investor.investmentAmount | appFormatInvestmentAmount }} <span class="text-sm text-blue-200">rupees</span></span>
             </p>
           </div>
           <div class="flex justify-center mt-3">
-            <p class="text-3xl font-semibold uppercase text-gray-200">
+            <p class="text-xl sm:text-3xl font-semibold uppercase text-gray-200">
               Past Investments
             </p>
           </div>
           <div class="flex flex-wrap gap-2">
             <div>
               <a
-                class="block max-w-[30%] p-6 bg-white bg-opacity-80 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                class="block md:max-w-[30%] p-6 bg-white bg-opacity-80 border border-gray-200 rounded-lg shadow hover:bg-gray-100 "
               >
                 <p
-                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                  class="mb-2 md:text-xl text-lg font-bold tracking-tight text-gray-900 dark:text-white"
                 >
                   Noteworthy
                 </p>

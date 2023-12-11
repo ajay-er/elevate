@@ -3,7 +3,7 @@
   <ng-container *ngIf="users.length">
     <ng-container *ngFor="let user of users" >
     <div
-    [routerLink]="['/founder/messages', user.id]"
+    [routerLink]="['/founder/messages', user?.userId]"
       class="bg-gray-200  px-3 flex m-2 rounded-lg items-center hover:bg-grey-lighter cursor-pointer"
     >
       <div>

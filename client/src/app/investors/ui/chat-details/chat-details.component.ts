@@ -27,8 +27,8 @@ export class ChatDetailsComponent {
     this.routeParamsSubscription = this.route.params.subscribe((params) => {
       this.participantId = params['id'];
       this.chatService.setCurrentParticipent(this.participantId);
-      this.investorService.getChatHistory(this.participantId).subscribe((res:any) => {
-        this.chatService.setChatHistory(res.history);
+      this.investorService.getChatHistory(this.participantId).subscribe((res:any) => {        
+        this.chatService.setChatHistory(res.history);        
       });
     });
 
@@ -44,8 +44,8 @@ export class ChatDetailsComponent {
   }
 
   isSendByUser(msg:any) {
-    if (msg.sender?.id) return msg.sender.id !== this.participantId;
-    else return msg.sender !== this.participantId;
+    if (this.participant.id) return msg.id !== this.participant.id;
+    else return msg.sender !== this.participant.id;
   }
 
   ngOnDestroy() {

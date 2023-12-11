@@ -7,14 +7,18 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InvestorTabComponent {
-@Input() investors:any;
+@Input() columnArray: any[] = [];
+@Input() investorDetail: any[] = [];
 
-protected tableHeader = {
-  
-};
-
-ngOnInit() {
-  
+getValue(obj: any, path: string): any {
+  const properties = path.split('.');
+  return properties.reduce((prev, curr) => {
+    if (prev && typeof prev === 'object' && curr in prev) {
+      return prev[curr];
+    } else {
+      return undefined; 
+    }
+  }, obj);
 }
-  
+
 }

@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardCardsComponent {
-  @Input() studentCount: number = 0;
+  @Input() count: number = 0;
   @Input() label: string = '';
   @Input() bgColor: string = 'text-purple-600 bg-purple-100';
 }

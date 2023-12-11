@@ -22,7 +22,6 @@ app.use(foundersRoute);
 
 app.use(paymentRoute);
 
-
 app.all('*', async (_req: Request, _res: Response) => {
     throw new NotFoundError();
 });

@@ -8,7 +8,7 @@ export interface USER_UPDATED {
     lastName?: string;
     profileImgUrl?: string;
   };
-} 
+}
 
 export class USER_UPDATED_PUBLISHER extends kafkaPublisher<USER_UPDATED> {
     topic: TOPIC.USER_UPDATED = TOPIC.USER_UPDATED;

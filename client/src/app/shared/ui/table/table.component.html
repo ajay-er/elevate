@@ -36,9 +36,11 @@
       class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
       <tr>
-        <th>No</th>
-        <th *ngFor="let item of columnArray">{{ item }}</th>
-        <th>Action</th>
+        <th class="text-center" >No</th>
+        <th class="text-center" *ngFor="let item of columnArray">{{ item.header }}</th>
+
+        <th class="text-center"  *ngIf="buttonPresent">Verify</th>
+        <th class="text-center" *ngIf="actionButtons">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -46,12 +48,22 @@
         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
       ></tr>
       <tr *ngFor="let item of gridArray; let no = index">
-        <td class="py-4">{{ no + 1 }}</td>
-        <td class="py-4" *ngFor="let column of columnArray">
-          {{ item[column] }}
+        <td class="py-4 text-center">{{ no + 1 }}</td>
+        <td class="py-4 text-center" *ngFor="let column of columnArray">
+          <ng-container *ngIf="column.datatype !== 'amount';else amount">{{ getValue(item, column.fieldName) }} </ng-container>              
+                
+          <ng-template #amount>
+            {{ getValue(item, column.fieldName) | appFormatInvestmentAmount }} 
+          </ng-template>
+
         </td>
-        <td>
-          <button class="" (click)="edit(item)">
+        <td class="text-center" *ngIf="buttonPresent">
+          <button (click)="edit(item)" class="px-4 py-2 bg-blue-400 text-black" >
+            verify
+          </button>
+        </td>
+        <td class="text-center"  *ngIf="actionButtons" >
+          <button   (click)="edit(item)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

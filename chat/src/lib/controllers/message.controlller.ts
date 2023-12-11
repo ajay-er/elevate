@@ -8,6 +8,7 @@ const messageService = container.resolve(MessageService);
 const userService = container.resolve(UserService);
 
 export class MesssageController {
+
     async chatList(req: Request, res: Response) {
         const userId = req.currentUser?.id;
         if (!userId) throw new UnAuthorizedError();
@@ -47,6 +48,7 @@ export class MesssageController {
                     (participant: any) => participant.id === investor.id
                 )
         );
+        
         const chat = [...participantsArray, ...uniqueInvestors!];
 
         res.status(200).json({ chat: chat, currentUserId: currentUser.id });
@@ -56,11 +58,12 @@ export class MesssageController {
         const participantId = req.params.participantId;
         const userId = req.currentUser?.id;
         if (!userId) throw new UnAuthorizedError();
+        const participant = await userService.findUserById(participantId);
+        if (!participant) throw new BadRequestError('participant not found');
         const currentUser = await userService.findUserById(userId);
         if (!currentUser) throw new BadRequestError('User not found');
 
-        const participant = await userService.findUser(participantId);
-        const messages = await messageService.getChatHistory(participantId, currentUser.id);
+        const messages = await messageService.getChatHistory(participant.id, currentUser.id);
         res.json({ history: { messages, participant } });
     }
 }

@@ -3,7 +3,7 @@ import 'express-async-errors';
 import morgan from 'morgan';
 import cors from 'cors';
 import { createServer } from 'http';
-import { currentUser } from '@ajay404/elevate';
+import { currentUser, errorHandler } from '@ajay404/elevate';
 import { messageRoute } from './lib/routes/message.route';
 import { setupSocketIO } from './socket';
 
@@ -23,4 +23,6 @@ app.use(messageRoute);
 
 setupSocketIO(httpServer);
 
+app.use(errorHandler);
+ 
 export default httpServer;

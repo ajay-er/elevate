@@ -13,7 +13,7 @@ export class ChatService {
   private chatHistory = new BehaviorSubject<any>([]);
 
   constructor() {
-    this.socket = io('http://elevate.test', {
+    this.socket = io('https://ajay404.online', {
       transports:['websocket'],
       path:'/api/v1/chat/socket.io',
       withCredentials:true,
@@ -58,6 +58,10 @@ export class ChatService {
 
   setCurrentUser(user: string) {
     this.currentUserId.next(user);
+  }
+
+  getCurrentUserId():Observable<any> {
+    return this.currentUserId.asObservable();
   }
 
   sendMessage(msg: string) {

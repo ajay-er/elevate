@@ -36,7 +36,7 @@ export class UserRepository {
             { new: true }
         );
     }
-
+    
     async save(user: UserDoc) {
         return await user.save();
     }

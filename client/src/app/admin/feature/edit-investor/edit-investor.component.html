@@ -1,3 +1,288 @@
 <div class="p-10 pt-24 sm:p-24 sm:ml-64 min-h-screen">
-  <router-outlet></router-outlet>
+  <form [formGroup]="updateInvestorForm">
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">First Name</label>
+        <input
+          formControlName="firstName"
+          placeholder="john"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Last Name</label>
+        <input
+        formControlName="lastName"
+          placeholder="doe"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+    </div>
+  
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Email</label>
+        <input 
+          formControlName="email"
+          placeholder="arun@gmail.com"
+          class="appearance-none  block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Phone</label>
+        <input
+        formControlName="phone"
+          placeholder="9999999999"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+    </div>
+  
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">website</label>
+        <input
+        formControlName="website"
+          placeholder="url"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Bio</label>
+        <textarea
+          rows="1"
+        formControlName="bio"
+          class="appearance-none block w-full text-grey-darker border border-black"
+          placeholder="your bio..."
+        ></textarea>
+      </div>
+    </div>
+  
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Twitter</label>
+        <div class="flex">
+          <span
+            class="sm:block hidden p-2 w-1/2 text-sm text-gray-600 bg-gray-200 border border-black"
+          >
+            http://www.twitter.com/
+          </span>
+          <input
+        formControlName="twitter"
+            class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">LinkedIn</label>
+        <div class="flex">
+          <span
+            class="sm:block hidden p-2 w-1/2 text-sm text-gray-600 bg-gray-200 border border-black"
+          >
+            http://www.linkedin.com/
+          </span>
+          <input
+        formControlName="linkedin"
+  
+            class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+  
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Facebook</label>
+        <div class="flex">
+          <span
+            class="sm:block hidden p-2 w-1/2 text-sm text-gray-600 bg-gray-200 border border-black"
+          >
+            http://www.facebook.com/
+          </span>
+          <input
+        formControlName="facebook"
+  
+            class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Youtube</label>
+        <div class="flex">
+          <span
+            class="sm:block hidden p-2 w-1/2 text-sm text-gray-600 bg-gray-200 border border-black"
+          >
+            http://www.youtube.com/
+          </span>
+          <input
+  
+          formControlName="youtube"
+          class="appearance-none block w-full text-grey-darker border sm:border-l-0 border-black h-10 px-4"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+  
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Investment Locations</label>
+        <input
+          (click)="selectCountryDropDown = !selectCountryDropDown"
+          type="text"
+  
+          class="appearance-none block w-full text-grey-darker border border-black h-10"
+          placeholder="Search coutry..."
+        />
+        <div
+          [ngClass]="{
+            block: selectCountryDropDown,
+            hidden: !selectCountryDropDown
+          }"
+          class="z-50 bg-white block w-60 absolute text-grey-darker shadow-2xl border p-2"
+        >
+          <ul
+            class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownSearchButton"
+          >
+            <li>
+              <div *ngFor="let item of countriesArray; let i = index" 
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  [formControl]="getCountryFormControl(i)" (change)="updateCountryArray(i)"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >{{Countries[i].name}}</label
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+  
+        <!-- tag -->
+        <!-- <div class="my-3 flex flex-wrap -m-1">
+          <span
+            class="m-1 flex flex-wrap justify-between items-center text-xs sm:text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded px-4 py-2 font-bold leading-loose cursor-pointer dark:text-gray-300"
+          >
+            India
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:h-4 sm:w-4 ml-4 text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div> -->
+      </div>
+  
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Investment Markets</label>
+        <input
+          (click)="selectMarketDropDown = !selectMarketDropDown"
+          type="text"
+          class="appearance-none block w-full text-grey-darker border border-black h-10"
+          placeholder="Search Markets..."
+        />
+        <div
+          [ngClass]="{
+            block: selectMarketDropDown,
+            hidden: !selectMarketDropDown
+          }"
+          class="z-50 bg-white block w-60 absolute text-grey-darker shadow-2xl border p-2"
+        >
+          <ul
+            class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownSearchButton"
+          >
+            <li>
+              <div
+              *ngFor="let item of technologiesArray; let i = index" 
+                class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  [formControl]="getMarketFormControl(i)" (change)="updateMarketsArray(i)"
+  
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >{{Technologies[i].name}}</label
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+  
+        <!-- tag -->
+        <!-- <div class="my-3 flex flex-wrap -m-1">
+          <span
+            class="m-1 flex flex-wrap justify-between items-center text-xs sm:text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded px-4 py-2 font-bold leading-loose cursor-pointer dark:text-gray-300"
+          >
+            Technology
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:h-4 sm:w-4 ml-4 text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  
+    <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2"
+          >Total Investment Count</label
+        >
+        <input
+        formControlName="totalInvestmentCount"
+          placeholder="10"
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4"
+          type="text"
+        />
+      </div>
+      <div class="mb-3 space-y-2 w-full text-xs">
+        <label class="font-semibold text-black py-2">Investment amount</label>
+        <select 
+        formControlName="investmentAmount"
+  
+          class="appearance-none block w-full text-grey-darker border border-black h-10 px-4" (change)="onInvestmentAmountChange($event)"
+        >
+        <option *ngFor="let amountVariant of investmentAmountVariants" [value]="amountVariant">₹{{ amountVariant }}</option>
+        </select>
+      </div>
+    </div>
+    <app-loading-button
+      (click)="submit()"
+      [type]="'submit'"
+      [buttonClass]="'bg-black text-white p-2 mt-2'"
+    ></app-loading-button>
+  </form>
+  
 </div>

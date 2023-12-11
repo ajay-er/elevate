@@ -61,6 +61,21 @@ spec:
                 secretKeyRef:
                   name: auth-secrets
                   key: ADMIN_PASSWORD
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloudinary-secrets
+                  key: CLOUDINARY_CLOUD_NAME
+            - name: CLOUDINARY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudinary-secrets
+                  key: CLOUDINARY_API_KEY
+            - name: CLOUDINARY_API_SECRET
+              valueFrom:
+                  secretKeyRef:
+                    name: cloudinary-secrets
+                    key: CLOUDINARY_API_SECRET
 ---
 apiVersion: v1
 kind: Service

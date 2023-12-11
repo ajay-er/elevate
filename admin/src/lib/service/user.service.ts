@@ -10,6 +10,10 @@ export class UserService {
         return await this.userRepo.findUser(userId);
     }
 
+    public async findById(userId:string):Promise<IUser | null> {
+        return await this.userRepo.findById(userId);
+    }
+
     public async createUser(userData:IUser) {
         return await this.userRepo.createUser(userData);
     }
@@ -17,6 +21,10 @@ export class UserService {
 
     public async update(userId:string,userData:IUser) {
         return await this.userRepo.update(userId,userData);
+    }
+
+    public async findAll(page:number,limit:number) {
+        return await this.userRepo.findAll(page,limit);
     }
    
 }

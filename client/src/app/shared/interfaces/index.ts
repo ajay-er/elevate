@@ -69,27 +69,6 @@ export interface IFounder {
   role: string;
 }
 
-export interface IStartup {
-  companyName: string;
-  logo: File | null;
-  bannerImage: File | null;
-  description: string;
-  industry: string;
-  location: string;
-  businessModel: string;
-  foundingDate: string;
-  targetAudience: string;
-  solution: string;
-  marketProblem: string;
-  founders: IFounder[];
-  fundingStatus: string;
-  fundingAmount: string;
-  totalEquityShares: string;
-  exitStrategy: string;
-  currentValuation: string;
-  availableEquityShares: string;
-  [key: string]: any;
-}
 
 export interface IJwtPayload {
   id: string;
@@ -155,4 +134,28 @@ export interface Technology {
   category: string;
   description: string;
   selected?: boolean;
+}
+
+
+interface SocialMediaLinks {
+  twitter: string;
+  linkedin: string;
+  facebook: string;
+  youtube: string;
+}
+
+export interface IInvestorData {
+  bio: string;
+  createdAt: string;
+  id: string;
+  investmentAmount: string;
+  investmentLocations: string[]; 
+  investmentMarkets: string[]; 
+  isVerified: boolean;
+  phone: string;
+  socialMediaLinks: SocialMediaLinks;
+  totalInvestmentCount: number;
+  updatedAt: string;
+  user: any;
+  website: string;
 }

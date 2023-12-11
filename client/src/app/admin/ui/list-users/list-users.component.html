@@ -1,14 +1,15 @@
 <div class="overflow-y-auto" style="max-height: 24rem">
-  <ul class="p-6 space-y-6">
-    <li class="flex items-center">
+  <ul *ngIf="investors.length > 0" class="p-6 space-y-6">
+    <li *ngFor="let item of investors" class="flex items-center">
       <div class="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
         <img
-          src="https://randomuser.me/api/portraits/men/75.jpg"
-          alt="Norman Walters profile picture"
+          [src]="item.user.profileImgUrl"
+          [alt]="item.user.firstName"
         />
       </div>
-      <span class="text-gray-600">Norman Walters</span>
-      <span class="ml-auto font-semibold">7.7</span>
+      <span class="text-gray-600">{{item.user.firstName}}</span>
+      <span *ngIf="!item.isVerified" class="ml-auto font-semibold">❌</span>
+      <span *ngIf="item.isVerified" class="ml-auto font-semibold">✅</span>
     </li>
   </ul>
 </div>

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '../../data-access/admin.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-founders-container',
@@ -8,15 +9,27 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./founders-container.component.css'],
 })
 export class FoundersContainerComponent {
-  dummyData: any;
-  coloumnArr = ['name','phone','email','website'];
+  protected founders: any;
 
-  constructor(private http: HttpClient) {
-    this.http
-      .get('https://jsonplaceholder.typicode.com/users')
-      .subscribe((res) => {
-        console.log(res);
-        this.dummyData = res;
-      });
+  private adminService = inject(AdminService);
+  private router = inject(Router);
+
+  coloumnArray : any[] = [
+    {header:'Founder Name',fieldName:'firstName',datatype:'string'},
+    {header:'email',fieldName:'email',datatype:'string'},
+    {header:'role',fieldName:'role',datatype:'string'},
+  ];
+  
+  ngOnInit() {
+    this.adminService.getAllFounders().subscribe((res:any) => {
+      this.founders = res.result;
+      console.log(this.founders);
+    });
   }
+
+  editUser(event:any) {
+    console.log(event);
+    this.router.navigate(['/admin/founders',event.id]);
+  }
+  
 }

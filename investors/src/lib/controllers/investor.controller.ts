@@ -7,6 +7,7 @@ import { BadRequestError, UnAuthorizedError } from '@ajay404/elevate';
 import { USER_UPDATED_PUBLISHER } from '../../events/publisher/user.updated.publisher';
 import { kafka_client } from '../../config/kafka.config';
 import { IUser } from '../database/model/User';
+import { INVESTOR_UPDATED_PUBLISHER } from '../../events/publisher/investor.updated.publisher';
 
 const investorService = container.resolve(InvestorService);
 const userService = container.resolve(UserService);
@@ -20,11 +21,23 @@ export class InvestorController {
 
     async getInvestorProfile(req: Request, res: Response) {
         const id = req.params.id;
-        const result = await investorService.findById(id);
-        res.status(200).json({ result });
+        const investor = await investorService.findById(id);
+        if (!investor?.isVerified) {
+            throw new BadRequestError('Investor is not verified'); 
+        }
+        res.status(200).json({ investor });
     }
     
     async getInvestorDetails(req: Request, res: Response) {
+        const id = req.currentUser?.id;
+        if (!id) throw new UnAuthorizedError();
+        const user = await userService.findUserById(id);
+        if (!user) throw new BadRequestError('oops user not found');
+        const result = await investorService.findByUserId(user.id);
+        res.status(200).json({ result , user});
+    }
+
+    async getProfile(req: Request, res: Response) {
         const id = req.currentUser?.id;
         if (!id) throw new UnAuthorizedError();
         const user = await userService.findUserById(id);
@@ -63,8 +76,30 @@ export class InvestorController {
         const {firstName,lastName } = req.body;
         const {phone,website,bio,twitter,facebook,youtube,linkedin,investmentAmount,totalInvestmentCount } = req.body;
         await userService.update(userId,{firstName,lastName});
+        await new USER_UPDATED_PUBLISHER(kafka_client).publish({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            userId: user.userId
+        });
         await investorService.update(user.id,{socialMediaLinks:{twitter,linkedin,facebook,youtube},investmentAmount,totalInvestmentCount,phone,website,bio});
-        res.json({message:'Investor profile updated successfully'});
+        const investor = await investorService.findByUserId(user.id);
+        if (!investor) throw new BadRequestError('Ooops investor not found');
+        await new INVESTOR_UPDATED_PUBLISHER(kafka_client).publish({
+            userId: user.userId,
+            isVerified:investor.isVerified,
+            socialMediaLinks:{
+                twitter,
+                facebook,
+                youtube,
+                linkedin,
+            },
+            investmentAmount,
+            totalInvestmentCount,
+            phone,
+            website,
+            bio
+        });
+        res.json({message:'Investor profile updated successfully',investor});
     }
 }
 

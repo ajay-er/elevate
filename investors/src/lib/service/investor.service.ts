@@ -14,7 +14,7 @@ export class InvestorService {
         return await this.investorRepo.findAll();
     }
 
-    public async findById(id: string) {
+    public async findById(id: string):Promise<IInvestor | null> {
         return await this.investorRepo.findById(id);
     }
 

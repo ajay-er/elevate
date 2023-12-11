@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -15,6 +15,10 @@ export class InvestorsService {
 
   updateProfileImage(imageData: FormData) {
     return this.http.put(`${this.apiUrl}/investor/profile-img`, imageData);
+  }
+
+  getInvestorDetails(id:string) {
+    return this.http.get(`${this.apiUrl}/investor/profile/${id}`);
   }
 
   getAllChatList() {

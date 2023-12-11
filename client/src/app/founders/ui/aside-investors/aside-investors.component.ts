@@ -7,5 +7,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AsideInvestorsComponent {
-  @Input() label: string = 'Markets';
+  @Input() values!: any;
 }

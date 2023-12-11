@@ -8,4 +8,12 @@ export class AdminService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
   
+  getLatestInvestors() {
+    return this.http.get(`${this.apiUrl}/admin/all-investors`);
+  }
+
+  getAllFounders() {
+    return this.http.get(`${this.apiUrl}/admin/all-founders`);
+  }
+  
 }

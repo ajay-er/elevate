@@ -24,7 +24,7 @@
           class="rounded py-2 px-3"
           [style.background-color]="isSendByUser(msg) ? '#e2f7cb' : '#f2f2f2'"
         >
-          <p *ngIf="!isSendByUser(msg)" class="text-sm text-purple">{{participant?.firstName}}</p>
+          <p *ngIf="!isSendByUser(msg)" class="text-sm text-gray-600">{{participant?.firstName}}</p>
           <p class="text-sm text-black mt-1">{{msg.text}}</p>
           <p class="text-right text-xs text-grey-dark mt-1 text-gray-500">{{msg.createdAt | date :'h:mm a'}}</p>
         </div>

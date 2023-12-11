@@ -1,6 +1,6 @@
 <div class="mt-16 p-4 sm:ml-64 min-h-screen">
   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-    <app-dashboard-cards [studentCount]="62" label="Students">
+    <app-dashboard-cards [count]="30" label="Verified Investors">
       <svg
         aria-hidden="true"
         fill="none"
@@ -19,8 +19,8 @@
     </app-dashboard-cards>
     <app-dashboard-cards
       [bgColor]="'text-yellow-600 bg-yellow-100'"
-      [studentCount]="62"
-      label="Students"
+      [count]="62"
+      label="Verified Founders"
     >
       <svg
         svg-slot
@@ -40,8 +40,8 @@
     </app-dashboard-cards>
     <app-dashboard-cards
       [bgColor]="'text-green-600 bg-green-100'"
-      [studentCount]="62"
-      label="Students"
+      [count]="2"
+      label="Total subscriptions"
     >
       <svg
         aria-hidden="true"
@@ -61,8 +61,8 @@
     </app-dashboard-cards>
     <app-dashboard-cards
       [bgColor]="'text-red-600 bg-red-100'"
-      [studentCount]="62"
-      label="Students"
+      [count]="23"
+      label="Failed subcriptions"
     >
       <svg
         aria-hidden="true"
@@ -85,14 +85,14 @@
     class="grid mt-4 md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6"
   >
     <div
-      class="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg"
+      class="flex flex-col  md:col-span-2 md:row-span-2 bg-white shadow rounded-lg"
     >
       <app-chart-1></app-chart-1>
     </div>
     <app-dashboard-cards
       [bgColor]="'text-cyan-600 bg-cyan-100'"
-      [studentCount]="62"
-      label="Students"
+      [count]="3198"
+      label="Total profit"
     >
       <svg
         aria-hidden="true"
@@ -118,8 +118,8 @@
 
     <app-dashboard-cards
       [bgColor]="'text-orange-600 bg-orange-100'"
-      [studentCount]="62"
-      label="Students"
+      [count]="20"
+      label="Pending verifications"
     >
       <svg
         aria-hidden="true"
@@ -142,7 +142,7 @@
       <div class="px-6 py-5 font-semibold border-b border-gray-100">
         Latest Investors
       </div>
-      <app-list-users></app-list-users>
+      <app-list-users [investors]="investors"></app-list-users>
     </div>
     <div class="flex flex-col row-span-3 bg-white shadow rounded-lg">
       <app-chart-2></app-chart-2>

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VerifyInvestorComponent } from '../verify-investor/verify-investor.component';
+import { InvestorVerificationComponent } from '../investor-verification/investor-verification.component';
 
 const routes: Routes = [
   {
@@ -13,6 +15,14 @@ const routes: Routes = [
       import('../dashboard-container/dashboard-container.module').then(
         (m) => m.DashboardContainerModule
       ),
+  },
+  {
+    path: 'investor/verify',
+    component:VerifyInvestorComponent
+  },
+  {
+    path: 'investor/verify/:id',
+    component:InvestorVerificationComponent
   },
   {
     path: 'investors',

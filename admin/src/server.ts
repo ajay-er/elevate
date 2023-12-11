@@ -4,6 +4,7 @@ import { kafka_client } from './config/kafka.config';
 import mongoConnect from './config/mongo';
 import { USER_CREATED_EVENT_CONSUMER } from './events/consumers/user.created.consumer';
 import { USER_UPDATED_EVENT_CONSUMER } from './events/consumers/user.updated.consumer';
+import { INVESTOR_UPDATED_EVENT_CONSUMER } from './events/consumers/investor.updated.consumer';
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 3000;
         await mongoConnect(process.env.MONGO_URI);
         await new USER_CREATED_EVENT_CONSUMER(kafka_client).subscribe();
         await new USER_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
+        await new INVESTOR_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
 
         app.listen(PORT, () => {
             console.log(`Server-Admin is Listening on port ${PORT}`);
