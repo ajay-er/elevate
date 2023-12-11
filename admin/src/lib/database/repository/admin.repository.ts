@@ -14,4 +14,12 @@ export class AdminRepository {
     public async createInvestor(id:string) {
         return await Investor.create({user:id});
     }
+    
+    public async findUser(id:string) {
+        return await Investor.findOne({user:id});
+    }
+    
+    public async findUserById(id:string) {
+        return await Investor.findById({_id:id}).populate('user');
+    }
 }

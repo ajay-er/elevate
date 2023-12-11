@@ -13,8 +13,12 @@ export class CommonApiService {
     return this.http.get(`${this.api}/investor/investor-profile`);
   }
 
-  getProfileInvestors() {
-    return this.http.get(`${this.api}/admin/investor-profile`);
+  getProfileInvestors(id:string) {
+    return this.http.get(`${this.api}/admin/investor-profile/${id}`);
+  }
+
+  getProfileFounder(id:string) {
+    return this.http.get(`${this.api}/admin/founder-profile/${id}`);
   }
 
   updateInvestorProfile(data:any) {

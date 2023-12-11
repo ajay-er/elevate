@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CommonApiService } from 'src/app/shared/data-access/api.service';
 import { Countries, Technology } from 'src/app/shared/interfaces';
 import { countries } from 'src/app/shared/interfaces/countries';
@@ -22,6 +23,7 @@ export class EditInvestorComponent {
   selectMarketDropDown:boolean = false;
 
   private commonApiService = inject(CommonApiService); 
+  private route = inject(ActivatedRoute); 
   protected userDetails:any;
   updateInvestorForm!: FormGroup;
   private initialFormValues: any;
@@ -62,27 +64,33 @@ export class EditInvestorComponent {
     // Store the initial form values
     this.initialFormValues = this.updateInvestorForm.value;
 
-    this.commonApiService.getuserProfile().subscribe((res: any) => {
-      const user = { ...res.user, ...res.result };
-      this.userDetails = user;
-      console.log(res);
-      
-      this.updateInvestorForm.patchValue({
-        twitter:user.socialMediaLinks?.twitter || '',
-        youtube: user.socialMediaLinks?.youtube || '',
-        facebook: user.socialMediaLinks?.facebook || '',
-        linkedin: user.socialMediaLinks?.linkedin || '',
-        firstName:user.firstName || '',
-        lastName:user.lastName || '',
-        email:user.email || '',
-        phone:user.phone || '',
-        bio:user.bio || '',
-        website:user.website || '',
-        totalInvestmentCount: user.totalInvestmentCount || '',
-        investmentAmount: user.investmentAmount || '',
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (!id) { return; }
+      this.commonApiService.getProfileInvestors(id).subscribe((res: any) => {
+        const user = res.investor;
+        this.userDetails = user;
+        console.log(res,'yes');
+        
+        this.updateInvestorForm.patchValue({
+          twitter:user.socialMediaLinks?.twitter || '',
+          youtube: user.socialMediaLinks?.youtube || '',
+          facebook: user.socialMediaLinks?.facebook || '',
+          linkedin: user.socialMediaLinks?.linkedin || '',
+          firstName:user.user.firstName || '',
+          lastName:user.user.lastName || '',
+          email:user.user.email || '',
+          phone:user.phone || '',
+          bio:user.bio || '',
+          website:user.website || '',
+          totalInvestmentCount: user.totalInvestmentCount || '',
+          investmentAmount: user.investmentAmount || '',
+        });
+  
       });
-
     });
+
+    
   }
 
   onInvestmentAmountChange(event: any) {

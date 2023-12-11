@@ -18,4 +18,12 @@ export class AdminService {
         return await this.adminRepo.createInvestor(id);
     }
 
+    public async findUser(id:string) {
+        return await this.adminRepo.findUser(id);
+    }
+
+    public async findUserById(id:string) {
+        return await this.adminRepo.findUserById(id);
+    }
+
 }

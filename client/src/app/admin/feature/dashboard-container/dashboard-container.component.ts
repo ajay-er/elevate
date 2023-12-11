@@ -9,12 +9,12 @@ import { AdminService } from '../../data-access/admin.service';
 export class DashboardContainerComponent {
 
   private adminService = inject(AdminService);
-  private investors:any[] = [];
+  investors:any[] = [];
   ngOnInit() {
     this.adminService.getLatestInvestors().subscribe((res:any) => {
-      this.investors = res.result;
-      console.log(res);
-      
+      this.investors = res.result; 
+      console.log(this.investors);
+           
     });
   }
   

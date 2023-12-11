@@ -11,4 +11,9 @@ export class AdminService {
   getLatestInvestors() {
     return this.http.get(`${this.apiUrl}/admin/all-investors`);
   }
+
+  getAllFounders() {
+    return this.http.get(`${this.apiUrl}/admin/all-founders`);
+  }
+  
 }
