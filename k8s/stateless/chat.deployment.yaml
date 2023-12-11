@@ -23,7 +23,7 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: JWT_SECRET
----
+--- 
 apiVersion: v1
 kind: Service
 metadata:
