@@ -29,7 +29,7 @@ export const resetPassEmailTemplate = function (token: string) {
      limited time. For security reasons, we recommend that you reset your password promptly and do not share this link with anyone.
       If you did not request this password reset, please disregard this email
     </p>
-    <a href="http://localhost:4200/auth/reset-password/${token}">
+    <a href="https://ajay404.online/auth/reset-password/${token}">
     click here to verify
     </a>
     <p style="font-size:0.9em;">Regards,<br />Elevate</p>
