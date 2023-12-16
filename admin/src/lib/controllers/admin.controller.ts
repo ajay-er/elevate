@@ -6,6 +6,8 @@ import { UserService } from '../service/user.service';
 import { BadRequestError } from '@ajay404/elevate';
 import { USER_TOGGLE_BLOCK_PUBLISHER } from '../../events/publisher/user.blocktoogle.publisher';
 import { kafka_client } from '../../config/kafka.config';
+import { VERIFY_INVESTOR_PUBLISHER } from '../../events/publisher/investor.verified.publisher';
+import { IUser } from '../database/model/User';
 
 const adminService = container.resolve(AdminService);
 const usersService = container.resolve(UserService);
@@ -29,8 +31,15 @@ export class AdminController {
 
     async verifyUser(req: Request, res: Response) {
         const { investorId } = req.body;
-        const investor = await adminService.updateVerifyInvestor(investorId);
-        res.json({ investor });
+        await adminService.updateVerifyInvestor(investorId);
+        const investor  = await adminService.findUserById(investorId);
+        if (!investor) throw new BadRequestError('Oops something goes wrong, investor not found');
+        const user = investor.user as unknown as IUser;
+        await new VERIFY_INVESTOR_PUBLISHER(kafka_client).publish({
+            isVerified: true,
+            userId: user?.userId
+        });
+        res.json({ statas:'OK' });
     }
 
     async getAllFounders(req: Request, res: Response) {
@@ -56,18 +65,17 @@ export class AdminController {
     }
 
     async toggleBlockUser(req: Request, res: Response) {
-        const userId = req.params.id;
+        const {userId} = req.body;
         const user = await usersService.findUserById(userId);
         if (!user) throw new BadRequestError('Oops user not found');
         user.isBlocked = !user.isBlocked;
         const newUser = await user.save();
-
         await new USER_TOGGLE_BLOCK_PUBLISHER(kafka_client).publish({
             userId,
             isBlocked: newUser.isBlocked,
         });
 
-        res.json({ user });
+        res.json({ newUser });
     }
 }
 

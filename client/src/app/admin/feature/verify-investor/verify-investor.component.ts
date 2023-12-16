@@ -14,7 +14,7 @@ import { AdminService } from '../../data-access/admin.service';
   template: `
 <div class="p-4 sm:ml-64 min-h-screen">
 <ng-container *ngIf="investors?.length > 0; else noInvestors">
-  <app-table [gridArray]="investors" [buttonPresent]="true" [columnArray]="coloumnArray" (onEdit)="verify($event)"></app-table>
+  <app-table [gridArray]="investors" [buttonPresent]="true" [columnArray]="coloumnArray" (onEdit)="verify($event)" (onDelete)="blockUser($event)" ></app-table>
 </ng-container>
 
 <ng-template #noInvestors>
@@ -44,7 +44,10 @@ export class VerifyInvestorComponent {
       this.investors = res.result;
     });
   }
-  
+
+  blockUser(event:any) {
+    console.log(event);
+  }
 
   verify(event:any) {
     console.log(event);

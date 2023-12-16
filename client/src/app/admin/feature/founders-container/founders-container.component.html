@@ -5,6 +5,7 @@
 </ng-template>
 
 <ng-container *ngIf="founders?.length > 0; else noFounders">
-  <app-table [columnArray]="coloumnArray" [actionButtons]="true" (onEdit)="editUser($event)" [gridArray]="founders"></app-table>
+  <app-table [columnArray]="coloumnArray" [actionButtons]="true" (onEdit)="editUser($event)" 
+  (onDelete)="blockUser($event)" [gridArray]="founders"></app-table>
 </ng-container>
 </div>

@@ -24,5 +24,7 @@ export class AdminService {
     return this.http.put(`${this.apiUrl}/admin/verify-investor`,{investorId:id});
   }
 
-  
+  blockUser(userId:string) {
+    return this.http.put(`${this.apiUrl}/admin/block-user`,{userId});
+  }
 }

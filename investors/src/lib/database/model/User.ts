@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             enum: Object.values(IRole),
         },
-        isBlocked: { type: Boolean, default: true }
+        isBlocked: { type: Boolean, default: false }
     },
     { 
         toJSON: {

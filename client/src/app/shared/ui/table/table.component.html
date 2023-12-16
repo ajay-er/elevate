@@ -50,8 +50,7 @@
       <tr *ngFor="let item of gridArray; let no = index">
         <td class="py-4 text-center">{{ no + 1 }}</td>
         <td class="py-4 text-center" *ngFor="let column of columnArray">
-          <ng-container *ngIf="column.datatype !== 'amount';else amount">{{ getValue(item, column.fieldName) }} </ng-container>              
-                
+          <ng-container *ngIf="column.datatype !== 'amount';else amount">{{ getValue(item, column.fieldName) }} </ng-container>                              
           <ng-template #amount>
             {{ getValue(item, column.fieldName) | appFormatInvestmentAmount }} 
           </ng-template>
@@ -88,7 +87,7 @@
             }"
           >
             <svg
-              *ngIf="item.isBlocked; else unblockIcon"
+              *ngIf="item?.user?.isBlocked || item?.isBlocked; else unblockIcon"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -96,11 +95,8 @@
               stroke="currentColor"
               class="w-6 h-6 text-red-500"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-              />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+
             </svg>
 
             <ng-template #unblockIcon>

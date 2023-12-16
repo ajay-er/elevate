@@ -39,7 +39,7 @@ const investorSchema = new Schema(
 );
 
 interface IInvestor extends Document {
-  user: Schema.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
   bio?: string;
   phone:string;
   website?: string;

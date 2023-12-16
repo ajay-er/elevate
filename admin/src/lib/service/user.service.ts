@@ -10,7 +10,7 @@ export class UserService {
         return await this.userRepo.findUser(userId);
     }
 
-    public async findById(userId:string):Promise<IUser | null> {
+    public async findById(userId:any):Promise<IUser | null> {
         return await this.userRepo.findById(userId);
     }
 

@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '../../data-access/admin.service';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,8 +27,18 @@ export class FoundersContainerComponent {
   }
 
   editUser(event:any) {
-    console.log(event);
     this.router.navigate(['/admin/founders',event.id]);
+  }
+
+  blockUser(event:any) {
+    this.adminService.blockUser(event.userId).subscribe((res:any) => {
+      console.log(res);
+      const newUser = res.newUser;
+      const index = this.founders.findIndex((user: any) => user.userId === newUser.userId);
+      if (index !== -1) {
+        this.founders[index].isBlocked = newUser.isBlocked;
+      }
+    });
   }
   
 }

@@ -18,11 +18,11 @@ import { AdminService } from '../../data-access/admin.service';
         <div *ngIf="investor" class="bg-gray-300 shadow rounded-lg p-6">
           <div class="flex flex-col items-center">
             <img
-              [src]="investor.user.profileImgUrl"
+              [src]="investor.user?.profileImgUrl"
               class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
             />
 
-            <p class="text-2xl uppercase font-bold">{{investor.user.firstName + ' ' + investor.user.lastName }}</p>
+            <p class="text-2xl uppercase font-bold">{{investor.user?.firstName + ' ' + investor.user?.lastName }}</p>
             <p class="font-bold">{{investor.user.email}}</p>
             <p class="font-bold">{{investor.phone}}</p>
             <div class="mt-3 flex flex-wrap gap-4 justify-center">
@@ -36,7 +36,7 @@ import { AdminService } from '../../data-access/admin.service';
           <hr class="my-6 border-t border-gray-300" />
           <div class="items-center justify-center flex">
             <!-- linkdin -->
-            <div class="p-2">
+            <div *ngIf="investor.socialMediaLinks" class="p-2">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds LinkedIn"
@@ -55,7 +55,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
               </a>
             </div>
             <!-- yt -->
-            <div class="p-2">
+            <div *ngIf="investor.socialMediaLinks" class="p-2">
               <a
                 class="text-white hover:text-orange-500"
                 aria-label="Visit TrendyMinds YouTube"
@@ -74,7 +74,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
               </a>
             </div>
             <!-- fb -->
-            <div class="p-2">
+            <div *ngIf="investor.socialMediaLinks" class="p-2">
               <a
                 class="text-white hover:text-blue-600"
                 aria-label="Visit TrendyMinds Facebook"
@@ -93,7 +93,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
               </a>
             </div>
             <!-- twitter -->
-            <div class="p-2">
+            <div *ngIf="investor.socialMediaLinks" class="p-2">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds Twitter"
@@ -195,6 +195,8 @@ export class InvestorVerificationComponent {
       const id  = param.get('id');
       if (!id) { return; }
       this.common.getProfileInvestors(id).subscribe((res:any) => {
+        console.log(res);
+        
         this.investor = res.investor;        
       });
     });
