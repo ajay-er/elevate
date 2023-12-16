@@ -3,6 +3,7 @@ import app from './app';
 import mongoConnect from './config/mongo';
 import { USER_UPDATED_EVENT_CONSUMER } from './events/consumer/user.updated.consumer';
 import { kafka_client } from './config/kafka.config';
+import { USER_TOGGLE_BLOCK_CONSUMER } from './events/consumer/user.toggleblock.consumer';
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
     try {
         console.clear();
         await new USER_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
+        await new USER_TOGGLE_BLOCK_CONSUMER(kafka_client).subscribe();
 
         await mongoConnect(process.env.MONGO_URI);
 

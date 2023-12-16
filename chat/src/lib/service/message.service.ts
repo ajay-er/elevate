@@ -1,6 +1,6 @@
 import { autoInjectable } from 'tsyringe';
 import { MessageRepository } from '../database/repository/message.repository';
-import { BadRequestError } from '@ajay404/elevate';
+import { BadRequestError, IRole } from '@ajay404/elevate';
 
 @autoInjectable()
 export class MessageService {
@@ -11,12 +11,8 @@ export class MessageService {
         return await this.messageRepo.addMessage(sender,recipient,text);
     }
 
-    async getAllmessagesOfUser(userId:string) { 
-        return await this.messageRepo.getAllMessages(userId);
-    }
-
-    async getChatListUserMessaged(userId:string) { 
-        return await this.messageRepo.getChatList(userId);
+    async getChatListOfUser(id:string,currentRole:IRole) { 
+        return await this.messageRepo.getChatList(id,currentRole);
     }
 
     async getChatHistory(participant:string,userId:string) { 

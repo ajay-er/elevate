@@ -23,7 +23,20 @@ export class InvestorsContainerComponent {
   
   ngOnInit() {
     this.adminService.getLatestInvestors().subscribe((res:any) => {
-      this.investors = res.result;
+      console.log(res.result);
+      const investors = res.result;
+      this.investors = investors.filter((item:any) => item.isVerified);
+    });
+  }
+
+  blockUser(event:any) {
+    this.adminService.blockUser(event.user.userId).subscribe((res:any) => {
+      console.log(res);
+      const newUser = res.newUser;
+      const index = this.investors.findIndex((investor: any) => investor.user.userId === newUser.userId);
+      if (index !== -1) {
+        this.investors[index].user.isBlocked = newUser.isBlocked;
+      }
     });
   }
 

@@ -1,3 +1,11 @@
 <div class="p-4 sm:ml-64 min-h-screen">
-  <app-table [columnArray]="coloumnArray" [actionButtons]="true" (onEdit)="editUser($event)" [gridArray]="founders"></app-table>
+
+<ng-template #noFounders>
+  <p class="text-blac pt-28 text-3xl text-center">No founders registered</p>
+</ng-template>
+
+<ng-container *ngIf="founders?.length > 0; else noFounders">
+  <app-table [columnArray]="coloumnArray" [actionButtons]="true" (onEdit)="editUser($event)" 
+  (onDelete)="blockUser($event)" [gridArray]="founders"></app-table>
+</ng-container>
 </div>

@@ -10,14 +10,13 @@ export class UserService {
         return await this.userRepo.findUser(userId);
     }
 
-    public async findById(userId:string):Promise<IUser | null> {
+    public async findById(userId:any):Promise<IUser | null> {
         return await this.userRepo.findById(userId);
     }
 
     public async createUser(userData:IUser) {
         return await this.userRepo.createUser(userData);
     }
-
 
     public async update(userId:string,userData:IUser) {
         return await this.userRepo.update(userId,userData);

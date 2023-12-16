@@ -25,7 +25,7 @@ export class TableComponent {
   }
 
   getValue(obj: any, path: string): any {
-    const properties = path.split('.');
+    const properties = path?.split('.');
     return properties.reduce((prev, curr) => {
       if (prev && typeof prev === 'object' && curr in prev) {
         return prev[curr];

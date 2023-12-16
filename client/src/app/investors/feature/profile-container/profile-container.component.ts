@@ -3,6 +3,8 @@ import { InvestorsService } from '../../data-access/investors.service';
 import { SharedService } from '../../../shared/data-access/shared.service';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
+import { JwtService } from 'src/app/shared/data-access/jwt.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-container',
@@ -13,6 +15,8 @@ export class ProfileContainerComponent {
   private sharedService = inject(SharedService);
   private investorService = inject(InvestorsService);
   private snackBar = inject(SnackbarService);
+  private jwtService = inject(JwtService);
+  private router = inject(Router);
   private subscription$: Subscription;
 
   constructor() {
@@ -24,6 +28,10 @@ export class ProfileContainerComponent {
         this.investorService.updateProfileImage(formData).subscribe((res:any) => {
           console.log(res);
           this.snackBar.showSuccess(res.message);
+          const token = window.localStorage.getItem('access_token');
+          if (this.jwtService.isInvestor(token!)) {
+            this.router.navigateByUrl('/investor/ideas');
+          }
         });
       });
   }

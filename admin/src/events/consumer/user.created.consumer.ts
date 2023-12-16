@@ -39,8 +39,9 @@ export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
     ): Promise<void> {
         try {
             const user = await userService.createUser(data as IUser);
-            const investor = await adminService.createInvestor(user.id);
-            console.log(investor,'investor created');
+            if (user.role === IRole.INVESTOR) {
+                await adminService.createInvestor(user.id);
+            }
             
         } catch (error) {
             console.log(error);

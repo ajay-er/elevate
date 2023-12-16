@@ -3,6 +3,8 @@ import app from './app';
 import mongoConnect from './config/mongo';
 import { kafka_client } from './config/kafka.config';
 import { USER_CREATED_EVENT_CONSUMER } from './events/consumers/user.created.consumer';
+import { USER_TOGGLE_BLOCK_CONSUMER } from './events/consumers/user.toggleblock.consumer';
+import { INVESTOR_UPDATED_EVENT_CONSUMER } from './events/consumers/investor.updated.consumer';
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,6 +17,8 @@ const PORT = process.env.PORT || 3000;
         await mongoConnect(process.env.MONGO_URI);
 		
         await new USER_CREATED_EVENT_CONSUMER(kafka_client).subscribe();
+        await new USER_TOGGLE_BLOCK_CONSUMER(kafka_client).subscribe();
+        await new INVESTOR_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
 
         app.listen(PORT, () => {
             console.log(`Server-Investors is Listening on port ${PORT}`);

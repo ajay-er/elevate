@@ -1,3 +1,4 @@
 <div class="p-4 sm:ml-64 min-h-screen">
-  <app-table [gridArray]="investors" [actionButtons]="true" [columnArray]="coloumnArray" (onEdit)="editUser($event)" ></app-table>
+  <app-table [gridArray]="investors" [actionButtons]="true" 
+  [columnArray]="coloumnArray" (onEdit)="editUser($event)"  (onDelete)="blockUser($event)" ></app-table>
 </div>

@@ -2,9 +2,9 @@ import 'reflect-metadata';
 import app from './app';
 import { kafka_client } from './config/kafka.config';
 import mongoConnect from './config/mongo';
-import { USER_CREATED_EVENT_CONSUMER } from './events/consumers/user.created.consumer';
-import { USER_UPDATED_EVENT_CONSUMER } from './events/consumers/user.updated.consumer';
-import { INVESTOR_UPDATED_EVENT_CONSUMER } from './events/consumers/investor.updated.consumer';
+import { USER_CREATED_EVENT_CONSUMER } from './events/consumer/user.created.consumer';
+import { USER_UPDATED_EVENT_CONSUMER } from './events/consumer/user.updated.consumer';
+import { INVESTOR_UPDATED_EVENT_CONSUMER } from './events/consumer/investor.updated.consumer';
 
 const PORT = process.env.PORT || 3000;
 

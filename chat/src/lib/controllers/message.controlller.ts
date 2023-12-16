@@ -8,51 +8,78 @@ const messageService = container.resolve(MessageService);
 const userService = container.resolve(UserService);
 
 export class MesssageController {
-
     async chatList(req: Request, res: Response) {
         const userId = req.currentUser?.id;
         if (!userId) throw new UnAuthorizedError();
 
         const currentUser = await userService.findUserById(userId);
         if (!currentUser) throw new BadRequestError('User not found');
-        let  allUsers;
+        let currespondParticipants;
         if (currentUser.role === IRole.INVESTOR) {
-            allUsers = await userService.findInvestors();
+            currespondParticipants = await userService.findInvestors(
+                currentUser.userId
+            );
         }
-        
+
         if (currentUser.role === IRole.FOUNDER) {
-            allUsers = await userService.findFounders();
+            currespondParticipants = await userService.findFounders(
+                currentUser.userId
+            );
         }
-
-        const filteredInvestors = allUsers?.filter(
-            (investor) => investor.id !== currentUser.id
-        );
-        const chatList = await messageService.getChatListUserMessaged(
-            currentUser.id
+        //if current user is founder. then payed users can message some investors.so that need to fetch.
+        const remainingChat = await messageService.getChatListOfUser(
+            currentUser.id,
+            currentUser.role
         );
 
-        const participants = chatList.reduce((users, message) => {
-            message.users.forEach((user: any) => {
-                if (user.id.toString() !== currentUser.id) {
-                    users.add(user);
-                }
-            });
-            return users;
-        }, new Set());
-
-        const participantsArray = Array.from(participants);
-
-        const uniqueInvestors = filteredInvestors?.filter(
-            (investor) =>
-                !participantsArray.some(
-                    (participant: any) => participant.id === investor.id
-                )
-        );
-        
-        const chat = [...participantsArray, ...uniqueInvestors!];
-
-        res.status(200).json({ chat: chat, currentUserId: currentUser.id });
+        const chat = currespondParticipants?.concat(remainingChat);
+        res.json({ chat ,currentUserId:currentUser.userId });
     }
+
+    // async chatList(req: Request, res: Response) {
+    //     const userId = req.currentUser?.id;
+    //     if (!userId) throw new UnAuthorizedError();
+
+    //     const currentUser = await userService.findUserById(userId);
+    //     if (!currentUser) throw new BadRequestError('User not found');
+    //     let  allUsers;
+    //     if (currentUser.role === IRole.INVESTOR) {
+    //         allUsers = await userService.findInvestors();
+    //     }
+
+    //     if (currentUser.role === IRole.FOUNDER) {
+    //         allUsers = await userService.findFounders();
+    //     }
+
+    //     const filteredInvestors = allUsers?.filter(
+    //         (investor) => investor.id !== currentUser.id
+    //     );
+    //     const chatList = await messageService.getChatListUserMessaged(
+    //         currentUser.id
+    //     );
+
+    //     const participants = chatList.reduce((users, message) => {
+    //         message.users.forEach((user: any) => {
+    //             if (user.id.toString() !== currentUser.id) {
+    //                 users.add(user);
+    //             }
+    //         });
+    //         return users;
+    //     }, new Set());
+
+    //     const participantsArray = Array.from(participants);
+
+    //     const uniqueInvestors = filteredInvestors?.filter(
+    //         (investor) =>
+    //             !participantsArray.some(
+    //                 (participant: any) => participant.id === investor.id
+    //             )
+    //     );
+
+    //     const chat = [...participantsArray, ...uniqueInvestors!];
+
+    //     res.status(200).json({ chat: chat, currentUserId: currentUser.id });
+    // }
 
     async chatHistory(req: Request, res: Response) {
         const participantId = req.params.participantId;
@@ -63,7 +90,10 @@ export class MesssageController {
         const currentUser = await userService.findUserById(userId);
         if (!currentUser) throw new BadRequestError('User not found');
 
-        const messages = await messageService.getChatHistory(participant.id, currentUser.id);
+        const messages = await messageService.getChatHistory(
+            participant.id,
+            currentUser.id
+        );
         res.json({ history: { messages, participant } });
     }
 }
