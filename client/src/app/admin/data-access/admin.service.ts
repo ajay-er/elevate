@@ -11,9 +11,18 @@ export class AdminService {
   getLatestInvestors() {
     return this.http.get(`${this.apiUrl}/admin/all-investors`);
   }
+  
+  getUnverifiedInvestors() {
+    return this.http.get(`${this.apiUrl}/admin/unverified-investors`);
+  }
 
   getAllFounders() {
     return this.http.get(`${this.apiUrl}/admin/all-founders`);
   }
+
+  verifyInvestor(id:string) {
+    return this.http.put(`${this.apiUrl}/admin/verify-investor`,{investorId:id});
+  }
+
   
 }

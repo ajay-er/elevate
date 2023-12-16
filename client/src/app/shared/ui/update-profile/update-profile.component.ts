@@ -4,6 +4,9 @@ import { countries } from '../../interfaces/countries';
 import { Countries, Technology } from '../../interfaces';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { technologies } from '../../interfaces/markets';
+import { Router } from '@angular/router';
+import { JwtService } from '../../data-access/jwt.service';
+import { LocalStorageService } from '../../data-access/local-storage.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -22,6 +25,9 @@ export class UpdateProfileComponent {
   selectMarketDropDown:boolean = false;
 
   private commonApiService = inject(CommonApiService); 
+  private jwtService = inject(JwtService); 
+  private localStorageService = inject(LocalStorageService); 
+  private router = inject(Router); 
   protected userDetails:any;
   updateInvestorForm!: FormGroup;
   private initialFormValues: any;
@@ -151,6 +157,10 @@ export class UpdateProfileComponent {
     console.log(this.updateInvestorForm.value);
     this.commonApiService.updateInvestorProfile(this.updateInvestorForm.value).subscribe((res:any) => {
       console.log(res);
+      const token = this.localStorageService.get('access_token');
+      if (this.jwtService.isInvestor(token!)) {
+        this.router.navigateByUrl('/investor/ideas');
+      }
     });
   }
 

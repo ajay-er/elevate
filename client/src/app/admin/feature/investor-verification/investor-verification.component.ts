@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IInvestorData } from 'src/app/shared/interfaces';
 import { LoadingButtonModule } from 'src/app/shared/ui/loading-button/loading-button.module';
 import { FormatInvestmentAmountPipe } from "../../../shared/resolvers/FormatInvestmentAmount.pipe";
 import { CommonApiService } from 'src/app/shared/data-access/api.service';
+import { AdminService } from '../../data-access/admin.service';
 
 @Component({
   selector: 'app-investor-verification',
@@ -26,7 +27,8 @@ import { CommonApiService } from 'src/app/shared/data-access/api.service';
             <p class="font-bold">{{investor.phone}}</p>
             <div class="mt-3 flex flex-wrap gap-4 justify-center">
               <app-loading-button
-                [label]="'Verify'"
+                (click)="verifyInvestor(investor.id)"
+                [label]="'Approve'"
                 [buttonClass]="'bg-blue-700 text-white px-6 py-2'"
               ></app-loading-button>
             </div>
@@ -115,7 +117,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
       <div  *ngIf="investor" class="col-span-4 sm:col-span-9">
         <div class="bg-gray-300 shadow rounded-lg p-6">
           <h2 class="text-xl font-bold mb-4">Bio</h2>
-          <p class="text-white opacity-80">
+          <p class="text-gray-700 opacity-80">
             {{investor.bio}}
           </p>
           <h2 class="text-xl font-bold mt-6 mb-4">Locations</h2>
@@ -149,7 +151,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
             </p>
           </div>
           <div class="flex justify-center mt-3">
-            <p class="text-xl sm:text-3xl font-semibold uppercase text-gray-200">
+            <p class="text-xl sm:text-3xl font-semibold uppercase text-gray-700">
               Past Investments
             </p>
           </div>
@@ -185,15 +187,23 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
 export class InvestorVerificationComponent { 
   investor!: IInvestorData;
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private common = inject(CommonApiService);
+  private admin = inject(AdminService);
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
       const id  = param.get('id');
       if (!id) { return; }
       this.common.getProfileInvestors(id).subscribe((res:any) => {
-        this.investor = res.investor;
+        this.investor = res.investor;        
       });
     });
-    console.log(this.investor);
+  }
+
+  verifyInvestor(id:string) {
+    console.log(id);
+    this.admin.verifyInvestor(id).subscribe((res:any) => {
+      this.router.navigateByUrl('/admin/investor/verify');
+    });
   }
 }

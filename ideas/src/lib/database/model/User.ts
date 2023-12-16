@@ -8,6 +8,8 @@ export interface IUser extends Document {
   profileImgUrl: string;
   email: string;
   role: IRole;
+  isBlocked: boolean;
+
 }
 
 const UserSchema = new mongoose.Schema(
@@ -21,6 +23,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             enum: Object.values(IRole),
         },
+        isBlocked: { type: Boolean, default: true }
     },
     { 
         toJSON: {

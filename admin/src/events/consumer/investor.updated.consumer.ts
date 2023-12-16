@@ -22,11 +22,7 @@ export class INVESTOR_UPDATED_EVENT_CONSUMER extends KafkaConsumer<INVESTOR_UPDA
         try {
             const userId = data.userId;
             const user = await userService.findUserById(userId);
-            console.log(data,'here the data sample');
-            
-            const investor = await adminService.updateInvestorDetail(user?.id,data);
-            console.log(investor);
-            
+            await adminService.updateInvestorDetail(user?.id,data);
         } catch (error) {
             console.log(error);
         }

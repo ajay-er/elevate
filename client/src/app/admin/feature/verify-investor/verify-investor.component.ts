@@ -13,7 +13,14 @@ import { AdminService } from '../../data-access/admin.service';
   ],
   template: `
 <div class="p-4 sm:ml-64 min-h-screen">
-  <app-table [gridArray]="investors" [buttonPresent]="true" [columnArray]="coloumnArray" (onEdit)="verify($event)" ></app-table>
+<ng-container *ngIf="investors?.length > 0; else noInvestors">
+  <app-table [gridArray]="investors" [buttonPresent]="true" [columnArray]="coloumnArray" (onEdit)="verify($event)"></app-table>
+</ng-container>
+
+<ng-template #noInvestors>
+  <p class="text-blac pt-28 text-3xl text-center">All investors verified</p>
+</ng-template>
+
 </div>
 
   `,
@@ -33,10 +40,8 @@ export class VerifyInvestorComponent {
   ];
     
   ngOnInit() {
-    this.adminService.getLatestInvestors().subscribe((res:any) => {
-      
+    this.adminService.getUnverifiedInvestors().subscribe((res:any) => {
       this.investors = res.result;
-
     });
   }
   

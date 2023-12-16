@@ -9,7 +9,7 @@ export const  setupSocketIO = async (server: http.Server) => {
     const io = new Server(server, {
         path: '/api/v1/chat/socket.io',
         cors: {
-            origin: 'http://elevate.test',
+            origin: '*',
             allowedHeaders: ['Authentication'],
             credentials: true,
         },
