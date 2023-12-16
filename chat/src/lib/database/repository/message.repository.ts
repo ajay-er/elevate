@@ -1,3 +1,4 @@
+import { IRole } from '@ajay404/elevate';
 import { Message } from '../model/Message';
 
 export class MessageRepository {
@@ -11,15 +12,13 @@ export class MessageRepository {
         );
     }
 
-    async getAllMessages(userId: string) {
-        return await Message.find({ users: userId }).populate('users');
-    }
-
-    async getChatList(userId: string) {
-        return await Message.find({ users: userId }).populate(
-            'users',
-            'firstName email id userId role profileImgUrl'
-        );
+    async getChatList(id: string,currentRole:IRole) {
+        return await Message.aggregate([
+            { $match: { users: id } },
+            { $unwind: '$users' },
+            { $match: { 'users.role': { $ne: currentRole } } },
+            { $group: { _id: null, users: { $addToSet: '$users' } } }
+        ]);
     }
 
     async chatDetails(participant: string, userId: string) {

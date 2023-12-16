@@ -2,6 +2,7 @@ import { container } from 'tsyringe';
 import { MessageService } from './lib/service/message.service';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
+import { BadRequestError } from '@ajay404/elevate';
 
 const messageService = container.resolve(MessageService);
 
@@ -47,6 +48,7 @@ const onSocketConnection = (io: Server, socket: Socket) => {
     socket.on('message', async (data:any) => {
         try {
             const { sender, recipient, text } = data;
+            if (!text) throw new BadRequestError('Please provide message');
             const message = await messageService.addMessage(sender, recipient, text);
             const user1 = getUser(sender);
             const user2 = getUser(recipient);

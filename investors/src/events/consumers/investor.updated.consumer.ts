@@ -27,7 +27,6 @@ export class INVESTOR_UPDATED_EVENT_CONSUMER extends KafkaConsumer<INVESTOR_UPDA
             if (!investor) throw new BadRequestError('investor not found');
             investor.isVerified = data.isVerified;
             investor.save();
-            console.log('verification completed',investor);
         } catch (error) {
             console.log(error);
         }

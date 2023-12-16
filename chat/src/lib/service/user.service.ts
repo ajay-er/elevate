@@ -18,12 +18,12 @@ export class UserService {
         return await this.userRepo.createUser(userData);
     }
 
-    public async findInvestors() {
-        return await this.userRepo.findAllInvestors();
+    public async findInvestors(currentUserId:string) {
+        return await this.userRepo.findAllInvestors(currentUserId);
     }
 
-    public async findFounders() {
-        return await this.userRepo.findAllFounders();
+    public async findFounders(currentUserId:string) {
+        return await this.userRepo.findAllFounders(currentUserId);
     }
 
     public async update(userId:string,userData:IUser) {

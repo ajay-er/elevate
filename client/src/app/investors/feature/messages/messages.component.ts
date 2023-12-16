@@ -17,7 +17,7 @@ export class MessagesComponent {
     this.chatService.connect(); 
     this.investorService.getAllChatList().subscribe((res:any) => {
       this.users = res.chat;  
-      console.log(this.users);
+      console.log(res);
         
       this.currentUserId = res.currentUserId;  
       this.chatService.setCurrentUser(this.currentUserId);
