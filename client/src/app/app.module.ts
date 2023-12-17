@@ -11,11 +11,6 @@ import { FooterModule } from './core/footer/footer.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-  GoogleLoginProvider,
-} from '@abacritt/angularx-social-login';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './shared/data-access/state/auth/auth.effects';
 import { authReducer } from './shared/data-access/state/auth/auth.reducer';
@@ -55,7 +50,6 @@ import { InvestorNavModule } from './core/investor-nav/investor-nav.module';
       logOnly: !isDevMode(),
     }),
     EffectsModule.forRoot([AuthEffects]),
-    SocialLoginModule,
     MatSnackBarModule,
     NoopAnimationsModule,
     BrowserAnimationsModule,
@@ -66,20 +60,6 @@ import { InvestorNavModule } from './core/investor-nav/investor-nav.module';
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler,
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '136905288035-rfcs7jag9gh9e4ne4454jri50lec2p9s.apps.googleusercontent.com'
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
     },
     {
       provide: HTTP_INTERCEPTORS,

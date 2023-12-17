@@ -12,7 +12,6 @@ import {
   IVerifyOTP,
 } from 'src/app/shared/interfaces';
 import { AuthService } from '../../../shared/data-access/auth.service';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { SnackbarService } from 'src/app/shared/data-access/snackbar.service';
 import { ICurrentUser } from 'src/app/shared/data-access/state/auth/auth.reducer';
 import { LocalStorageService } from 'src/app/shared/data-access/local-storage.service';
@@ -32,7 +31,6 @@ export class AuthAccessComponent {
   private activatedRoute = inject(ActivatedRoute);
   private store = inject(Store<State>);
   private authService = inject(AuthService);
-  private socialAuthService = inject(SocialAuthService);
   private snackbar = inject(SnackbarService);
   private localstorageService = inject(LocalStorageService);
 
@@ -44,32 +42,6 @@ export class AuthAccessComponent {
   // The function sets the current authentication tab based on the current route segment.
   constructor() {
     this.setAuthTabFromRoute();
-    this.subscribeSocialAuth();
-  }
-
-  private subscribeSocialAuth() {
-    this.socialAuthSubscription = this.socialAuthService.authState.subscribe(
-      (user: SocialUser) => {
-        if (user) {
-          console.log(user);
-          this.authService.sendGoogleToken(user.idToken).subscribe({
-            next: (res: any) => {
-              console.log(res);
-
-              if (res?.user) {
-                this.store.dispatch(
-                  AuthActions.SetAccessToken({
-                    accessToken: res.accessToken,
-                    tokenType: 'access_token',
-                  })
-                );
-                this.snackbar.showSuccess('Login successfull');
-              }
-            },
-          });
-        }
-      }
-    );
   }
 
   private setAuthTabFromRoute(): void {
