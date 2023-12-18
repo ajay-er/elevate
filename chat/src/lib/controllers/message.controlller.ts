@@ -29,10 +29,15 @@ export class MesssageController {
         //if current user is founder. then payed users can message some investors.so that need to fetch.
         const remainingChat = await messageService.getChatListOfUser(
             currentUser.id,
-            currentUser.role
-        );
-
-        const chat = currespondParticipants?.concat(remainingChat);
+            currentUser.role 
+        );        
+        let chat;
+        if (remainingChat.length > 0) {
+            chat = currespondParticipants?.concat(remainingChat[0]?.otherUsers);
+        } else {
+            chat = currespondParticipants;
+        }
+        
         res.json({ chat ,currentUserId:currentUser.userId });
     }
 
