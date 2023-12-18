@@ -12,12 +12,11 @@ import { InvestorsService } from '../../data-access/investors.service';
 export class ChatDetailsComponent {
   @Input() msgs: any = [];
   protected message: string = '';
-  private chatHistorySubscription: Subscription | undefined;
   private routeParamsSubscription: Subscription | undefined;
+  private chatHistorySubscription: Subscription | undefined;
   protected participant:any;
   protected participantId:any = '';
   container!: HTMLElement;          
-
 
   private chatService = inject(ChatService);
   private investorService = inject(InvestorsService);
@@ -27,14 +26,14 @@ export class ChatDetailsComponent {
     this.routeParamsSubscription = this.route.params.subscribe((params) => {
       this.participantId = params['id'];
       this.chatService.setCurrentParticipent(this.participantId);
-      this.investorService.getChatHistory(this.participantId).subscribe((res:any) => {        
-        this.chatService.setChatHistory(res.history);        
+      this.investorService.getChatHistory(this.participantId).subscribe((res:any) => { 
+        this.chatService.setChatHistory(res.history);             
+        this.participant = res.history.participant;  
       });
     });
 
     this.chatHistorySubscription =  this.chatService.getChatHistory().subscribe((chat) => {
       this.msgs = chat.messages;        
-      this.participant = chat.participant;      
     });
   }
 
@@ -44,16 +43,15 @@ export class ChatDetailsComponent {
   }
 
   isSendByUser(msg:any) {
-    if (this.participant.id) return msg.id !== this.participant.id;
-    else return msg.sender !== this.participant.id;
+    return msg.sender.userId === this.chatService.getCurrentUserId();
   }
 
   ngOnDestroy() {
-    if (this.chatHistorySubscription) {
-      this.chatHistorySubscription.unsubscribe();
-    }
     if (this.routeParamsSubscription) {
       this.routeParamsSubscription.unsubscribe();
+    }
+    if (this.chatHistorySubscription) {
+      this.chatHistorySubscription.unsubscribe();
     }
   }
   //sroll

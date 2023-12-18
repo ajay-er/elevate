@@ -29,57 +29,17 @@ export class MesssageController {
         //if current user is founder. then payed users can message some investors.so that need to fetch.
         const remainingChat = await messageService.getChatListOfUser(
             currentUser.id,
-            currentUser.role
-        );
-
-        const chat = currespondParticipants?.concat(remainingChat);
+            currentUser.role 
+        );        
+        let chat;
+        if (remainingChat.length > 0) {
+            chat = currespondParticipants?.concat(remainingChat[0]?.otherUsers);
+        } else {
+            chat = currespondParticipants;
+        }
+        
         res.json({ chat ,currentUserId:currentUser.userId });
     }
-
-    // async chatList(req: Request, res: Response) {
-    //     const userId = req.currentUser?.id;
-    //     if (!userId) throw new UnAuthorizedError();
-
-    //     const currentUser = await userService.findUserById(userId);
-    //     if (!currentUser) throw new BadRequestError('User not found');
-    //     let  allUsers;
-    //     if (currentUser.role === IRole.INVESTOR) {
-    //         allUsers = await userService.findInvestors();
-    //     }
-
-    //     if (currentUser.role === IRole.FOUNDER) {
-    //         allUsers = await userService.findFounders();
-    //     }
-
-    //     const filteredInvestors = allUsers?.filter(
-    //         (investor) => investor.id !== currentUser.id
-    //     );
-    //     const chatList = await messageService.getChatListUserMessaged(
-    //         currentUser.id
-    //     );
-
-    //     const participants = chatList.reduce((users, message) => {
-    //         message.users.forEach((user: any) => {
-    //             if (user.id.toString() !== currentUser.id) {
-    //                 users.add(user);
-    //             }
-    //         });
-    //         return users;
-    //     }, new Set());
-
-    //     const participantsArray = Array.from(participants);
-
-    //     const uniqueInvestors = filteredInvestors?.filter(
-    //         (investor) =>
-    //             !participantsArray.some(
-    //                 (participant: any) => participant.id === investor.id
-    //             )
-    //     );
-
-    //     const chat = [...participantsArray, ...uniqueInvestors!];
-
-    //     res.status(200).json({ chat: chat, currentUserId: currentUser.id });
-    // }
 
     async chatHistory(req: Request, res: Response) {
         const participantId = req.params.participantId;

@@ -6,7 +6,7 @@ import { Socket, io } from 'socket.io-client';
   providedIn: 'root',
 })
 export class ChatService {
-  private socket:Socket;
+  private socket: Socket;
 
   private participantId = new BehaviorSubject<string>('');
   private currentUserId = new BehaviorSubject<string>('');
@@ -14,20 +14,26 @@ export class ChatService {
 
   constructor() {
     this.socket = io('https://ajay404.online', {
-      transports:['websocket'],
-      path:'/api/v1/chat/socket.io',
-      withCredentials:true,
-      autoConnect:false
+      transports: ['websocket'],
+      path: '/api/v1/chat/socket.io',
+      withCredentials: true,
+      autoConnect: false,
     });
 
-    this.socket.on('getUsers',(data) => {
-      console.log('active sockets:',data);
+    this.socket.on('getUsers', (data) => {
+      console.log('active sockets:', data);
     });
-    this.socket.on('receiveMessage',(message) => {
-      console.log(message,'this is message');
-      if (message.users.includes(this.participantId.getValue())) {
-        const history = this.chatHistory.getValue();   
-        this.setChatHistory({participant:history.participant,messages:[...history.messages, message]});
+    this.socket.on('receiveMessage', (message) => {
+      console.log(message, 'message recieved');
+      if (
+        message.participantId === this.participantId.getValue() ||
+        message.currentUserId === this.participantId.getValue()
+      ) {
+        const history = this.chatHistory.getValue();
+        this.setChatHistory({
+          participant: history.participant,
+          messages: [...history.messages, message.result],
+        });
       }
     });
   }
@@ -37,7 +43,7 @@ export class ChatService {
   }
 
   addUser() {
-    this.socket.emit('addUser',this.currentUserId.getValue());
+    this.socket.emit('addUser', this.currentUserId.getValue());
   }
 
   disconnect() {
@@ -48,11 +54,11 @@ export class ChatService {
     this.participantId.next(participantId);
   }
 
-  getChatHistory():Observable<any> {
+  getChatHistory(): Observable<any> {
     return this.chatHistory.asObservable();
   }
 
-  setChatHistory(data:any) {    
+  setChatHistory(data: any) {
     this.chatHistory.next(data);
   }
 
@@ -60,8 +66,8 @@ export class ChatService {
     this.currentUserId.next(user);
   }
 
-  getCurrentUserId():Observable<any> {
-    return this.currentUserId.asObservable();
+  getCurrentUserId() {
+    return this.currentUserId.getValue();
   }
 
   sendMessage(msg: string) {
@@ -71,7 +77,7 @@ export class ChatService {
       recipient: participantId,
       sender: senderId,
       text: msg,
-    };    
+    };
     this.socket.emit('message', data);
   }
 }

@@ -3,10 +3,12 @@ import { MessageService } from './lib/service/message.service';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import { BadRequestError } from '@ajay404/elevate';
+import { UserService } from './lib/service/user.service';
 
 const messageService = container.resolve(MessageService);
+const userService = container.resolve(UserService);
 
-export const  setupSocketIO = async (server: http.Server) => {
+export const setupSocketIO = async (server: http.Server) => {
     const io = new Server(server, {
         path: '/api/v1/chat/socket.io',
         cors: {
@@ -17,7 +19,7 @@ export const  setupSocketIO = async (server: http.Server) => {
     });
 
     io.on('connection', (socket: Socket) => {
-        onSocketConnection(io, socket); 
+        onSocketConnection(io, socket);
     });
 };
 
@@ -25,7 +27,8 @@ let users: any[] = [];
 
 const addUser = (userId: any, socketId: any) => {
     // eslint-disable-next-line no-unused-expressions
-    !users.some((user) => user.userId === userId) && users.push({ userId, socketId });
+    !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
 };
 
 const removeUser = (socketId: any) => {
@@ -37,22 +40,31 @@ const getUser = (userId: any) => {
 };
 
 const onSocketConnection = (io: Server, socket: Socket) => {
-    console.log('User connected');    
+    console.log('User connected');
 
-    socket.on('addUser', (userId:any) => {
-        console.log(userId,'user added');
+    socket.on('addUser', (userId: any) => {
+        console.log(userId, 'user added');
         addUser(userId, socket.id);
         io.emit('getUsers', users);
     });
 
-    socket.on('message', async (data:any) => {
+    socket.on('message', async (data: any) => {
         try {
             const { sender, recipient, text } = data;
             if (!text) throw new BadRequestError('Please provide message');
-            const message = await messageService.addMessage(sender, recipient, text);
+            const senderData = await userService.findUserById(sender);
+            const recipientData = await userService.findUserById(recipient);
+            if (!senderData || !recipientData) throw new BadRequestError('Oops something goes wrong');
+            const result = await messageService.addMessage(
+                senderData.id,
+                recipientData?.id,
+                text
+            );
             const user1 = getUser(sender);
             const user2 = getUser(recipient);
 
+            const message = { result, currentUserId: sender, participantId: recipient };
+            
             if (user1?.socketId) {
                 io.to(user1.socketId).emit('receiveMessage', message);
             }
@@ -71,4 +83,3 @@ const onSocketConnection = (io: Server, socket: Socket) => {
         io.emit('getUsers', users);
     });
 };
-
