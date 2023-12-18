@@ -3,13 +3,17 @@ import { Message } from '../model/Message';
 
 export class MessageRepository {
     async addMessage(sender: string, recipient: string, text: string) {
-        return await Message.create(
+        const message =  await Message.create(
             {
                 text,
                 users: [sender, recipient],
                 sender,
             }
         );
+        return message.populate({
+            select:'userId',
+            path:'sender'
+        });
     }
 
     async getChatList(id: string,currentRole:IRole) {
@@ -24,6 +28,6 @@ export class MessageRepository {
     async chatDetails(participant: string, userId: string) {
         return await Message.find({ users: { $all: [participant, userId] } })
             .sort({ createdAt: 1 })
-            .populate('sender', 'firstName');
+            .populate('sender', 'userId');
     }
 }
