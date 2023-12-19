@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { PaymentStatus, PlanType, SubscriptionStatus } from '../../../types';
 import { IRazorpayPaymentDetails, Subscription } from '../model/Subscription';
 
@@ -34,5 +35,9 @@ export class FounderRepository {
         });
     }
 
+    async getSubscriptions(user:string): Promise<any> {
+        const userObjectId = new mongoose.Types.ObjectId(user);
+        return await Subscription.find({user:userObjectId});
+    }
 
 }

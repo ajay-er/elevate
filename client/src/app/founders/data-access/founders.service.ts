@@ -29,5 +29,7 @@ export class FoundersService {
     return this.http.get(`${this.api}/chat/history/${participantId}`);
   }
 
-  
+  getAllSubscriptions() {
+    return this.http.get(`${this.api}/founder/all-subscriptions`);
+  }
 }
