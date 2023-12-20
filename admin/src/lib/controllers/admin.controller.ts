@@ -76,6 +76,21 @@ export class AdminController {
 
         res.json({ newUser });
     }
+
+    async getVerifiedInvestorsCount(req: Request, res: Response) {
+        const result = await adminService.getVerifiedInvestorsCount();
+        res.json({ result });
+    }
+
+    async getNotVerifiedInvestorsCount(req: Request, res: Response) {
+        const result = await adminService.getNotVerifiedInvestorsCount();
+        res.json({ result });
+    }
+
+    async getVerifiedFoundersCount(req: Request, res: Response) {
+        const result = await usersService.foundersCount();
+        res.json({ result });
+    }
 }
 
 export const adminController = new AdminController();

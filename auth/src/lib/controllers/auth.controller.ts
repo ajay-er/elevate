@@ -18,45 +18,6 @@ const router = express.Router();
 const authService = container.resolve(AuthService);
 const tokenService = container.resolve(TokenService);
 
-// router.post('/api/v1/auth/googleauth', async (req: Request, res: Response) => {
-//     const { googleToken } = req.body;
-//     if (!googleToken) throw new BadRequestError('Please provide google id_token');
-
-//     const oAuthuser = await authService.verifyOauthToken(googleToken, process.env.CLIENT_ID!);
-
-//     if (!oAuthuser) throw new BadRequestError('oops user not found in the google_token');
-
-//     const userexist = await authService.findUserByEmail(oAuthuser.email);
-
-//     const accessToken = jwt.sign(
-//         {
-//             id: userexist?._id,
-//             email: userexist?.email,
-//             role: IRole.USER
-//         },
-// 		process.env.JWT_SECRET!
-//     );
-
-//     if (!userexist) {
-//         //if user doen't exist,then create
-//         const user = await authService.signup({
-//             email: oAuthuser.email,
-//             firstName: oAuthuser.name,
-//             isEmailVerified: oAuthuser.isEmailVerified
-//         });
-//         console.log(user);
-//         // await new USER_CREATED_PUBLISHER().publish({
-//         // 	email: user.email, firstName: user.firstName, id:user.id, profileImgUrl:user.profileImgUrl
-//         // });
-//         return res.status(201).json({ message: 'google signup successfully completed', user, accessToken });
-//     } else {
-//         //if user already then update
-//         const user = await authService.update(oAuthuser);
-//         console.log(user);
-//         return res.status(200).json({ message: 'google login successfully completed', user, accessToken });
-//     }
-// });
-
 router.post('/api/v1/auth/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
     
@@ -330,5 +291,6 @@ router.post('/api/v1/auth/admin-login', async (req: Request, res: Response) => {
 router.post('/api/v1/auth/logout', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'logout succefully' });
 });
+
 
 export { router as authRoute };

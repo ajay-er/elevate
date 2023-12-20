@@ -1,6 +1,6 @@
 <div class="mt-16 p-4 sm:ml-64 min-h-screen">
   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-    <app-dashboard-cards [count]="30" label="Verified Investors">
+    <app-dashboard-cards [count]="investorsCount" label="Verified Investors">
       <svg
         aria-hidden="true"
         fill="none"
@@ -19,7 +19,7 @@
     </app-dashboard-cards>
     <app-dashboard-cards
       [bgColor]="'text-yellow-600 bg-yellow-100'"
-      [count]="62"
+      [count]="foundersCount"
       label="Verified Founders"
     >
       <svg
@@ -40,7 +40,7 @@
     </app-dashboard-cards>
     <app-dashboard-cards
       [bgColor]="'text-green-600 bg-green-100'"
-      [count]="2"
+      [count]="totalSubscriptionCount"
       label="Total subscriptions"
     >
       <svg
@@ -61,7 +61,7 @@
     </app-dashboard-cards>
     <app-dashboard-cards
       [bgColor]="'text-red-600 bg-red-100'"
-      [count]="23"
+      [count]="totalpendingSubscriptionCount"
       label="Failed subcriptions"
     >
       <svg
@@ -91,7 +91,7 @@
     </div>
     <app-dashboard-cards
       [bgColor]="'text-cyan-600 bg-cyan-100'"
-      [count]="3198"
+      [count]="totalprofit"
       label="Total profit"
     >
       <svg
@@ -118,8 +118,8 @@
 
     <app-dashboard-cards
       [bgColor]="'text-orange-600 bg-orange-100'"
-      [count]="20"
-      label="Pending verifications"
+      [count]="notVerifiedInvestors"
+      label="Pending investor verifications"
     >
       <svg
         aria-hidden="true"

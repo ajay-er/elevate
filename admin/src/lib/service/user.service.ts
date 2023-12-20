@@ -25,5 +25,8 @@ export class UserService {
     public async findAll(page:number,limit:number) {
         return await this.userRepo.findAll(page,limit);
     }
-   
+
+    public async foundersCount() {
+        return await this.userRepo.findFoundersCount();
+    }
 }

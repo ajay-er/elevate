@@ -23,4 +23,8 @@ export class UserRepository {
         const skip = (page - 1) * limit;
         return await User.find({role:IRole.FOUNDER}).skip(skip).limit(limit).exec();
     }
+
+    public async findFoundersCount() {
+        return await User.find({role:IRole.FOUNDER}).countDocuments();
+    }
 }

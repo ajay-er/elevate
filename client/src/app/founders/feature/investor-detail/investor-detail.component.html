@@ -18,14 +18,14 @@
             </ng-template>
            
             <p class="text-2xl uppercase font-bold">{{investor?.user?.firstName + ' ' + investor?.user.lastName }}</p>
-            <ng-container *ngIf="isFounderHavePremium ==='PRO';else email" >
+            <ng-container *ngIf="isFounderHavePremium ==='PRO' || isFounderHavePremium ==='BASIC' || isFounderHavePremium ==='PREMIUM';else email" >
               <p class="font-bold">{{investor?.user?.email}}</p>
             </ng-container>
             <ng-template #email>
               <p class="font-bold">Email Redacted</p>
             </ng-template>
 
-            <ng-container *ngIf="isFounderHavePremium ==='PRO';else phone" >
+            <ng-container *ngIf="isFounderHavePremium ==='PRO'  || isFounderHavePremium ==='PREMIUM';else phone" >
               <p class="font-bold">{{investor?.phone}}</p>
             </ng-container>
             <ng-template #phone>
@@ -43,7 +43,7 @@
 
              <ng-template #message>
               <app-loading-button
-                [label]="'PURCHASE PREMIUM'"
+                [label]="'MESSAGE'"
                 [routerLink]="['/founder/pricing']"
                 [buttonClass]="'bg-blue-700 text-white px-6 py-2'"
               ></app-loading-button>
@@ -53,7 +53,7 @@
           <hr class="my-6 border-t border-gray-300" />
           <div class="items-center justify-center flex">
             <!-- linkdin -->
-            <div class="p-2" *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2" *ngIf="isFounderHavePremium==='PRO' || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds LinkedIn"
@@ -72,7 +72,7 @@
               </a>
             </div>
             <!-- yt -->
-            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'  || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-orange-500"
                 aria-label="Visit TrendyMinds YouTube"
@@ -91,7 +91,7 @@
               </a>
             </div>
             <!-- fb -->
-            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'  || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-blue-600"
                 aria-label="Visit TrendyMinds Facebook"
@@ -110,7 +110,7 @@
               </a>
             </div>
             <!-- twitter -->
-            <div class="p-2"    *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2"    *ngIf="isFounderHavePremium==='PRO'  || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds Twitter"

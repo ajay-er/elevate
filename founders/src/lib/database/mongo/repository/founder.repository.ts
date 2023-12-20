@@ -44,4 +44,43 @@ export class FounderRepository {
         return await Subscription.find({user:userObjectId});
     }
 
+    async findTotalCount(): Promise<any> {
+        return await Subscription.find({status:SubscriptionStatus.ACTIVE}).countDocuments();
+    }
+
+    async findPendingSubTotalCount(): Promise<any> {
+        return await Subscription.find({'paymentDetails.paymentStatus':PaymentStatus.PENDING}).countDocuments();
+    }
+
+    async totalProfit(): Promise<any> {
+        return await Subscription.aggregate([
+            {
+                $match: {
+                    'status': SubscriptionStatus.ACTIVE, 
+                    'paymentDetails.paymentStatus': PaymentStatus.SUCCESS, 
+                },
+            },
+            {
+                $group: {
+                    _id: null, 
+                    totalProfit: {
+                        $sum: {
+                            $cond: {
+                                if: { $eq: ['$plan', PlanType.BASIC] },
+                                then: 199,
+                                else: { $cond: { if: { $eq: ['$plan', PlanType.PRO] }, then: 599, else: 1499 } },
+                            },
+                        },
+                    },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    totalProfit: 1,
+                },
+            },
+        ]);
+    }
+
 }

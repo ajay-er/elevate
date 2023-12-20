@@ -17,4 +17,16 @@ export class FounderService {
     public async updateSub(subId:string,payId:string,signature:string) {
         return this.founderRepo.updateSuccess(subId,payId,signature);
     }
+   
+    public async getAllSubcriptionsCount() {
+        return this.founderRepo.findTotalCount();
+    }
+   
+    public async getPendingSubscriptionCount() {
+        return this.founderRepo.findPendingSubTotalCount();
+    }
+   
+    public async findTotalProfit() {
+        return this.founderRepo.totalProfit();
+    }
 }

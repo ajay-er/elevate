@@ -12,6 +12,31 @@ export class AdminService {
     return this.http.get(`${this.apiUrl}/admin/all-investors`);
   }
   
+  getLatestFoundersCount() {
+    return this.http.get(`${this.apiUrl}/admin/all-founders-count`);
+  }
+  
+  totalSubscriptions() {
+    return this.http.get(`${this.apiUrl}/founder/subscription-count`);
+  }
+  
+  
+  totalPendingSubscriptions() {
+    return this.http.get(`${this.apiUrl}/founder/pending-subscription-count`);
+  }
+  
+  totalProfit() {
+    return this.http.get(`${this.apiUrl}/founder/total-profit`);
+  }
+
+  getVerifiedInvestorsCount() {
+    return this.http.get(`${this.apiUrl}/admin/total-verfied-investors`);
+  }
+
+  getNotVerifiedInvestorsCount() {
+    return this.http.get(`${this.apiUrl}/admin/total-not-verfied-investors`);
+  }
+  
   getUnverifiedInvestors() {
     return this.http.get(`${this.apiUrl}/admin/unverified-investors`);
   }

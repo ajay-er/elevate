@@ -6,6 +6,12 @@ const router = express.Router();
 
 router.get('/api/v1/admin/all-investors',requireAdminAuth,adminController.getAllInvestors);
 
+router.get('/api/v1/admin/all-founders-count',requireAdminAuth,adminController.getVerifiedFoundersCount);
+
+router.get('/api/v1/admin/total-verfied-investors',requireAdminAuth,adminController.getVerifiedInvestorsCount);
+
+router.get('/api/v1/admin/total-not-verfied-investors',requireAdminAuth,adminController.getNotVerifiedInvestorsCount);
+
 router.get('/api/v1/admin/unverified-investors',requireAdminAuth,adminController.getAllUnverifiedInvestors);
 
 router.put('/api/v1/admin/verify-investor',requireAdminAuth,adminController.verifyUser);
