@@ -6,10 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatInvestmentAmountPipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: any): string {
     if (!value) return 'not provided';
-    const amounts = value.split('-').map(amount => amount.trim());
-    const formattedAmounts = amounts.map(amount => this.formatAmount(Number(amount)));
+    const amounts = value.split('-').map((amount: any) => amount.trim());
+    const formattedAmounts = amounts.map((amount:any) => this.formatAmount(Number(amount)));
     return formattedAmounts.join(' - ');
   }
 

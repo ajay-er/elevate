@@ -16,14 +16,18 @@ export class FounderRepository {
     }
 
     async updateSuccess(subId:string,payId:string,signature:string): Promise<any> {
-        return await Subscription.updateOne({subscriptionId:subId},{
-            status:SubscriptionStatus.ACTIVE,
-            paymentDetails: {
-                payment_id:payId,
-                signature,
-                paymentStatus:PaymentStatus.SUCCESS
-            } as IRazorpayPaymentDetails
-        });
+        return await Subscription.findOneAndUpdate({subscriptionId:subId},{
+            $set: {
+                status:SubscriptionStatus.ACTIVE,
+                paymentDetails: {
+                    payment_id:payId,
+                    signature,
+                    paymentStatus:PaymentStatus.SUCCESS
+                } as IRazorpayPaymentDetails
+            }
+        },
+        { returnDocument: 'after' }
+        );
     }
 
     async updateFailed(subId:string): Promise<any> {

@@ -7,7 +7,7 @@
       <app-chat-list [users]="users"></app-chat-list>
     </div>
     <!-- Right -->
-    <div class="sm:w-1/2 w-full rounded-lg bg-opacity-25 bg-white hidden  sm:flex flex-col">
+    <div class="sm:w-1/2 w-full rounded-lg bg-opacity-10 bg-white hidden  sm:flex flex-col">
       <router-outlet #outlet="outlet"></router-outlet>
 
       <div *ngIf="!outlet.isActivated" class="bg-gray-200  bg-opacity-5 min-h-full">

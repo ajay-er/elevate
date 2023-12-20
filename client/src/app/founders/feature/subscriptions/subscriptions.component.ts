@@ -28,9 +28,9 @@ import { FoundersService } from '../../data-access/founders.service';
             <div *ngSwitchCase="'SUCCESS'" class="bg-green-100 text-green-800 text-xs font-medium min-w-[80px] text-center rounded-lg p-1 sm:p-3 dark:bg-green-900 dark:text-green-300">
               completed
             </div>
-            <div *ngSwitchCase="'PENDING'" class="bg-yellow-100 text-yellow-800 text-xs font-medium min-w-[80px] text-center rounded-lg p-1 sm:p-3 ">
+            <!-- <div *ngSwitchCase="'PENDING'" class="bg-yellow-100 text-yellow-800 text-xs font-medium min-w-[80px] text-center rounded-lg p-1 sm:p-3 ">
               pending
-            </div>
+            </div> -->
             <div *ngSwitchDefault class="bg-red-100 text-red-800 rounded-lg p-1 sm:p-3 min-w-[80px] text-center text-xs font-medium px-3 dark:bg-red-900 dark:text-red-300">
               failed
             </div>

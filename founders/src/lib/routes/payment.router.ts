@@ -15,6 +15,4 @@ router.post(
     paymentController.verifyRazorpayPayment
 );
 
-// router.post('/api/v1/founder/payment/failed', paymentController.paymentFailed);
-
 export { router as paymentRoute };

@@ -5,29 +5,50 @@
         <div class="bg-white bg-opacity-20 shadow rounded-lg p-6">
           <div class="flex flex-col items-center">
             <img
-              [src]="investor.user.profileImgUrl"
+              [src]="investor?.user?.profileImgUrl"
               class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
             />
+            <p class="text-2xl uppercase font-bold">{{investor?.user?.firstName + ' ' + investor?.user.lastName }}</p>
+            <ng-container *ngIf="isFounderHavePremium ==='PRO';else email" >
+              <p class="font-bold">{{investor?.user?.email}}</p>
+            </ng-container>
+            <ng-template #email>
+              <p class="font-bold">Email Redacted</p>
+            </ng-template>
 
-            <p class="text-2xl uppercase font-bold">{{investor.user.firstName + ' ' + investor.user.lastName }}</p>
-            <p class="font-bold">{{investor.user.email}}</p>
-            <p class="font-bold">{{investor.phone}}</p>
+            <ng-container *ngIf="isFounderHavePremium ==='PRO';else phone" >
+              <p class="font-bold">{{investor?.phone}}</p>
+            </ng-container>
+            <ng-template #phone>
+              <p class="font-bold">Phone number Redacted</p>
+            </ng-template>
+
             <div class="mt-3 flex flex-wrap gap-4 justify-center">
+              <ng-container *ngIf="isFounderHavePremium ==='PREMIUM';else message" >
               <app-loading-button
                 [label]="'Message'"
-                [routerLink]="['/founder/messages',investor.user.userId]"
+                [routerLink]="['/founder/messages',investor?.user.userId]"
                 [buttonClass]="'bg-blue-700 text-white px-6 py-2'"
               ></app-loading-button>
+            </ng-container>
+
+             <ng-template #message>
+              <app-loading-button
+                [label]="'PURCHASE PREMIUM'"
+                [routerLink]="['/founder/pricing']"
+                [buttonClass]="'bg-blue-700 text-white px-6 py-2'"
+              ></app-loading-button>
+             </ng-template>
             </div>
           </div>
           <hr class="my-6 border-t border-gray-300" />
           <div class="items-center justify-center flex">
             <!-- linkdin -->
-            <div class="p-2">
+            <div class="p-2" *ngIf="isFounderHavePremium==='PRO'">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds LinkedIn"
-                [href]="investor.socialMediaLinks.linkedin"
+                [href]="investor?.socialMediaLinks?.linkedin"
                 target="_blank"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -42,11 +63,11 @@
               </a>
             </div>
             <!-- yt -->
-            <div class="p-2">
+            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'">
               <a
                 class="text-white hover:text-orange-500"
                 aria-label="Visit TrendyMinds YouTube"
-                [href]="investor.socialMediaLinks.youtube"
+                [href]="investor?.socialMediaLinks?.youtube"
                 target="_blank"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -61,11 +82,11 @@
               </a>
             </div>
             <!-- fb -->
-            <div class="p-2">
+            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'">
               <a
                 class="text-white hover:text-blue-600"
                 aria-label="Visit TrendyMinds Facebook"
-                [href]="investor.socialMediaLinks.facebook"
+                [href]="investor?.socialMediaLinks?.facebook"
                 target="_blank"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -80,11 +101,11 @@
               </a>
             </div>
             <!-- twitter -->
-            <div class="p-2">
+            <div class="p-2"    *ngIf="isFounderHavePremium==='PRO'">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds Twitter"
-                [href]="investor.socialMediaLinks.twitter"
+                [href]="investor?.socialMediaLinks?.twitter"
                 target="_blank"
                 ><svg
                   class="h-6"
@@ -98,6 +119,11 @@
                 </svg>
               </a>
             </div>
+
+            <div
+            *ngIf="isFounderHavePremium==='NO-PLAN'">
+            PURCHASE PRO PLAN FOR SOCIAL MEDIA LINKS
+          </div>
           </div>
         </div>
       </div>
@@ -105,11 +131,11 @@
         <div class="bg-white bg-opacity-20 shadow rounded-lg p-6">
           <h2 class="text-xl font-bold mb-4">Bio</h2>
           <p class="text-white opacity-80">
-            {{investor.bio}}
+            {{investor?.bio}}
           </p>
 
           <h2 class="text-xl font-bold mt-6 mb-4">Locations</h2>
-          <div class="flex-wrap flex gap-2" *ngFor="let location of investor.investmentLocations">
+          <div class="flex-wrap flex gap-2" *ngFor="let location of investor?.investmentLocations">
             <div 
               class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
             >
@@ -118,7 +144,7 @@
           </div>
           <div class="mt-6">
             <h2 class="text-xl font-bold">Markets</h2>
-            <div class="flex-wrap flex gap-2" *ngFor="let market of investor.investmentMarkets">
+            <div class="flex-wrap flex gap-2" *ngFor="let market of investor?.investmentMarkets">
               <div 
                 class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
               >
@@ -129,13 +155,13 @@
           <div class="mt-4">
             <p class="font-extrabold text-lg">
               Investment Count:
-              <span class="text-blue-400 text-md"> {{investor.totalInvestmentCount }}  <span class="text-sm text-blue-200">investments</span></span>
+              <span class="text-blue-400 text-md"> {{investor?.totalInvestmentCount }}  <span class="text-sm text-blue-200">investments</span></span>
             </p>
           </div>
           <div class="mt-4">
             <p class="font-extrabold text-lg">
               Investment Amount:
-              <span class="text-blue-400 text-md"> {{investor.investmentAmount | appFormatInvestmentAmount }} <span class="text-sm text-blue-200">rupees</span></span>
+              <span class="text-blue-400 text-md"> {{ investor?.investmentAmount | appFormatInvestmentAmount }} <span class="text-sm text-blue-200">rupees</span></span>
             </p>
           </div>
           <div class="flex justify-center mt-3">

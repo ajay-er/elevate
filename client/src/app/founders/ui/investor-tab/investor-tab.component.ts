@@ -11,8 +11,14 @@ export class InvestorTabComponent {
 @Input() investorDetail: any[] = [];
 
 getValue(obj: any, path: string): any {
-  const properties = path.split('.');
+  const properties = path.split('.');  
   return properties.reduce((prev, curr) => {
+    if (curr === 'email') {
+      return 'Redacted';
+    }
+    if (curr === 'linkedin') {
+      return 'Redacted';
+    }
     if (prev && typeof prev === 'object' && curr in prev) {
       return prev[curr];
     } else {
