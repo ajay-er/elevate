@@ -32,17 +32,17 @@ export class InvestorController {
             const subscription = user?.subscription;
             if (subscription?.status === SubscriptionStatus.ACTIVE && subscription.plan === PlanType.BASIC) {
                 const investor = await investorService.findByIdBasicPlan(id);
-                return res.status(200).json({ investor ,subscription:subscription.status});
+                return res.status(200).json({ investor ,subscription:PlanType.BASIC});
             }
 
             if (subscription?.status === SubscriptionStatus.ACTIVE && subscription.plan === PlanType.PRO) {
                 const investor = await investorService.findByIdProPlan(id);
-                return res.status(200).json({ investor ,subscription:subscription.status});
+                return res.status(200).json({ investor ,subscription:PlanType.PRO});
             }
 
             if (subscription?.status === SubscriptionStatus.ACTIVE && subscription.plan === PlanType.PREMIUM) {
                 const investor = await investorService.findByIdPremiumPlan(id);
-                return res.status(200).json({ investor ,subscription : subscription.status});
+                return res.status(200).json({ investor ,subscription : PlanType.PREMIUM});
             }
         }
 

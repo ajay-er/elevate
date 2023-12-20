@@ -7,7 +7,7 @@ import {
 import { Kafka, KafkaMessage } from 'kafkajs';
 import { container } from 'tsyringe';
 import { UserService } from '../../lib/service/user.service';
-import { IRole } from '../../lib/interfaces';
+import { IRole, PlanType } from '../../lib/interfaces';
 
 const userService = container.resolve(UserService);
 
@@ -23,12 +23,18 @@ export class SUBSCRIPTION_PURCHASED_EVENT_CONSUMER extends KafkaConsumer<SUBSCRI
         data: SUBSCRIPTION_PURCHASED['data'],
         _message: KafkaMessage
     ): Promise<void> {
-        try {
+        try {            
             const userId = data.userId;
             const user = await userService.findUserById(userId);
             if (!user) throw new BadRequestError('user not found');
             if (user.role === IRole.FOUNDER) {
-                user.subscription.plan = data.plan;
+                if (data.plan === PlanType.BASIC) {
+                    user.subscription.plan = PlanType.BASIC;
+                } else if (data.plan === PlanType.PREMIUM) {
+                    user.subscription.plan = PlanType.PREMIUM;
+                } else if (data.plan === PlanType.PRO) {
+                    user.subscription.plan = PlanType.PRO;
+                }
                 user.subscription.status = data.subscriptionStatus;
                 await user.save();
             }

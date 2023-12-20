@@ -4,10 +4,19 @@
       <div class="col-span-4 sm:col-span-3">
         <div class="bg-white bg-opacity-20 shadow rounded-lg p-6">
           <div class="flex flex-col items-center">
-            <img
+            <ng-container *ngIf="isFounderHavePremium ==='BASIC' || isFounderHavePremium === 'NO-PLAN';else profile" >
+              <img
+              [src]="'https://res.cloudinary.com/elevate-connect/image/upload/f_auto,q_auto/v1/elevate/xtt1vpogqccibkkc06oj'"
+              class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+              />
+            </ng-container>
+            <ng-template #profile>
+              <img
               [src]="investor?.user?.profileImgUrl"
               class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
-            />
+              />
+            </ng-template>
+           
             <p class="text-2xl uppercase font-bold">{{investor?.user?.firstName + ' ' + investor?.user.lastName }}</p>
             <ng-container *ngIf="isFounderHavePremium ==='PRO';else email" >
               <p class="font-bold">{{investor?.user?.email}}</p>

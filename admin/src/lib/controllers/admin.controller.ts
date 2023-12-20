@@ -1,4 +1,3 @@
-/* eslint-disable space-unary-ops */
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { AdminService } from '../service/admin.service';

@@ -29,10 +29,8 @@ const UserSchema = new mongoose.Schema(
         },
         isBlocked: { type: Boolean, default: false },
         subscription: {
-            type: {
-                status: {type:String,enum:Object.values(SubscriptionStatus)},
-                plan: {type:String,enum:Object.values(PlanType)},
-            }
+            status: {type:String,enum:Object.values(SubscriptionStatus)},
+            plan: {type:String,enum:Object.values(PlanType)},
         }
     },
     { 
