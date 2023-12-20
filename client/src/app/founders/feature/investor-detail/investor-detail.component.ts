@@ -8,11 +8,13 @@ import { IInvestorData } from 'src/app/shared/interfaces';
   styleUrls: ['./investor-detail.component.css']
 })
 export class InvestorDetailComponent {
-  investor!: IInvestorData;
+  investor!: IInvestorData | null;
+  isFounderHavePremium!: string | null;
   private route = inject(ActivatedRoute);
   ngOnInit() {
     const data = this.route.snapshot.data['investor'];
     this.investor = data.investor;
+    this.isFounderHavePremium = data.subscription;
     console.log(this.investor);
   }
 }

@@ -8,6 +8,7 @@ import { USER_UPDATED_PUBLISHER } from '../../events/publisher/user.updated.publ
 import { kafka_client } from '../../config/kafka.config';
 import { IUser } from '../database/model/User';
 import { INVESTOR_UPDATED_PUBLISHER } from '../../events/publisher/investor.updated.publisher';
+import { PlanType, SubscriptionStatus } from '../interfaces';
 
 const investorService = container.resolve(InvestorService);
 const userService = container.resolve(UserService);
@@ -15,19 +16,43 @@ const userService = container.resolve(UserService);
 export class InvestorController {
 
     async getAllInvestors(req: Request, res: Response) {
+        
         const result = await investorService.get();
+
         res.status(200).json({ result });
-    }
+    } 
 
     async getInvestorProfile(req: Request, res: Response) {
+        const currentUserId = req.currentUser?.id;
         const id = req.params.id;
-        const investor = await investorService.findById(id);
+
+        if (currentUserId) {
+            const user = await userService.findUserById(currentUserId);
+            if (!user) throw new BadRequestError('oops user not found');
+            const subscription = user?.subscription;
+            if (subscription?.status === SubscriptionStatus.ACTIVE && subscription.plan === PlanType.BASIC) {
+                const investor = await investorService.findByIdBasicPlan(id);
+                return res.status(200).json({ investor ,subscription:subscription.status});
+            }
+
+            if (subscription?.status === SubscriptionStatus.ACTIVE && subscription.plan === PlanType.PRO) {
+                const investor = await investorService.findByIdProPlan(id);
+                return res.status(200).json({ investor ,subscription:subscription.status});
+            }
+
+            if (subscription?.status === SubscriptionStatus.ACTIVE && subscription.plan === PlanType.PREMIUM) {
+                const investor = await investorService.findByIdPremiumPlan(id);
+                return res.status(200).json({ investor ,subscription : subscription.status});
+            }
+        }
+
+        const investor = await investorService.findByIdBasicPlan(id);
         if (!investor?.isVerified) {
             throw new BadRequestError('Investor is not verified'); 
         }
-        res.status(200).json({ investor });
+        res.status(200).json({ investor , subscription: 'NO-PLAN' });
     }
-    
+      
     async getInvestorDetails(req: Request, res: Response) {
         const id = req.currentUser?.id;
         if (!id) throw new UnAuthorizedError();

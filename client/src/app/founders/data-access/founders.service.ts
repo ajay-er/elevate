@@ -20,6 +20,11 @@ export class FoundersService {
       data,
     });
   }
+  subscriptionPaymentFailed(data:any) {
+    return this.http.post(`${this.api}/founder/payment/failed`, {
+      data,
+    });
+  }
 
   getAllChatList() {
     return this.http.get(`${this.api}/chat/chatList`);
@@ -29,5 +34,7 @@ export class FoundersService {
     return this.http.get(`${this.api}/chat/history/${participantId}`);
   }
 
-  
+  getAllSubscriptions() {
+    return this.http.get(`${this.api}/founder/all-subscriptions`);
+  }
 }

@@ -25,4 +25,17 @@ export class InvestorService {
     public async update(investorId:string,update: Partial<IInvestor>) {
         return await this.investorRepo.updateProfile(investorId,update);
     }
+
+    //for founder search 
+    public async findByIdBasicPlan(id: string):Promise<IInvestor | null> {
+        return await this.investorRepo.findByIdBasicPlan(id);
+    }
+
+    public async findByIdProPlan(id: string):Promise<IInvestor | null> {
+        return await this.investorRepo.findByIdProPlan(id);
+    }
+
+    public async findByIdPremiumPlan(id: string):Promise<IInvestor | null> {
+        return await this.investorRepo.findByIdPremiumPlan(id);
+    }
 }

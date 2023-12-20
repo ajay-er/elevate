@@ -9,6 +9,10 @@ export class FounderService {
     public async addSubscription(subId:string,userId:string,plan:PlanType) {
         return this.founderRepo.create(subId,userId,plan);
     }
+
+    public async getAllSubcriptions(user:string) {
+        return this.founderRepo.getSubscriptions(user);
+    }
    
     public async updateSub(subId:string,payId:string,signature:string) {
         return this.founderRepo.updateSuccess(subId,payId,signature);

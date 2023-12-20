@@ -34,7 +34,7 @@ export class USER_CREATED_EVENT_CONSUMER extends KafkaConsumer<USER_CREATED> {
         super(client);
     }
 
-    async onMessage(data: USER_CREATED['data'], message: KafkaMessage): Promise<void> {
+    async onMessage(data: USER_CREATED['data'], _message: KafkaMessage): Promise<void> {
         try {
             const user = await userService.createUser(data as IUser);
             if (user.role === IRole.INVESTOR) {

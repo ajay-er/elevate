@@ -1,5 +1,5 @@
 import mongoose ,{ Document } from 'mongoose';
-import { IRole } from '../../interfaces';
+import { IRole, PlanType, SubscriptionStatus } from '../../interfaces';
 export interface IUser extends Document {
   userId: string;
   firstName: string;
@@ -8,6 +8,12 @@ export interface IUser extends Document {
   email: string;
   role: IRole;
   isBlocked: boolean;
+  subscription: Subscription;
+}
+
+interface Subscription {
+    status: SubscriptionStatus;
+    plan: PlanType;
 }
 
 const UserSchema = new mongoose.Schema(
@@ -21,7 +27,13 @@ const UserSchema = new mongoose.Schema(
             type: String,
             enum: Object.values(IRole),
         },
-        isBlocked: { type: Boolean, default: false }
+        isBlocked: { type: Boolean, default: false },
+        subscription: {
+            type: {
+                status: {type:String,enum:Object.values(SubscriptionStatus)},
+                plan: {type:String,enum:Object.values(PlanType)},
+            }
+        }
     },
     { 
         toJSON: {

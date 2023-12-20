@@ -10,3 +10,12 @@ export enum IRole {
   FOUNDER = 'FOUNDER',
   INVESTOR = 'INVESTOR',
 }
+export enum PlanType {
+  BASIC = 'BASIC',
+  PRO = 'PRO',
+  PREMIUM = 'PREMIUM'
+}
+export enum SubscriptionStatus {
+  ACTIVE = 'ACTIVE',
+  CANCELED = 'CANCELED'
+}

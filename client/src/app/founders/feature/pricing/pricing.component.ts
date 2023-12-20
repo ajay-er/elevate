@@ -43,8 +43,9 @@ export class PricingComponent {
         key: 'rzp_test_mfG6Xukc148Lkm',
         image: '../../../../assets/images/logo.jpg',
         handler: (res: any) => {
-          this.founderService.updateSubscription(res).subscribe((r) => {
+          this.founderService.updateSubscription(res).subscribe((r:any) => {
             console.log('payment succesfully completed');
+            this.snackbar.showSuccess('Subscription successfully completed');
           });
         },
         prefill: {
@@ -57,6 +58,11 @@ export class PricingComponent {
       };
       const rzpy = new Razorpay(RazarpayOptions);
       rzpy.open();
+
+      rzpy.on("payment.failed", (response:any) => {
+        console.log(response);
+      });
+      
     });
   }
 }

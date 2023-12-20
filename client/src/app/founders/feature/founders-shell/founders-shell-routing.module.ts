@@ -51,6 +51,11 @@ const routes: Routes = [
       import('../pricing/pricing.module').then((m) => m.PricingModule),
   },
   {
+    path: 'subscription',
+    loadComponent: () =>
+      import('../subscriptions/subscriptions.component').then((m) => m.SubscriptionsComponent),
+  },
+  {
     path: '',
     redirectTo: 'ideas',
     pathMatch: 'full',
