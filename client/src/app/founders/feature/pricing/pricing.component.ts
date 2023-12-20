@@ -58,6 +58,11 @@ export class PricingComponent {
       };
       const rzpy = new Razorpay(RazarpayOptions);
       rzpy.open();
+
+      rzpy.on("payment.failed", (response:any) => {
+        console.log(response);
+      });
+      
     });
   }
 }
