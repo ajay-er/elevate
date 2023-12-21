@@ -41,7 +41,7 @@ export class DashboardContainerComponent {
     });
 
     this.adminService.totalProfit().subscribe((res:any) => {      
-      this.totalprofit = res.result[0].totalProfit; 
+      this.totalprofit = res.result[0]?.totalProfit || 0; 
     });
 
     this.adminService.getNotVerifiedInvestorsCount().subscribe((res:any) => {      

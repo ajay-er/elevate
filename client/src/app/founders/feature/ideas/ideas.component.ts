@@ -44,14 +44,6 @@ export class IdeasComponent {
     });
   }
 
-  addComment(ideaId:any) {
-    this.ideaService.addComment(this.comment,ideaId).subscribe((res) => {
-      console.log(res);
-      this.comment = '';
-      this.fetchData();
-    });
-  }
-
   like(idea: any) {
     this.ideaService.like(idea).subscribe((res: any) => {
       console.log(res);

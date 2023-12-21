@@ -46,7 +46,7 @@ import { LoadingButtonModule } from 'src/app/shared/ui/loading-button/loading-bu
           <p class="font-semibold text-sm text-white-900">{{comment?.user?.firstName}}</p>
       </div>
       <div  class="my-2 ml-2 text-sm cursor-pointer font-normal text-gray-300">
-        hello
+        {{comment.text}}
       </div>
     </div>
   </div>
@@ -64,6 +64,8 @@ export class IdeaCommentComponent {
 
     addComment() {
       if (this.comment) {
+        console.log(this.comment);
+        
         const data = {comment:this.comment,ideaId:this.idea.id};
         this.commentemit.emit(data);
         this.comment = '';

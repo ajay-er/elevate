@@ -150,7 +150,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
               <span class="text-blue-400 text-md"> {{investor.investmentAmount | appFormatInvestmentAmount }} <span class="text-sm text-blue-200">rupees</span></span>
             </p>
           </div>
-          <div class="flex justify-center mt-3">
+          <!-- <div class="flex justify-center mt-3">
             <p class="text-xl sm:text-3xl font-semibold uppercase text-gray-700">
               Past Investments
             </p>
@@ -171,7 +171,7 @@ d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.7
                 </p>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
