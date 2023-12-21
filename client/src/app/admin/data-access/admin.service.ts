@@ -20,6 +20,10 @@ export class AdminService {
     return this.http.get(`${this.apiUrl}/founder/subscription-count`);
   }
   
+  allSubscriptions() {
+    return this.http.get(`${this.apiUrl}/founder/admin-all-subscriptions`);
+  }
+  
   chartOnedata() {
     return this.http.get(`${this.apiUrl}/founder/chart-data`);
   }

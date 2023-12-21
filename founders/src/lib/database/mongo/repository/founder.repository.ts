@@ -44,6 +44,10 @@ export class FounderRepository {
         return await Subscription.find({user:userObjectId});
     }
 
+    async getAllSubcriptionsAdmin(): Promise<any> {
+        return await Subscription.find({});
+    }
+
     async findTotalCount(): Promise<any> {
         return await Subscription.find({status:SubscriptionStatus.ACTIVE}).countDocuments();
     }

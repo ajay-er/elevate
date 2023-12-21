@@ -1,7 +1,9 @@
-<div class="flex mt-3 p-1" [class]="positionClass">
-  <a
-   [class]="pageClass"  class="flex items-center justify-center px-4 py-2 mx-1 text-gray-500 capitalize  bg-opacity-10 rounded-md cursor-not-allowed rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-600"
+<div class="flex mt-3 p-1" >
+  <a  (click)="previous()"  *ngIf="nextPreviousButtons"
+  class="flex items-center justify-center px-4 py-2 mx-1 text-gray-500 capitalize  bg-opacity-10 rounded-md  rtl:-scale-x-100"
   >
+    <!-- <ng-content select="[slot='previous']"></ng-content> -->
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="w-5 h-5"
@@ -15,40 +17,21 @@
       />
     </svg>
   </a>
+  <ng-container  *ngFor="let p of totalPages; index as i">
+    <ng-container *ngIf="i + 1 >= currentPage - maxSize && i + 1 <= currentPage + maxSize">
+    <a  class="hidden cursor-pointer px-4 py-2 mx-1 transition-colors duration-300 transform bg-opacity-10 rounded-md sm:inline"  
+      (click)="selectPageNumber(i + 1)"
+>
+      {{ i + 1 }}
+    </a>
+  </ng-container>
+</ng-container>
 
-  <a
-    [class]="pageClass" class="hidden px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md sm:inline "
-  >
-    1
-  </a>
+  <a (click)="next()"  *ngIf="nextPreviousButtons"
 
-  <a
-    [class]="pageClass" class="hidden px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md sm:inline "
+   class="flex items-center cursor-pointer justify-center px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md rtl:-scale-x-100 "
   >
-    2
-  </a>
-
-  <a
-    [class]="pageClass" class="hidden px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md sm:inline "
-  >
-    ...
-  </a>
-
-  <a
-    [class]="pageClass" class="hidden px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md sm:inline "
-  >
-    9
-  </a>
-
-  <a
-    [class]="pageClass" class="hidden px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md sm:inline "
-  >
-    10
-  </a>
-
-  <a
-   [class]="pageClass"  class="flex items-center justify-center px-4 py-2 mx-1  transition-colors duration-300 transform  bg-opacity-10 rounded-md rtl:-scale-x-100 "
-  >
+  <!-- <ng-content select="[slot='next']"></ng-content> -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="w-5 h-5"
@@ -62,4 +45,3 @@
       />
     </svg>
   </a>
-</div>

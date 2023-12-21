@@ -16,6 +16,10 @@ class FounderController {
         const result = await founderService.getAllSubcriptions(user.id);
         res.json({result});
     } 
+    async getAllUserSubscriptionsAdmin(req: Request, res: Response) {
+        const result = await founderService.getAllSubcriptionsAdmin();
+        res.json({result});
+    } 
 
     async getSubscriptionsCount(req: Request, res: Response) {
         const result = await founderService.getAllSubcriptionsCount();

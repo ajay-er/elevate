@@ -14,6 +14,10 @@ export class FounderService {
         return this.founderRepo.getSubscriptions(user);
     }
    
+    public async getAllSubcriptionsAdmin() {
+        return this.founderRepo.getAllSubcriptionsAdmin();
+    }
+   
     public async updateSub(subId:string,payId:string,signature:string) {
         return this.founderRepo.updateSuccess(subId,payId,signature);
     }

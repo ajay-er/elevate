@@ -12,6 +12,7 @@ export class TableComponent {
   @Input() actionButtons: boolean = false;
 
   @Output() onEdit = new EventEmitter<any>();
+  @Output() pageChange = new EventEmitter<number>();
   @Output() verifyTooglebtn = new EventEmitter<any>();
   @Output() onDelete = new EventEmitter<any>();
   @Input() buttonConfig: { label: string; action: string; class: string; svg?: string }[] = [];
@@ -22,6 +23,10 @@ export class TableComponent {
 
   toggleBlock(item: any) {
     this.onDelete.emit(item);
+  }
+
+  pageChanged(event:any) {
+    this.pageChange.emit(event);
   }
 
   getValue(obj: any, path: string): any {
