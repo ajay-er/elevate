@@ -144,20 +144,16 @@
           </p>
 
           <h2 class="text-xl font-bold mt-6 mb-4">Locations</h2>
-          <div class="flex-wrap flex gap-2" *ngFor="let location of investor?.investmentLocations">
-            <div 
-              class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
-            >
+          <div class="flex flex-wrap gap-2">
+            <div class="bg-red-200 rounded-lg shadow-lg text-black p-1" *ngFor="let location of investor?.investmentLocations">
               {{ location }}
             </div>
           </div>
           <div class="mt-6">
             <h2 class="text-xl font-bold">Markets</h2>
-            <div class="flex-wrap flex gap-2" *ngFor="let market of investor?.investmentMarkets">
-              <div 
-                class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
-              >
-                {{market}}
+            <div class="flex flex-wrap gap-2">
+              <div class="bg-red-200 rounded-lg shadow-lg text-black p-1" *ngFor="let market of investor?.investmentMarkets">
+                {{ market }}
               </div>
             </div>
           </div>
@@ -173,11 +169,11 @@
               <span class="text-blue-400 text-md"> {{ investor?.investmentAmount | appFormatInvestmentAmount }} <span class="text-sm text-blue-200">rupees</span></span>
             </p>
           </div>
-          <div class="flex justify-center mt-3">
+          <!-- <div class="flex justify-center mt-3">
             <p class="text-xl sm:text-3xl font-semibold uppercase text-gray-200">
               Past Investments
             </p>
-          </div>
+          </div> -->
           <!-- <div class="flex flex-wrap gap-2">
             <div>
               <a
