@@ -26,7 +26,7 @@ export class IdeaRepository {
         return await Idea.findById({ _id:id }).select('likes');
     }
 
-    async addComment(comment: ICommentByUser) {
+    async addComment(comment: ICommentByUser) { 
         const {text, commentedUser } = comment;
         return await Comment.create({ user:commentedUser , text });
     }
