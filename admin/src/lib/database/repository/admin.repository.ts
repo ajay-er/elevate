@@ -46,4 +46,5 @@ export class AdminRepository {
     public async findUserById(id: string) {
         return await Investor.findById({ _id: id }).populate('user');
     }
+  
 }

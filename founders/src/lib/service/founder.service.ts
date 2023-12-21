@@ -29,4 +29,12 @@ export class FounderService {
     public async findTotalProfit() {
         return this.founderRepo.totalProfit();
     }
+   
+    public async getChartData() {
+        return this.founderRepo.chartData();
+    }
+   
+    public async getChart2Data() {
+        return this.founderRepo.chart2Data();
+    }
 }

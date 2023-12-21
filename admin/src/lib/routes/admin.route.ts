@@ -24,4 +24,8 @@ router.get('/api/v1/admin/investor-profile/:id',requireAdminAuth,adminController
 
 router.get('/api/v1/admin/founder-profile/:id',requireAdminAuth,adminController.getFounderProfile);
 
+router.put('/api/v1/admin/admin-update-profile/:id',requireAdminAuth,adminController.updateInvestorProfile);
+
+router.put('/api/v1/admin/admin-update-founder/:id',requireAdminAuth,adminController.updateFounderProfile);
+
 export { router as adminRoute };

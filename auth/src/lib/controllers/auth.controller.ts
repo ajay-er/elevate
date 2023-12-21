@@ -292,5 +292,4 @@ router.post('/api/v1/auth/logout', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'logout succefully' });
 });
 
-
 export { router as authRoute };

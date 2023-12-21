@@ -12,4 +12,8 @@ router.get('/api/v1/founder/pending-subscription-count',requireAuth,founderContr
 
 router.get('/api/v1/founder/total-profit',requireAuth,founderController.findTotalProfit);
 
+router.get('/api/v1/founder/chart-data',requireAuth,founderController.chartData);
+
+router.get('/api/v1/founder/chart-two-data',requireAuth,founderController.chart2Data);
+
 export { router as foundersRoute }; 

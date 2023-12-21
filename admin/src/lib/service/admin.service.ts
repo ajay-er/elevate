@@ -26,7 +26,7 @@ export class AdminService {
         return await this.adminRepo.verifyInvestor(id);
     }
 
-    public async updateInvestorDetail(id:string,investorDetails:Partial<IInvestor>) {
+    public async updateInvestorDetail(id:any,investorDetails:Partial<IInvestor>) {
         return await this.adminRepo.update(id,investorDetails);
     }
 

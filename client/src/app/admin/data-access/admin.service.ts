@@ -20,6 +20,13 @@ export class AdminService {
     return this.http.get(`${this.apiUrl}/founder/subscription-count`);
   }
   
+  chartOnedata() {
+    return this.http.get(`${this.apiUrl}/founder/chart-data`);
+  }
+  
+  chartTwodata() {
+    return this.http.get(`${this.apiUrl}/founder/chart-two-data`);
+  }
   
   totalPendingSubscriptions() {
     return this.http.get(`${this.apiUrl}/founder/pending-subscription-count`);
@@ -52,4 +59,14 @@ export class AdminService {
   blockUser(userId:string) {
     return this.http.put(`${this.apiUrl}/admin/block-user`,{userId});
   }
+
+  updateFounderData(user:any,id:any) {
+    return this.http.put(`${this.apiUrl}/admin/admin-update-founder/${id}`,user);
+  }
+
+  updateInvestorData(user:any,id:string) {
+    return this.http.put(`${this.apiUrl}/admin/admin-update-profile/${id}`,user);
+  }
+
+
 }

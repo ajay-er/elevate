@@ -5,6 +5,7 @@ import { CommonApiService } from 'src/app/shared/data-access/api.service';
 import { Countries, Technology } from 'src/app/shared/interfaces';
 import { countries } from 'src/app/shared/interfaces/countries';
 import { technologies } from 'src/app/shared/interfaces/markets';
+import { AdminService } from '../../data-access/admin.service';
 
 @Component({
   selector: 'app-edit-investor',
@@ -23,10 +24,12 @@ export class EditInvestorComponent {
   selectMarketDropDown:boolean = false;
 
   private commonApiService = inject(CommonApiService); 
+  private adminservice = inject(AdminService); 
   private route = inject(ActivatedRoute); 
   protected userDetails:any;
   updateInvestorForm!: FormGroup;
   private initialFormValues: any;
+  private id:any;
 
   constructor(private fb: FormBuilder) {}
 
@@ -65,9 +68,9 @@ export class EditInvestorComponent {
     this.initialFormValues = this.updateInvestorForm.value;
 
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (!id) { return; }
-      this.commonApiService.getProfileInvestors(id).subscribe((res: any) => {
+      this.id = params.get('id');
+      if (!this.id) { return; }
+      this.commonApiService.getProfileInvestors(this.id).subscribe((res: any) => {
         const user = res.investor;
         this.userDetails = user;
         console.log(res,'yes');
@@ -157,7 +160,7 @@ export class EditInvestorComponent {
 
   submit() {
     console.log(this.updateInvestorForm.value);
-    this.commonApiService.updateInvestorProfile(this.updateInvestorForm.value).subscribe((res:any) => {
+    this.adminservice.updateInvestorData(this.updateInvestorForm.value,this.id).subscribe((res:any) => {
       console.log(res);
     });
   }

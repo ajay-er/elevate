@@ -18,7 +18,7 @@ export class UserService {
         return await this.userRepo.createUser(userData);
     }
 
-    public async update(userId:string,userData:IUser) {
+    public async update(userId:string,userData:Partial<IUser>) {
         return await this.userRepo.update(userId,userData);
     }
 

@@ -7,6 +7,8 @@ import { USER_TOGGLE_BLOCK_PUBLISHER } from '../../events/publisher/user.blockto
 import { kafka_client } from '../../config/kafka.config';
 import { VERIFY_INVESTOR_PUBLISHER } from '../../events/publisher/investor.verified.publisher';
 import { IUser } from '../database/model/User';
+import { USER_UPDATED_PUBLISHER } from '../../events/publisher/user.updated.publisher';
+import { INVESTOR_UPDATED_PUBLISHER } from '../../events/publisher/investor.updated.publisher';
 
 const adminService = container.resolve(AdminService);
 const usersService = container.resolve(UserService);
@@ -31,14 +33,16 @@ export class AdminController {
     async verifyUser(req: Request, res: Response) {
         const { investorId } = req.body;
         await adminService.updateVerifyInvestor(investorId);
-        const investor  = await adminService.findUserById(investorId);
-        if (!investor) throw new BadRequestError('Oops something goes wrong, investor not found');
+        const investor = await adminService.findUserById(investorId);
+        if (!investor) throw new BadRequestError(
+            'Oops something goes wrong, investor not found'
+        );
         const user = investor.user as unknown as IUser;
         await new VERIFY_INVESTOR_PUBLISHER(kafka_client).publish({
             isVerified: true,
-            userId: user?.userId
+            userId: user?.userId,
         });
-        res.json({ statas:'OK' });
+        res.json({ statas: 'OK' });
     }
 
     async getAllFounders(req: Request, res: Response) {
@@ -63,8 +67,73 @@ export class AdminController {
         res.json({ founder });
     }
 
+    async updateInvestorProfile(req: Request, res: Response) {
+        const id = req.params.id;
+        const investor = await adminService.findUserById(id);
+        if (!investor) throw new BadRequestError('Oops user not found');
+        const {
+            firstName,
+            lastName,
+            phone,
+            website,
+            bio,
+            twitter,
+            facebook,
+            youtube,
+            linkedin,
+            investmentAmount,
+            totalInvestmentCount,
+        } = req.body;
+        const userId = (investor.user as any).userId;
+        await usersService.update(userId, { firstName, lastName });
+        await new USER_UPDATED_PUBLISHER(kafka_client).publish({
+            firstName: firstName,
+            lastName: lastName,
+            userId,
+        });
+        await adminService.updateInvestorDetail(investor.user.id, {
+            socialMediaLinks: { twitter, linkedin, facebook, youtube },
+            investmentAmount,
+            totalInvestmentCount,
+            phone,
+            website,
+            bio,
+        });
+
+        await new INVESTOR_UPDATED_PUBLISHER(kafka_client).publish({
+            userId: userId,
+            isVerified:investor.isVerified,
+            socialMediaLinks:{
+                twitter,
+                facebook,
+                youtube,
+                linkedin,
+            },
+            investmentAmount,
+            totalInvestmentCount,
+            phone,
+            website,
+            bio
+        });
+        res.json({ status:'OK' });
+    }
+
+    async updateFounderProfile(req: Request, res: Response) {
+        const id = req.params.id;
+        const {firstName,lastName} = req.body;
+        const currentUser = await usersService.findById(id);
+        if (!currentUser) throw new BadRequestError('ooops');
+        await usersService.update(currentUser?.userId, { firstName, lastName });
+        await new USER_UPDATED_PUBLISHER(kafka_client).publish({
+            firstName: firstName,
+            lastName: lastName,
+            userId:currentUser.userId
+        });
+        res.json({ status:'OK' });
+    }
+
     async toggleBlockUser(req: Request, res: Response) {
-        const {userId} = req.body;
+        const { userId } = req.body;
         const user = await usersService.findUserById(userId);
         if (!user) throw new BadRequestError('Oops user not found');
         user.isBlocked = !user.isBlocked;
