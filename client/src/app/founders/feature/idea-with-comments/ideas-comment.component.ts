@@ -24,30 +24,36 @@ export class IdeasCommentComponent {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       const id = params['id'];      
-      this.ideaService.fetchCurrentIdea(id).subscribe((res:any) => {
-        console.log(res);
-        this.idea = res.idea;
-      });
+      this.fetchidea(id);
     });
     
+  }
+
+  fetchidea(id:any) {
+    this.ideaService.fetchCurrentIdea(id).subscribe((res:any) => {
+      console.log(res);
+      this.idea = res.idea;
+    });
   }
 
   addComment(data:{comment:string,ideaId:string}) {
     this.ideaService.addComment(data.comment,data.ideaId).subscribe((res) => {
       console.log(res);
+      this.fetchidea(data.ideaId);
     });
   }
 
   like(idea:any) {
     this.ideaService.like(idea).subscribe((res) => {
       console.log(res);
-      
+      this.fetchidea(idea);
     });
   }
 
   dislike(idea:any) {
     this.ideaService.dislike(idea).subscribe((res) => {
       console.log(res);
+      this.fetchidea(idea);
     });
   }
 }

@@ -94,7 +94,8 @@ class ideaController {
             await ideaService.addLike(ideaId, user.id);
             tag = 'added';
         }
-        res.json({ status: 'OK', message: `like ${tag}` });
+        const likes = await ideaService.findIdeaLike(ideaId);
+        res.json({ status: 'OK', message: `like ${tag}`,likes });
     }
 
     async toogleDislike(req: Request, res: Response) {

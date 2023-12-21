@@ -22,6 +22,10 @@ export class IdeaRepository {
         }).populate('user');
     }
 
+    async findIdeaLike(id: string) {
+        return await Idea.findById({ _id:id }).select('likes');
+    }
+
     async addComment(comment: ICommentByUser) {
         const {text, commentedUser } = comment;
         return await Comment.create({ user:commentedUser , text });
