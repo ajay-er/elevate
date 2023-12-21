@@ -2,7 +2,7 @@
   <ng-container *ngIf="isFounderLoggedIn$ | async">
   <app-create-idea (createIdea)="createIdea($event)"></app-create-idea>
 </ng-container>
-<ng-container *ngFor="let idea of ideas">
+<ng-container *ngFor="let idea of ideas;">
   <app-idea-detail (like)="like($event)" (dislike)="dislike($event)" (ideaselect)="ideaSelected($event)" [idea]="idea"></app-idea-detail>
-  </ng-container>
+</ng-container>
 </div>

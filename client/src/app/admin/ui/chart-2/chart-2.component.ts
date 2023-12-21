@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { AdminService } from '../../data-access/admin.service';
 
 @Component({
   selector: 'app-chart-2',
@@ -9,31 +10,29 @@ import Chart from 'chart.js/auto';
 })
 export class Chart2Component {
   chart:any;
+  private adminService = inject(AdminService);
 
   
   ngOnInit(): void {
-    this.createChart();
+    this.adminService.chartTwodata().subscribe((res:any) => {
+      const data = res.result;
+      const count = data.map((item:any) => item.data);
+      const label = data.map((item:any) => item.label);
+      this.createChart(count,label);
+    });
   }
 
-  createChart() {
+  createChart(count:any[],labels:any[]) {
 
     const data = {
-      labels: [
-        'Red',
-        'Green',
-        'Yellow',
-        'Grey',
-        'Blue'
-      ],
+      labels: labels,
       datasets: [{
-        label: 'My First Dataset',
-        data: [11, 16, 7, 3, 14],
+        label: 'Sub count',
+        data: count,
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(75, 192, 192)',
           'rgb(255, 205, 86)',
-          'rgb(201, 203, 207)',
-          'rgb(54, 162, 235)'
         ]
       }]
     };

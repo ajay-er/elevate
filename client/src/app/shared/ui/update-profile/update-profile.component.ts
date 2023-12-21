@@ -50,7 +50,6 @@ export class UpdateProfileComponent {
       investmentAmount: [''],
       countries: this.fb.array([]),
       markets: this.fb.array([]),
-
     });
 
     this.updateInvestorForm.get('email')?.disable();
@@ -152,10 +151,26 @@ export class UpdateProfileComponent {
       console.log(`No change in ${selectedMarket.name}`);
     }
   }
+  getSelectedCountries(): string[] {
+    return this.countriesArray
+      .filter((control) => control.value)
+      .map((control, index) => this.Countries[index].name);
+  }
+
+  getSelectedMarkets(): string[] {
+    return this.technologiesArray
+      .filter((control) => control.value)
+      .map((control, index) => this.Technologies[index].name);
+  }
+
 
   submit() {
-    console.log(this.updateInvestorForm.value);
-    this.commonApiService.updateInvestorProfile(this.updateInvestorForm.value).subscribe((res:any) => {
+    const selectedCountries = this.getSelectedCountries();
+    const selectedMarkets = this.getSelectedMarkets();
+    const data = this.updateInvestorForm.value;
+    data.countries = selectedCountries;
+    data.markets = selectedMarkets;
+    this.commonApiService.updateInvestorProfile(data).subscribe((res:any) => {
       console.log(res);
       const token = this.localStorageService.get('access_token');
       if (this.jwtService.isInvestor(token!)) {

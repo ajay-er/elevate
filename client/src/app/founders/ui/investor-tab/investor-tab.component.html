@@ -30,28 +30,28 @@
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white bg-opacity-5">
             <tr *ngFor="let item of investorDetail; let no = index">
-              <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+              <td class="px-4 py-4 text-xs text-gray-300 whitespace-nowrap">
                 {{ no + 1 }}
               </td>
-              <td
-                *ngFor="let entry of columnArray"
-                class="px-4 py-4 text-sm border text-center text-gray-300 whitespace-nowrap"
-              >
-              <ng-container *ngIf="entry.datatype !== 'amount';else amount">{{ getValue(item, entry.fieldName) }} </ng-container>              
-              <ng-template #amount>
-                {{ getValue(item, entry.fieldName) | appFormatInvestmentAmount }} 
-              </ng-template>
+              <td *ngFor="let entry of columnArray" class="px-4 py-4 text-xs border text-center text-gray-300">
+                <ng-container *ngIf="entry.datatype !== 'amount'; else amount">
+                  <div class=" w-24 truncate">
+                    {{ getValue(item, entry.fieldName) }}
+                  </div>
+                </ng-container>
+                <ng-template #amount>
+                  <div class=" w-24 truncate">
+                    {{ getValue(item, entry.fieldName) | appFormatInvestmentAmount }}
+                  </div>
+                </ng-template>
               </td>
-              <td
-                class="px-4 py-4 text-sm text-gray-300 text-center whitespace-nowrap"
-                [routerLink]="['/founder/investor',item.id]"
-              >
-                <app-loading-button [label]="'Details'" 
-                  [buttonClass]="'bg-blue-500 p-2  text-white'"
-                ></app-loading-button>
+              <td class="px-4 py-4 text-xs text-gray-300 text-center whitespace-nowrap" [routerLink]="['/founder/investor', item.id]">
+                <app-loading-button [label]="'Details'" [buttonClass]="'bg-blue-500 p-2 text-white'"></app-loading-button>
               </td>
             </tr>
           </tbody>
+          
+          
         </table>
       </div>
     </div>

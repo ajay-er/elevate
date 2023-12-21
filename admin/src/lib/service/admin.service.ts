@@ -10,6 +10,14 @@ export class AdminService {
         return await this.adminRepo.findAllInvestors(page,limit);
     }
 
+    public async getVerifiedInvestorsCount() {
+        return await this.adminRepo.getInvestorsCount();
+    }
+
+    public async getNotVerifiedInvestorsCount() {
+        return await this.adminRepo.getNotVerifiedInvestorsCount();
+    }
+
     public async findAllUnverifiedInvestors(page:number,limit:number) {
         return await this.adminRepo.findAllUnverifiedInvestors(page,limit);
     }
@@ -18,7 +26,7 @@ export class AdminService {
         return await this.adminRepo.verifyInvestor(id);
     }
 
-    public async updateInvestorDetail(id:string,investorDetails:Partial<IInvestor>) {
+    public async updateInvestorDetail(id:any,investorDetails:Partial<IInvestor>) {
         return await this.adminRepo.update(id,investorDetails);
     }
 

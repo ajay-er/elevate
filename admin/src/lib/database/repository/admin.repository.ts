@@ -10,6 +10,14 @@ export class AdminRepository {
             .exec();
     }
 
+    public async getInvestorsCount() {
+        return await Investor.find({ isVerified:true }).countDocuments();
+    }
+
+    public async getNotVerifiedInvestorsCount() {
+        return await Investor.find({ isVerified:false }).countDocuments();
+    }
+
     public async findAllUnverifiedInvestors(page: number, limit: number) {
         const skip = (page - 1) * limit;
         return await Investor.find({ isVerified: false })
@@ -38,4 +46,5 @@ export class AdminRepository {
     public async findUserById(id: string) {
         return await Investor.findById({ _id: id }).populate('user');
     }
+  
 }

@@ -9,8 +9,8 @@ export class InvestorsService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
-  getAllInvestors() {
-    return this.http.get(`${this.apiUrl}/investor/investors`);
+  getAllInvestors(page:number) {
+    return this.http.get(`${this.apiUrl}/investor/investors?page=${page}`);
   }
 
   updateProfileImage(imageData: FormData) {

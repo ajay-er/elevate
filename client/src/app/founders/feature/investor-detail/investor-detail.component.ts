@@ -15,6 +15,6 @@ export class InvestorDetailComponent {
     const data = this.route.snapshot.data['investor'];
     this.investor = data.investor;
     this.isFounderHavePremium = data.subscription;
-    console.log(this.investor);
+    console.log(data);
   }
 }

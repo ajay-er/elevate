@@ -10,8 +10,8 @@ export class InvestorService {
         return await this.investorRepo.create(investor);
     }
 
-    public async get() {
-        return await this.investorRepo.findAll();
+    public async get(page:number,limit:number) {
+        return await this.investorRepo.findAll(page,limit);
     }
 
     public async findById(id: string):Promise<IInvestor | null> {

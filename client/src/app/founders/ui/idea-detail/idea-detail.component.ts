@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IIdea } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-idea-detail',
   templateUrl: './idea-detail.component.html',
   styleUrls: ['./idea-detail.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IdeaDetailComponent {
   @Input() idea!:IIdea;

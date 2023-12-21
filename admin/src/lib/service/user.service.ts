@@ -18,12 +18,15 @@ export class UserService {
         return await this.userRepo.createUser(userData);
     }
 
-    public async update(userId:string,userData:IUser) {
+    public async update(userId:string,userData:Partial<IUser>) {
         return await this.userRepo.update(userId,userData);
     }
 
     public async findAll(page:number,limit:number) {
         return await this.userRepo.findAll(page,limit);
     }
-   
+
+    public async foundersCount() {
+        return await this.userRepo.findFoundersCount();
+    }
 }

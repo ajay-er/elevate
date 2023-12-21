@@ -15,12 +15,16 @@ export class UserRepository {
         return await User.create(user);
     }
     
-    public async update(userId:string,user:IUser) {
+    public async update(userId:string,user:Partial<IUser>) {
         return await User.updateOne({userId},user);
     }
     
     public async findAll(page:number,limit:number) {
         const skip = (page - 1) * limit;
         return await User.find({role:IRole.FOUNDER}).skip(skip).limit(limit).exec();
+    }
+
+    public async findFoundersCount() {
+        return await User.find({role:IRole.FOUNDER}).countDocuments();
     }
 }

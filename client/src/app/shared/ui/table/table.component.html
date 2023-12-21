@@ -121,8 +121,13 @@
       </tr>
     </tbody>
   </table>
-  <app-pagination
-    [pageClass]="'cursor-pointer text-black bg-gray-700'"
-    [positionClass]="'justify-end'"
-  ></app-pagination>
+  <ng-container *ngIf="gridArray">
+
+    <app-pagination 
+    [collectionSize]="gridArray.length"
+    [pageSize]="10"
+    (pageChange)="pageChanged($event)"
+    >
+  </app-pagination>
+  </ng-container>
 </div>

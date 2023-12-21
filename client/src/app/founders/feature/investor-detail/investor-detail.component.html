@@ -4,19 +4,28 @@
       <div class="col-span-4 sm:col-span-3">
         <div class="bg-white bg-opacity-20 shadow rounded-lg p-6">
           <div class="flex flex-col items-center">
-            <img
+            <ng-container *ngIf="isFounderHavePremium ==='BASIC' || isFounderHavePremium === 'NO-PLAN';else profile" >
+              <img
+              [src]="'https://res.cloudinary.com/elevate-connect/image/upload/f_auto,q_auto/v1/elevate/xtt1vpogqccibkkc06oj'"
+              class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+              />
+            </ng-container>
+            <ng-template #profile>
+              <img
               [src]="investor?.user?.profileImgUrl"
               class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
-            />
+              />
+            </ng-template>
+           
             <p class="text-2xl uppercase font-bold">{{investor?.user?.firstName + ' ' + investor?.user.lastName }}</p>
-            <ng-container *ngIf="isFounderHavePremium ==='PRO';else email" >
+            <ng-container *ngIf="isFounderHavePremium ==='PRO' || isFounderHavePremium ==='BASIC' || isFounderHavePremium ==='PREMIUM';else email" >
               <p class="font-bold">{{investor?.user?.email}}</p>
             </ng-container>
             <ng-template #email>
               <p class="font-bold">Email Redacted</p>
             </ng-template>
 
-            <ng-container *ngIf="isFounderHavePremium ==='PRO';else phone" >
+            <ng-container *ngIf="isFounderHavePremium ==='PRO'  || isFounderHavePremium ==='PREMIUM';else phone" >
               <p class="font-bold">{{investor?.phone}}</p>
             </ng-container>
             <ng-template #phone>
@@ -34,7 +43,7 @@
 
              <ng-template #message>
               <app-loading-button
-                [label]="'PURCHASE PREMIUM'"
+                [label]="'MESSAGE'"
                 [routerLink]="['/founder/pricing']"
                 [buttonClass]="'bg-blue-700 text-white px-6 py-2'"
               ></app-loading-button>
@@ -44,7 +53,7 @@
           <hr class="my-6 border-t border-gray-300" />
           <div class="items-center justify-center flex">
             <!-- linkdin -->
-            <div class="p-2" *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2" *ngIf="isFounderHavePremium==='PRO' || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds LinkedIn"
@@ -63,7 +72,7 @@
               </a>
             </div>
             <!-- yt -->
-            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'  || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-orange-500"
                 aria-label="Visit TrendyMinds YouTube"
@@ -82,7 +91,7 @@
               </a>
             </div>
             <!-- fb -->
-            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2"  *ngIf="isFounderHavePremium==='PRO'  || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-blue-600"
                 aria-label="Visit TrendyMinds Facebook"
@@ -101,7 +110,7 @@
               </a>
             </div>
             <!-- twitter -->
-            <div class="p-2"    *ngIf="isFounderHavePremium==='PRO'">
+            <div class="p-2"    *ngIf="isFounderHavePremium==='PRO'  || isFounderHavePremium ==='PREMIUM'">
               <a
                 class="text-white hover:text-blue-500"
                 aria-label="Visit TrendyMinds Twitter"
@@ -135,20 +144,16 @@
           </p>
 
           <h2 class="text-xl font-bold mt-6 mb-4">Locations</h2>
-          <div class="flex-wrap flex gap-2" *ngFor="let location of investor?.investmentLocations">
-            <div 
-              class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
-            >
+          <div class="flex flex-wrap gap-2">
+            <div class="bg-red-200 rounded-lg shadow-lg text-black p-1" *ngFor="let location of investor?.investmentLocations">
               {{ location }}
             </div>
           </div>
           <div class="mt-6">
             <h2 class="text-xl font-bold">Markets</h2>
-            <div class="flex-wrap flex gap-2" *ngFor="let market of investor?.investmentMarkets">
-              <div 
-                class="bg-red-200 rounded-lg shadow-lg w-fit text-black px-4 py-2"
-              >
-                {{market}}
+            <div class="flex flex-wrap gap-2">
+              <div class="bg-red-200 rounded-lg shadow-lg text-black p-1" *ngFor="let market of investor?.investmentMarkets">
+                {{ market }}
               </div>
             </div>
           </div>
@@ -164,11 +169,11 @@
               <span class="text-blue-400 text-md"> {{ investor?.investmentAmount | appFormatInvestmentAmount }} <span class="text-sm text-blue-200">rupees</span></span>
             </p>
           </div>
-          <div class="flex justify-center mt-3">
+          <!-- <div class="flex justify-center mt-3">
             <p class="text-xl sm:text-3xl font-semibold uppercase text-gray-200">
               Past Investments
             </p>
-          </div>
+          </div> -->
           <!-- <div class="flex flex-wrap gap-2">
             <div>
               <a

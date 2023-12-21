@@ -14,7 +14,7 @@ export class InvestorsListComponent {
   investors:any;
   countries:Countries[] = countries;
   markets:Technology[] = technologies;
-
+  currentPage = 1;
   coloumnArray : any[] = [
     {header:'Investor Name',fieldName:'user.firstName',datatype:'any'},
     {header:'Locations',fieldName:'investmentLocations',datatype:'[]'},
@@ -26,9 +26,18 @@ export class InvestorsListComponent {
   ];
 
   ngOnInit() {
-    this.investorsService.getAllInvestors().subscribe((res:any) => {
+    this.fetchData(this.currentPage);
+  }
+
+  fetchData(page:number) {
+    this.investorsService.getAllInvestors(page).subscribe((res:any) => {
       this.investors = res.result;
       console.log(this.investors);
     });
+  }
+
+  pageChanged(event:number) {
+    this.currentPage = event;
+    this.fetchData(this.currentPage);
   }
 }

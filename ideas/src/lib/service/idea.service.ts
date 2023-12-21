@@ -23,6 +23,10 @@ export class IdeaService {
         return await this.ideaRepo.findIdeaById(id);
     }
 
+    public async findIdeaLike(id: string) {
+        return await this.ideaRepo.findIdeaLike(id);
+    }
+
     public async addComment(comment: ICommentByUser) {
         return await this.ideaRepo.addComment(comment);
     }

@@ -23,11 +23,14 @@ export class IdeasComponent {
   comment:string = '';
 
   ngOnInit() {
+    this.fetchData();
+  }
+
+  fetchData() {
     this.ideaService.getAllIdeas().subscribe((res:any) => {
       this.ideas = res.ideas;
     });
   }
-
   createIdea(caption:any) {
     this.ideaService.createIdea(caption).subscribe((res:any) => {
       this.ideas.unshift(res.idea);
@@ -45,19 +48,21 @@ export class IdeasComponent {
     this.ideaService.addComment(this.comment,ideaId).subscribe((res) => {
       console.log(res);
       this.comment = '';
+      this.fetchData();
     });
   }
 
-  like(idea:any) {
-    this.ideaService.like(idea).subscribe((res) => {
+  like(idea: any) {
+    this.ideaService.like(idea).subscribe((res: any) => {
       console.log(res);
-      
+      this.fetchData();
     });
   }
-
-  dislike(idea:any) {
-    this.ideaService.dislike(idea).subscribe((res) => {
+  
+  dislike(idea: any) {
+    this.ideaService.dislike(idea).subscribe((res: any) => {
       console.log(res);
+      this.fetchData();
     });
   }
 }

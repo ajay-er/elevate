@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { AdminService } from '../../data-access/admin.service';
 
 @Component({
   selector: 'app-chart-1',
@@ -8,33 +9,38 @@ import Chart from 'chart.js/auto';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Chart1Component {
+  private adminService = inject(AdminService);
+
   public chart: any;
 
   ngOnInit(): void {
-    this.createChart();
+    this.adminService.chartOnedata().subscribe((res:any) => {
+      const data = res.result;
+      const profit = data.map((item:any) => {
+        return item.profit;
+      });
+      const label = data.map((item:any) => {
+        return item.day;
+      });
+      
+      this.createChart(profit,label);
+    });
   }
 
-  createChart() {
+  createChart(profitData:any[],labels:any[]) {
   
     this.chart = new Chart("MyChart", {
-      type: 'bar', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
+      type: 'bar',
+      data: {
+        labels: 
+        labels, 
 	       datasets: [
           {
-            label: "Sales",
-            data: ['467','576', '572', '79', '92',
-								 '574', '573', '576'],
+            label: "profit",
+            data: profitData,
             backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-									 '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }  
+          }
+          
         ]
       },
       options: {
