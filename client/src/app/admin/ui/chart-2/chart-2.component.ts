@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import Chart from 'chart.js/auto';
 import { AdminService } from '../../data-access/admin.service';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-chart-2',
