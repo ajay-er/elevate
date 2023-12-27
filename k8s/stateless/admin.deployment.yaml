@@ -27,11 +27,6 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: JWT_SECRET
-          - name: CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: auth-secrets
-                key: CLIENT_ID
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:

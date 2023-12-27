@@ -27,30 +27,25 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: JWT_SECRET
-          - name: CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: auth-secrets
-                key: CLIENT_ID
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:
                 name: auth-secrets
                 key: SESSION_SECRET
-          - name: ELASTIC_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: elevate-es-elastic-user
-                key: elastic
+          # - name: ELASTIC_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: elevate-es-elastic-user
+          #       key: elastic
           - name: RAZORPAY_KEY_ID
             valueFrom:
               secretKeyRef:
-                name: razorypay-secrets
+                name: razorpay-secrets
                 key: RAZORPAY_KEY_ID
           - name: RAZORPAY_KEY_SECRET
             valueFrom:
               secretKeyRef:
-                name: razorypay-secrets
+                name: razorpay-secrets
                 key: RAZORPAY_KEY_SECRET
 ---
 apiVersion: v1

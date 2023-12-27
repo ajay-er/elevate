@@ -40,7 +40,7 @@ export class PricingComponent {
         description: 'Monthly plan test',
         currency: 'INR',
         name: 'Elevate',
-        key: 'rzp_test_mfG6Xukc148Lkm',
+        key: 'rzp_test_Z9Vm6xRwUNDqf1',
         image: '../../../../assets/images/logo.jpg',
         handler: (res: any) => {
           this.founderService.updateSubscription(res).subscribe((r:any) => {

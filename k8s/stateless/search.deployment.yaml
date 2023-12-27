@@ -27,21 +27,16 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: JWT_SECRET
-          - name: CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: auth-secrets
-                key: CLIENT_ID
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:
                 name: auth-secrets
                 key: SESSION_SECRET
-          - name: ELASTIC_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: elevate-es-elastic-user
-                key: elastic
+          # - name: ELASTIC_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: elevate-es-elastic-user
+          #       key: elastic
 ---
 apiVersion: v1
 kind: Service
