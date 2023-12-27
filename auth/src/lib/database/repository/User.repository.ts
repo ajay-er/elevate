@@ -10,7 +10,7 @@ export class UserRepository {
     async signup(user: ISignupUser) {
         return await User.create(user);
     }
-
+ 
     async find() {
         return await User.find({});
     }
