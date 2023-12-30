@@ -12,9 +12,17 @@
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              src="../../../../assets/images/profile/profile.png"
-              alt="user photo"
+              *ngIf="(currentUser$ | async)?.photo; else fallbackImage"
+              src="{{ (currentUser$ | async)?.photo }}"
+              alt="photo"
             />
+            <ng-template #fallbackImage>
+              <img
+                class="w-6 h-6 rounded-full"
+                src="../../../../assets/images/profile/profile.png"
+                alt="photo"
+              />
+            </ng-template>
           </button>
           <div
             *ngIf="isDropdownOpen"

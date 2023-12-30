@@ -24,7 +24,7 @@ import { AddOneMonthPipe } from 'src/app/shared/resolvers/addOneMonth.pipe';
         <tr *ngFor="let item of allSubscriptions" class="bg-white  cursor-pointer bg-opacity-5 border border-white sm:mt-8 rounded-lg sm:p-4 p-2 text-center">
           <td class="rounded-lg bg-opacity-70 p-1 sm:p-3">{{ item.plan }}</td>
           <td class="rounded-lg bg-opacity-70 sm:p-3">{{item.createdAt | appAddOneMonth | date:'short'}}</td>
-          <td *ngIf="item.status;failed" class="bg-green-100 text-green-800 text-xs font-medium text-center  p-1 ">
+          <td *ngIf="item.status === 'ACTIVE';failed" class="bg-green-100 text-green-800 text-xs font-medium text-center  p-1 ">
             {{item.status}}
           </td>
             <!-- <td  class="bg-yellow-100 text-yellow-800 text-xs font-medium min-w-[80px] text-center rounded-lg p-1 sm:p-3 ">
@@ -32,7 +32,7 @@ import { AddOneMonthPipe } from 'src/app/shared/resolvers/addOneMonth.pipe';
             </td> -->
             <ng-template #failed>
               <td class="bg-red-100 text-red-800 rounded-lg p-1 sm:p-3 min-w-[80px] text-center text-xs font-medium px-3 dark:bg-red-900 dark:text-red-300">
-                failed
+                failed/canceled
               </td>
             </ng-template>
             
