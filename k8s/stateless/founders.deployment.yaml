@@ -32,11 +32,6 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: SESSION_SECRET
-          - name: ELASTIC_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: elevate-es-elastic-user
-                key: elastic
           - name: RAZORPAY_KEY_ID
             valueFrom:
               secretKeyRef:
