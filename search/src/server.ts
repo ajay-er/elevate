@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
     try {
         console.clear();
         
-        // await PingElasticSearch();
+        await PingElasticSearch();
 
         app.listen(PORT, () => {
             console.log(`Server-search is Listening on port ${PORT}`);
