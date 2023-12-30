@@ -61,12 +61,3 @@ class FounderController {
 
 export const founderController = new FounderController();
 
-
-//     await PUT_TO_ELASTIC('startups', {
-//         companyName,
-//         bannerImage,
-//         description,
-//         industry,
-//         location,
-//         id: result._id,
-//     });

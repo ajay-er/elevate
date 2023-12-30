@@ -11,12 +11,12 @@ router.get('/', async (req: Request, res: Response) => {
     }
 
     const response = await ELASTIC_CLIENT.search({
-        index: 'startups',
+        index: 'investors',
         body: {
             query: {
                 multi_match: {
                     query: searchQuery,
-                    fields: ['companyName^3', 'description', 'industry^2', 'location']
+                    fields: ['investmentMarkets^3', 'investmentLocations']
                 }
             }
         }
@@ -27,4 +27,4 @@ router.get('/', async (req: Request, res: Response) => {
     res.send(results);
 });
 
-export { router as startupRoute };
+export { router as investorRoute };
