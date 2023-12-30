@@ -11,7 +11,9 @@ export class TransactionsContainerComponent {
   allSubs:any;
 
   coloumnArray : any[] = [
-    {header:'UserId',fieldName:'user',datatype:'string'},
+    {header:'user',fieldName:'user.firstName',datatype:'any'},
+    {header:'subscriptionId',fieldName:'subscriptionId',datatype:'string'},
+    {header:'purchaseDate',fieldName:'createdAt',datatype:'string'},
     {header:'Plan',fieldName:'plan',datatype:'string'},
     {header:'Status',fieldName:'status',datatype:'string'},
     {header:'Payment',fieldName:'paymentDetails.paymentStatus',datatype:'string'},

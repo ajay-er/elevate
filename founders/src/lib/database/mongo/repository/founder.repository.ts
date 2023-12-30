@@ -45,7 +45,7 @@ export class FounderRepository {
     }
 
     async getAllSubcriptionsAdmin(): Promise<any> {
-        return await Subscription.find({});
+        return await Subscription.find({}).populate('user');
     }
 
     async changeSubscriptionStatus(id:string): Promise<any> {
