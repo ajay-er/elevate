@@ -4,6 +4,8 @@ import { AuthService } from '../service/auth.service';
 import { container } from 'tsyringe';
 import { cloudinary } from '../../config/cloudinary.config';
 import { upload } from '../../config/multer.config';
+import { USER_UPDATED_PUBLISHER } from '../../events/publisher/user.updated.publisher';
+import { kafka_client } from '../../config/kafka.config';
 
 const router = express.Router();
 
@@ -49,6 +51,11 @@ router.post('/api/v1/auth/profile/profile-img',upload.single('profile'), require
     if (!user) throw new BadRequestError('User not found');
     user.profileImgUrl = url;
     authService.saveUser(user);
+
+    await new USER_UPDATED_PUBLISHER(kafka_client).publish({
+        profileImgUrl:url,
+        userId:user.id,
+    });
     res.status(200).json({ message: 'profile image updated successfully',url});
 });
 

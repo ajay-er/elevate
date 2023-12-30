@@ -30,7 +30,7 @@ class PaymentController {
 
     async verifyRazorpayPayment(req: Request, res: Response) {
         const currentUserId = req.currentUser?.id;
-        if (!currentUserId) throw new BadRequestError('Oops user not found');
+        if (!currentUserId) throw new BadRequestError('Oops userid not found');
         const paymentDetails: IPaymentDetails = req.body.data;
         const isVerificationSuccessful = paymentService.verifySignature(
             paymentDetails.razorpay_subscription_id,
@@ -43,6 +43,10 @@ class PaymentController {
             paymentDetails.razorpay_signature
         );
         
+        const user = await userService.findUserById(currentUserId);
+        if (!user) throw new BadRequestError('Oops user not found');
+        await paymentService.updateSubscriptionStatus(user.id);
+
         if (isVerificationSuccessful) {
             await new SUBSCRIPTION_PURCHASED_PUBLISHER(kafka_client).publish({
                 plan: result.plan,

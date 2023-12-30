@@ -2,6 +2,7 @@ import { autoInjectable } from 'tsyringe';
 import crypto from 'crypto';
 import { razorpay } from '../../config/razor.config';
 import { PlanType } from '../types';
+import { FounderRepository } from '../database/mongo/repository/founder.repository';
 
 enum Plans { 
     BASIC_ID = 'plan_N7vx8YjRjn3Z3l',
@@ -11,6 +12,8 @@ enum Plans {
 
 @autoInjectable()
 export class RazorpayService {
+    constructor(private founderRepo:FounderRepository) {}
+
     public async createSubcription(plan: string): Promise<any> {
         
         let plan_id = Plans.BASIC_ID;
@@ -27,6 +30,10 @@ export class RazorpayService {
             quantity:1
         };
         return razorpay.subscriptions.create(options);
+    }
+    
+    async updateSubscriptionStatus(id:string):Promise<any> {
+        return  await this.founderRepo.changeSubscriptionStatus(id);
     }
 
     public verifySignature(

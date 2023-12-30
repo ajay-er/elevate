@@ -14,6 +14,10 @@ export class IdeasComponent {
   comment:string = '';
 
   ngOnInit() {
+    this.getAllIdeas();
+  }
+
+  getAllIdeas() {
     this.ideaService.getAllIdeas().subscribe((res:any) => {
       this.ideas = res.ideas;
     });
@@ -40,6 +44,7 @@ export class IdeasComponent {
 
   addComment(ideaId:any) {
     this.ideaService.addComment(this.comment,ideaId).subscribe((res) => {
+      this.getAllIdeas();
       console.log(res);
       this.comment = '';
       this.selectedIdea = null;
@@ -49,13 +54,14 @@ export class IdeasComponent {
   like(idea:any) {
     this.ideaService.like(idea).subscribe((res) => {
       console.log(res);
-      
+      this.getAllIdeas();
     });
   }
 
   dislike(idea:any) {
     this.ideaService.dislike(idea).subscribe((res) => {
       console.log(res);
+      this.getAllIdeas();
     });
   }
   

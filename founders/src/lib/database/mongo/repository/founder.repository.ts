@@ -48,6 +48,10 @@ export class FounderRepository {
         return await Subscription.find({});
     }
 
+    async changeSubscriptionStatus(id:string): Promise<any> {
+        return await Subscription.updateMany({user:id},{$set:{status:SubscriptionStatus.CANCELED}});
+    }
+
     async findTotalCount(): Promise<any> {
         return await Subscription.find({status:SubscriptionStatus.ACTIVE}).countDocuments();
     }
