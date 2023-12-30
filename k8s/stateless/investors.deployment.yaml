@@ -47,6 +47,11 @@ spec:
               secretKeyRef:
                 name: cloudinary-secrets
                 key: CLOUDINARY_API_SECRET
+          - name: ELASTIC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: elevate-es-elastic-user
+                key: elastic
          
 ---
 apiVersion: v1
