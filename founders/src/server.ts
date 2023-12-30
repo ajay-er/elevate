@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000;
         await new USER_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
         await new USER_TOGGLE_BLOCK_CONSUMER(kafka_client).subscribe();
 
-        // await PingElasticSearch();
+        await PingElasticSearch();
 
         app.listen(PORT, () => {
             console.log(`Server-Startups is Listening on port ${PORT}`);
