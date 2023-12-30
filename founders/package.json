@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ajay404/elevate": "^2.0.4",
+    "@ajay404/elevate": "^2.0.5",
     "@elastic/elasticsearch": "^8.10.0",
     "@types/cors": "^2.8.17",
     "cors": "^2.8.5",
