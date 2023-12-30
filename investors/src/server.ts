@@ -6,6 +6,7 @@ import { USER_CREATED_EVENT_CONSUMER } from './events/consumers/user.created.con
 import { USER_TOGGLE_BLOCK_CONSUMER } from './events/consumers/user.toggleblock.consumer';
 import { INVESTOR_UPDATED_EVENT_CONSUMER } from './events/consumers/investor.updated.consumer';
 import { SUBSCRIPTION_PURCHASED_EVENT_CONSUMER } from './events/consumers/subscription.success.consumer';
+import { PingElasticSearch } from './config/elastic.search.config';
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +22,8 @@ const PORT = process.env.PORT || 3000;
         await new USER_TOGGLE_BLOCK_CONSUMER(kafka_client).subscribe();
         await new INVESTOR_UPDATED_EVENT_CONSUMER(kafka_client).subscribe();
         await new SUBSCRIPTION_PURCHASED_EVENT_CONSUMER(kafka_client).subscribe();
+
+        await PingElasticSearch();
 
         app.listen(PORT, () => {
             console.log(`Server-Investors is Listening on port ${PORT}`);

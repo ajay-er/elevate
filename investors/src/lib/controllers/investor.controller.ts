@@ -9,6 +9,7 @@ import { kafka_client } from '../../config/kafka.config';
 import { IUser } from '../database/model/User';
 import { INVESTOR_UPDATED_PUBLISHER } from '../../events/publisher/investor.updated.publisher';
 import { PlanType, SubscriptionStatus } from '../interfaces';
+import { PUT_TO_ELASTIC } from '../database/elasticsearch/elasticsearch.repository';
 
 const investorService = container.resolve(InvestorService);
 const userService = container.resolve(UserService);
@@ -125,11 +126,13 @@ export class InvestorController {
             markets,
         } = req.body;
         await userService.update(userId, { firstName, lastName });
+
         await new USER_UPDATED_PUBLISHER(kafka_client).publish({
             firstName: user.firstName,
             lastName: user.lastName,
             userId: user.userId,
         });
+
         await investorService.update(user.id, {
             socialMediaLinks: { twitter, linkedin, facebook, youtube },
             investmentAmount,
@@ -142,6 +145,7 @@ export class InvestorController {
         });
         const investor = await investorService.findByUserId(user.id);
         if (!investor) throw new BadRequestError('Ooops investor not found');
+
         await new INVESTOR_UPDATED_PUBLISHER(kafka_client).publish({
             userId: user.userId,
             isVerified: investor.isVerified,
@@ -159,6 +163,13 @@ export class InvestorController {
             investmentLocations: countries,
             investmentMarkets: markets,
         });
+                
+        await PUT_TO_ELASTIC('investors', {
+            investmentLocations: countries,
+            investmentMarkets: markets,
+            userId,
+        });
+
         res.json({ message: 'Investor profile updated successfully', investor });
     }
 }
