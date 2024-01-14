@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import { IdeaService } from '../service/idea.service';
 import { UserService } from '../service/user.service';
 import { BadRequestError, UnAuthorizedError } from '@ajay404/elevate';
+import { IIdea } from '../database/model/Idea';
 
 const ideaService = container.resolve(IdeaService);
 const userService = container.resolve(UserService);
@@ -16,6 +17,15 @@ class ideaController {
     async createIdea(req: Request, res: Response) {
         const userId = req.currentUser?.id;
         if (!userId) throw new UnAuthorizedError();
+        const ideaData = req.body as IIdea;
+        
+        if (!ideaData.caption || !ideaData.caption.trim()) {
+            throw new BadRequestError('Caption is required');
+        }
+
+        if (ideaData.caption.length < 3) {
+            throw new BadRequestError('Caption must be minimum 3 letters!');
+        }
 
         const user = await userService.findUserById(userId);
         if (!user) throw new BadRequestError('User not found');
