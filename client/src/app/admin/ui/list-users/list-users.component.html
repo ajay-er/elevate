@@ -3,11 +3,11 @@
     <li *ngFor="let item of investors" class="flex items-center">
       <div class="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
         <img
-          [src]="item.user.profileImgUrl"
-          [alt]="item.user.firstName"
+          [src]="item.user?.profileImgUrl"
+          [alt]="item.user?.firstName"
         />
       </div>
-      <span class="text-gray-600">{{item.user.firstName}}</span>
+      <span class="text-gray-600">{{item.user?.firstName}}</span>
       <span *ngIf="!item.isVerified" class="ml-auto font-semibold">❌</span>
       <span *ngIf="item.isVerified" class="ml-auto font-semibold">✅</span>
     </li>
