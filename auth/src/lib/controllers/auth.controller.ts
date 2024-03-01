@@ -73,6 +73,9 @@ router.post('/api/v1/auth/signup', async (req: Request, res: Response) => {
 
     const otp: string = generateOtp();
     const emailTemplate = verifyEmailTemplate(otp);
+
+    console.log('email:' ,process.env.EMAIL, 'pass:' ,process.env.APP_PASSWORD);
+
     // SEND EMAIL FOR EMAIL VERIFICATION
     const result = await sendMail({
         to: email,
